@@ -1,0 +1,25 @@
+\BOOKMARK [0][-]{chapter*.3}{List of Figures}{}% 1
+\BOOKMARK [0][-]{chapter*.4}{List of Tables}{}% 2
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 3
+\BOOKMARK [1][-]{section.1.1}{Contribution}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.2}{Organisation}{chapter.1}% 5
+\BOOKMARK [0][-]{chapter.2}{Theory}{}% 6
+\BOOKMARK [1][-]{section.2.1}{Cryptographic preliminaries}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.2}{Verifiable additive homomorphic secret sharing}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.3}{Constructions for verifying clients input}{chapter.2}% 9
+\BOOKMARK [2][-]{subsection.2.3.1}{Signature-based constructions}{section.2.3}% 10
+\BOOKMARK [2][-]{subsection.2.3.2}{Bulletproofs}{section.2.3}% 11
+\BOOKMARK [0][-]{chapter.3}{Methods}{}% 12
+\BOOKMARK [1][-]{section.3.1}{Comparison of constructions for verifying clients input}{chapter.3}% 13
+\BOOKMARK [2][-]{subsection.3.1.1}{Signature-based range proof}{section.3.1}% 14
+\BOOKMARK [2][-]{subsection.3.1.2}{Bulletproof}{section.3.1}% 15
+\BOOKMARK [1][-]{section.3.2}{Additive homomorphic secret sharing with verification of both clients and severs }{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.3}{Proofs}{chapter.3}% 17
+\BOOKMARK [1][-]{section.3.4}{Implementation}{chapter.3}% 18
+\BOOKMARK [0][-]{chapter.4}{Results}{}% 19
+\BOOKMARK [1][-]{section.4.1}{Runtime and complexity}{chapter.4}% 20
+\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 21
+\BOOKMARK [1][-]{section.5.1}{Discussion}{chapter.5}% 22
+\BOOKMARK [1][-]{section.5.2}{Conclusion}{chapter.5}% 23
+\BOOKMARK [0][-]{section.5.2}{Bibliography}{}% 24
+\BOOKMARK [0][-]{appendix.A}{Appendix 1}{}% 25

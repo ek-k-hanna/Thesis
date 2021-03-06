@@ -1,0 +1,50 @@
+\chapter{Introduction}
+
+\begin{comment}
+This chapter presents the section levels that can be used in the template. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll} \hline\hline
+Name & Command\\ \hline
+Chapter & \textbackslash\texttt{chapter\{\emph{Chapter name}\}}\\
+Section & \textbackslash\texttt{section\{\emph{Section name}\}}\\
+Subsection & \textbackslash\texttt{subsection\{\emph{Subsection name}\}}\\
+Subsubsection & \textbackslash\texttt{subsubsection\{\emph{Subsubsection name}\}}\\
+%Paragraph & \textbackslash\texttt{paragraph\{\emph{Paragraph name}\}}\\
+%Subparagraph & \textbackslash\texttt{paragraph\{\emph{Subparagraph name}\}}\\ \hline\hline
+\end{tabular}
+\end{table}
+
+
+\subsection*{Idea}
+Data collection ---> security --> fast ---> VHASS ---> mallisious clients. Range proofs eliminate the amount of impact a evil client can have on the final output. History and background using sourcers. 
+
+
+
+Many companies collect data from their users in order to learn their clients behaviour, habit and preferences and use this for example  to target commercials or make their products/services more attractable. Sharing personal data is problematic, research show  that $87\%$ of the American citizen can be identified from XXX-data based on only their ZIP-code, XXX and XXX.
+If we do not agree with the XXX a companies collects our data we could delete out account and stop using their services in order to prevent the company for getting access to our data. Following this method for protecting data leads to trouble in situations when the service a company provides is necessary. Consider the situation when applying for a loan in order to get an approval from the bank we will have to present some information regarding our salary. Here it is clear that we will have to provide some information to the bank, but it might be the we do not wish to share our exact salary, then we could use a range proof. This enables us to prove that our salary is withing a certain range without specifying the exact amount.  
+
+
+Verifiable homomorphic secret sharing (VHASS) \cite{VHASS} is a protocol that verifies the servers computations is correct in homomorphic secret sharing protocol. 
+
+\section{Previous work}
+\cite{DRYNX}<- use for other similar approaches.
+
+
+In this section the most relevant works which this paper builds upon will be briefly presented.
+\subsection*{Verifiable additive homomorphic secret sharing}
+This paper aims to extend the Verifiable additive homomorphic secret sharing (VHASS) construction presented in \cite{SumItUp} and further analysed in \cite{VHASS}, to also ensure honest clients. In this section we will give a brief review of their construction for VHASS  based on homomorphic hash functions to verify the servers computations. All details of this protocol can be found in the original paper \cite{SumItUp}.  
+
+The aim of their protocol is to compute the sum $y=f(x_1,...,x_n)=\sum_{i=1}^n x_i$ of $n$ clients input denoted $x_i$ whiling keeping all $x_i$ secret and provide a proof $\sigma$ of the correctness of $y$. Each client split their secret $x_i$ between $m$ servers using homomorphic secret sharing, see section \ref{sec:secret_sharing}, such that no information about $x_i$ is obtained from any proper subset of the shares. The clients also computes and publishes $\tau_i=H(x_i+R_i)$, for a pseudorandom number $R_i$, $\tau_i$ will be used to verify the servers computations. Each servers computes the partial sum $y_j=\sum_{i=1}^n x_{ij}$ and a partial proof $\sigma_j$ and publishes $y_j$ and $\sigma_j$. Then any one can compute the sum of the clients input $y=\sum_{j=1}^m y_j$ and verify this sum is correct using $\sigma_j$ and $\tau_i$. This protocol assumes the clients are honest and does not provide any insurance that the clients input is correct and not malicious. 
+
+\subsection*{Range Proofs}
+Range proofs are used to verify that a value is withing a given range without reviling anything more about the value. 
+Interactive / non-interactive. Move from general to wich one/ones we will cosider.
+
+\end{comment}
+\section{Contribution}
+\section{Organisation}
+%\paragraph{Paragraph}
+%\subparagraph{Subparagraph}
+

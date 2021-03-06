@@ -1,0 +1,74 @@
+\chapter{Methods}
+\label{sec:Methods}
+
+Evaluate and choose one to implement, do implementation and construct proofs
+\section{Comparison of constructions for verifying clients input}
+In this section the different constructions presented in section \ref{sec:RF_theory} will be evaluated and compared in order to decide which method is best to combine with the VHASS scheme described in Construction\ref{alg:VHASS-HSS} to check clients input. Each range proof constructions pros and cons will be discussed separately but tables for comparison will also be presented. Then a final comparison will be made.
+
+The aspects that will be considered in the evaluation of the range proofs and their compatibility with the VHASS construction is presented is the below list;
+\begin{itemize}
+    \item Proof size
+    \item Communication complexity
+    \item Flexibility of range
+    \item Assumptions and requirements 
+    \item Computation complexity for prover resp. verifier
+\end{itemize}
+
+Remark that all the range proof considered aim to prove that the secret in a Pedersen commitment is in an allowed range. Thus to combine any of the range proofs with the VHASS construction, the clients needs beyond previously computed and published values also publish a Pedersen commitment. This is investigated further in section \ref{}. Another remark is that all range proofs considered have be made non interactive using the Fiat-Shamir heuristic, even if they were originally presented as interactive constructions. 
+
+%\subsection{Square-based range proof}
+\subsection{Signature-based range proof}
+flexible, sets and arbitrary range proofs. 
+sends $XXX$. Signature is $\mathcal{O}(n)$ or using $\sigma=\sum_{k=1}^j\sigma_ju^j$ we have $\mathcal{O}(\frac{n}{log\:n-log\:log\:n})$\\
+Third party?
+\subsection{Bulletproof}
+bullet is $\mathcal{O}(log\:n)$. Bulletproof not general range. No third party?
+ logarithmic size, linear prove and verifucation time'? 
+
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{c|c}
+         bullet proof & \\
+        signature  & \\
+        square & \\
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
+
+
+\section{Additive homomorphic secret sharing with verification of both clients and severs }
+\begin{algorithm}[H]
+\caption{XX}
+\textbf{Require:} \\
+\textbf{Ensure:} 
+\\\hrulefill
+\begin{enumerate}
+  \item 
+\end{enumerate}
+\label{alg: 2D esprit}
+\end{algorithm}
+\section{Proofs}
+\begin{thm}[Correctness]
+$Pr[]$
+\end{thm}
+\begin{proof}
+To prove XXX it is sufficient to show that $\sigma= \prod_{i=1}^n \tau_i \:\bigwedge\: \prod_{i=1}^n \tau_i = \mathcal{H}(y)$. For $y$ and $\sigma$ we have the same construction as in \cite{VHASS}. Hence by construction we have:
+\begin{align}
+    \label{eq:y=sum(x_ij)}
+    y = \sum_{j=1}^m y_j= \sum_{j=1}^m \sum_{i=1}^n \lambda_{ij}p_i(\theta_{ij}) = \sum_{i=1}^n \overbrace{ \Big (\sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij}) \Big)}^{ p_i(0)} = \sum_{i=1}^n p_i(0) = \sum_{i=1}^n x_i,
+\end{align}
+and for $\sigma$ it holds that:
+\begin{align*}
+    \sigma = \prod_{j=1}^m \sigma_j = \prod_{j=1}^m g^{y_j} = g^{\sum_{j=1}^my_j} =g^y = \mathcal{H}(y)
+\end{align*}
+For the $\tau_i$, whose construction has been modified compared to \cite{VHASS} we have:
+\begin{align*}
+    &\prod_{i=1}^n \tau_i = \prod_{i=1}^n \mathds{E}(x_i,R_i)= \prod_{i=1}^n g^{x_i}h^{R_i} = g^{\sum_{i=1}^n x_i } h^{\sum_{i=1}^n R_i} \overset{\eqref{eq:y=sum(x_ij)}}{=} g^y h^{\sum_{i=1}^{n-1} R_i+R_n} = \\ 
+    &= g^y h^{ \phi(N)\big\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N) }\big\rceil}  \overset{*}{=} g^y = \mathcal{H}(y) \quad \textit{*- since $h$ is co-prime to $N$.}
+\end{align*}
+
+\end{proof}
+
+\section{Implementation}
