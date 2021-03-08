@@ -17,7 +17,7 @@ The notation $x\in_R\mathds{Y}$, means that an element $x$ in chosen at random f
 \subsection*{Definitions and theorems}
 
 \begin{Mydef}[\textbf{Euler's totient function}]
-The function $\Phi(n)$ is defined as the counter of the number of integers in the set $\{1,...,n\}$ that are relative primes to $n$. Therefore if $n$ is a prime number $\phi(n) = n-1$.
+The function $\Phi(n)$ is defined as the counter of the number of integers that are relative primes to $n$ in the set $\{1,...,n\}$ . Note if $n$ is a prime number $\phi(n) = n-1$.
 \end{Mydef}
 \vspace{10pt}
 \begin{thm}[Euler's Theorem]
@@ -49,10 +49,10 @@ Let $\mathds{G}$ be a group of prime order $q$, a generator $g\in \mathds{G}$ an
 
 
 \subsection*{Homomorphic Secret Sharing}
-The idea behind secret sharing \cite{How_share_A_secret} is to split a secret $x$ into $m$ shares $x_i \text{ s.t } i\in\{1,...,m\}$, where individual shares reviles no information about the original secret $x$. To reconstruct the value $x$ a party would need to combine at least $\tau$ shares for some threshold value $\tau$ and any subset of shares smaller than $\tau$ reviles no information about the original secret $x$, this is called a $(\tau,m)$-threshold scheme. In this paper $\tau = \textit{number of shares}=m$. Furter this paper will consider additive secret sharing scheme, thus the shares will have the property; $x = \sum_{i=1}^\tau x_i$. 
+Secret sharing \cite{How_share_A_secret} is a method where a secret is to split  into shares to hide its value. A secret $x$ is split into $m$ shares $x_i \text{ s.t } i\in\{1,...,m\}$, where any the shares reviles no information about the original secret $x$. To reconstruct the value $x$ one have to combine at least $\tau$ shares and any subset of shares smaller than $\tau$ reviles no information about the original secret $x$, this is called a $(\tau,m)$-threshold scheme. In this paper $\tau = \textit{number of shares}=m$. Further this paper will consider additive secret sharing scheme, thus the shares will have the property; $x = \sum_{i=1}^\tau x_i$. 
 
 \subsection*{Homomorphic hash functions}
-Let $\mathcal{H}$ be a cryptographic hash function \cite{HHF}, $\mathcal{H}:\mathds{F}\to \mathds{G}$. Any such function should satisfy the following two properties:
+Let $\mathcal{H}$ be a cryptographic hash function, $\mathcal{H}:\mathds{F}\to \mathds{G}$. Any such function should satisfy the following two properties:
 \begin{itemize}
     \item \textbf{Collision-resistant} It should be hard to find $x,x'\in\mathds{F}$ such that $x\neq x'$ and $\mathcal{H}(x)=\mathcal{H}(x')$.
     \item \textbf{One-Way} It should be computationally hard to find $\mathcal{H}^{-1}(x)$.
@@ -63,8 +63,7 @@ A homomorphic hash function should also satisfy the following property:
     \item \textbf{Homomorphism} For any $x,x'\in\mathds{F}$ it should hold that $\mathcal{H}(x\circ x') = \mathcal{H}(x)\circ\mathcal{H}(x')$. Where $\circ$ is either $"+"$ or $"*"$.
 \end{itemize}
 
-A funtion satisfying the thee properties is $\mathcal{H}_1(x):\mathds{F}\to\mathds{G}$ and $\mathcal{H}_1(x)= g^{x}$ \cite{HHF}. 
-
+A such function satisfying the thee properties is $\mathcal{H}_1(x):\mathds{F}\to\mathds{G}$ and $\mathcal{H}_1(x)= g^{x}$ \cite{HHF}. 
 \subsection*{Pedersen Commitment scheme}
 Define a commitment to an $x\in\mathds{F}$ as $\mathds{E}(x,R)=g^xh^R$, where $R\in_R\mathds{F}$, this commitment is known as \textit{Pedersen commitment} and originally presented in \cite{pedersen}. This commitment satisfies the following theorem;
 \\
@@ -90,14 +89,24 @@ A final remark is the similarity between the hash function $\mathcal{H}_1$ and t
 \label{sec:bilinear}
 
 \subsection*{Zero knowledge proof}
-\cite{OG_ZKP}
+Zero-knowledge proofs  (ZKP) was first presented in \cite{OG_ZKP}. A ZKP consist of two parties: \textit{Prover} \& \textit{Verifier} and satisfies the properties  in Definition \ref{def:ZKP}. After successfully performing a ZKP the prover has convinced the verifier that a certain statement of a secret $x$ is true without having relieved any other information about $x$. This is done by providing a witness $w$ of the statement. In this paper ZKP that ensures proof of knowledge (PoK) is of interest,  this means that the verifier is now only convinced that the statement is true but also that the prover knows the value of secret $x$.  Further this paper will study zero knowledge range proof (ZKRP) where the statement that the prover convinces the verifier of is that the value of secret belongs to a predetermined interval.
 
-A zero knowledge proof can be made non-interactive by Fiat-Shamir heuristic \cite{Fiat-Shamir}. A non interactive constructions means that there is no communication between the prover and verifier while constructing the proof. Usually in interactive protocols the verifier sends a challenge $c\in_R\mathds{F}$ to the prover which is included in the proof to convince the verifier of its correctness. The Fiat-Shamir heuristic uses a challenge that instead of being randomly chosen by the verifier is the a hash of the transcripts up to this point. This heuristic allows to convert an interactive protocol to a non-interactive while preserving its secure and full zero-knowledge in the random oracle model. 
+\begin{Mydef}
+\label{def:ZKP}
+A ZKP should fulfill the three properties: 
+\begin{itemize}
+\item \textbf{Completeness} 
+\item \textbf{Soundness} 
+\item  \textbf{Zero-knowledge}
+\end{itemize}
+\end{Mydef}
 
+\subsection*{Fiat-Shamir heuristic}
+ Fiat-Shamir heuristic \cite{Fiat-Shamir} can be used to convert an interactive protocol  non interactive, here it will be used to construct non-interactive ZKP. A non interactive constructions for a zZKP requires no communication between the prover and verifier during the construction of the proof. In interactive constructions the verifier sends a challenge $c\in_R\mathds{F}$ to the prover which is included in the proof to convince the verifier of its correctness. The Fiat-Shamir heuristic uses a challenge that instead of being randomly chosen by the verifier is the a hash of the transcripts up to this point. This heuristic convert an interactive protocol to a non-interactive while preserving its secure and full zero-knowledge in the random oracle model (ROM). 
 
 \section{Verifiable additive homomorphic secret sharing}
 \label{sec:VAHSS}
-This section will describe the verifiable additive homomorphic secret sharing (VAHSS) constructions presented in \cite{VAHSS,SumItUp}. An additive homophobic secret sharing construction assumes $n$ clients/data providers and $m$ servers. The clients split the secret $x_i$ into $m$ shares, $x_{ij}$ and sends one share to each server. The servers receives shares from all $n$ clients and computes the partial function $y_j = \sum_{i=1}^n x_i_j $ and publishes the result. The final result $y = \sum_{j=1}^m y_j$ can then be computed by any party. In verifiable additive homomorphic secret sharing a proof $\sigma$ that verifies that $y= \sum_{j=1}^n y_j= \sum_{j=1}^m \big( \sum_{i=1}^n  x_i_j \big) =  \sum_{i=1}^n \big( \sum_{j=1}^m  x_i_j \big)  = \sum_{i=1}^n x_i$ is generated and published. This allows any party to verify the correctness of the severs computations. Remark that the individual secrets $x_i$ is never revealed in the protocol.
+This section will describe the verifiable additive homomorphic secret sharing (VAHSS) constructions presented in \cite{VAHSS,SumItUp}. Lets assume  $n$ clients/data providers and $m$ servers. Each client split their secret $x_i$ into $m$ shares, $x_{ij}$ and sends one share to each server. The servers receives shares from all $n$ clients and computes the partial function $y_j = \sum_{i=1}^n x_{ij} $ and publishes the result. The final result $y = \sum_{j=1}^m y_j$ can then be computed by any party. In verifiable additive homomorphic secret sharing a proof $\sigma$ that verifies that $y= \sum_{j=1}^n y_j= \sum_{j=1}^m \big( \sum_{i=1}^n  x_{ij} \big) =  \sum_{i=1}^n \big( \sum_{j=1}^m  x_{ij} \big)  = \sum_{i=1}^n x_i$ is generated and published. This allows any party to verify the correctness of the severs computations. Remark that the individual secrets $x_i$ is never revealed in the protocol.
 
 
 \subsection*{Construction}
@@ -106,10 +115,10 @@ In this section a VAHSS construction  is presented. The construction consists of
 \begin{algorithm}[H]
 \caption{\textbf{: Verifiable additive homomorphic secret sharing}}
 \begin{itemize}
-  \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\tau_i,\{x_{ij}\}_{j\in\mathcal{M}})$}\\
-Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree polunomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Let $H:x\to g^x$, (g generator the multiplicative group of $\mathds{F}$), be a collision-resistant homomorphic hash function. Let $R_i\in\mathds{F}$ be the output of a PRF. We require $R_n\in \mathds{F}$ to satisfy
-$R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute $\tau_i = H(x_i+R_i)$, and put $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$. \\
-The algorithm published $\tau_i$ and sends $x_{i,j}$ to server $j$ for $j\in\mathcal{M}$. 
+  \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\pi_i,\{x_{ij}\}_{j\in\mathcal{M}})$}\\
+Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Let $H:x\to g^x$, (g generator the multiplicative group of $\mathds{F}$), be a collision-resistant homomorphic hash function. Let $R_i\in\mathds{F}$ be the output of a PRF. We require $R_n\in \mathds{F}$ to satisfy
+$R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute $\tau_i = H(x_i+R_i)$, and put $x_{ij}=\lambda_{i,j}p_i(sigma_{ij})$. \\
+The algorithm published $\pi_i$ and sends $x_{i,j}$ to server $j$ for $j\in\mathcal{M}$. 
 
 \item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
 Compute and publish $y_j = \sum_{i=1}^n x_{ij}$.
@@ -123,8 +132,8 @@ Compute and output $y = \sum_{i=1}^n y_{j}$.
 \item\textbf{FinalProof $(\{\sigma_j\}_{j\in\mathcal{M}})\xrightarrow[]{}\sigma$}\\
 Compute and output $\sigma = \prod_{j=1}^n \sigma_j = \prod_{j=1}^m g^{y_{j}} =  g^{\sum_{j=1}^m y_{j}}= g^{y}=H(y)$.
 
-\item\textbf{Verify $(\{\tau_i\}_{i\in\mathcal{N}},\sigma,y)\xrightarrow[]{}\{0,1\}$}\\
-Compute and output $\sigma = \prod_{i=1}^n \tau_i \wedge \prod_{i=1}^n \tau_i = H(y)$.
+\item\textbf{Verify $(\{\pi_i\}_{i\in\mathcal{N}},x,y)\xrightarrow[]{}\{0,1\}$}\\
+Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y)$.
 \end{itemize}
 \label{alg:VAHSS-HSS}
 \end{algorithm}
@@ -149,11 +158,11 @@ A HSS/additive-HSS construction should satisfy the two requirements: \textit{Cor
     \item \textbf{Security} Let $T$ define the set of corrupted servers with $|T|<m$, i.e at least one honest server, and Adv$(1^\lambda,\mathcal{A},T):= \text{Pr}[b' = b]-1/2$, i.e the advantage of $\mathcal{A}=\{\mathcal{A}_1,\mathcal{D}\}$ in guessing $b$ in the following experiment:
     \begin{enumerate}
         \item The adversary $\mathcal{A}_1$ gives $(i,x_i,x_i')\xleftarrow[]{}\mathcal{A}_1$ to the challenger, where $i\in[n], x_i\neq x_i'$ and $|x_i|=|x_i'|$.
-        \item The challenger picks a bit $b\in{0,1}$ uniformly at random chooses and computes $(\hat{\text{share}}_{i1},...,\hat{\text{share}}_{im},\tau_i)\xleftarrow[]{}\textbf{ShareSecret}(1^\lambda,i,\hat{\mathbf{x}}_i)$, where $\hat{\textbf{x}}_i$ is $\hat{\textbf{x}}_i = \begin{cases}x_i, \text{ if } b=0 \\ x_i' \text{ else} \end{cases}$. 
-        \item Given the shares from the corrupted servers T and $\hat{\tau}_i$ the adversary distinguisger outputs a guess $b'\xleftarrow[]{}\mathcal{D}(\hat{\text{share}}_{j|s_j\in T},\hat{\tau}_i)$.
+        \item The challenger picks a bit $b\in\{0,1\}$ uniformly at random chooses and computes $(\hat{\text{share}}_{i1},...,\hat{\text{share}}_{im},\pi_i)\xleftarrow[]{}\textbf{ShareSecret}(1^\lambda,i,\hat{\mathbf{x}}_i)$, where $\hat{\textbf{x}}_i$ is $\hat{\textbf{x}}_i = \begin{cases}\sigma_i, \text{ if } b=0 \\ x_i' \text{ else} \end{cases}$. 
+        \item Given the shares from the corrupted servers T and $\hat{\pi}_i$ the adversary distinguisger outputs a guess $b'\xleftarrow[]{}\mathcal{D}(\hat{\text{share}}_{j|s_j\in T},\hat{\pi}_i)$.
     \end{enumerate}
     A construction is $t$-secure if for all $T\subset \{s_1,...,s_m\}$ with $|T|<t$ if Adv$(1^\lambda,\mathcal{A},T)<\varepsilon(\lambda)$ for some negligible $\varepsilon(\lambda)$.
-    \item \textbf{Verifiability} Let $\mathcal{A}$ denote any PPT and $T$ denote the set of corrupted servers with $T\leq m$. Note that if $|T|=m$, the verifiability property holds but not the security property. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(x_1,...,x_n)$ with negligible probability.   
+    \item \textbf{Verifiability} Let $\mathcal{A}$ denote any PPT and $T$ denote the set of corrupted servers with $T\leq m$. Note that if $|T|=m$, the verifiability property holds but not the security property. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(\x_1,...,x_n)$ with negligible probability.   
 \end{itemize}
 %The aim  is to compute the sum $y=f(x_1,...,x_n)=\sum_{i=1}^n x_i$ of $n$ clients input and provide a proof $\sigma$ of the correctness of $y$.
 %This paper aims to extend the Verifiable additive homomorphic secret sharing (VAHSS) \cite{SumItUp,VAHSS}, to also ensure honest clients. This section will give a (not sufficient) review of their construction for VAHSS  based on homomorphic hash functions to verify the servers computations. All details of this protocol can be found in the original paper \cite{SumItUp}.  
@@ -168,18 +177,19 @@ A HSS/additive-HSS construction should satisfy the two requirements: \textit{Cor
 
 \section{Constructions for verifying clients input}
 \label{sec:RF_theory}
-A range proof is constructed to prove the following statement about a secret $\sigma$ in a Pedersen commitment without revealing anything else regarding $\sigma$:
+A range proof is constructed to prove the following statement about a secret $x$ without revealing anything else regarding $x$:
 \begin{align*}
-    \{(g,h\in\mathds{G},C;\sigma,R\in\mathds{Z}_p)\::\:C= g^\sigma h^R \wedge \sigma\in \textit{"predetermined allowed range"}\}
+    \{(g,h\in\mathds{G},C;x,R\in\mathds{Z}_p)\::\:C= g^x h^R \wedge x in \textit{"predetermined allowed range"}\}
 \end{align*}
-The range which $\sigma$ is proved to belong to vary between different constructions and will be more precisely defied below for the separate constructions. 
+Note that in the above statement  it is assumed that $x$ is the secret in a Pedersen commitment, which is not required for range proofs however only such range proof will be studied in this paper. The range which $x$ is proved to belong to vary between different constructions and will be more precisely defied below for the separate constructions. 
 
-A range proof consists of two parties the \textit{prover}, denoted $\mathcal{P}$, and the verifier, denoted $\mathcal{V}$. After successfully performing a range proof  $\mathcal{P}$ has convinced $\mathcal{V}$, that the secret $\sigma$ in a commitment $C$ is in an predetermined allowed range (or set) without the verifier learning anything else about $\sigma$. Note that this means that a range proof is a zero knowledge proof, and this property needs to be proved for each the following constructions.
+The range proof considered are all ZKRP.  Let's denote the two parties prover and verifier as  $\mathcal{P}$ respectively $\mathcal{V}$. After successfully performing a range proof  $\mathcal{P}$ has convinced $\mathcal{V}$, that the secret $x$ in a commitment $C$ is in an predetermined allowed range (or set) without the verifier learning anything else about $x$.
 
+There exists several constructions for  range proofs such as square based range proofs \cite{Efficient _proof_interval} %what is is and why do not use. 
+Another construction which could be used to construct a prove that a value is in an allowed range is function secret sharing \cite{FSS} % explain what and why not use.
+ In the subsections below theory and construction of two different range proofs will be presented.
 
-In the subsections below theory and construction of some range proofs will be presented, these will then be compared and evaluated in section \ref{sec:Methods}.
-
-\%subsection{Square based}
+%\subsection{Square based}
 %\cite{Effifient_proof_interval} Based on strong RSA-assumption --> not strong any more removed by %\cite{remove_strong_RSA}
 
 %$\mathds{Z}_n, n=p\cdot q$
@@ -187,36 +197,42 @@ In the subsections below theory and construction of some range proofs will be pr
 %The Fujisaki-Okamoto Commitment Scheme differense from pedersen? 
 
 \subsection{Signature-based  constructions}
-The first two constructions that will be considered here are based on the range proofs presented in \cite{RANGE-SET} and adjusted to a non-interactive construction described by \cite{ZKRP_Morais}. The transformation from a interactive protocol to a non interactive is done via the Fiat-Schit principle \cite{fiat-schmit}.  Non-interactive means that there communication between the prover and verifies while XXX Find. 
+Here the zero knowledge set membership (ZKSM) originally presented by \cite{RANGE-SET} is described and an then the construction is  extended to a ZKRP. Both the ZKSM and ZKRP constructions presented in this section are modified according to the Fiat-Shamir heuristic to be non-interactive.
 
-Construction \ref{alg:ZKSM} is a non interactive set membership proof of a Pedersen commitment $C=g^\sigma h^R$, where $\sigma$ is the secret and $R\in_R\mathds{F}$ is chosen uniformly at random. The construction allows a prover that knows the secret $\sigma$ to prove for a verifyer, who knows only $C$ that $\sigma\in\Phi$ for some predetermined set $\Phi$ without revealing any other information regarding the secret $\sigma$. This construction fulfils the zero knowledge requirements described in \ref{sec:ZK} and is a non interactive zero knowledge set membership proof. 
-\begin{algorithm}[H]
+The idea behind the ZKSM (and also the later derived ZKRP) is that for each element in the allowed set $\Phi$ there exist a public commitment, published by the verifier or some third party, denoted $A_i\: \forall i\in\Phi$. The prover who aims to prove that the secret hidden by a pre published pedesen commitment, denoted $C$, is in the allowed range $\Phi$ chooses the commitment representing the the secret $x$, i.e $A_x$. Then hides this choice by raising $A_x$  to a random value $\tau\in_R\mathds{F}$, this gives $V = A_x^\tau$, and publishes $V$. Then the prover has to convince the verifier that  1) the published value $V$ is indeed equal to  $A_x^\tau$ where $A_x$ is from the allowed set  2) the secret in the Pedersen commitment $C$  is the same as the secret hidden by $V$.
+
+%The first two constructions that will be considered here are based on the range proofs presented in \cite{RANGE-SET} and adjusted to a non-interactive construction described by \cite{ZKRP_Morais}. The transformation from a interactive protocol to a non interactive is done via the Fiat-Schit principle \cite{fiat-schmit}.  Non-interactive means that there communication between the prover and verifies while XXX Find. 
+
+%Construction \ref{alg:ZKSM} is a non interactive set membership proof of a Pedersen commitment $C=g^\sigma h^R$, where $\sigma$ is the secret and $R\in_R\mathds{F}$ is chosen uniformly at random.
+The construction allows a prover that knows the secret $x$ to convince the verifier, who has access to the commitment $C$ that $x\in\Phi$ for some predetermined set $\Phi$ without revealing any other information regarding the secret $x$.  For Construction \ref{alg:ZKSM} for a detailed description of the non-interactive ZKSM.
+%This construction fulfils the zero knowledge requirements described in \ref{sec:ZK} and is a non interactive zero knowledge set membership proof. 
+\begin{algorithm}[]
 \caption{\textbf{: Non interactive set membership proof}}
-\textbf{Goal:} Given a Pedersen commitment $C=g^\sigma h^R$ and a set $\Phi$, prove that the secret $\sigma$ belongs to the set $\Phi$ without revealing anything else about $\sigma$.
+\textbf{Goal:} Given a Pedersen commitment $C=g^x h^R$ and a set $\Phi$, prove that the secret $x$ belongs to the set $\Phi$ without revealing anything else about $x$.
 \vspace{2pt} \hline \vspace{2pt}
 \begin{itemize}
   \item\textbf{SetUp $(g,h,\Phi)\xrightarrow[]{}(y,\{A_{i}\}_{i\in\Phi})$}\\
-Pick uniformly at random $\sigma\in_R\mathds{G}$. Define $y=g^\sigma$ and $A_i=g^{\frac{1}{\sigma+i}} \:\forall i\in\Phi$, publish $y$ and $\{A_i\}_{i\in\Phi}$.
+Pick uniformly at random $\chi\in_R\mathds{G}$. Define $y=g^\chi$ and $A_i=g^{\frac{1}{\chi+i}} \:\forall i\in\Phi$, publish $y$ and $\{A_i\}_{i\in\Phi}$.
 
-\item\text{\textbf{Prove} $(g,h,C,\Phi)\xrightarrow[]{}\textit{ proof}=(V,a,D,z_\sigma,z_\tau,z_R)$}\\
-Pick uniformly at random $\tau\in_R\mathds{F}$, choose from the set $\{A_i\}$ the element $A_\sigma$ and calculate $V=A_\sigma^\tau$. Pick uniformly random three values $s,t,m\in_R\mathds{F}$. Put $a=e(V,g)^{-s}e(g,g)^t$, $D=g^sh^m$ and $c=\text{Hash}(V,a,D)$. Finally compute $z_\sigma = s-\sigma c$, $z_R = m-Rc$ and $z_\tau= t-\tau c$ then construct and publish $\textit{proof} = (V,a,D,z_\sigma,z_R,z_\tau)$.
+\item\text{\textbf{Prove} $(g,h,C=g^x h^R,\Phi)\xrightarrow[]{}\textit{ proof}=(V,a,D,z_x,z_\tau,z_R)$}\\
+Pick uniformly at random $\tau\in_R\mathds{F}$, choose from the set $\{A_i\}$ the element $A_x$ and calculate $V=A_x^\tau$. Pick uniformly random three values $s,t,m\in_R\mathds{F}$. Put $a=e(V,g)^{-s}e(g,g)^t$, $D=g^sh^m$ and $c=\text{Hash}(V,a,D)$. Finally compute $z_x = s-x c$, $z_R = m-Rc$ and $z_\tau= t-\tau c$ then construct and publish $\textit{proof} = (V,a,D,z_x,z_R,z_\tau)$.
 
-\item\text{\textbf{Verify} $(g,h,C=g^\sigma h^R,\textit{proof})\xrightarrow[]{}\{0,1\}$}
-Check if $D\overset{?}{=}C^ch^{z_R}g^{z_\sigma}\wedge a \overset{?}{=} e(V,g)^c e(V,g)^{-z_\sigma}e(g,g)^{z_\tau}$. If the equality holds the prover has shown that $\sigma\in\Phi$ then return $1$ otherwise return $0$, since $\sigma\notin\Phi$.
+\item\text{\textbf{Verify} $(g,h,C,\textit{proof})\xrightarrow[]{}\{0,1\}$}
+Check if $D\overset{?}{=}C^ch^{z_R}g^{z_x}\wedge a \overset{?}{=} e(V,g)^c e(V,g)^{-z_x}e(g,g)^{z_\tau}$. If the equality holds the prover has convinced the verifier that $x\in\Phi$ return $1$ otherwise return $0$.
 \end{itemize}
 \label{alg:ZKSM}
 \end{algorithm}
 
-The above construction can be turned into a efficient zero knowledge range proof by rewriting the secret $\sigma$ into base $u$ such that,
+The above construction can be turned into a efficient zero knowledge range proof by rewriting the secret $x$ into base $u$ such that,
 \begin{align*}
-    \sigma = \sum_{j=0}^l \sigma_ju^j.
+    x = \sum_{j=0}^l x_ju^j.
 \end{align*}
 Optimal choice of the two parameters $u,l$ is described in \cite{PR}. 
-Using this notation if follows that if $\sigma_j\in[0,u)\: \forall j\in[0,l]$, then $\sigma\in[0,u^l)$. The following construction is a modification of construction \ref{alg:ZKSM} into a non interactive zero knowledge range proof using the above decomposition of the secret $\sigma$.
+Using this notation it follows that if $\x_j\in[0,u)\: \forall j\in[0,l]$, then $x\in[0,u^l)$. Construction \ref{alg:ZKRP} is a modification of construction \ref{alg:ZKSM} into a non interactive zero knowledge range proof using the above decomposition of the secret $x$.
 
-\begin{algorithm}[H]
+\begin{algorithm}[]
 \caption{\textbf{: Non interactive range proof}}
-\textbf{Goal:} Given a Pedersen commitment $C=g^\sigma h^R$ and two parameters $u,l$, prove that the secret $\sigma=\sum_{j=0}^l \sigma_ju^j$ belongs to the interval $[0,u^l)$ without revealing anything else about $\sigma$.
+\textbf{Goal:} Given a Pedersen commitment $C=g^x h^R$ and two parameters $u,l$, prove that the secret $x=\sum_{j=0}^l x_j u^j$ belongs to the interval $[0,u^l)$ without revealing anything else about $x$.
 \vspace{2pt}
 \hline
 \vspace{2pt}
@@ -224,16 +240,16 @@ Using this notation if follows that if $\sigma_j\in[0,u)\: \forall j\in[0,l]$, t
   \item\textbf{SetUp $(g,h,u,l)\xrightarrow[]{}(y,\{A_{i}\})$}\\
 Pick uniformly at random $\chi\in_R\mathds{Z}_p$. Define $y=g^\chi$ and $A_i=g^{\frac{1}{\chi+i}} \: \forall i\in\mathds{Z}_u$, publish $y$ and $\{A_i\}$.
 
-\item\text{\textbf{Prove} $(g,h,u,l,C=g^\sigma h^R)\xrightarrow[]{}\textit{ proof}=(\{V_j\},\{a_j\},D,\{z_{\sigma_j}\},\{z_{\tau_j}\},z_R)$}\\
-Fist put $D$ to be the identity element in $\mathds{G}$. Then for every $j\in\mathds{Z}_l$: pick uniformly at random $\tau_j\in_R\mathds{Z}_p$ and compute $V_j=A_{\sigma_j}^{\tau_j}$. Then pick uniformly at random three more values $s_j,t_j,m_j\in_R\mathds{Z}_p$ and compute $a_j=e(V_j,g)^{-s_j}e(g,g)^{t_j}$, $D=Dg^{\sigma_js_j}h^{m_j}$ Given these computations for all $j\in\mathds{Z}_l$ let $c=\text{Hash}(\{V_j\},\{a_j\},D)$. Then for all $j\in\mathds{Z}_l$ compute $z_{\sigma_j}=s_j-\sigma_jc$,$z_{\tau_j}=t_j-\tau_jc$. Compute $z_R=m-Rc$, where $m=\sum_{j\in\mathds{Z}_l}m_j$. Finally publish \textit{proof}$=(\{V_j\},\{a_j\},D,\{z_{\sigma_j}\},\{z_{\tau_j}\},z_R)$ 
+\item\text{\textbf{Prove} $(g,h,u,l,C=g^x h^R)\xrightarrow[]{}\textit{ proof}=(\{V_j\},\{a_j\},D,\{z_{x_j}\},\{z_{\tau_j}\},z_R)$}\\
+Fist put $D$ to be the identity element in $\mathds{G}$. Then for every $j\in\mathds{Z}_l$: pick uniformly at random $\tau_j\in_R\mathds{Z}_p$ and compute $V_j=A_{x_j}^{\tau_j}$. Then pick uniformly at random three more values $s_j,t_j,m_j\in_R\mathds{Z}_p$ and compute $a_j=e(V_j,g)^{-s_j}e(g,g)^{t_j}$, $D=Dg^{x_js_j}h^{m_j}$ Given these computations for all $j\in\mathds{Z}_l$ let $c=\text{Hash}(\{V_j\},\{a_j\},D)$. Then for all $j\in\mathds{Z}_l$ compute $z_{x_j}=s_j-x_jc$,$z_{\tau_j}=t_j-\tau_jc$. Compute $z_R=m-Rc$, where $m=\sum_{j\in\mathds{Z}_l}m_j$. Finally publish \textit{proof}$=(\{V_j\},\{a_j\},D,\{z_{x_j}\},\{z_{\tau_j}\},z_R)$ 
 
 \item\text{\textbf{Verify} $(g,h,C,\textit{proof})\xrightarrow[]{}\{0,1\}$}\\
-Check if $D\overset{?}{=}C^ch^{z_R}\prod_{j\in\mathds{Z}_l}g^{z_{\sigma_j}}\wedge a_j \overset{?}{=} e(V_j,g)^c e(V_j,g)^{-z_{\sigma_j}}e(g,g)^{z_{\tau_j}}$ for all $j\in\mathds{Z}_l$. If the equality holds the prover has shown that $\sigma\in[0,u^l]$ then return $1$ otherwise return $0$, since $\sigma\notin[0,u^l)$.
+Check if $D\overset{?}{=}C^ch^{z_R}\prod_{j\in\mathds{Z}_l}g^{z_{x_j}}\wedge a_j \overset{?}{=} e(V_j,g)^c e(V_j,g)^{-z_{x_j}}e(g,g)^{z_{\tau_j}}$ for all $j\in\mathds{Z}_l$.  If the equality holds the prover has convinced the verifier that $xin [0,u^l)$ return $1$ otherwise return $0$.
 \end{itemize}
 \label{alg:ZKRP}
 \end{algorithm}
 
-The construction can be generalised to be used for verifying a secret $\sigma$ is in an arbitrary interval $[a,b]$ where $a>0, \:b>a$.  By verifying that $\sigma\in[a,a+u^l)$ and $\sigma\in[b-u^l,b)$, it must hold that $\sigma\in[a,b]$. Figure \ref{fig:interval} illustrates the intuition and correctness of the transformation.  Proving $\sigma\in[a,a+u^l)$ and $\sigma\in[b-u^l,b)$ can easily be transferred into proving $\sigma-a\in[0,u^l)$ and $\sigma-b+u^l\in[0,u^l)$, since both $a,b$ are public. Therefore to extend the construction two a arbitrary interval the steps \textbf{Prove} and \textbf{Verify} will have to be run twice but the step \textbf{SetUp} will only have to be executed once. In this approach for general intervals \texttt{AND} operation will have to be executed to verify that the secret is a interval where the lower bound is non-zero. In \cite{arbitary_range_opt} an optimised implementation reduces the complexity with a factor $2$ compared to \cite{RANGE-SET} for the case of non-zero lower bound of the allowed interval. This rather small reduction of a factor $2$, makes a considerable difference for a verifier that checks multiple clients honesty, which is the case in VAHSS.
+This construction can be generalised to  prove membership to an arbitrary interval $[a,b]$ where $a>0$$ and  $\:b>a$, by showing  that $x\in[a,a+u^l)$ and $x\in[b-u^l,b)$, since then must hold that $x\in[a,b]$. Figure \ref{fig:interval} illustrates the intuition and correctness of the transformation.  Proving $x\in[a,a+u^l)$ and $x\in[b-u^l,b)$ can easily be transferred into proving $x-a\in[0,u^l)$ and $x-b+u^l\in[0,u^l)$, since both $a,b$ are public this can easily be done by both prover and verifier. Therefore prove a secret is in an arbitrary interval the steps \textbf{Prove} and \textbf{Verify} in construction \ref{alg:ZKRP} will have to be executed twice. and  an \texttt{AND} operation will have to be executed to verify that the secret satisfies both $x-a\in[0,u^l)$ and $x-b+u^l\in[0,u^l)$.  In \cite{arbitary_range_opt} an optimised implementation is presented  reducing the complexity with a factor $2$. This rather small reduction is important when a verifier is required check the range of multiple clients secrets, which is the case in VAHSS.
 
 \begin{figure}[]
     \centering

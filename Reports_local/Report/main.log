@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.12)  6 MAR 2021 13:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.12)  8 MAR 2021 15:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1286,48 +1286,35 @@ Underfull \hbox (badness 10000) in paragraph at lines 36--38
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 69--71
+Underfull \hbox (badness 10000) in paragraph at lines 68--70
 
  []
 
-[4]
+[4] [5]
 
-LaTeX Warning: Citation `VAHSS' on page 5 undefined on input line 100.
-
-! Double subscript.
-l.100 ...partial function $y_j = \sum_{i=1}^n x_i_
-                                                  j $ and publishes the resu...
-I treat `x_1_2' essentially like `x_1{}_2'.
-
-! Double subscript.
-l.100 ..._j= \sum_{j=1}^m \big( \sum_{i=1}^n  x_i_
-                                                  j \big) =  \sum_{i=1}^n \b...
-I treat `x_1_2' essentially like `x_1{}_2'.
-
-! Double subscript.
-l.100 ... =  \sum_{i=1}^n \big( \sum_{j=1}^m  x_i_
-                                                  j \big)  = \sum_{i=1}^n x_...
-I treat `x_1_2' essentially like `x_1{}_2'.
+LaTeX Warning: Citation `VAHSS' on page 6 undefined on input line 109.
 
 
-Overfull \hbox (5.0077pt too wide) in paragraph at lines 100--101
+Overfull \hbox (5.0077pt too wide) in paragraph at lines 109--110
 \T1/lmr/m/n/12 This sec-tion will de-scribe the ver-i-fi-able ad-di-tive ho-mo-
 mor-phic se-cret shar-ing (VAHSS)
  []
 
-[5]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 107.
+put line 116.
 
-Underfull \hbox (badness 10000) in paragraph at lines 133--135
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+Underfull \hbox (badness 10000) in paragraph at lines 142--144
 
  []
 
 
-LaTeX Warning: Citation `VAHSS' on page 6 undefined on input line 140.
+LaTeX Warning: Citation `VAHSS' on page 7 undefined on input line 149.
 
-[6]
-Overfull \hbox (12.63867pt too wide) in paragraph at lines 155--156
+[7]
+Overfull \hbox (12.63867pt too wide) in paragraph at lines 164--165
 \T1/lmr/m/n/12 A con-struc-tion is $\OML/lmm/m/it/12 t$\T1/lmr/m/n/12 -secure i
 f for all $\OML/lmm/m/it/12 T \OMS/lmsy/m/n/12 ^^Z f\OML/lmm/m/it/12 s[]; :::; 
 s[]\OMS/lmsy/m/n/12 g$ \T1/lmr/m/n/12 with $\OMS/lmsy/m/n/12 j\OML/lmm/m/it/12 
@@ -1336,66 +1323,103 @@ T\OMS/lmsy/m/n/12 j \OML/lmm/m/it/12 < t$ \T1/lmr/m/n/12 if Adv$\OT1/lmr/m/n/12
  \OML/lmm/m/it/12 <
  []
 
+! Undefined control sequence.
+l.165 ...e a wrong value to be excepted as $y=f(\x
+                                                  _1,...,x_n)$ with negligib...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-LaTeX Warning: Citation `fiat-schmit' on page 7 undefined on input line 190.
 
-[7]
+LaTeX Warning: Citation `Efficient _proof_interval' on page 8 undefined on inpu
+t line 188.
 
-LaTeX Warning: Reference `sec:ZK' on page 8 undefined on input line 192.
+
+LaTeX Warning: Citation `FSS' on page 8 undefined on input line 189.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `htbp') on input line 209.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
-l.196 \vspace{2pt} \hline
+l.212 \vspace{2pt} \hline
                           \vspace{2pt}
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
 
-Underfull \hbox (badness 1194) in paragraph at lines 204--206
+Underfull \hbox (badness 10000) in paragraph at lines 220--222
 [][] \T1/lmr/m/n/12 Check if $\OML/lmm/m/it/12 D [] C[]h[]g[] \OMS/lmsy/m/n/12 
 ^ \OML/lmm/m/it/12 a []
  []
 
+[8]
 
-LaTeX Warning: Citation `PR' on page 8 undefined on input line 214.
+LaTeX Warning: Citation `PR' on page 9 undefined on input line 230.
+
+! Undefined control sequence.
+<recently read> \x 
+                   
+l.231 Using this notation it follows that if $\x
+                                                _j\in[0,u)\: \forall j\in[0,...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `htbp') on input line 233.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
-l.221 \hline
+l.237 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.252 ...>0$$ and  $\:b>a$, by showing  that $x\in
+                                                  [a,a+u^l)$ and $x\in[b-u^l...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [8]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-36.
-
+52.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 238.
+               Default added (so using `tbp') on input line 254.
 
-[9]
+
+Underfull \vbox (badness 4024) has occurred while \output is active []
+
+ [9]
+[10] [11]
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
-l.302 \hline
+l.318 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
-[10]
 
-LaTeX Warning: Reference `alg:bullet' on page 11 undefined on input line 335.
+LaTeX Warning: Reference `alg:bullet' on page 12 undefined on input line 351.
 
-[11]) (./include/Methods.tex [12]
+[12]) (./include/Methods.tex [13] [14
+
+]
 Chapter 3.
 
 Overfull \hbox (20.85167pt too wide) in paragraph at lines 5--5
@@ -1403,10 +1427,10 @@ Overfull \hbox (20.85167pt too wide) in paragraph at lines 5--5
  []
 
 
-LaTeX Warning: Reference `alg:VHASS-HSS' on page 13 undefined on input line 6.
+LaTeX Warning: Reference `alg:VHASS-HSS' on page 15 undefined on input line 6.
 
 
-LaTeX Warning: Reference `' on page 13 undefined on input line 17.
+LaTeX Warning: Reference `' on page 15 undefined on input line 17.
 
 
 LaTeX Warning: No positions in optional float specifier.
@@ -1422,25 +1446,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 44--47
 
  []
 
-[13
-
-]) (./include/Results.tex [14]
+[15]) (./include/Results.tex [16]
 Chapter 4.
-) (./include/Conclusion.tex [15
+) (./include/Conclusion.tex [17
 
-] [16
+] [18
 
 ]
 Chapter 5.
-) [17] [18
+) [19] [20
 
 ] (./main.bbl
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [19
+ [21
 
 ])
-[20] (./include/backmatter/Appendix_1.tex
+[22] (./include/backmatter/Appendix_1.tex
 Appendix A.
 ) [1
 
@@ -1459,13 +1481,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 24598 strings out of 480608
- 457015 string characters out of 5903630
- 781886 words of memory out of 5000000
- 39760 multiletter control sequences out of 15000+600000
- 640054 words of font info for 92 fonts, out of 8000000 for 9000
+ 24603 strings out of 480608
+ 457062 string characters out of 5903630
+ 783909 words of memory out of 5000000
+ 39761 multiletter control sequences out of 15000+600000
+ 644325 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,19n,85p,1324b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,19n,85p,1248b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/lo
 cal/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/20
 20/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2020/texmf-dist/
@@ -1476,25 +1498,26 @@ m-ts1.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr
 r/local/texlive/2020/texmf-dist/fonts/type1/public/doublestroke/dsrom8.pfb></us
 r/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/te
 xlive/2020/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2020/
-texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2020/texmf-dis
-t/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/ty
-pe1/public/lm/lmmi12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public
-/lm/lmmi6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi8.p
-fb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></usr/
-local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texli
-ve/2020/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2020/tex
-mf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2020/texmf-dist/font
-s/type1/public/lm/lmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/publ
-ic/lm/lmri12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy
-10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></us
-r/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/tex
-live/2020/texmf-dist/fonts/type1/public/lm/lmtt12.pfb></usr/local/texlive/2020/
-texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2020/texmf-d
-ist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on main.pdf (35 pages, 1242218 bytes).
+texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2020/texmf-dis
+t/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2020/texmf-dist/fonts/t
+ype1/public/lm/lmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/publi
+c/lm/lmmi12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi6
+.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/
+local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></usr/local/tex
+live/2020/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2020/t
+exmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2020/texmf-dist/f
+onts/type1/public/lm/lmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/p
+ublic/lm/lmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmr
+i12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></
+usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/t
+exlive/2020/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2020
+/texmf-dist/fonts/type1/public/lm/lmtt12.pfb></usr/local/texlive/2020/texmf-dis
+t/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts
+/type1/urw/helvetic/uhvr8a.pfb>
+Output written on main.pdf (37 pages, 1260055 bytes).
 PDF statistics:
- 545 PDF objects out of 1000 (max. 8388607)
- 442 compressed objects within 5 object streams
- 102 named destinations out of 1000 (max. 500000)
+ 561 PDF objects out of 1000 (max. 8388607)
+ 455 compressed objects within 5 object streams
+ 105 named destinations out of 1000 (max. 500000)
  319 words of extra memory for PDF output out of 10000 (max. 10000000)
 
