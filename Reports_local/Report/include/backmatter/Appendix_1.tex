@@ -1,2 +1,11 @@
-\chapter{Appendix 1}
+\chapter{Proof of range in signature based range proof}
+\label{appendix:range}
 
+Let $x=\sum_{j=0}^{l-1} x_j u^j$, where $x_j$ is an integer and $x_j\in[0,u)$, $u,l$ are integers and $j\in[0,l-1] (=\mathds{Z}_l)$. Then it holds that $x\in[0,u^l)$.
+
+\begin{align*}
+x =& \sum_{j=0}^{l-1} x_j u^j \leq \sum_{j=0}^{l-1}  (u-1)u^j = \sum_{j=0}^{l-1} u^{j+1} - \sum_{j=0}^{l-1} u^j = (u-1) \sum_{j=0}^{l-1} u^j =\\
+ &(u-1) \frac{u^l-1}{u-1} = u^l-1< u^l 
+\end{align*}
+
+Hence the  statement is proved and it is trivial to see that if $j\in[0,l]$ the value of $x$ could exceed $u^l$.

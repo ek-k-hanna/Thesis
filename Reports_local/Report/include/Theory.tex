@@ -1,20 +1,22 @@
 % CREATED BY DAVID FRISK, 2016
 \chapter{Theory}
-This chapter will present the theory that is relevant to construct a client and server verifiable VAHSS construction.  First the \textit{preliminaries} needed is described, this includes notation that is used, theorems/definitions, assumptions and several cryptographic preliminaries and  concepts. Then the VAHSS construction, which this reports aims to extend to include verification of clients honesty, originally described in \cite{SumItUp,VAHSS} is presented.  Finally two different range proof constructions is described in detail. These two constructions will be refereed to as \textit{signature-based range proof} and \textit{bulletproof}. 
+This chapter will present the theory needed to construct a client and server verifiable VAHSS construction.  First the \textit{preliminaries} needed is described, this includes notation that is used, theorems/definitions, assumptions and several cryptographic preliminaries and  concepts. Then the VAHSS construction, which this reports aims to extend to include verification of clients honesty, originally described in \cite{SumItUp} \cite{VAHSS}  is presented.  Finally two different range proof constructions is described in detail. These two constructions will be refereed to as \textit{signature-based range proof} and \textit{bulletproof}. 
 
 
 \section{Cryptographic preliminaries}
-This sections aim to present all relevant background to the cryptographic constructions presented in section \ref{sec:VAHSS} and \ref{sec:RF_theory}. 
+This sections aim to present the background to the cryptographic constructions presented in section \ref{sec:VAHSS} and \ref{sec:RF_theory}. 
 \subsection*{Notation and setup}
 First lets define some notation that will be used trough out the paper.
-Consider $n$ clients and $m$ servers, to simplify notation define the two sets $\mathcal{N}=\{1,...,n\}$ and $\mathcal{M} = \{1,...,m\}$. Let $c_i$ and $x_i$ for $i\in\mathcal{N}$ denote the clients (data providers) and their respective data. Denote the servers by $s_j$, where $\:j\in\mathcal{M}$.
+
+%Consider $n$ clients and $m$ servers, to simplify notation define the two sets $\mathcal{N}=\{1,...,n\}$ and $\mathcal{M} = \{1,...,m\}$. Let $c_i$ and $x_i$ for $i\in\mathcal{N}$ denote the clients (data providers) and their respective data. Denote the servers by $s_j$, where $\:j\in\mathcal{M}$.
 
 
-Let $\mathds{F}=\mathds{Z}_N$ denote a finite field, where $N$ is a large prime and let $\mathds{G}$ denote he unique subgroup of order $q$.  Define $g\in\mathds{G}$ to be a group generator and $h\in\mathds{G}$ a group element such that no one knows $log_g\:h$. The two group elements $g,h$ can either be chosen by a trusted party or by one of the participates using a \textit{coin-flipping} protocol \cite{pedersen}.
+Let $\mathds{F}=\mathds{Z}_p$ denote a finite field, where $p$ is a large prime and let $\mathds{G}$ denote he unique subgroup of order $q$.  Define $g\in\mathds{G}$ to be a group generator and $h\in\mathds{G}$ a group element such that  $log_g\:h$ is unknown. The two group elements $g,h$ can either be chosen by a trusted party or by one of the participates using a \textit{coin-flipping} protocol \cite{pedersen}.
 
 The notation $x\in_R\mathds{Y}$, means that an element $x$ in chosen at random from the set $\mathds{Y}$.
 
-\subsection*{Definitions and theorems}
+\subsection*{Definitions, Theorems and Assumptions}
+In this section definitions, theorems  and cryptographic assumptions that is used in the constructions presented later rely on will be presented. A remark is that the assumptions will not hold in the presence of quantum computers which means that non of the constructions presented in this paper is secure post quantum.
 
 \begin{Mydef}[\textbf{Euler's totient function}]
 The function $\Phi(n)$ is defined as the counter of the number of integers that are relative primes to $n$ in the set $\{1,...,n\}$ . Note if $n$ is a prime number $\phi(n) = n-1$.
@@ -32,9 +34,9 @@ From Theorem \ref{thm:euler} it follows that for arbitrary $y$ it holds that $x^
 ehjs
 \end{Mydef}
 
-\subsection*{Assumptions}
-In this section cryptographic assumptions that is used in the constructions presented later rely on will be presented. A remark is that this assumptions will not hold in the presence of quantum computers which means that the constructions presented here is not secure post quantum.
-\\
+%\subsection*{Assumptions}
+%In this section cryptographic assumptions that is used in the constructions presented later rely on will be presented. A remark is that this assumptions will not hold in the presence of quantum computers which means that the constructions presented here is not secure post quantum.
+
 \begin{Ass}[\textbf{Discrete logarithmic assumption}]
 Let $\mathds{G}$ be a group of prime order $q$, a generator $g\in \mathds{G}$ and an arbitrary element $y \in\mathds{G}$, it is  infeasible to find $x \in \mathds{Z}_q$, such that $y=g^x$
 \end{Ass}
@@ -49,7 +51,7 @@ Let $\mathds{G}$ be a group of prime order $q$, a generator $g\in \mathds{G}$ an
 
 
 \subsection*{Homomorphic Secret Sharing}
-Secret sharing \cite{How_share_A_secret} is a method where a secret is to split  into shares to hide its value. A secret $x$ is split into $m$ shares $x_i \text{ s.t } i\in\{1,...,m\}$, where any the shares reviles no information about the original secret $x$. To reconstruct the value $x$ one have to combine at least $\tau$ shares and any subset of shares smaller than $\tau$ reviles no information about the original secret $x$, this is called a $(\tau,m)$-threshold scheme. In this paper $\tau = \textit{number of shares}=m$. Further this paper will consider additive secret sharing scheme, thus the shares will have the property; $x = \sum_{i=1}^\tau x_i$. 
+Secret sharing \cite{How_share_A_secret} is a method where a secret is to split  into shares to hide its value. A secret $x$ is split into $m$ shares $x_i \text{ s.t } i\in\{1,...,m\}$, where a shares reviles no information about the original secret $x$. To reconstruct the value $x$ one have to combine at least $\tau$ shares and any subset of shares smaller than $|\tau|$ reviles no information about the original secret $x$, this is called a $(\tau,m)$-threshold scheme. In this paper $\tau = \textit{number of shares}=m$. Further this paper will consider additive secret sharing scheme, thus the shares will have the property; $x = \sum_{i=1}^\tau x_i$. 
 
 \subsection*{Homomorphic hash functions}
 Let $\mathcal{H}$ be a cryptographic hash function, $\mathcal{H}:\mathds{F}\to \mathds{G}$. Any such function should satisfy the following two properties:
@@ -65,7 +67,7 @@ A homomorphic hash function should also satisfy the following property:
 
 A such function satisfying the thee properties is $\mathcal{H}_1(x):\mathds{F}\to\mathds{G}$ and $\mathcal{H}_1(x)= g^{x}$ \cite{HHF}. 
 \subsection*{Pedersen Commitment scheme}
-Define a commitment to an $x\in\mathds{F}$ as $\mathds{E}(x,R)=g^xh^R$, where $R\in_R\mathds{F}$, this commitment is known as \textit{Pedersen commitment} and originally presented in \cite{pedersen}. This commitment satisfies the following theorem;
+Define a commitment to a secret $x\in\mathds{F}$ as $\mathds{E}(x,R)=g^xh^R$, where $R\in_R\mathds{F}$, this commitment is known as \textit{Pedersen commitment} and originally presented in \cite{pedersen}. This commitment satisfies the following theorem;
 \\
 \begin{thm}
 \label{thm:C=g^xh^R}
@@ -78,7 +80,7 @@ For any $x\in\mathds{F}$ and for $R\in_R\mathds{F}$, it follows that   $\mathds{
 The statements of the theorem follows from solving for $log_g(h)$ in $\mathds{E}(x,R)=\mathds{E}(x',R')$ 
 \end{proof}
 
-Theorem \ref{thm:C=g^xh^R} implies that if someone knows the discrete logarithm of $h$ with respect to $g$, i.e $log_g(h)$, he is able to provide two equal commits, $\mathds{E}(x,R)=\mathds{E}(x',R')$ such that $x\neq x'$. Note that in he set up of the protocol it was required that this logarithm should be unknown to any party and generated by a trusted third party or by one of the participants using a coin-flipping protocol.
+Theorem \ref{thm:C=g^xh^R} implies that if someone knows the discrete logarithm of $h$ with respect to $g$, i.e $log_g(h)$, he is able to provide two equal commits, $\mathds{E}(x,R)=\mathds{E}(x',R')$ such that $x\neq x'$. Note that in the set up of the protocol it is required that this logarithm should be unknown to any party and generated by a trusted third party or by one of the participants using a coin-flipping protocol.
 
 Further note that Pedersen commitment is homomorphic. Hence for arbitrary messages $x_1,x_2\in\mathds{F}$, random values $R_1,R_2\in_R\mathds{F}$ and the commits $C_i=\mathds{E}(x_i,R_i),\:i\in\{1,2\}$, it holds that $C_1\cdot C_2 = \mathds{E}(x_1+x_2,R_1+R_2)$.
 
@@ -102,22 +104,35 @@ A ZKP should fulfill the three properties:
 \end{Mydef}
 
 \subsection*{Fiat-Shamir heuristic}
- Fiat-Shamir heuristic \cite{Fiat-Shamir} can be used to convert an interactive protocol  non interactive, here it will be used to construct non-interactive ZKP. A non interactive constructions for a zZKP requires no communication between the prover and verifier during the construction of the proof. In interactive constructions the verifier sends a challenge $c\in_R\mathds{F}$ to the prover which is included in the proof to convince the verifier of its correctness. The Fiat-Shamir heuristic uses a challenge that instead of being randomly chosen by the verifier is the a hash of the transcripts up to this point. This heuristic convert an interactive protocol to a non-interactive while preserving its secure and full zero-knowledge in the random oracle model (ROM). 
+ Fiat-Shamir heuristic \cite{Fiat-Shamir} can be used to convert an interactive protocol  non interactive, here it will be used to construct non-interactive ZKP. A non interactive constructions for a ZKP requires no communication between the prover and verifier during the construction of the proof. In interactive constructions the verifier sends a challenge $c\in_R\mathds{F}$ to the prover which is included in the proof to convince the verifier of its correctness. The Fiat-Shamir heuristic uses a challenge that instead of being randomly chosen by the verifier is the a hash of the transcripts up to this point. This heuristic convert an interactive protocol to a non-interactive while preserving its secure and full zero-knowledge and relies on the random oracle model (ROM). 
 
 \section{Verifiable additive homomorphic secret sharing}
 \label{sec:VAHSS}
-This section will describe the verifiable additive homomorphic secret sharing (VAHSS) constructions presented in \cite{VAHSS,SumItUp}. Lets assume  $n$ clients/data providers and $m$ servers. Each client split their secret $x_i$ into $m$ shares, $x_{ij}$ and sends one share to each server. The servers receives shares from all $n$ clients and computes the partial function $y_j = \sum_{i=1}^n x_{ij} $ and publishes the result. The final result $y = \sum_{j=1}^m y_j$ can then be computed by any party. In verifiable additive homomorphic secret sharing a proof $\sigma$ that verifies that $y= \sum_{j=1}^n y_j= \sum_{j=1}^m \big( \sum_{i=1}^n  x_{ij} \big) =  \sum_{i=1}^n \big( \sum_{j=1}^m  x_{ij} \big)  = \sum_{i=1}^n x_i$ is generated and published. This allows any party to verify the correctness of the severs computations. Remark that the individual secrets $x_i$ is never revealed in the protocol.
+%Consider $n$ clients and $m$ servers, to simplify notation define the two sets $\mathcal{N}=\{1,...,n\}$ and $\mathcal{M} = \{1,...,m\}$. Let $c_i$ and $x_i$ for $i\in\mathcal{N}$ denote the clients (data providers) and their respective data. Denote the servers by $s_j$, where $\:j\in\mathcal{M}$.
+
+
+This section will describe the verifiable additive homomorphic secret sharing (VAHSS) constructions presented in \cite{VAHSS,SumItUp}. Lets assume  $n$ clients/data providers and $m$ servers, to simplify notation define the two sets $\mathcal{N}=\{1,...,n\}$ and $\mathcal{M} = \{1,...,m\}$. Let $c_i$ and $x_i$ for $i\in\mathcal{N}$ denote the clients (data providers) and their respective data. Denote the servers by $s_j$, where $\:j\in\mathcal{M}$. Each client split their secret $x_i$ into $m$ shares, $x_{ij}$ and sends one share to each server. The servers receives shares from all $n$ clients and computes the partial function $y_j = \sum_{i=1}^n x_{ij} $ and publishes the result. The final result $y = \sum_{j=1}^m y_j$ can then be computed by any party. In verifiable additive homomorphic secret sharing a proof $\sigma$ that verifies that $y= \sum_{j=1}^n y_j= \sum_{j=1}^m \big( \sum_{i=1}^n  x_{ij} \big) =  \sum_{i=1}^n \big( \sum_{j=1}^m  x_{ij} \big)  = \sum_{i=1}^n x_i$ is generated and published. This allows any party to verify the correctness of the severs computations. Remark that the individual secrets $x_i$ is never revealed in the protocol.
 
 
 \subsection*{Construction}
-In this section a VAHSS construction  is presented. The construction consists of the six PPT algorithms: \textbf{ShareSecret}, \textbf{PartialEval}, \textbf{PartialProof}, \textbf{FinalEval}, \textbf{FinalProof} and \textbf{Verify}. The clients/data providers executed the step \textbf{ShareSecret}, the servers \textbf{PartialEval} and \textbf{PartialProof} and the last three steps can run by anyone. The complete construction looks like:
+In this section a VAHSS construction  is presented. The construction consists of the six PPT algorithms: \textbf{ShareSecret}, \textbf{PartialEval}, \textbf{PartialProof}, \textbf{FinalEval}, \textbf{FinalProof} and \textbf{Verify}. The clients/data providers executed the step \textbf{ShareSecret}, the servers \textbf{PartialEval} and \textbf{PartialProof} and the last three steps can run by anyone.
 
-\begin{algorithm}[H]
+To achieve secret sharing where any true subset of shares reviles no information about the secret the construction makes use the following. For each client $c_i$ let $\theta_{i1},...,\theta:_{im}\in\matds{F}\{0}$ and $\lambda_{i1},...,\lambda_{im}\in\mards{F}$ such that the following property for polynomial $p_i$ holds,
+\begin{align}
+\label{eq:pi(0)}
+p_i(0) = \sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij}).
+\end{align}
+
+To obtain verifiability of servers honesty a proof, denoted $\sigma$, relying on homomorphic secret sharing will be constructed. Each server, $s_j$ publishes a partial proof $\sigma_j$, and it will then be possible for any party to verify the correctness of the aggregation. A detailed description is seen in Construction \ref{alg:VAHSS-HSS}.
+
+\begin{algorithm}
 \caption{\textbf{: Verifiable additive homomorphic secret sharing}}
 \begin{itemize}
   \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\pi_i,\{x_{ij}\}_{j\in\mathcal{M}})$}\\
-Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Let $H:x\to g^x$, (g generator the multiplicative group of $\mathds{F}$), be a collision-resistant homomorphic hash function. Let $R_i\in\mathds{F}$ be the output of a PRF. We require $R_n\in \mathds{F}$ to satisfy
-$R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute $\tau_i = H(x_i+R_i)$, and put $x_{ij}=\lambda_{i,j}p_i(sigma_{ij})$. \\
+Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Remark that polynomial satisfies equation \eqref{eq:pi(0)} and further that $p_i(0)=x_i$  which implies that $x_i =  \sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij})$. Let $H:x\to g^x$
+% (g generator the multiplicative group of $\mathds{F}$)
+, be a collision-resistant homomorphic hash function. Let $R_i\in\mathds{F}$ be the output of a PRF. Where it is required that  $R_n\in \mathds{F}$  satisfies
+$R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute $\tau_i = H(x_i+R_i)$, and put $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$. \\
 The algorithm published $\pi_i$ and sends $x_{i,j}$ to server $j$ for $j\in\mathcal{M}$. 
 
 \item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
@@ -139,11 +154,11 @@ Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y
 \end{algorithm}
 
 
-The above described construction satisfies the correctness, security and verifiability requirements presented below, this is stated in Theorem \ref{thm:VAHSS_CSV} 
+The VHASS in Construction \ref{alg:VAHSS-HSS} satisfies the correctness, security and verifiability requirements presented below, this is stated in Theorem \ref{thm:VAHSS_CSV} 
 \\
 \begin{thm}
 \label{thm:VAHSS_CSV}
-The VAHSS construction above satisfies the correctness, security and verifiability requirements described below.
+The VAHSS construction above satisfies the correctness, security and verifiability requirements described in the next sub-section. 
 \end{thm}
 \begin{proof}
 See section $4.1$ in \cite{VAHSS}.
@@ -151,7 +166,6 @@ See section $4.1$ in \cite{VAHSS}.
 
 
 \subsection*{Correctness, Security and Verifiability}
-
 A HSS/additive-HSS construction should satisfy the two requirements: \textit{Correctness} and \textit{Security}. A verifiable additive HSS should also satisfy \textit{Verifiability}. The requirements are defined as:
 \begin{itemize}
     \item \textbf{Correctness} It must hold that Pr$\Big[\textbf{Verify}(pp,\sigma,y)=1\Big]=1$. This means that with probability $1$ the output $y$ from the construction is accepted given all parties where honest and the protocol were executed correctly.
@@ -162,7 +176,7 @@ A HSS/additive-HSS construction should satisfy the two requirements: \textit{Cor
         \item Given the shares from the corrupted servers T and $\hat{\pi}_i$ the adversary distinguisger outputs a guess $b'\xleftarrow[]{}\mathcal{D}(\hat{\text{share}}_{j|s_j\in T},\hat{\pi}_i)$.
     \end{enumerate}
     A construction is $t$-secure if for all $T\subset \{s_1,...,s_m\}$ with $|T|<t$ if Adv$(1^\lambda,\mathcal{A},T)<\varepsilon(\lambda)$ for some negligible $\varepsilon(\lambda)$.
-    \item \textbf{Verifiability} Let $\mathcal{A}$ denote any PPT and $T$ denote the set of corrupted servers with $T\leq m$. Note that if $|T|=m$, the verifiability property holds but not the security property. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(\x_1,...,x_n)$ with negligible probability.   
+ \item \textbf{Verifiability} Let $\mathcal{A}$ denote any PPT  adversary and $T$ denote the set of corrupted servers with $T\leq m$. Note that if $|T|=m$, the verifiability property holds but not the security property. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(x_1,...,x_n)$ with negligible probability.   
 \end{itemize}
 %The aim  is to compute the sum $y=f(x_1,...,x_n)=\sum_{i=1}^n x_i$ of $n$ clients input and provide a proof $\sigma$ of the correctness of $y$.
 %This paper aims to extend the Verifiable additive homomorphic secret sharing (VAHSS) \cite{SumItUp,VAHSS}, to also ensure honest clients. This section will give a (not sufficient) review of their construction for VAHSS  based on homomorphic hash functions to verify the servers computations. All details of this protocol can be found in the original paper \cite{SumItUp}.  
@@ -179,13 +193,13 @@ A HSS/additive-HSS construction should satisfy the two requirements: \textit{Cor
 \label{sec:RF_theory}
 A range proof is constructed to prove the following statement about a secret $x$ without revealing anything else regarding $x$:
 \begin{align*}
-    \{(g,h\in\mathds{G},C;x,R\in\mathds{Z}_p)\::\:C= g^x h^R \wedge x in \textit{"predetermined allowed range"}\}
+    \{(g,h\in\mathds{G},C;x,R\in\mathds{Z}_p)\::\:C= g^x h^R \wedge x \in \{\textit{"predetermined allowed range"}\}
 \end{align*}
 Note that in the above statement  it is assumed that $x$ is the secret in a Pedersen commitment, which is not required for range proofs however only such range proof will be studied in this paper. The range which $x$ is proved to belong to vary between different constructions and will be more precisely defied below for the separate constructions. 
 
 The range proof considered are all ZKRP.  Let's denote the two parties prover and verifier as  $\mathcal{P}$ respectively $\mathcal{V}$. After successfully performing a range proof  $\mathcal{P}$ has convinced $\mathcal{V}$, that the secret $x$ in a commitment $C$ is in an predetermined allowed range (or set) without the verifier learning anything else about $x$.
 
-There exists several constructions for  range proofs such as square based range proofs \cite{Efficient _proof_interval} %what is is and why do not use. 
+There exists several constructions for  range proofs such as square based range proofs \cite{Efficient_proof_interval} %what is is and why do not use. 
 Another construction which could be used to construct a prove that a value is in an allowed range is function secret sharing \cite{FSS} % explain what and why not use.
  In the subsections below theory and construction of two different range proofs will be presented.
 
@@ -225,10 +239,10 @@ Check if $D\overset{?}{=}C^ch^{z_R}g^{z_x}\wedge a \overset{?}{=} e(V,g)^c e(V,g
 
 The above construction can be turned into a efficient zero knowledge range proof by rewriting the secret $x$ into base $u$ such that,
 \begin{align*}
-    x = \sum_{j=0}^l x_ju^j.
+    x = \sum_{j=0}^{l-1} x_ju^j.
 \end{align*}
 Optimal choice of the two parameters $u,l$ is described in \cite{PR}. 
-Using this notation it follows that if $\x_j\in[0,u)\: \forall j\in[0,l]$, then $x\in[0,u^l)$. Construction \ref{alg:ZKRP} is a modification of construction \ref{alg:ZKSM} into a non interactive zero knowledge range proof using the above decomposition of the secret $x$.
+Using this notation it follows that if $x_j\in[0,u)\: \forall j\in\mathds{Z}_l$, then $x\in[0,u^l)$. A remark is that range for the subscript $j$ is $[0,l-1]$ and not $[0,l]$.  This has been wrongly notated \cite{RANGE-SET,ZKRP_Morais} and therefore an explicit proof of this is given in Appendix \ref{appendix:range}. Construction \ref{alg:ZKRP} is a modification of construction \ref{alg:ZKSM} into a non interactive zero knowledge range proof using the above decomposition of the secret $x$.
 
 \begin{algorithm}[]
 \caption{\textbf{: Non interactive range proof}}
@@ -280,9 +294,10 @@ This construction can be generalised to  prove membership to an arbitrary interv
 
 
 \subsection{Bulletproofs}
-The construction of bulletproofs presented in \cite{bulletProofs_theory} is presented. This construction is based on a inner-product argument. 
+Bulletproof is a range proof of logarithmic in the size of the range. The construction relies on the inner product argument which allows a prove to convince a verifier that he knows the opening $\bm{s},\bm{r}\in\mathds{F}^n$ to a Pedersen $P_v = \bm{g}^{\bm{s}}\bm{h}^{\bm{r}}$ such that the inner product of $\bm{s},\bm{r}$ is equal to a known value, and this can be done with a proof of size $log\: n$, compare to the trivial solution of publishing $\bm{s},\bm{r}$ which would lead to a proof of size $n$.
+
 \subsubsection*{Notation}
-The description and construction or bulletproofs requires some additional notation which will be presented here. First let lowercase bold font denote vectors, i.e $\mathbf{a}\in\mathds{F}$ is a vector with element $a_1,..,a_n \in \mathds{F}$, and uppercase bold font denote matrices, i.e $\mathbf{A}\in\mathds{F}^{n\times m}$ is a matrix and $a_{ij}$ the element of $\mathbf{A}$ at row $i$ and column $j$. Given this notation denote scalar multiplication with a vector as $\mathbf{b}=c\cdot \mathbf{a}\in\mathds{F}$, where $c\in\mathds{F}$ and $\mathbf{b}=(b_1,...,b_n)$ where $b_i=c\cdot a_i$. Denote the euclidean inner product of two vectors as $\langle \mathbf{a},\mathbf{b}\rangle$ and Hadamard product as $\mathbf{a}\circ \mathbf{b}$.
+The description and construction or bulletproofs requires some additional notation which will be presented here. First let lowercase bold font denote vectors, i.e $\mathbf{a}\in\mathds{F}^n$ is a vector with element $a_1,..,a_n \in \mathds{F}$, and uppercase bold font denote matrices, i.e $\mathbf{A}\in\mathds{F}^{n\times m}$ is a matrix and $a_{ij}$ the element of $\mathbf{A}$ at row $i$ and column $j$. Given this notation denote scalar multiplication with a vector as $\mathbf{b}=c\cdot \mathbf{a}\in\mathds{F}^n$, where $c\in\mathds{F}$ and $\mathbf{b}=(b_1,...,b_n)$ where $b_i=c\cdot a_i$. Denote the euclidean inner product of two vectors as $\langle \mathbf{a},\mathbf{b}\rangle$ and Hadamard product as $\mathbf{a}\circ \mathbf{b}$.
 
 Further consider vector polynomials $p(X)$ of degree $d$ on the form $p(X)=\sum_{i=0}^d \mathbf{p_i}\cdot X^i\in\mathds{Z}_p^n[X]$, where the coefficients $\mathbf{p_i}\in\mathds{Z}_p^n$. The inner product of two vector polynomials, $l(X),r(X)$ is defined as, 
 \begin{align*}
@@ -290,30 +305,32 @@ Further consider vector polynomials $p(X)$ of degree $d$ on the form $p(X)=\sum_
 \end{align*}
 The following is equivalent: evaluating two polynomials at $x$ then taking the inner product versus taking the inner product polynomial at $x$.
 
-Let $\mathbf{a}||\mathbf{b}$ denote the concatenation of two vectors and for $0\leq l\geq n$ use python notation to denote sections of vectors such that $\mathbf{a}_{[:l]} = (a_1,...,a_l)$ and $\mathbf{a}_{[l:]} = (a_{l+1},...,a_n)$. 
+Let $\mathbf{a}||\mathbf{b}$ denote the concatenation of two vectors and for $0\leq l \leq n$ use python notation to denote sections of vectors such that $\mathbf{a}_{[:l]} = (a_1,...,a_l)$ and $\mathbf{a}_{[l:]} = (a_{l+1},...,a_n)$. 
 
 For $k\in\mathds{Z}_p^*$ let $\mathbf{k}^n=(1,k,k^2,...,k^{n-1})$, i.e the vector containing the $n$ fist powers of $k$. 
 
-Also let $\mathbf{g},\mathbf{h}\in\mathds{G}^n$ be two vectors. Given such a vector $\mathbf{g}$ and a vector $\mathbf{a}\in\mathds{Z}_p^n$ write $C= \mathbf{g}^\mathbf{a} = \prod_{i=1}^ng_i^{a_i}\in\mathds{G}$. $C$ can be interpreted as a commitment to the vector $\mathbf{a}$.
+Let $\mathbf{g},\mathbf{h}\in\mathds{G}^n$ and remember that $\mathbf{a}\in\mathds{F}^n$ then define $C= \mathbf{g}^\mathbf{a} = \prod_{i=1}^ng_i^{a_i}\in\mathds{G}$, where $C$ can be interpreted as a commitment to the vector $\mathbf{a}$. In this section the two vectors $\mathbf{g},\mathbf{h}$ will be considered to be generators of the space $\matds{G}^n$.
 
 Remark that is this section $n$ denotes the dimension of the room not the number of clients, further remark that the dimension of the room is the length of the bit representation of the secret in the Pedersen vector commitment considered below. 
 
 \subsubsection*{Inner product argument}
 \label{sec:inner_prod}
-The bulletproof construction is based on the inner product argument presented in this section. The inner product argument is a argument of knowledge of $\textbf{s},\mathbf{r}$ in a  Pedersen vector commitment $P_v=\mathbf{g}^\mathbf{s}\mathbf{h}^\mathbf{r}$ satisfying a given inner product. (To differ from the Pedersen vector commitment considered here and the Pedersen commitment in the range proofs the exponents in the commit are denoted $\mathbf{s},\mathbf{r}$ instead of $\sigma,R$, and the commitment by $P_v$) More formally the argument is a proof system of the statement,
+The bulletproof construction is based on the inner product argument which will be closer presented in this section. The inner product argument is a argument of knowledge of $\textbf{s},\mathbf{r}$ in a  Pedersen vector commitment $P_v=\mathbf{g}^\mathbf{s}\mathbf{h}^\mathbf{r}$ satisfying a given inner product denoted $c$. 
+%(To differ from the Pedersen vector commitment considered here and the Pedersen commitment in the range proofs the exponents in the commit are denoted $\mathbf{s},\mathbf{r}$ instead of $\sigma,R$, and the commitment by $P_v$) 
+More formally the argument is a proof system of the statement,
 \begin{align*}
-    \{(\mathbf{g},\mathbf{h}\in\mathds{G}^n,P_v\in\mathds{G},c\in\mathds{Z}_p;\: \mathbf{s},\mathbf{r}\in\mathds{Z}_p^n) : \: P_v=\mathbf{g}^\mathbf{s}\mathbf{h}^\mathbf{r}\wedge\: c =\langle\mathbf{s},\mathbf{r}\rangle\}
+    \{(\mathbf{g},\mathbf{h}\in\mathds{G}^n,\:P_v\in\mathds{G},\:c\in\mathds{Z}_p;\: \mathbf{s},\mathbf{r}\in\mathds{Z}_p^n) : \: P_v=\mathbf{g}^\mathbf{s}\mathbf{h}^\mathbf{r}\wedge\: c =\langle\mathbf{s},\mathbf{r}\rangle\}
 \end{align*}
 Which can be shown to be equivalent to a proof of the statement,
 \begin{align*}
-    \{(\mathbf{g},\mathbf{h}\in\mathds{G}^n,u,P_v\in\mathds{G};\: \mathbf{s},\mathbf{r}\in\mathds{Z}_p^n) : \: P_v=\mathbf{g}^\mathbf{s}\mathbf{h}^\mathbf{r}u^{\langle\mathbf{s},\mathbf{r}\rangle}\}.
+    \{(\mathbf{g},\mathbf{h}\in\mathds{G}^n,\: u,P_v\in\mathds{G};\: \mathbf{s},\mathbf{r}\in\mathds{Z}_p^n) : \: P_v=\mathbf{g}^\mathbf{s}\mathbf{h}^\mathbf{r}u^{\langle\mathbf{s},\mathbf{r}\rangle}\}.
 \end{align*}
 
-The construction to prove the inner product argument is presented in Construction \ref{alg:inner_product}. The construction presented is modified compared to the one presented in \cite{bulletProofs_theory} to be non-interactive using the Fiat-Shamir heuristic by \cite{ZKRP_Morais}.
+A logarithmic sized proof of the above inner product statement is presented in Construction \ref{alg:inner_product}. The construction presented is modified compared to the one presented in \cite{bulletProofs_theory} to be non-interactive using the Fiat-Shamir heuristic.
 
-\begin{algorithm}[H]
+\begin{algorithm}
 \caption{\textbf{: Inner-product argument}}
-\textbf{Goal:} Given a Pedersen commitment $C=g^\sigma h^R$ and two parameters $u,l$, prove that the secret $\sigma=\sum_{j=0}^l \sigma_ju^j$ belongs to the interval $[0,u^l)$ without revealing anything else about $\sigma$.
+\textbf{Goal:} Given a Pedersen vector  commitment $P_v=\bm{g}^{\bm{x}} \bm{h}^\bm{R}$ and a value $c$ prove that the two vectors $\bm{x},\bm{R}$ satisfies $c=\langle\bm{x},\bm{R}\rangle$.
 \vspace{2pt}
 \hline
 \vspace{2pt}
@@ -337,24 +354,45 @@ Accept if
 
 
 \subsubsection*{Inner product rang proof}
-Based on the inner product argument  in this section the construction a range proof called  \textit{bulletproof}, will be described. This construction allows a prover, given a Pedersen commitment $C=g^\sigma h^R$ to convince a verifier that the secret $\sigma$ belongs to the interval $[0,2^n)$. To do this the prover needs to convince the verifier that:
-\begin{itemize}
-    \item $\bm{\sigma}\in\{0,1\}^n$ is the binary representation of $\sigma$, or equivalently that $\langle \bm{\sigma},\mathbf{2}^n\rangle = \sigma$.
-    \item $\bm{\bar{\sigma}}$ is the component-wise complement of $\bm{\sigma}$. This is equivalent to show that $\bm{\bar{\sigma}}$ satisfies the two conditions: $\bm{\bar{\sigma}}\circ \bm{\sigma}=\bm{0}^n$ and $\bm{\bar{\sigma}} = \bm{\sigma} -\bm{1}^n \: \text{mod }2$.
-\end{itemize}
-These three equations can be rewritten and summarised in proving the following statement;
+Lets present a logarithmic sized range proof called \textit{bulletproof}, based, on the inner product argument. This construction allows a prover, given a Pedersen commitment $C=g^x h^R$ to convince a verifier that the secret $x$ belongs to the interval $[0,2^n)$. By convincing the verifier that  $\bm{x}\in\{0,1\}^n$ is the binary representation of the secret $x$, or equivalently that $x= \langle \bm{x},\mathbf{2}^n\rangle $ and that the prover knows $\bm{x}$.
+   % \item $\bm{\bar{x}}$ is the component-wise complement of $\bm{x}$. This is equivalent to show that $\bm{\bar{x}}$ satisfies the two conditions: $\bm{\bar{x}}\circ \bm{x}=\bm{0}^n$ and $\bm{\bar{x}} = \bm{x} -\bm{1}^n \: \text{mod }2$.
+%\end{itemize}
+These can be done by proving the following statement;
 \begin{align}
-    \big\langle \bm{\sigma} -z\cdot \bm{1}^n, \bm{y}^n\circ (\bm{\bar{\sigma}} + z \cdot\bm{1}^n) + z^2\cdot\bm{2}^n \big\rangle = z^2\cdot\sigma + \delta(y,z),
+    \big\langle \bm{x} -z\cdot \bm{1}^n, \bm{y}^n\circ (\bm{\bar{x}} + z \cdot\bm{1}^n) + z^2\cdot\bm{2}^n \big\rangle = z^2\cdot x+ \delta(y,z),
     \label{eq:range_non_zero}
 \end{align}
-where $\delta(y,z) = (z-z^2)\cdot\langle\bm{1}^n,\bm{y}^n\rangle-z^3\langle \bm{1}^n,\bm{2}^n\rangle\in\mathds{Z}_p.$.
-The values $z$ and $y$ are either chosen at random from the set $\mathds{Z}_p$ by the verifier in an interactive construction or are the hash of other values in a non-interactive construction. Here a non-interactive construction will be considered, for further definition of the variables $z,y$ see Construction \ref{alg:bullet}.
+where $\bar{\bm{x}}$ is the component-wise complement of $\bm{x}$ and $\delta(y,z) = (z-z^2)\cdot\langle\bm{1}^n,\bm{y}^n\rangle-z^3\langle \bm{1}^n,\bm{2}^n\rangle\in\mathds{Z}_p$.
+The values $z$ and $y$ are either chosen at random from the set $\mathds{Z}_p$ by the verifier in an interactive construction or are the output of a hash function in a non-interactive construction. Here a non-interactive construction will be considered, for further explanation of the variables $z,y$ see Construction \ref{alg:bullet}.
 
-If a inner product argument presented in Construction \ref{alg:inner_product} was used to prove the inner product defined in equation \eqref{eq:range_non_zero} it would leak information about $\sigma$, since information about the two vectors $\bm{\sigma},\bm{\bar{\sigma}}$ is revealed and they contain information about the binary representation of $\sigma$. Hence two new vectors $\bm{s}_1,\bm{s}_2$ are introduced and will serve as blinding vectors and help construct a zero-knowledge range proof even if the inner product argument is not a zero knowledge construction. Given this idea, the inner product in \eqref{eq:range_non_zero} is tweaked to include the two blinding vectors,
-\begin{align}
+Directly using  a inner product argument presented in Construction \ref{alg:inner_product} to prove the statement  in equation \eqref{eq:range_non_zero} would leak information about $x$, since information about the two vectors $\bm{x},\bm{\bar{x}}$ is revealed, i.e the binary representation of $x$. Hence two new vectors $\bm{s}_1,\bm{s}_2$ are introduced and will serve as blinding vectors and help construct a zero-knowledge range proof even if the inner product argument is not a zero knowledge construction. Given this idea, the inner product in \eqref{eq:range_non_zero} is tweaked to include the two blinding vectors and the new statment is,
+\begin{align*}
      t(X) &= \langle  l(X),r(X)\rangle = t_0 + t_1\cdot X + t_2\cdot X^2\\
-    l(X) &= \bm{\sigma} -z\cdot \bm{1}^n +\bm{s}_1\cdot X\\
-    r(X) &= \bm{y}^n\circ (\bm{\bar{\sigma}} + z \cdot\bm{1}^n + \bm{s}_2\cdot X)+ z^2\cdot\bm{2}^n,\\
-    \label{eq:range_zero}
-\end{align}
-Clearly $t_0 = z^2\cdot\sigma + \delta(y,z)$ which is equal to the right hand side of equation \eqref{eq:range_non_zero}. 
+    l(X) &= \bm{x} -z\cdot \bm{1}^n +\bm{s}_1\cdot X\\
+    r(X) &= \bm{y}^n\circ (\bm{\bar{x}} + z \cdot\bm{1}^n + \bm{s}_2\cdot X)+ z^2\cdot\bm{2}^n,\\
+\end{align*}
+Note that $t_0 = z^2\cdotx + \delta(y,z)$ which is equal to the right hand side of equation \eqref{eq:range_non_zero}. Further it holds that $t_1 = \langle \bm{x}-z\cdot \bm{1}^n , \bm{y}^n\circ \bm{s_R}\rangle + \langle\bm{s_L},\bm{y}^n\circ (\bm{a_R}+z\cdot\bm{1}^n) + z\cdot \bm{2}^n\rangle$ and $t_2 =\langle \bm{s_L}, \bm{y}^n \circ \bm{s_R}\rangle $. Given this set up Construction \ref{alg:bullet} gives a non interactive zero knowledge range proof that the secret $x$ belongs to the interval $[0,2^n]$.
+
+\begin{algorithm}[]
+\caption{\textbf{: Bulletproof}}
+\textbf{Goal:} Given a Pedersen vector  commitment $P=g^xh^R$ and a value $c$ prove that the two vectors $\bm{x},\bm{R}$ satisfies $c=\langle\bm{x},\bm{R}\rangle$.
+\vspace{2pt}
+\hline
+\vspace{2pt}
+\begin{itemize}
+\item\text{\textbf{Prove} $(g,h,\mathbf{g},\mathbf{h},P,n,\mathbf{r},\mathbf{s})\xrightarrow[]{}\textit{ proof}_{RP}$}\\
+Let $\bm{x}$ denote the binary representation of the secret $x$ in the commitment $P$ and $\bar{\bm{x}}$ the component-wise complement such  that $\bm{x}\circ \bar{\bm{x}} = 0$. Construct the commitment $A= h^\alpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}$, where $\alpha\in_R\mathds{F}$. Then chose the two blinding vectors $\bm{s_R},\bm{s_L}\in_R\mathds{F}^n$ and the value $\rho\in_R\mathds{F}$ and compute the commitment $S=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}$. Let $y=\text{Hash}(A,S)$, $z=\text{Hash}(A,S,y)$ and $\tau_1,\tau_2\in_R\mathds{F}$. Now the it is possible to construct $t_1,t_2$ defined above. Given this let $T_1=g^{t_1}h^{\tau_1}$ and $T_2=g^{t_1}h^{\tau_1}$, next let $X=\text{Hash}(T_1,T_2)$. Now construct the two vectors for the inner product argument: $\bm{l} = \bm{x}-z\cdot \bm{1}^n-\bm{s_L}\cdot X$, $\bm{r}= \bm{y}^n\circ(\bar{\bm{x}}+ z\cdot \bm{1}^n+\bm{s_R}\cdot X ) + z^2\ X $ and calculate the inner product $\hat{t} = \langle \bm{l},\bm{r}\rangle$. Finally compute $\tau_X = \tau_2 x^2 + \tau_1 X + z^2 R$ and $\mu = \alpha+ R\:X$.  Now use the inner product argumen.  First let $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}$ and  secondly compute the step \textbf{Prove}  of Construction \ref{alg:inner_product}  with the input $(\bm{g},\bm{h},P_v,\hat{t},\bm{l},\bm{r})$ and store the output \textit{proof$_{IP}$}. Combine and publish  the proof: $\textit{proof}_{RP} = (\tau_X, \mu , \hat{t}, P, A, S, T_1, T_2 , P_v ,\textit{proof}_{IP}) $.
+
+\item\text{\textbf{Verify} $(g,h,C,\textit{proof})\xrightarrow[]{}\{0,1\}$}\\
+Compute the three hash functions $y= \text{Hash}(A,S)$, $z= \text{Hash}(A,S,y)$ and $X= \text{Hash}(T_1,T_2)$. Then given  $y,z,X$ compute $h_i' = h_i ^{y^{-i+1}}$ for all $i\in\{1,...,n\}$, $P_l = P\cdot h\mu$ and $P_r = A\cdot S ^x \bm{g}^ {-z}\bm{h'}^{z\bm{y}^n+z^2\cdot \bm{2}^n}$. Then check if the following equalities hold: $P_l\overset{?}{=} P_r \wedge g^{\hat{t}}h^{\tau_X} \overset{?}{=}  P ^{z^2}\:g^{\delta(y,z)}\:T_1^x\:T_2^{x^2}$ and if the output of \textbf{Verify} in Construction \ref{alg:inner_product} on the input $(\text{proof}_{IP})$ is $1$. If all three criterion is fulfilled then the secret  $x$ in the commitment $P$ is in the range $[0,2^n]$.
+\end{itemize}
+\label{alg:bullet}
+\end{algorithm}
+
+An optimised version of bulletproof where one prover wishes to verify the range of several commitments reduces the proof size from growing multiplicatively in the number of commits to additive. More precisely lets a assume a prover wants to prove the range of $k$ commits a naive implementation would lead to a proof size of $k\cdot log_2 n $, but an optimised implementation reduces this to $log_2 n + 2 log_2 k$.  With a similar approach as presented for the signature based range proofs, illustrated in  Figure \ref{fig:interval},  bulletproof can also be generalised to arbitrary ranges $[a,b]$, where $a>0,b>a$.  This would then increase the proof size with the additive term $2log_2 2 = 2$. 
+
+
+Optimise when one proving much!
+Vad för hash function? 
+Se igenom notation både generell  o bullet
+

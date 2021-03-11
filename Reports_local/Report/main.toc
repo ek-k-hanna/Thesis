@@ -9,18 +9,18 @@
 \contentsline {section}{\numberline {2.2}Verifiable additive homomorphic secret sharing}{6}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Constructions for verifying clients input}{8}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Signature-based constructions}{8}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Bulletproofs}{11}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.2}Bulletproofs}{10}{subsection.2.3.2}%
 \contentsline {chapter}{\numberline {3}Methods}{15}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Comparison of constructions for verifying clients input}{15}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Signature-based range proof}{15}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Bulletproof}{15}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Additive homomorphic secret sharing with verification of both clients and severs }{16}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Proofs}{16}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Implementation}{16}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Results}{17}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Runtime and complexity}{17}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Conclusion}{19}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Discussion}{19}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Conclusion}{19}{section.5.2}%
-\contentsline {chapter}{Bibliography}{21}{section.5.2}%
-\contentsline {chapter}{\numberline {A}Appendix 1}{I}{appendix.A}%
+\contentsline {subsection}{\numberline {3.1.1}Signature-based set membership and range proof}{15}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Bulletproof}{16}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Additive homomorphic secret sharing with verification of both clients and severs }{17}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Proofs}{17}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Implementation}{17}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Results}{19}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Runtime and complexity}{19}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Conclusion}{21}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Discussion}{21}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Conclusion}{21}{section.5.2}%
+\contentsline {chapter}{Bibliography}{23}{section.5.2}%
+\contentsline {chapter}{\numberline {A}Proof of range in signature based range proof}{I}{appendix.A}%

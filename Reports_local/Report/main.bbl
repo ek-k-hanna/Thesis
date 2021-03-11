@@ -8,6 +8,19 @@ M.~Bellare and P.~Rogaway.
   Communications Security}, CCS '93, page 62–73, New York, NY, USA, 1993.
   Association for Computing Machinery.
 
+\bibitem{Efficient_proof_interval}
+F.~Boudot.
+\newblock Efficient proofs that a committed number lies in an interval.
+\newblock In B.~Preneel, editor, {\em Advances in Cryptology --- EUROCRYPT
+  2000}, pages 431--444, Berlin, Heidelberg, 2000. Springer Berlin Heidelberg.
+
+\bibitem{FSS}
+E.~Boyle, N.~Gilboa, and Y.~Ishai.
+\newblock Function secret sharing: Improvements and extensions.
+\newblock In {\em Proceedings of the 2016 ACM SIGSAC Conference on Computer and
+  Communications Security}, CCS '16, page 1292–1303, New York, NY, USA, 2016.
+  Association for Computing Machinery.
+
 \bibitem{bulletProofs_theory}
 B.~{Bünz}, J.~{Bootle}, D.~{Boneh}, A.~{Poelstra}, P.~{Wuille}, and
   G.~{Maxwell}.
@@ -28,19 +41,6 @@ R.~Chaabouni, H.~Lipmaa, and A.~Shelat.
   Privacy}, pages 336--351, Berlin, Heidelberg, 2010. Springer Berlin
   Heidelberg.
 
-\bibitem{remove_strong_RSA}
-G.~Couteau, T.~Peters, and D.~Pointcheval.
-\newblock Removing the strong rsa assumption from arguments over the integers.
-\newblock In J.-S. Coron and J.~B. Nielsen, editors, {\em Advances in
-  Cryptology -- EUROCRYPT 2017}, pages 321--350, Cham, 2017. Springer
-  International Publishing.
-
-\bibitem{DRYNX}
-D.~Froelicher, J.~R. Troncoso{-}Pastoriza, J.~S. Sousa, and J.~Hubaux.
-\newblock Drynx: Decentralized, secure, verifiable system for statistical
-  queries and machine learning on distributed datasets.
-\newblock {\em CoRR}, abs/1902.03785, 2019.
-
 \bibitem{OG_ZKP}
 S.~Goldwasser, S.~Micali, and C.~Rackoff.
 \newblock The knowledge complexity of interactive proof systems.
@@ -49,7 +49,7 @@ S.~Goldwasser, S.~Micali, and C.~Rackoff.
 \bibitem{ZKRP_Morais}
 E.~Morais, T.~Koens, C.~van Wijk, and A.~Koren.
 \newblock A survey on zero knowledge range proofs and applications.
-\newblock {\em SN Applied Sciences}, (946), 2019.
+\newblock {\em SN Applied Sciences}, 1(946), 2019.
 
 \bibitem{pedersen}
 T.~P. Pedersen.
@@ -63,7 +63,7 @@ A.~Shamir.
 \newblock How to share a secret.
 \newblock {\em Commun. ACM}, 22(11):612–613, Nov. 1979.
 
-\bibitem{VHASS}
+\bibitem{VAHSS}
 G.~Tsaloli, G.~Banegas, and A.~Mitrokotsa.
 \newblock Practical and provably secure distributed aggregation: Verifiable
   additive homomorphic secret sharing.

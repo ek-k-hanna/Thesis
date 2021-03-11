@@ -1,11 +1,11 @@
 \chapter{Methods}
 \label{sec:Methods}
-
 Evaluate and choose one to implement, do implementation and construct proofs
-\section{Comparison of constructions for verifying clients input}
-In this section the different constructions presented in section \ref{sec:RF_theory} will be evaluated and compared in order to decide which method is best to combine with the VHASS scheme described in Construction\ref{alg:VHASS-HSS} to check clients input. Each range proof constructions pros and cons will be discussed separately but tables for comparison will also be presented. Then a final comparison will be made.
 
-The aspects that will be considered in the evaluation of the range proofs and their compatibility with the VHASS construction is presented is the below list;
+\section{Comparison of constructions for verifying clients input}
+In this section the different constructions presented in section \ref{sec:RF_theory} will be evaluated and compared in order to decide which method is best to combine with the VAHSS scheme described in Construction\ref{alg:VAHSS-HSS} to check clients input. Each range proof constructions pros and cons will be discussed separately but tables for comparison will also be presented. Then a final comparison will be made.
+
+The aspects that will be considered in the evaluation of the range proofs and their compatibility with the VAHSS construction is presented is the below list;
 \begin{itemize}
     \item Proof size
     \item Communication complexity
@@ -14,29 +14,66 @@ The aspects that will be considered in the evaluation of the range proofs and th
     \item Computation complexity for prover resp. verifier
 \end{itemize}
 
-Remark that all the range proof considered aim to prove that the secret in a Pedersen commitment is in an allowed range. Thus to combine any of the range proofs with the VHASS construction, the clients needs beyond previously computed and published values also publish a Pedersen commitment. This is investigated further in section \ref{}. Another remark is that all range proofs considered have be made non interactive using the Fiat-Shamir heuristic, even if they were originally presented as interactive constructions. 
+Remark that all the range proof considered aim to prove that the secret in a Pedersen commitment is in an allowed range. Thus to combine any of the range proofs with the VAHSS construction, the clients needs beyond previously computed and published values also publish a Pedersen commitment. This is investigated further in section \ref{}. Another remark is that all range proofs considered have be made non interactive using the Fiat-Shamir heuristic, even if they were originally presented as interactive constructions. 
 
 %\subsection{Square-based range proof}
-\subsection{Signature-based range proof}
-flexible, sets and arbitrary range proofs. 
-sends $XXX$. Signature is $\mathcal{O}(n)$ or using $\sigma=\sum_{k=1}^j\sigma_ju^j$ we have $\mathcal{O}(\frac{n}{log\:n-log\:log\:n})$\\
-Third party?
+
+The two range proofs are in some aspects fundamentally different, one uses bilinear mapping,  while bullet proofs does not. Therefore it is not straightforward to compare them in aspects of number of operations performed by prover and verifier. First the performance of the range proofs will be discussed individually then compared in terms of runtime. 
+
+\subsection{Signature-based set membership and range proof}
+
+First lets discuss the communication complexity and proof size starting with the signature based set membership . This construction allows for a $\mathcal{O}(1)$- size proof that a committed value belongs to a given set $\Phi$. In order to construct such a proof $n=|\Phi|$ digital signatures needs to be known by both prover and verifier, one signature for each elements in $\Phi$. This signatures are usually shared by the verifier in the Setup phase. Sharing the digital signatures of the elements in the set $\Phi$ becomes intractable when the set is large.  A large set in this context would be a set consisting of a few hundred elements since the verifier has to publish $n$ digital signatures in the SetUp phase. 
+
+The signature based range proof reduces this to only needing to publish $u$ digital signatures to prove a commitment is in the range $[0,u^l]$. 
+This number of digital signatures needed thus depends on the choice of $u,l$. Asymptotic analysis gives a communication complexity $\mathcal{O}(\frac{k}{log\:k-log\:log\:k})$, where $l=\frac{k}{log\:u}$ and $u$ put to $u=\frac{k}{log\: k}$ Here $k$ satisfies $u^l \geq 2^{k-1}$.
+
+Both the signature based set membership and range proof has a a constant size, given the \textit{digital signatures} of all elements in the set. In some practical applications these signatures can be assumed to be pre shared. Therefore in applications where $\Phi$ is used many times  or when $\Phi$ is a relative small, set membership is preferred.
+
+Next consider the computational complexity.  In the set membership construction both the prover and verifier has to perform one bilinear paring and two  exponentials over the group $\mathds{G}$. While in the range proof construction DISSCUSS ON MEETING HOW MANY.
+ 
+ 
+Another advantage of the set membership construction is allows non continuous sets. An example could be that the set $\Phi$ represents all odd numbers in a certain interval and then the prover can insure the verifier that the secret is an odd number in a given range. This is an illustrative example of the flexibility of set membership proofs compared to range proofs.
+
+%sends $XXX$. Signature is $\mathcal{O}(n)$ or using $\sigma=\sum_{k=1}^j\sigma_ju^j$ we have $\mathcal{O}(\frac{n}{log\:n-log\:log\:n})$\\
+%Third party?
+
+
+
 \subsection{Bulletproof}
 bullet is $\mathcal{O}(log\:n)$. Bulletproof not general range. No third party?
- logarithmic size, linear prove and verifucation time'? 
+ logarithmic size, linear prove and verification time? 
+ 
 
 
-\begin{table}[]
-    \centering
-    \begin{tabular}{c|c}
-         bullet proof & \\
-        signature  & \\
-        square & \\
-    \end{tabular}
-    \caption{Caption}
-    \label{tab:my_label}
-\end{table}
+\begin{table}[H]
+\label{tab:compare}
+\caption{Communication Complexity}
+\begin{tabular}{| *{3}{c|}}
+			 \hline
+    									&Proof Size 		&		Set up  \\ \hline		
+  Signature based SM  	&   $\mathcal{O} (1) $ 					 &			 $\mathcal{O} (n)$				\\ \hline 
+  Signature based RP  	&   $\mathcal{O} (l )$   	&	$\mathcal{O} (u)$ 
+  	\\ \hline
+  Bulletproof   				&   $ \mathcal{O} (  log_2\: n ) $  & $\mathcal{O} (1)$ 	\\
+  \hline			
+\end{tabular}
+ \end{table}
+	
 
+\begin{table}[H]
+\label{tab:compare}
+\caption{Operations of proof construction}
+\begin{tabular}{| *{8}{c|}}
+			 \hline
+    										&   \multicolumn{2}{c|}{Group Operations} 	& \multicolumn{2}{c|}{Fiels Operations}    & \multicolumn{2}{c|}{Bilinear mapping }        	\\
+&  Prover & Verifier & Prover & Verifier&	Prover & Verifier 						 	\\ \hline
+  Signature based SM  			&   b1  &   b2  											&   c1  &   c2    & $1$							 &d						\\ \hline 
+  Signature based RP  	&   b1  &   b2 							&   $5l$ &     	 & $l$	& d	 										\\ \hline
+  Bulletproof   						& b1  &   b2 												&   c1 &   c2     & d					&d2								\\ \hline	
+\end{tabular}
+ \end{table}
+	
+	
 
 \section{Additive homomorphic secret sharing with verification of both clients and severs }
 \begin{algorithm}[H]
@@ -54,7 +91,7 @@ bullet is $\mathcal{O}(log\:n)$. Bulletproof not general range. No third party?
 $Pr[]$
 \end{thm}
 \begin{proof}
-To prove XXX it is sufficient to show that $\sigma= \prod_{i=1}^n \tau_i \:\bigwedge\: \prod_{i=1}^n \tau_i = \mathcal{H}(y)$. For $y$ and $\sigma$ we have the same construction as in \cite{VHASS}. Hence by construction we have:
+To prove XXX it is sufficient to show that $\sigma= \prod_{i=1}^n \tau_i \:\bigwedge\: \prod_{i=1}^n \tau_i = \mathcal{H}(y)$. For $y$ and $\sigma$ we have the same construction as in \cite{VAHSS}. Hence by construction we have:
 \begin{align}
     \label{eq:y=sum(x_ij)}
     y = \sum_{j=1}^m y_j= \sum_{j=1}^m \sum_{i=1}^n \lambda_{ij}p_i(\theta_{ij}) = \sum_{i=1}^n \overbrace{ \Big (\sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij}) \Big)}^{ p_i(0)} = \sum_{i=1}^n p_i(0) = \sum_{i=1}^n x_i,
@@ -63,7 +100,7 @@ and for $\sigma$ it holds that:
 \begin{align*}
     \sigma = \prod_{j=1}^m \sigma_j = \prod_{j=1}^m g^{y_j} = g^{\sum_{j=1}^my_j} =g^y = \mathcal{H}(y)
 \end{align*}
-For the $\tau_i$, whose construction has been modified compared to \cite{VHASS} we have:
+For the $\tau_i$, whose construction has been modified compared to \cite{VAHSS} we have:
 \begin{align*}
     &\prod_{i=1}^n \tau_i = \prod_{i=1}^n \mathds{E}(x_i,R_i)= \prod_{i=1}^n g^{x_i}h^{R_i} = g^{\sum_{i=1}^n x_i } h^{\sum_{i=1}^n R_i} \overset{\eqref{eq:y=sum(x_ij)}}{=} g^y h^{\sum_{i=1}^{n-1} R_i+R_n} = \\ 
     &= g^y h^{ \phi(N)\big\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N) }\big\rceil}  \overset{*}{=} g^y = \mathcal{H}(y) \quad \textit{*- since $h$ is co-prime to $N$.}

@@ -11,7 +11,7 @@
 \BOOKMARK [2][-]{subsection.2.3.2}{Bulletproofs}{section.2.3}% 11
 \BOOKMARK [0][-]{chapter.3}{Methods}{}% 12
 \BOOKMARK [1][-]{section.3.1}{Comparison of constructions for verifying clients input}{chapter.3}% 13
-\BOOKMARK [2][-]{subsection.3.1.1}{Signature-based range proof}{section.3.1}% 14
+\BOOKMARK [2][-]{subsection.3.1.1}{Signature-based set membership and range proof}{section.3.1}% 14
 \BOOKMARK [2][-]{subsection.3.1.2}{Bulletproof}{section.3.1}% 15
 \BOOKMARK [1][-]{section.3.2}{Additive homomorphic secret sharing with verification of both clients and severs }{chapter.3}% 16
 \BOOKMARK [1][-]{section.3.3}{Proofs}{chapter.3}% 17
@@ -22,4 +22,4 @@
 \BOOKMARK [1][-]{section.5.1}{Discussion}{chapter.5}% 22
 \BOOKMARK [1][-]{section.5.2}{Conclusion}{chapter.5}% 23
 \BOOKMARK [0][-]{section.5.2}{Bibliography}{}% 24
-\BOOKMARK [0][-]{appendix.A}{Appendix 1}{}% 25
+\BOOKMARK [0][-]{appendix.A}{Proof of range in signature based range proof}{}% 25

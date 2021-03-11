@@ -2,50 +2,47 @@ This is BibTeX, Version 0.99d (TeX Live 2020)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: abbrv.bst
-Database file #1: bibliography.bib
-Warning--I didn't find a database entry for "Effifient_proof_interval"
-Warning--I didn't find a database entry for "fiat-schmit"
+Database file #1: ref.bib
 Warning--I didn't find a database entry for "PR"
-Warning--there's a number but no volume in ZKRP_Morais
 You've used 13 entries,
             2118 wiz_defined-function locations,
-            601 strings with 6500 characters,
-and the built_in function-call counts, 5633 in all, are:
-= -- 568
-> -- 260
-< -- 8
-+ -- 100
-- -- 85
-* -- 377
-:= -- 883
-add.period$ -- 45
+            600 strings with 6313 characters,
+and the built_in function-call counts, 5800 in all, are:
+= -- 600
+> -- 240
+< -- 9
++ -- 93
+- -- 78
+* -- 367
+:= -- 880
+add.period$ -- 46
 call.type$ -- 13
-change.case$ -- 78
+change.case$ -- 75
 chr.to.int$ -- 0
-cite$ -- 14
-duplicate$ -- 242
-empty$ -- 426
-format.name$ -- 85
-if$ -- 1246
+cite$ -- 13
+duplicate$ -- 269
+empty$ -- 447
+format.name$ -- 78
+if$ -- 1312
 int.to.chr$ -- 0
 int.to.str$ -- 13
 missing$ -- 13
 newline$ -- 68
 num.names$ -- 36
-pop$ -- 86
+pop$ -- 85
 preamble$ -- 1
-purify$ -- 65
+purify$ -- 62
 quote$ -- 0
-skip$ -- 196
+skip$ -- 228
 stack$ -- 0
-substring$ -- 345
-swap$ -- 93
-text.length$ -- 8
+substring$ -- 367
+swap$ -- 116
+text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 52
-warning$ -- 1
-while$ -- 53
+warning$ -- 0
+while$ -- 54
 width$ -- 15
-write$ -- 158
-(There were 4 warnings)
+write$ -- 161
+(There was 1 warning)
