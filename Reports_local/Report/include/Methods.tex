@@ -24,10 +24,11 @@ The two range proofs are in some aspects fundamentally different, one uses bilin
 
 First lets discuss the communication complexity and proof size starting with the signature based set membership . This construction allows for a $\mathcal{O}(1)$- size proof that a committed value belongs to a given set $\Phi$. In order to construct such a proof $n=|\Phi|$ digital signatures needs to be known by both prover and verifier, one signature for each elements in $\Phi$. This signatures are usually shared by the verifier in the Setup phase. Sharing the digital signatures of the elements in the set $\Phi$ becomes intractable when the set is large.  A large set in this context would be a set consisting of a few hundred elements since the verifier has to publish $n$ digital signatures in the SetUp phase. 
 
-The signature based range proof reduces this to only needing to publish $u$ digital signatures to prove a commitment is in the range $[0,u^l]$. 
-This number of digital signatures needed thus depends on the choice of $u,l$. Asymptotic analysis gives a communication complexity $\mathcal{O}(\frac{k}{log\:k-log\:log\:k})$, where $l=\frac{k}{log\:u}$ and $u$ put to $u=\frac{k}{log\: k}$ Here $k$ satisfies $u^l \geq 2^{k-1}$.
+The signature based range proof reduces this to only needing to publish $u$ digital signatures to prove a commitment is in the range $[0,u^l]$ in the SetUp phase. For he rest of the proof the prover sends $l+1$ elements from the group $\mathds{G}_1$, $l$ elements from the group $\mathds{G}_T$ and $2l+1$ field elements. 
+Thus the communication complexity depends on the choice of $u,l$. Asymptotic analysis gives a communication complexity $\mathcal{O}(\frac{k}{log\:k-log\:log\:k})$, where $l=\frac{k}{log\:u}$ and $u$ put to $u=\frac{k}{log\: k}$ Here $k$ satisfies $u^l \geq 2^{k-1}$.
 
-Both the signature based set membership and range proof has a a constant size, given the \textit{digital signatures} of all elements in the set. In some practical applications these signatures can be assumed to be pre shared. Therefore in applications where $\Phi$ is used many times  or when $\Phi$ is a relative small, set membership is preferred.
+The signature based set membership has a a constant size, given the \textit{digital signatures} of all elements in the set. In some practical applications these signatures can be assumed to be pre shared. Therefore in applications where $\Phi$ is used many times  or when $\Phi$ is a relative small, set membership is preferred.
+
 
 Next consider the computational complexity.  In the set membership construction both the prover and verifier has to perform one bilinear paring and two  exponentials over the group $\mathds{G}$. While in the range proof construction the prover need to perform $l$ bilinear mappings and $5l$ exponentials to prove a secret is in the range $[0,u^l)$ and additionally $3l$ exponentials for arbitrary ranges $[a,b]$. The verifier need to ?? Discuss on meeting.
  
@@ -50,7 +51,7 @@ Using the inner product argument to build bullet proofs result in a communicatio
  %logarithmic size, linear prove and verification time? 
  
 
-\subsection{Time comparison}
+\subsection{Time complexity}
 \begin{table}[H]
 \label{tab:compare}
 \caption{Communication Complexity}
@@ -58,7 +59,7 @@ Using the inner product argument to build bullet proofs result in a communicatio
 			 \hline
     									&Proof Size 		&		Set up  \\ \hline		
   Signature based SM  	&   $\mathcal{O} (1) $ 					 &			 $\mathcal{O} (n)$				\\ \hline 
-  Signature based RP  	&   $\mathcal{O} (l )$   	&	$\mathcal{O} (u)$ 
+  Signature based RP  	&   $\mathcal{O} (l)$   	&	$\mathcal{O} (u)$ 
   	\\ \hline
   Bulletproof   				&   $ \mathcal{O} (  log_2\: n ) $  & $\mathcal{O} (1)$ 	\\
   \hline			
@@ -71,7 +72,7 @@ Using the inner product argument to build bullet proofs result in a communicatio
 \caption{Operations of proof construction}
 \begin{tabular}{| *{8}{c|}}
 			 \hline
-    										&   \multicolumn{2}{c|}{Group Operations} 	& \multicolumn{2}{c|}{Fiels Operations}    & \multicolumn{2}{c|}{Bilinear mapping }        	\\
+    										&   \multicolumn{2}{c|}{exponentials} 	& \multicolumn{2}{c|}{Fiels Operations}    & \multicolumn{2}{c|}{Bilinear mapping }        	\\
 &  Prover & Verifier & Prover & Verifier&	Prover & Verifier 						 	\\ \hline
   Signature based SM  			&   b1  &   b2  											&   c1  &   c2    & $1$							 &d						\\ \hline 
   Signature based RP  	&   b1  &   b2 							&   $5l$ &     	 & $l$	& d	 										\\ \hline
@@ -79,17 +80,64 @@ Using the inner product argument to build bullet proofs result in a communicatio
 \end{tabular}
  \end{table}
 	
+	\begin{table}[H]
+\label{tab:compare}
+\caption{Operations of proof construction}
+\begin{tabular}{| *{8}{c|}}
+			 \hline
+    										&   \multicolumn{2}{c|}{exponentials} 	& \multicolumn{2}{c|}{Fiels Operations}    & \multicolumn{2}{c|}{Bilinear mapping }        	\\
+&  Prover & Verifier & Prover & Verifier&	Prover & Verifier 						 	\\ \hline
+  Signature based SM  			&   b1  &   b2  											&   c1  &   c2    & $1$							 &d						\\ \hline 
+  Signature based RP  	&   b1  &   b2 							&   $5l$ &     	 & $l$	& d	 										\\ \hline
+  Bulletproof   						& b1  &   b2 												&   c1 &   c2     & d					&d2								\\ \hline	
+\end{tabular}
+ \end{table}
 	
 
 \section{Additive homomorphic secret sharing with verification of both clients and severs }
+In the VAHSS Construction \ref{alg:VAHSS-HSS} the verifiability property includes verification of the servers. In this section this will be extended to also include the clients. The value $\pi_i$ published by the clients will be modified into a Pedersen commitment on the form $\pi_i = g^{x_i}h^{R_i}$, remember $\pi_i=g^{x_iR_i}$ in the original construction presented in \cite{SumItUp}. The clients will apart from the previous commitments  also construct and publish a range proof for $\pi_i$. This allows any verifier to apart from verifying the servers also verify that the secret shared by the clients is in an certain range.  
 
+begin{algorithm}
+\caption{\textbf{: Client and Server Verifiable additive homomorphic secret sharing}}
+\begin{itemize}
+  \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\pi_i,\{x_{ij}\}_{j\in\mathcal{M}})$}\\
+Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Remark that polynomial satisfies equation \eqref{eq:pi(0)} and further that $p_i(0)=x_i$  which implies that $x_i =  \sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij})$. 
+%Let $H:x\to g^x$
+% (g generator the multiplicative group of $\mathds{F}$)
+% be a collision-resistant homomorphic hash function.
+Let $P : x,y \to g^xh^y$ be a Pedersen commitment function.
+ Let $R_i\in\mathds{F}$ be the output of a PRF. Where it is required that  $R_n\in \mathds{F}$  satisfies
+$R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute $\pi_i = H(x_i,R_i)$, and put $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$. \\
+Construct a range proof, denoted $RP_i$, for  $\pi_i$ to the  range $[0,B]$ using Construction \ref{alg:ZKSM}, \ref{alg:ZKRP} or \ref{alg:bullet}. All required  parameters and setup is assumed to be pre-shared and known by all parties.
+The algorithm published $\pi_i$ \& $RP_i$ and $x_{i,j}$ to server $j$ for $j\in\mathcal{M}$. 
 
-\section{Proofs}
-\begin{thm}[Correctness]
-$Pr[]$
+\item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
+Compute and publish $y_j = \sum_{i=1}^n x_{ij}$.
+
+\item\textbf{PartialProof $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}\sigma_j$}\\
+Compute and publish $\sigma_j = \prod_{i=1}^n g^{x_{ij}} =  g^{\sum_{i=1}^n x_{ij}}= g^{y_j}=H(y_j)$.
+
+\item\textbf{FinalEval $(\{y_j\}_{j\in\mathcal{M}})\xrightarrow[]{}y$}\\
+Compute and output $y = \sum_{i=1}^n y_{j}$.
+
+\item\textbf{FinalProof $(\{\sigma_j\}_{j\in\mathcal{M}})\xrightarrow[]{}\sigma$}\\
+Compute and output $\sigma = \prod_{j=1}^n \sigma_j = \prod_{j=1}^m g^{y_{j}} =  g^{\sum_{j=1}^m y_{j}}= g^{y}=H(y)$.
+
+\item\textbf{Verify $(\{\pi_i\}_{i\in\mathcal{N}},x,y)\xrightarrow[]{}\{0,1\}$}\\
+Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y)\wedge \textbf{Verify}(RP_i)$. Where \textbf{Verify} is the verification step of the range proof used by the client to construct $RP_i$.
+\end{itemize}
+\label{alg:VAHSS-HSS-RP}
+\end{algorithm}
+
+\begin{thm}
+The client and server verifiable AHSS presented in Construction \ref{alg:VAHSS-HSS-RP} satisfies the same correctness, security and requirements as Construction \ref{alg:VAHSS-HSS} as well as the verifiability requirements: 
+\begin{itemize}
+ \item \textbf{Verifiability Servers}  Let $\mathcal{A}$ denote any PPT  adversary and $T$ denote the set of corrupted servers with $T\leq m$. Note that if $|T|=m$, the verifiability property holds but not the security property. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(x_1,...,x_n)$ with negligible probability.  
+ \item  \textbf{Verifiability Clients} 
+\end{itemize} 
 \end{thm}
 \begin{proof}
-To prove XXX it is sufficient to show that $\sigma= \prod_{i=1}^n \tau_i \:\bigwedge\: \prod_{i=1}^n \tau_i = \mathcal{H}(y)$. For $y$ and $\sigma$ we have the same construction as in \cite{VAHSS}. Hence by construction we have:
+The proof of security is the same as in \cite{SumItUp} since the pedersen commitment is perfectly hiding. For proving the correctness it is sufficient to show that $\sigma= \prod_{i=1}^n \pi_i \:\bigwedge\: \prod_{i=1}^n \pi_i = \mathcal{H}(y)$. Both $y$ and $\sigma$ are the same as in construction as in \cite{VAHSS}. Hence by construction:
 \begin{align}
     \label{eq:y=sum(x_ij)}
     y = \sum_{j=1}^m y_j= \sum_{j=1}^m \sum_{i=1}^n \lambda_{ij}p_i(\theta_{ij}) = \sum_{i=1}^n \overbrace{ \Big (\sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij}) \Big)}^{ p_i(0)} = \sum_{i=1}^n p_i(0) = \sum_{i=1}^n x_i,
@@ -104,6 +152,7 @@ For the $\tau_i$, whose construction has been modified compared to \cite{VAHSS} 
     &= g^y h^{ \phi(N)\big\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N) }\big\rceil}  \overset{*}{=} g^y = \mathcal{H}(y) \quad \textit{*- since $h$ is co-prime to $N$.}
 \end{align*}
 
+The proof of \textit{\textbf{Verifiability Severs}} is the same as in \cite{SumItUp} and the proof of \textit{\textbf{Verifiability Clients}} follows from the propertied of range proof.
 \end{proof}
 
 \section{Implementation}
