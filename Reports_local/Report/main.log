@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  11 MAR 2021 16:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  12 MAR 2021 11:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1174,7 +1174,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 30--31
 
  []
 
-<figure/auxiliary/frontpage_gu_eng_vec_m2.pdf, id=130, 597.23125pt x 845.15756p
+<figure/auxiliary/frontpage_gu_eng_vec_m2.pdf, id=134, 597.23125pt x 845.15756p
 t>
 File: figure/auxiliary/frontpage_gu_eng_vec_m2.pdf Graphic file (type pdf)
 <use figure/auxiliary/frontpage_gu_eng_vec_m2.pdf>
@@ -1188,7 +1188,7 @@ input line 44.
 e/auxiliary/frontpage_gu_eng_vec_m2.pdf>] [2
 
 ]
-<figure/auxiliary/ChGULogoHog.pdf, id=149, 142.26349pt x 199.1691pt>
+<figure/auxiliary/ChGULogoHog.pdf, id=153, 142.26349pt x 199.1691pt>
 File: figure/auxiliary/ChGULogoHog.pdf Graphic file (type pdf)
 <use figure/auxiliary/ChGULogoHog.pdf>
 Package pdftex.def Info: figure/auxiliary/ChGULogoHog.pdf  used on input line 6
@@ -1406,7 +1406,7 @@ and I'll forget about whatever was undefined.
 ! Missing { inserted.
 <to be read again> 
                    \begingroup 
-l.333 ...itment $P_v=\bm{g}^{\bm{x}} \bm{h}^\bm{R}
+l.334 ...itment $P_v=\bm{g}^{\bm{x}} \bm{h}^\bm{R}
                                                   $ and a value $c$ prove th...
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
@@ -1416,7 +1416,7 @@ so that I will find a matching right brace soon.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.333 ...tment $P_v=\bm{g}^{\bm{x}} \bm{h}^\bm{R}$
+l.334 ...tment $P_v=\bm{g}^{\bm{x}} \bm{h}^\bm{R}$
                                                    and a value $c$ prove tha...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1427,14 +1427,14 @@ my insertion and my current dilemma will both disappear.
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
-l.335 \hline
+l.336 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
 [11] [12]
 ! Undefined control sequence.
-l.374 Note that $t_0 = z^2\cdotx
+l.375 Note that $t_0 = z^2\cdotx
                                  + \delta(y,z)$ which is equal to the right ...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1444,12 +1444,12 @@ and I'll forget about whatever was undefined.
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 376.
+               Default added (so using `htbp') on input line 377.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
-l.380 \hline
+l.381 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1457,7 +1457,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Missing { inserted.
 <to be read again> 
                    \gdef 
-l.384 ...alpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}
+l.385 ...alpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}
                                                   $, where $\alpha\in_R\math...
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
@@ -1467,7 +1467,7 @@ so that I will find a matching right brace soon.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.384 ...lpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}$
+l.385 ...lpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}$
                                                   , where $\alpha\in_R\mathd...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1478,7 +1478,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing { inserted.
 <to be read again> 
                    \begingroup 
-l.384 ...S=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}
+l.385 ...S=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}
                                                   $. Let $y=\text{Hash}(A,S)...
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
@@ -1488,7 +1488,7 @@ so that I will find a matching right brace soon.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.384 ...=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}$
+l.385 ...=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}$
                                                   . Let $y=\text{Hash}(A,S)$...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1499,7 +1499,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing { inserted.
 <to be read again> 
                    \begingroup 
-l.384 ...t let $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}
+l.385 ...t let $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}
                                                   $ and  secondly compute th...
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
@@ -1509,7 +1509,7 @@ so that I will find a matching right brace soon.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.384 ... let $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}$
+l.385 ... let $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}$
                                                    and  secondly compute the...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1520,30 +1520,25 @@ my insertion and my current dilemma will both disappear.
 ) (./include/Methods.tex [13] [14]
 Chapter 3.
 
-Overfull \hbox (20.85167pt too wide) in paragraph at lines 5--5
-|[]\T1/lmr/bx/n/17.28 Comparison of con-struc-tions for ver-i-fy-ing clients
- []
-
-
 LaTeX Warning: Reference `' on page 15 undefined on input line 17.
 
 [15
 
 ]
-Overfull \hbox (9.8559pt too wide) in paragraph at lines 78--78
+Overfull \hbox (1.3012pt too wide) in paragraph at lines 44--45
+\T1/lmr/m/n/12 interactive con-struc-tion the ver-i-fier could in-stead per-for
+m only one multidimensional-
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16]
+Overfull \hbox (9.8559pt too wide) in paragraph at lines 84--84
 |[]\T1/lmr/bx/n/17.28 Additive ho-mo-mor-phic se-cret shar-ing with ver-
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 81--84
-
- []
-
-
-Underfull \vbox (badness 1048) has occurred while \output is active []
-
- [16])
-(./include/Results.tex [17] [18
+) (./include/Results.tex [17] [18
 
 ]
 Chapter 4.
@@ -1571,7 +1566,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 87.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 87.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 87.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: A38BD72A3047FC55ED7C62257584BA07;1662.
+(rerunfilecheck)             Checksum: CA0DF74FC53DAAC6D00D8DC60009D1AD;1702.
 
 
 LaTeX Warning: There were undefined references.
@@ -1581,10 +1576,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 24606 strings out of 480608
- 457079 string characters out of 5903631
- 783096 words of memory out of 5000000
- 39763 multiletter control sequences out of 15000+600000
+ 24607 strings out of 480608
+ 457102 string characters out of 5903631
+ 783107 words of memory out of 5000000
+ 39764 multiletter control sequences out of 15000+600000
  644325 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  71i,19n,85p,1523b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1616,10 +1611,10 @@ ist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/t
 ype1/public/lm/lmtt12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/h
 elvetic/uhvb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic
 /uhvr8a.pfb>
-Output written on main.pdf (39 pages, 1280891 bytes).
+Output written on main.pdf (39 pages, 1281974 bytes).
 PDF statistics:
- 592 PDF objects out of 1000 (max. 8388607)
- 482 compressed objects within 5 object streams
+ 597 PDF objects out of 1000 (max. 8388607)
+ 487 compressed objects within 5 object streams
  106 named destinations out of 1000 (max. 500000)
- 319 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 327 words of extra memory for PDF output out of 10000 (max. 10000000)
 

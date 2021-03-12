@@ -322,9 +322,10 @@ More formally the argument is a proof system of the statement,
     \{(\mathbf{g},\mathbf{h}\in\mathds{G}^n,\:P_v\in\mathds{G},\:c\in\mathds{Z}_p;\: \mathbf{s},\mathbf{r}\in\mathds{Z}_p^n) : \: P_v=\mathbf{g}^\mathbf{s}\mathbf{h}^\mathbf{r}\wedge\: c =\langle\mathbf{s},\mathbf{r}\rangle\}
 \end{align*}
 Which can be shown to be equivalent to a proof of the statement,
-\begin{align*}
+\begin{align}
+\label{eq:IPA}
     \{(\mathbf{g},\mathbf{h}\in\mathds{G}^n,\: u,P_v\in\mathds{G};\: \mathbf{s},\mathbf{r}\in\mathds{Z}_p^n) : \: P_v=\mathbf{g}^\mathbf{s}\mathbf{h}^\mathbf{r}u^{\langle\mathbf{s},\mathbf{r}\rangle}\}.
-\end{align*}
+\end{align}
 
 A logarithmic sized proof of the above inner product statement is presented in Construction \ref{alg:inner_product}. The construction presented is modified compared to the one presented in \cite{bulletProofs_theory} to be non-interactive using the Fiat-Shamir heuristic.
 

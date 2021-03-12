@@ -2,7 +2,7 @@
 \label{sec:Methods}
 Evaluate and choose one to implement, do implementation and construct proofs
 
-\section{Comparison of constructions for verifying clients input}
+\section{Comparison of range proofs}
 In this section the different constructions presented in section \ref{sec:RF_theory} will be evaluated and compared in order to decide which method is best to combine with the VAHSS scheme described in Construction\ref{alg:VAHSS-HSS} to check clients input. Each range proof constructions pros and cons will be discussed separately but tables for comparison will also be presented. Then a final comparison will be made.
 
 The aspects that will be considered in the evaluation of the range proofs and their compatibility with the VAHSS construction is presented is the below list;
@@ -29,10 +29,9 @@ This number of digital signatures needed thus depends on the choice of $u,l$. As
 
 Both the signature based set membership and range proof has a a constant size, given the \textit{digital signatures} of all elements in the set. In some practical applications these signatures can be assumed to be pre shared. Therefore in applications where $\Phi$ is used many times  or when $\Phi$ is a relative small, set membership is preferred.
 
-Next consider the computational complexity.  In the set membership construction both the prover and verifier has to perform one bilinear paring and two  exponentials over the group $\mathds{G}$. While in the range proof construction DISSCUSS ON MEETING HOW MANY.
+Next consider the computational complexity.  In the set membership construction both the prover and verifier has to perform one bilinear paring and two  exponentials over the group $\mathds{G}$. While in the range proof construction the prover need to perform $l$ bilinear mappings and $5l$ exponentials to prove a secret is in the range $[0,u^l)$ and additionally $3l$ exponentials for arbitrary ranges $[a,b]$. The verifier need to ?? Discuss on meeting.
  
- 
-Another advantage of the set membership construction is allows non continuous sets. An example could be that the set $\Phi$ represents all odd numbers in a certain interval and then the prover can insure the verifier that the secret is an odd number in a given range. This is an illustrative example of the flexibility of set membership proofs compared to range proofs.
+An advantage of the set membership construction is allows non continuous sets. An example could be that the set $\Phi$ represents all odd numbers in a certain interval and then the prover can insure the verifier that the secret is an odd number in a given range. This is an illustrative example of the flexibility of set membership proofs compared to range proofs.
 
 %sends $XXX$. Signature is $\mathcal{O}(n)$ or using $\sigma=\sum_{k=1}^j\sigma_ju^j$ we have $\mathcal{O}(\frac{n}{log\:n-log\:log\:n})$\\
 %Third party?
@@ -40,11 +39,18 @@ Another advantage of the set membership construction is allows non continuous se
 
 
 \subsection{Bulletproof}
-bullet is $\mathcal{O}(log\:n)$. Bulletproof not general range. No third party?
- logarithmic size, linear prove and verification time? 
+The inner product argument reduces the complexity for proving the statement  in equation \eqref{eq:IPA} from being linear in the length of the vectors to logarithmic. More precisely the prover has to send $2\lceil log_2 n \rceil$ group elements and $2$ field elements to the verifier when proving the statement, thus the commutation complexity id of order $\mathcal{O}(log_2 n)$, where $n$ is the length of the vectors. 
+
+The computational effort for the inner product argument is dominated by $8n$ respectively $4n$ group exponentiations for the prover respectively verifier. In a non-interactive construction the verifier could instead perform only one multidimensional-exponent of size $2n+ 2log_2n +1$. This leads to a significant speed up of the verification of the argument.     
+
+Using the inner product argument to build bullet proofs result in a communication complexity of $2\lceil log_2 n \rceil +4$ group elements and $5$ field elements, where $n$ is such that a secret  is proved to be in the range $[0,2^n)$.  A remark is that in a bulletproof construction the range always has to be an exponent on $2$, if the length of the binary representation of the secret is not a two-exponent this can be solved with padding. When extending the bulletproof to prove a secret is in an arbitrary range $[a,b]$ the communication complexity is increased by an additive term of size $2$. 
+
+
+%bullet is $\mathcal{O}(log\:n)$. Bulletproof not general range. No third party?
+ %logarithmic size, linear prove and verification time? 
  
 
-
+\subsection{Time comparison}
 \begin{table}[H]
 \label{tab:compare}
 \caption{Communication Complexity}
@@ -76,16 +82,8 @@ bullet is $\mathcal{O}(log\:n)$. Bulletproof not general range. No third party?
 	
 
 \section{Additive homomorphic secret sharing with verification of both clients and severs }
-\begin{algorithm}[H]
-\caption{XX}
-\textbf{Require:} \\
-\textbf{Ensure:} 
-\\\hrulefill
-\begin{enumerate}
-  \item 
-\end{enumerate}
-\label{alg: 2D esprit}
-\end{algorithm}
+
+
 \section{Proofs}
 \begin{thm}[Correctness]
 $Pr[]$
