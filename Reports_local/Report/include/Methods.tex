@@ -97,7 +97,7 @@ Using the inner product argument to build bullet proofs result in a communicatio
 \section{Additive homomorphic secret sharing with verification of both clients and severs }
 In the VAHSS Construction \ref{alg:VAHSS-HSS} the verifiability property includes verification of the servers. In this section this will be extended to also include the clients. The value $\pi_i$ published by the clients will be modified into a Pedersen commitment on the form $\pi_i = g^{x_i}h^{R_i}$, remember $\pi_i=g^{x_iR_i}$ in the original construction presented in \cite{SumItUp}. The clients will apart from the previous commitments  also construct and publish a range proof for $\pi_i$. This allows any verifier to apart from verifying the servers also verify that the secret shared by the clients is in an certain range.  
 
-begin{algorithm}
+\begin{algorithm}[H]
 \caption{\textbf{: Client and Server Verifiable additive homomorphic secret sharing}}
 \begin{itemize}
   \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\pi_i,\{x_{ij}\}_{j\in\mathcal{M}})$}\\

@@ -4,10 +4,10 @@
 \BOOKMARK [1][-]{section.1.1}{Contribution}{chapter.1}% 4
 \BOOKMARK [1][-]{section.1.2}{Organisation}{chapter.1}% 5
 \BOOKMARK [0][-]{chapter.2}{Theory}{}% 6
-\BOOKMARK [1][-]{section.2.1}{Cryptographic preliminaries}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.1}{Preliminaries}{chapter.2}% 7
 \BOOKMARK [1][-]{section.2.2}{Verifiable additive homomorphic secret sharing}{chapter.2}% 8
 \BOOKMARK [1][-]{section.2.3}{Constructions for verifying clients input}{chapter.2}% 9
-\BOOKMARK [2][-]{subsection.2.3.1}{Signature-based constructions}{section.2.3}% 10
+\BOOKMARK [2][-]{subsection.2.3.1}{Signature-based range proof}{section.2.3}% 10
 \BOOKMARK [2][-]{subsection.2.3.2}{Bulletproofs}{section.2.3}% 11
 \BOOKMARK [0][-]{chapter.3}{Methods}{}% 12
 \BOOKMARK [1][-]{section.3.1}{Comparison of range proofs}{chapter.3}% 13
