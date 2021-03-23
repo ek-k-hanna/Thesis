@@ -1,60 +1,47 @@
 \chapter{Methods}
 \label{sec:Methods}
+Based on the theory presented in the previous chapter .
 Evaluate and choose one to implement, do implementation and construct proofs
 
 \section{Comparison of range proofs}
-In this section the different constructions presented in section \ref{sec:RF_theory} will be evaluated and compared in order to decide which method is best to combine with the VAHSS scheme described in Construction\ref{alg:VAHSS-HSS} to check clients input. Each range proof constructions pros and cons will be discussed separately but tables for comparison will also be presented. Then a final comparison will be made.
+In this section the different constructions for verifying clients honesty presented in section \ref{sec:RF_theory} will be analysed and compared in order to evaluate  their suitability to combine with the VAHSS scheme described in Construction \ref{alg:VAHSS-HSS} to verify clients honesty. First a theoretical analysis of each range proofs will given and then a prototype analysis where the range proofs are compares.  
 
 The aspects that will be considered in the evaluation of the range proofs and their compatibility with the VAHSS construction is presented is the below list;
 \begin{itemize}
-    \item Proof size
-    \item Communication complexity
+    \item Proof size (communication complexity)
+    \item Computation complexity  (for setup, prover verifier)
     \item Flexibility of range
-    \item Assumptions and requirements 
-    \item Computation complexity for prover resp. verifier
 \end{itemize}
 
-Remark that all the range proof considered aim to prove that the secret in a Pedersen commitment is in an allowed range. Thus to combine any of the range proofs with the VAHSS construction, the clients needs beyond previously computed and published values also publish a Pedersen commitment. This is investigated further in section \ref{}. Another remark is that all range proofs considered have be made non interactive using the Fiat-Shamir heuristic, even if they were originally presented as interactive constructions. 
+Remark that all of the range proof considered aim to prove that the secret in a Pedersen commitment is in an allowed range. Thus to combine any of the range proofs with the VAHSS construction, the clients needs beyond previously computed and published values also publish a Pedersen commitment of their secret $x_i$. This is investigated further in section \ref{sec:combination}. Since the adaptation of the VAHSS construction is the same independent of the considered range proof it is not relevant in the evaluation of range proofs expect in terms of runtime. 
 
-%\subsection{Square-based range proof}
+The considerable difference between the bulletproof and the signature based range proofs makes the comparison between them not straightforward.  Signature based range proofs requires bilinear mappings unlike bulletproofs, bilinear mappings are relative expensive operation compared to for example group exponentials which are dominating  the computational complexity for bulletproofs. Therefore it is not straightforward to compare them in aspects of number of operations performed and an explicit comparison will only be made with respect to runtime. But first the theoretical performance of the range proofs will be discussed individually.
 
-The two range proofs are in some aspects fundamentally different, one uses bilinear mapping,  while bullet proofs does not. Therefore it is not straightforward to compare them in aspects of number of operations performed by prover and verifier. First the performance of the range proofs will be discussed individually then compared in terms of runtime. 
-
-\subsection{Signature-based set membership and range proof}
+\subsection{Theoretical analysis: Signature-based set membership and range proof}
 
 First lets discuss the communication complexity and proof size starting with the signature based set membership . This construction allows for a $\mathcal{O}(1)$- size proof that a committed value belongs to a given set $\Phi$. In order to construct such a proof $n=|\Phi|$ digital signatures needs to be known by both prover and verifier, one signature for each elements in $\Phi$. This signatures are usually shared by the verifier in the Setup phase. Sharing the digital signatures of the elements in the set $\Phi$ becomes intractable when the set is large.  A large set in this context would be a set consisting of a few hundred elements since the verifier has to publish $n$ digital signatures in the SetUp phase. 
 
-The signature based range proof reduces this to only needing to publish $u$ digital signatures to prove a commitment is in the range $[0,u^l]$ in the SetUp phase. For he rest of the proof the prover sends $l+1$ elements from the group $\mathds{G}_1$, $l$ elements from the group $\mathds{G}_T$ and $2l+1$ field elements. 
-Thus the communication complexity depends on the choice of $u,l$. Asymptotic analysis gives a communication complexity $\mathcal{O}(\frac{k}{log\:k-log\:log\:k})$, where $l=\frac{k}{log\:u}$ and $u$ put to $u=\frac{k}{log\: k}$ Here $k$ satisfies $u^l \geq 2^{k-1}$.
+The signature based range proof reduces this to only needing to publish $u$ digital signatures to prove a commitment is in the range $[0,u^l]$ in the SetUp phase. In the algorithm \textbf{Prove} in Construction \ref{alg:ZKRP} the prover sends $l+1$ elements from the group $\mathds{G}_1$, $l$ elements from the group $\mathds{G}_T$ and $2l+1$ field elements. Comparing to the algorithm \textbf{Prove} in Construction \ref{alg:ZKSM} where the prover sends two elements from the group $\mathds{G}_1$, one elements from the group $\mathds{G}_T$ and three field elements. For the ZKRP the communication complexity depends on the choice of $u,l$. Asymptotic analysis gives a communication complexity $\mathcal{O}(\frac{k}{log\:k-log\:log\:k})$, where $l=\frac{k}{log\:u}$ and $u$ put to $u=\frac{k}{log\: k}$ Here $k$ satisfies $u^l \geq 2^{k-1}$.
 
-The signature based set membership has a a constant size, given the \textit{digital signatures} of all elements in the set. In some practical applications these signatures can be assumed to be pre shared. Therefore in applications where $\Phi$ is used many times  or when $\Phi$ is a relative small, set membership is preferred.
+For ZKSM the communicational complexity for the proof is lower then for the ZKRP, given $l>1$. In some practical applications the digital signatures shared in the setup phase can be assumed to be pre shared, for example in applications where $\Phi$ is used many times. This leads that ZKSM is to prefer over ZKRP in such applications or when $\Phi$ is a relative small. 
 
-
-Next consider the computational complexity.  In the set membership construction both the prover and verifier has to perform one bilinear paring and two  exponentials over the group $\mathds{G}$. While in the range proof construction the prover need to perform $l$ bilinear mappings and $5l$ exponentials to prove a secret is in the range $[0,u^l)$ and additionally $3l$ exponentials for arbitrary ranges $[a,b]$. The verifier need to ?? Discuss on meeting.
+Next consider the computational complexity for algorithms \textbf{Prove} and \textbf{Verify} in the ZKSM and ZKRP. constructions  In the set membership construction both the prover and verifier has to perform one bilinear paring and two exponentials over the group $\mathds{G}$. While in the range proof construction the prover need to perform $l$ bilinear mappings and $5l$ exponentials to prove a secret is in the range $[0,u^l)$ and additionally $3l$ exponentials for arbitrary ranges $[a,b]$. The verifier need to ?? Discuss on meeting.
  
-An advantage of the set membership construction is allows non continuous sets. An example could be that the set $\Phi$ represents all odd numbers in a certain interval and then the prover can insure the verifier that the secret is an odd number in a given range. This is an illustrative example of the flexibility of set membership proofs compared to range proofs.
+An advantage of the set membership construction is that it can prove membership of non continuous sets. An example could be that the set $\Phi$ represents all odd numbers in a certain interval and then the prover can insure the verifier that the secret is an odd number in a given range. This is an illustrative example of the flexibility of set membership proofs compared to range proofs.
 
-%sends $XXX$. Signature is $\mathcal{O}(n)$ or using $\sigma=\sum_{k=1}^j\sigma_ju^j$ we have $\mathcal{O}(\frac{n}{log\:n-log\:log\:n})$\\
-%Third party?
+\subsection{Theoretical analysis: Bulletproof}
+First the communication and computational complexity of the inner product argument which is used in the bulletproof is considered. Then based on this the bulletproofs will be analysed.
 
+The inner product argument as described in Construction \ref{alg:inner_product}, compared to the naive approach, reduces the communication complexity for proving the statement in equation \eqref{eq:IPA} from linear to logarithmic size in terms of the vecotrs length.  More precisely the prover has to send $2\lceil log_2 n \rceil$ group elements and $2$ field elements to the verifier when proving the statement, thus the commutation complexity id of order $\mathcal{O}(log_2 n)$, where $n$ is the length of the vectors. 
 
+The computational effort for the inner product argument is dominated by $8n$ group exponentiations for the prover and  $4n$ group exponentiations for the  verifier. In a non-interactive construction this can be optimised such that the verifier instead perform only one multidimensional-exponent of size $2n+ 2log_2n +1$. This leads to a significant speed up of the verification of the argument.     
 
-\subsection{Bulletproof}
-The inner product argument reduces the complexity for proving the statement  in equation \eqref{eq:IPA} from being linear in the length of the vectors to logarithmic. More precisely the prover has to send $2\lceil log_2 n \rceil$ group elements and $2$ field elements to the verifier when proving the statement, thus the commutation complexity id of order $\mathcal{O}(log_2 n)$, where $n$ is the length of the vectors. 
+Using the inner product argument to build bullet proofs result in a communication complexity of $2\lceil log_2 n \rceil +4$ group elements and $5$ field elements, where $n$ is such that a secret is proved to be in the range $[0,2^n)$.  A remark is that in a bulletproof construction the range always has to be an exponent on $2$, if the length of the binary representation of the secret is not a two-exponent this can be solved with padding. IWhen extending the bulletproof to prove a secret is in an arbitrary range $[a,b]$ the communication complexity is increased by an additive term of size $2$.  
 
-The computational effort for the inner product argument is dominated by $8n$ respectively $4n$ group exponentiations for the prover respectively verifier. In a non-interactive construction the verifier could instead perform only one multidimensional-exponent of size $2n+ 2log_2n +1$. This leads to a significant speed up of the verification of the argument.     
-
-Using the inner product argument to build bullet proofs result in a communication complexity of $2\lceil log_2 n \rceil +4$ group elements and $5$ field elements, where $n$ is such that a secret  is proved to be in the range $[0,2^n)$.  A remark is that in a bulletproof construction the range always has to be an exponent on $2$, if the length of the binary representation of the secret is not a two-exponent this can be solved with padding. When extending the bulletproof to prove a secret is in an arbitrary range $[a,b]$ the communication complexity is increased by an additive term of size $2$. 
-
-
-%bullet is $\mathcal{O}(log\:n)$. Bulletproof not general range. No third party?
- %logarithmic size, linear prove and verification time? 
- 
-
-\subsection{Time complexity}
-\begin{table}[H]
+\subsection{Prototype Analysis TODO}
+\begin{table}
 \label{tab:compare}
-\caption{Communication Complexity}
+\caption{Communication Complexity TODO}
 \begin{tabular}{| *{3}{c|}}
 			 \hline
     									&Proof Size 		&		Set up  \\ \hline		
@@ -67,9 +54,9 @@ Using the inner product argument to build bullet proofs result in a communicatio
  \end{table}
 	
 
-\begin{table}[H]
+\begin{table}
 \label{tab:compare}
-\caption{Operations of proof construction}
+\caption{Operations of proof construction TODO}
 \begin{tabular}{| *{8}{c|}}
 			 \hline
     										&   \multicolumn{2}{c|}{exponentials} 	& \multicolumn{2}{c|}{Fiels Operations}    & \multicolumn{2}{c|}{Bilinear mapping }        	\\
@@ -80,9 +67,9 @@ Using the inner product argument to build bullet proofs result in a communicatio
 \end{tabular}
  \end{table}
 	
-	\begin{table}[H]
+	\begin{table}
 \label{tab:compare}
-\caption{Operations of proof construction}
+\caption{Operations of proof construction TODO}
 \begin{tabular}{| *{8}{c|}}
 			 \hline
     										&   \multicolumn{2}{c|}{exponentials} 	& \multicolumn{2}{c|}{Fiels Operations}    & \multicolumn{2}{c|}{Bilinear mapping }        	\\
@@ -95,22 +82,39 @@ Using the inner product argument to build bullet proofs result in a communicatio
 	
 
 \section{Additive homomorphic secret sharing with verification of both clients and severs }
-In the VAHSS Construction \ref{alg:VAHSS-HSS} the verifiability property includes verification of the servers. In this section this will be extended to also include the clients. The value $\pi_i$ published by the clients will be modified into a Pedersen commitment on the form $\pi_i = g^{x_i}h^{R_i}$, remember $\pi_i=g^{x_iR_i}$ in the original construction presented in \cite{SumItUp}. The clients will apart from the previous commitments  also construct and publish a range proof for $\pi_i$. This allows any verifier to apart from verifying the servers also verify that the secret shared by the clients is in an certain range.  
+\label{sec:combination}
 
-\begin{algorithm}[H]
+The  VAHSS constructions  discussed in section \ref{sec:VAHSS} assumes honest clients but verifiers that the servers where honest. The aim of this paper is to present an extended this VAHSS construction to verify both client and servers honesty.  To achieve this range proofs has been studied, extending the VAHSS construction with a range proof  forces potential malicious client to submit a value still within the allowed range. This means that even if a client submits a false value the amount of impact this haves on the final output $y$ is limited by the size of the range.
+
+The considered range proofs emanate from a Pedersen commitment hiding a secret and then generate a zero knowledge proof that the secret belongs to an pre-specified interval. In order to combine the VAHSS construction with a range proof a link between the shares hiding the secret generated in the algorithm \textbf{ShareSecret} in the VAHSS construction and  the Pedersen commitment in the range proof need to be establoshed to convince the verifier that the shares  represents a secret that is in the allowed range, without revealing the secret. Individual shares themselves does not contain information about the secret and therefore a Pedersen commitment hiding a share would not be useful use in a range proof. The clients except from the shares also publishes the checksum $\tau_i$ for the secret $x_i$, more precisely the definition of $\tau_i=g^{x_i+R_i}$, where $R_i$ chosen uniformly at random. This checksum is indeed equal to a Pedersen commitment where $g=h$. Performing a range proof of $\tau_i$ assuming $g=h$ would be sound. However if $g=h$ the computationally hiding property of a Pedersen commitment would not hold since $log_g(h)=log_g(g)=1$ which leads to that the LHS in equation \ref{eq:pedersen_binidng} is equal to $1$. Therefore to construct two commits $\mathds{E}(x,R)$ and $\mathds{E}(x',R')$ such that $\mathds{E}(x,R) = \mathds{E}(x',R')$ but $x='$ it is sufficient to solve, 
+\begin{align*}
+1 = \frac{x-x'}{R-R'}\:mod \:N \implies x' = \frac{x}{R'-R} \:mod\: N.
+\end{align*}
+In other words it is straightforward to create a false commitment hence also a false range proof. Lets instead investigate modifying the checksum $\tau_i$ to a Pedersen commitment. Let the clients compute and output $\pi_i=g^{x_i}h^{R_i}$, where $x_i,R_i,g,h$ are as defined above instead of $\tau_i$ as before.  Now a range proof can easily be constructed for the commitment $\pi_i$. Below it will be shown that Theorem \ref{thm:VAHSS_CSV} still hold after replacing $\tau_i$ with $\pi_i$. 
+
+In Construction \ref{alg:VAHSS-HSS-RP} the extended VAHSS is described in detail. Compared to the construction presented n \cite{SumItUp} the algorithms \textbf{ShareSecret} and \textbf{Verify} has been modified and the algorithm \textbf{ConstructRangeProof} has been added. More precisely in the algorithm \textbf{ShareSecret} the client computes the commitment $\pi_i$ instead of the checksum $\tau_i$ as motivated above. The algorithm \textbf{ConstructRangeProof} constructs a range proof (or set membership proof) denoted $RP_i$ of the commitment $\pi_i$. It is not specified which range proof construction that is used since will not affect the rest of construction as long as the verification algorithm used to verify range proof is the algorithm \textbf{Verify} is the same as used to construct the proof. This algorithm will be run by the client. The algorithm \textbf{Verify} contains an call to the verification algorithms corresponding to the one used to generate the range proof $RP_i$ and an additional \texttt{AND} operator. 
+
+%In the VAHSS Construction \ref{alg:VAHSS-HSS} the verifiability property includes verification of the servers. In this section this will be extended to also include the clients. The value $\pi_i$ published by the clients will be modified into a Pedersen commitment on the form $\pi_i = g^{x_i}h^{R_i}$, remember $\pi_i=g^{x_i+R_i}$ in the original construction presented in \cite{SumItUp}. The clients will apart from the previous commitments  also construct and publish a range proof for $\pi_i$. This allows any verifier to apart from verifying the servers also verify that the secret shared by the clients is in an certain range.  
+
+\begin{algorithm}
 \caption{\textbf{: Client and Server Verifiable additive homomorphic secret sharing}}
+
+\textbf{Goal:} Construct and share the sum $\sum_{i=1}^n x_i$, where $x_i$ is a secret value known by client $c_i$, where $i\in\mathcal{N}$ without any client needing to revealing their individual secret. Servers and clients computations are verified. 
+\vspace{2pt}
+\hline
+\vspace{2pt}
 \begin{itemize}
   \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\pi_i,\{x_{ij}\}_{j\in\mathcal{M}})$}\\
-Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Remark that polynomial satisfies equation \eqref{eq:pi(0)} and further that $p_i(0)=x_i$  which implies that $x_i =  \sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij})$. 
+Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$.
 %Let $H:x\to g^x$
 % (g generator the multiplicative group of $\mathds{F}$)
 % be a collision-resistant homomorphic hash function.
 Let $P : x,y \to g^xh^y$ be a Pedersen commitment function.
  Let $R_i\in\mathds{F}$ be the output of a PRF. Where it is required that  $R_n\in \mathds{F}$  satisfies
-$R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute $\pi_i = H(x_i,R_i)$, and put $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$. \\
+$R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute $\pi_i = P(x_i,R_i)$, and $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$. \\
+Output $\pi_i$ and $\{x_{i,j}\}_{j\in\mathcal{M}}$.
+\item\textbf{ConstructRangeProof $x \mapsto Proof_{RP}$}\\
 Construct a range proof, denoted $RP_i$, for  $\pi_i$ to the  range $[0,B]$ using Construction \ref{alg:ZKSM}, \ref{alg:ZKRP} or \ref{alg:bullet}. All required  parameters and setup is assumed to be pre-shared and known by all parties.
-The algorithm published $\pi_i$ \& $RP_i$ and $x_{i,j}$ to server $j$ for $j\in\mathcal{M}$. 
-
 \item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
 Compute and publish $y_j = \sum_{i=1}^n x_{ij}$.
 
@@ -130,6 +134,7 @@ Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y
 \end{algorithm}
 
 \begin{thm}
+\vspace{10pt}
 The client and server verifiable AHSS presented in Construction \ref{alg:VAHSS-HSS-RP} satisfies the same correctness, security and requirements as Construction \ref{alg:VAHSS-HSS} as well as the verifiability requirements: 
 \begin{itemize}
  \item \textbf{Verifiability Servers}  Let $\mathcal{A}$ denote any PPT  adversary and $T$ denote the set of corrupted servers with $T\leq m$. Note that if $|T|=m$, the verifiability property holds but not the security property. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(x_1,...,x_n)$ with negligible probability.  
@@ -152,7 +157,8 @@ For the $\tau_i$, whose construction has been modified compared to \cite{VAHSS} 
     &= g^y h^{ \phi(N)\big\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N) }\big\rceil}  \overset{*}{=} g^y = \mathcal{H}(y) \quad \textit{*- since $h$ is co-prime to $N$.}
 \end{align*}
 
-The proof of \textit{\textbf{Verifiability Severs}} is the same as in \cite{SumItUp} and the proof of \textit{\textbf{Verifiability Clients}} follows from the propertied of range proof.
+The proof of \textit{\textbf{Verifiability Severs}} is the same as in \cite{SumItUp} and the proof of \textit{\textbf{Verifiability Clients}} follows from the properties of  the range proof.
 \end{proof}
 
 \section{Implementation}
+The implementations is done in Golang. Specify all parameters used for the implementation. 

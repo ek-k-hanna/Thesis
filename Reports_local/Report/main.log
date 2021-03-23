@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  22 MAR 2021 17:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  23 MAR 2021 16:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -998,7 +998,14 @@ File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count364
 \l__pdf_internal_box=\box68
 )
-(./main.aux)
+(./main.aux
+
+LaTeX Warning: Label `tab:compare' multiply defined.
+
+
+LaTeX Warning: Label `tab:compare' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
@@ -1017,8 +1024,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
-
-(/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+ (/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count365
 \scratchdimen=\dimen295
@@ -1171,8 +1177,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 30--31
 
  []
 
-<figure/auxiliary/frontpage_gu_eng_vec_m2.pdf, id=75, 597.23125pt x 845.15756pt
->
+<figure/auxiliary/frontpage_gu_eng_vec_m2.pdf, id=130, 597.23125pt x 845.15756p
+t>
 File: figure/auxiliary/frontpage_gu_eng_vec_m2.pdf Graphic file (type pdf)
 <use figure/auxiliary/frontpage_gu_eng_vec_m2.pdf>
 Package pdftex.def Info: figure/auxiliary/frontpage_gu_eng_vec_m2.pdf  used on 
@@ -1185,7 +1191,7 @@ input line 44.
 e/auxiliary/frontpage_gu_eng_vec_m2.pdf>] [2
 
 ]
-<figure/auxiliary/ChGULogoHog.pdf, id=94, 142.26349pt x 199.1691pt>
+<figure/auxiliary/ChGULogoHog.pdf, id=149, 142.26349pt x 199.1691pt>
 File: figure/auxiliary/ChGULogoHog.pdf Graphic file (type pdf)
 <use figure/auxiliary/ChGULogoHog.pdf>
 Package pdftex.def Info: figure/auxiliary/ChGULogoHog.pdf  used on input line 6
@@ -1240,7 +1246,13 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 8
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )) [4]
 (./include/frontmatter/Abstract.tex [5]) [6]
-(./include/frontmatter/Acknowledgements.tex [7]) [8] (./main.toc)
+(./include/frontmatter/Acknowledgements.tex [7]) [8] (./main.toc
+Overfull \hbox (9.85062pt too wide) in paragraph at lines 15--15
+ [][] [][][]\T1/lmr/m/n/12 Theoretical anal-y-sis: Signature-based set mem-ber-
+ship and range 
+ []
+
+)
 \tf@toc=\write7
 \openout7 = `main.toc'.
 
@@ -1248,8 +1260,7 @@ File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 ] [10
 
-]
-(./main.lof)
+] (./main.lof)
 \tf@lof=\write8
 \openout8 = `main.lof'.
 
@@ -1265,7 +1276,8 @@ File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 ] [14
 
-] (./include/Introduction.tex
+]
+(./include/Introduction.tex
 Chapter 1.
 ) (./include/Theory.tex [1
 
@@ -1273,9 +1285,6 @@ Chapter 1.
 
 ]
 Chapter 2.
-
-LaTeX Warning: Reference `sec:Methods' on page 3 undefined on input line 3.
-
 LaTeX Font Info:    Trying to load font information for U+dsrom on input line 1
 4.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/doublestroke/Udsrom.fd
@@ -1298,7 +1307,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 69--71
 [4] [5]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 134.
- [6]
+
+! Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.137 \hline
+            
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+[6]
 
 ! LaTeX Error: \mathbb allowed only in math mode.
 
@@ -1306,12 +1324,16 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.164 ...obability $1$ the output $y$ from \mathbb
+l.168 ...obability $1$ the output $y$ from \mathbb
                                                   {FinalEval} is accepted gi...
 
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
+
+Underfull \vbox (badness 8075) has occurred while \output is active []
+
+ [7]
 
 ! LaTeX Error: There's no line here to end.
 
@@ -1319,7 +1341,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.175 T
+l.179 T
        he VHASS in Construction \ref{alg:VAHSS-HSS} satisfies the correctnes...
 
 Your command was ignored.
@@ -1327,86 +1349,62 @@ Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 175--177
+Underfull \hbox (badness 10000) in paragraph at lines 179--181
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [7]
-
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 225.
+               Default added (so using `htbp') on input line 229.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
-l.228 \vspace{2pt} \hline
+l.232 \vspace{2pt} \hline
                           \vspace{2pt}
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 236--238
+Underfull \hbox (badness 10000) in paragraph at lines 240--242
 [][] \T1/lmr/m/n/12 Check if $\OML/lmm/m/it/12 D [] C[]h[]g[] \OMS/lmsy/m/n/12 
 ^ \OML/lmm/m/it/12 a []
  []
 
 [8]
 
-LaTeX Warning: Reference `appendix:range' on page 9 undefined on input line 247
-.
-
-
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 249.
+               Default added (so using `htbp') on input line 253.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
-l.253 \hline
+l.257 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-68.
+72.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
+) [9]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 270.
+               Default added (so using `tbp') on input line 274.
 
-[9] [10] [11]
-
-LaTeX Warning: Reference `alg:inner_product' on page 12 undefined on input line
- 334.
-
+[10] [11]
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
-l.340 \hline
+l.346 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
 [12]
-
-LaTeX Warning: Reference `alg:inner_product' on page 13 undefined on input line
- 371.
-
-
-LaTeX Warning: Reference `eq:range_non_zero' on page 13 undefined on input line
- 371.
-
-
-LaTeX Warning: Reference `eq:range_non_zero' on page 13 undefined on input line
- 371.
-
 ! Undefined control sequence.
-l.377 Note that $t_0 = z^2\cdotx
+l.383 Note that $t_0 = z^2\cdotx
                                  + \delta(y,z)$ which is equal to the right ...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1415,20 +1413,13 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `eq:range_non_zero' on page 13 undefined on input line
- 377.
-
-
-LaTeX Warning: Reference `alg:bullet' on page 13 undefined on input line 377.
-
-
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 379.
+               Default added (so using `htbp') on input line 385.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
-l.383 \hline
+l.389 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1436,7 +1427,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Missing { inserted.
 <to be read again> 
                    \gdef 
-l.387 ...alpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}
+l.393 ...alpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}
                                                   $, where $\alpha\in_R\math...
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
@@ -1446,7 +1437,7 @@ so that I will find a matching right brace soon.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.387 ...lpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}$
+l.393 ...lpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}$
                                                   , where $\alpha\in_R\mathd...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1457,7 +1448,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing { inserted.
 <to be read again> 
                    \begingroup 
-l.387 ...S=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}
+l.393 ...S=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}
                                                   $. Let $y=\text{Hash}(A,S)...
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
@@ -1467,7 +1458,7 @@ so that I will find a matching right brace soon.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.387 ...=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}$
+l.393 ...=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}$
                                                   . Let $y=\text{Hash}(A,S)$...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1478,7 +1469,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing { inserted.
 <to be read again> 
                    \begingroup 
-l.387 ...t let $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}
+l.393 ...t let $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}
                                                   $ and  secondly compute th...
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
@@ -1488,7 +1479,7 @@ so that I will find a matching right brace soon.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.387 ... let $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}$
+l.393 ... let $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}$
                                                    and  secondly compute the...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1496,64 +1487,33 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
-
-LaTeX Warning: Reference `alg:inner_product' on page 13 undefined on input line
- 387.
-
-
-LaTeX Warning: Reference `alg:inner_product' on page 13 undefined on input line
- 390.
-
 ) (./include/Methods.tex [13] [14]
 Chapter 3.
-
-LaTeX Warning: Reference `' on page 15 undefined on input line 17.
-
 [15
 
-]
-
-LaTeX Warning: Reference `eq:IPA' on page 16 undefined on input line 43.
-
-
-Overfull \hbox (1.3012pt too wide) in paragraph at lines 45--46
-\T1/lmr/m/n/12 interactive con-struc-tion the ver-i-fier could in-stead per-for
-m only one multidimensional-
- []
-
-
-Underfull \vbox (badness 6775) has occurred while \output is active []
-
- [16]
-Overfull \hbox (9.8559pt too wide) in paragraph at lines 97--97
+] [16]
+Overfull \hbox (9.8559pt too wide) in paragraph at lines 84--84
 |[]\T1/lmr/bx/n/17.28 Additive ho-mo-mor-phic se-cret shar-ing with ver-
  []
 
+[17]
 
-LaTeX Warning: Reference `alg:bullet' on page 17 undefined on input line 111.
+LaTeX Warning: Reference `eq:pedersen_binidng' on page 18 undefined on input li
+ne 89.
 
+! Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.104 \hline
+            
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [17]
-
-LaTeX Warning: Reference `alg:VAHSS-HSS-RP' on page 18 undefined on input line 
-133.
-
-[18]
-
-LaTeX Warning: Reference `eq:y=sum(x_ij)' on page 19 undefined on input line 15
-3.
-
-
-LaTeX Warning: Reference `eq:y=sum(x_ij)' on page 19 undefined on input line 15
-3.
-
-) (./include/Results.tex [19] [20
-
-]
+[18] [19]) (./include/Results.tex [20]
 Chapter 4.
-) (./include/Conclusion.tex [21] [22
+) (./include/Conclusion.tex [21
+
+] [22
 
 ]
 Chapter 5.
@@ -1576,34 +1536,28 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 87.
  (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 87.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 87.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: EF5F16673B3050EAFD51112FECEE3C64;1685.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: E09A28DF87DD85ABC634AC5DFB4F6A78;690
-(rerunfilecheck)             After:  CBEEA0290E76E91BFEC71856FD84F376;1633.
 
 LaTeX Warning: There were undefined references.
 
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 24599 strings out of 480608
- 456986 string characters out of 5903631
- 784752 words of memory out of 5000000
- 39753 multiletter control sequences out of 15000+600000
+ 24612 strings out of 480608
+ 457190 string characters out of 5903631
+ 783452 words of memory out of 5000000
+ 39766 multiletter control sequences out of 15000+600000
  644325 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  71i,19n,85p,1523b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
-texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/20
-20/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2020/texmf-d
-ist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/
+{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/lo
+cal/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texliv
+e/2020/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2020/texmf-d
+ist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/
 dvips/lm/lm-mathex.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/l
 m-ts1.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr
 /local/texlive/2020/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb></us
@@ -1628,10 +1582,10 @@ ist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/t
 ype1/public/lm/lmtt12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/h
 elvetic/uhvb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic
 /uhvr8a.pfb>
-Output written on main.pdf (41 pages, 1290124 bytes).
+Output written on main.pdf (41 pages, 1299162 bytes).
 PDF statistics:
- 536 PDF objects out of 1000 (max. 8388607)
- 431 compressed objects within 5 object streams
+ 623 PDF objects out of 1000 (max. 8388607)
+ 510 compressed objects within 6 object streams
  109 named destinations out of 1000 (max. 500000)
- 207 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 319 words of extra memory for PDF output out of 10000 (max. 10000000)
 

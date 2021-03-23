@@ -132,6 +132,10 @@ Note that is the step \textbf{ShareSecret} the shares are put to $x_{ij}= \lambd
 
 \begin{algorithm}
 \caption{\textbf{: Verifiable additive homomorphic secret sharing}}
+\textbf{Goal:} Construct and share the sum $\sum_{i=1}^n x_i$, where $x_i$ is a secret value known by client $c_i$, where $i\in\mathcal{N}$ without any client needing to revealing their individual secret. Servers computations are verified. 
+\vspace{2pt}
+\hline
+\vspace{2pt}
 \begin{itemize}
   \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\pi_i,\{x_{ij}\}_{j\in\mathcal{M}})$}\\
 Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Let $\mathcal{H}:x\mapsto g^x$
@@ -216,7 +220,7 @@ In the subsections below theory and construction of \textit{Signature based rang
 \subsection{Signature-based  range proof}
 First the zero knowledge set membership (ZKSM) is described and then extended to a ZKRP, originally presented in \cite{RANGE-SET}. Both the ZKSM and ZKRP constructions presented are modified compared to the original construction according to the Fiat-Shamir heuristic to be non-interactive.
 
-The idea behind the ZKSM (and also the later derived ZKRP) is that for each element in the allowed set $\Phi$ there exist a public commitment, denoted $A_i\: \forall i\in\Phi$. The prover who aims to prove that the secret hidden by a pre published Pedesen commitment, denoted $C$, is in the allowed range $\Phi$ chooses the commitment representing the the secret $x$, i.e $A_x$. Then hides this choice by raising $A_x$  to a random value $\tau\in_R\mathds{F}$, this gives $V = A_x^\tau$, and publishes $V$. Then the prover has to convince the verifier that  1) the published value $V$ is indeed equal to  $A_x^\tau$ where $A_x$ is from the allowed set  2) the secret in the Pedersen commitment $C$  is the same as the secret hidden by $V$.
+The idea behind the ZKSM (and also the later derived ZKRP) is that for each element in the allowed set $\Phi$ there exist a public commitment, denoted $A_i\: \forall i\in\Phi$.  These commitments are made public in the set-up phase by the verifier. The prover who aims to prove that the secret hidden by a pre published Pedesen commitment, denoted $C$, is in the allowed set $\Phi$ chooses the commitment representing the the secret $x$, i.e $A_x$. Then hides this choice by raising $A_x$  to a random value $\tau\in_R\mathds{F}$, this gives $V = A_x^\tau$, and publishes $V$. Then the prover has to convince the verifier that  1) the published value $V$ is indeed equal to  $A_x^\tau$ where $A_x$ is from the allowed set  2) the secret in the Pedersen commitment $C$  is the same as the secret hidden by $V$.
 %The first two constructions that will be considered here are based on the range proofs presented in \cite{RANGE-SET} and adjusted to a non-interactive construction described by \cite{ZKRP_Morais}. The transformation from a interactive protocol to a non interactive is done via the Fiat-Schit principle \cite{fiat-schmit}.  Non-interactive means that there communication between the prover and verifies while XXX Find. 
 %Construction \ref{alg:ZKSM} is a non interactive set membership proof of a Pedersen commitment $C=g^\sigma h^R$, where $\sigma$ is the secret and $R\in_R\mathds{F}$ is chosen uniformly at random.
 %The construction allows a prover, that knows the secret $x$, to convince the verifier, who has access to the commitment $C$, that $x\in\Phi$ for some predetermined set $\Phi$ without revealing any other information regarding the secret $x$.  
@@ -224,7 +228,7 @@ In Construction \ref{alg:ZKSM}  a detailed description of the ZKSM algorithms th
 %This construction fulfils the zero knowledge requirements described in \ref{sec:ZK} and is a non interactive zero knowledge set membership proof. 
 \begin{algorithm}[]
 \caption{\textbf{: Non interactive set membership proof}}
-\textbf{Goal:} Given a Pedersen commitment $C=g^x h^R$ and a set $\Phi$, prove that the secret $x$ belongs to the set $\Phi$ without revealing anything else about $x$.
+\textbf{Goal:} Given a Pedersen commitment $C=g^x h^R$ and a set $\Phi$, prove that the secret $x$ in the commitment belongs to the set $\Phi$ without revealing anything else about $x$.
 \vspace{2pt} \hline \vspace{2pt}
 \begin{itemize}
   \item\textbf{SetUp $(g,h,\Phi)\xrightarrow[]{}(y,\{A_{i}\}_{i\in\Phi})$}\\
@@ -300,7 +304,7 @@ This ZKRP construction can be generalised to  prove membership to an arbitrary i
 \subsection{Bulletproofs}
 Bulletproof is a range proof, logarithmic in the size of the range. The proof relies on the inner product argument which allows a prove to convince a verifier that he knows the opening $\bm{s},\bm{q}\in\mathds{F}^n$ to a Pedersen vector commitment $P_v = \bm{g}^{\bm{s}}\bm{h}^{\bm{q}}$ such that the inner product of $\bm{s},\bm{q}$ is equal to a known value, $c$. This can be done with a proof of size $log\: n$, compare to the trivial solution of publishing $\bm{s},\bm{q}$ which is a proof of size $n$.
 
-\subsubsection*{Notation}
+\subsubsection*{Notation and SetUp}
 The description and construction or bulletproofs requires additional notation which will be presented here. First let lowercase bold font variables denote vectors, i.e $\mathbf{a}\in\mathds{F}^n$ is a vector with element $a_1,..,a_n \in \mathds{F}$, and uppercase bold font variables denote matrices, i.e $\mathbf{A}\in\mathds{F}^{n\times m}$ is a matrix and $a_{ij}$ the element of $\mathbf{A}$ at row $i$ and column $j$. Given this notation denote scalar multiplication with a vector as $\mathbf{b}=c\cdot \mathbf{a}\in\mathds{F}^n$, where $c\in\mathds{F}$ and  $b_i=c\cdot a_i, \: i\in\{1,...,n\}$. Denote the euclidean inner product of two vectors as $\langle \mathbf{a},\mathbf{b}\rangle$ and Hadamard product as $\mathbf{a}\circ \mathbf{b}$.
 
 Further consider vector polynomials $p(X)$ of degree $d$ on the form $p(X)=\sum_{i=0}^d \mathbf{p_i}\cdot X^i\in\mathds{F}^n[X]$, where the coefficients $\mathbf{p_i}\in\mathds{F}^n$. The inner product of two vector polynomials, $l(X),r(X)$ is defined as, 
@@ -316,6 +320,8 @@ For $k\in\mathds{F}^*$ let $\mathbf{k}^n=(1,k,k^2,...,k^{n-1})$, i.e the vector 
 Let $\mathbf{g},\mathbf{h}\in\mathds{G}^n$ and remember that $\mathbf{a}\in\mathds{F}^n$ then define $C= \mathbf{g}^\mathbf{a} = \prod_{i=1}^ng_i^{a_i}\in\mathds{G}$, where $C$ can be interpreted as a commitment to the vector $\mathbf{a}$. In this section the two vectors $\mathbf{g},\mathbf{h}$ will be considered to be generators of the space $\mathds{G}^n$.
 
 Remark that in here $n$ denotes the dimension of the room not the number of clients as earlier, further remark that the dimension of the room is the length of the bit representation of the secret in the Pedersen vector commitment considered below or if not the bit representation is padded with zeros.
+
+Both the construction of the inner product argument and the bullet proof the parameters $g,h,\mathbf{g},\mathbf{h},u$ are assumed to be pre-shared and known by both verifier and prover. The assumptions about $g,h$ are before. Further the two vectors $\mathbf{g}, \mathbf{h} \in \mathds{G}^n$ are assumed to be independent generators of the space $\mathds{G}^n$. The variable $u\in\mathds{G}$ is such that there is no known discrete logarithm relation among $\mathbf{g},\mathbf{h}$. In order to ensure the fairness and correctness of the parameters $g,h,\mathbf{g},\mathbf{h},u$ they can be  assumed to be chosen by some trusted third party. Another possibility that drops the assumption of a trusted setup is to use the \textit{Nothing Up My Sleeve} (NUMS) stategy, \cite{ZKRP_Morais}.
 
 \subsubsection*{Inner product argument}
 \label{sec:inner_prod}
@@ -335,19 +341,19 @@ A logarithmic sized proof of the above inner product statement is presented in C
 
 \begin{algorithm}
 \caption{\textbf{: Inner-product argument}}
-\textbf{Goal:} Given a Pedersen vector  commitment $P_v=\bm{g}^{\bm{s}} \bm{h}^{\bm{q}}$ and a value $c$ prove that the two vectors $\bm{s},\bm{q}$ satisfies $c=\langle\bm{x},\bm{q}\rangle$.
+\textbf{Goal:} Given a Pedersen vector  commitment $P_v=\bm{g}^{\bm{s}} \bm{h}^{\bm{q}}$ and a value $c$ prove that the two vectors $\bm{s},\bm{q}$ satisfies $\langle\bm{s},\bm{q}\rangle=c$.
 \vspace{2pt}
 \hline
 \vspace{2pt}
 \begin{itemize}
-\item\text{\textbf{Prove} $(\mathbf{g},\mathbf{h},P_v=\mathbf{g}^s \mathbf{h}^q,c,\mathbf{q},\mathbf{s})\xrightarrow[]{}\textit{proof}_{IP}=(\mathbf{g},\mathbf{h},P_v',u^x,\mathbf{s},\mathbf{q},\mathbf{l},\mathbf{r})$}\\
-Let $x=\text{Hash}(\mathbf{g},\mathbf{h},P_v,c) \in\mathds{F}^*$ and compute $P_v'= u^{x\cdot c}P$. Then define the two vectors $\mathbf{l},\mathbf{r}$.
+\item\text{\textbf{Prove} $(\mathbf{g},\mathbf{h},P_v,c,u,\mathbf{q},\mathbf{s})\xrightarrow[]{}\textit{proof}_{IP}=(\mathbf{g},\mathbf{h},P_v',u^y,\mathbf{s},\mathbf{q},\mathbf{l},\mathbf{r})$}\\
+Let $y=\text{Hash}(\mathbf{g},\mathbf{h},P_v,c) \in\mathds{F}^*$ and compute $P_v'= u^{y\cdot c}P$. Then define the two vectors $\mathbf{l},\mathbf{r}$.
 \begin{itemize}
-    \item If the dimension of the vectors $\mathbf{g},\mathbf{h},\mathbf{s},\mathbf{q}$ is one drop the bold font in the notation and publish the proof $\textit{ proof}_{IP}=(g,h,P_v',u^x,s,r,\mathbf{l},\mathbf{r})$.
-    \item  Otherwise:  Let $n'=n/2$ and define  $c_L=\langle a_{[:,n']},b_{[n',:]} \rangle$ and $c_R=\langle a_{[n',:]},b_{[:,n']} \rangle$. Then use these variables to calculate $L=\mathbf{g}_{[n':]}^{\mathbf{a}_{[:n']}} \mathbf{h}_{[:n']}^{\mathbf{b}_{[n':]}} u^{c_L}$ and $R=\mathbf{g}_{[:n']}^{\mathbf{a}_{[n':]}} \mathbf{h}_{[n':]}^{\mathbf{b}_{[:n']}} u^{c_R}$. Further store the current values of $L,R\in\mathds{G}$, by appending them to the vectors $\mathbf{l}$ resp $\mathbf{r}$. Now update $x=\text{Hash}(L,R)$, and recalculate $\mathbf{g} = \mathbf{g}_{[:n']}^{x^{-1}}\mathbf{g}_{[n':]}^{x}$, $\mathbf{h} = \mathbf{h}_{[:n']}^{x}\mathbf{h}_{[n':]}^{x^{-1}}$ and the commitment $P'=L^{x^2}PR^{x^{-2}}$. Finally update the exponents $\mathbf{s},\mathbf{q}$ to $\mathbf{s} = \mathbf{s}_{[:n']}+\mathbf{s}_{[n':]}x^{-1}$ and $\mathbf{q} = \mathbf{q}_{[:n']}x^{-1}+\mathbf{q}_{[n':]}x$. Run the step \textbf{Prove}$(\mathbf{g},\mathbf{h},P_v',n',\mathbf{q},\mathbf{s})$ with the updated variables. Note that the vectors $\mathbf{g},\mathbf{h},\mathbf{s},\mathbf{q}$ now have the dimension $n'=n/2$, hence performing the recursion until one-dimensional vectors will require $log\:n$ iterations.
+    \item If the dimension of the vectors $\mathbf{g},\mathbf{h},\mathbf{s},\mathbf{q}$ is one drop the bold font in the notation and publish the proof $\textit{ proof}_{IP}=(g,h,P_v',u^y,s,r,\mathbf{l},\mathbf{r})$.
+    \item  Otherwise:  Let $n'=n/2$ and define  $c_L=\langle \bm{s}_{[:,n']},\bm{q}_{[n',:]} \rangle$ and $c_R=\langle \bm{s}_{[n',:]},\bm{q}_{[:,n']} \rangle$. Then use these variables to calculate $L=\mathbf{g}_{[n':]}^{\mathbf{s}_{[:n']}} \mathbf{h}_{[:n']}^{\mathbf{q}_{[n':]}} u^{c_L}$ and $R=\mathbf{g}_{[:n']}^{\mathbf{s}_{[n':]}} \mathbf{h}_{[n':]}^{\mathbf{q}_{[:n']}} u^{c_R}$. Further store the current values of $L,R\in\mathds{G}$, by appending them to the vectors $\mathbf{l}$ resp $\mathbf{r}$. Now update $y=\text{Hash}(L,R)$, and recalculate $\mathbf{g} = \mathbf{g}_{[:n']}^{y^{-1}}\mathbf{g}_{[n':]}^{y}$, $\mathbf{h} = \mathbf{h}_{[:n']}^{y}\mathbf{h}_{[n':]}^{y^{-1}}$ and the commitment $P'=L^{y^2}PR^{y^{-2}}$. Finally update the exponents $\mathbf{s},\mathbf{q}$ to $\mathbf{s} = \mathbf{s}_{[:n']}y+\mathbf{s}_{[n':]}y^{-1}$ and $\mathbf{q} = \mathbf{q}_{[:n']}y^{-1}+\mathbf{q}_{[n':]}y$. Run the step \textbf{Prove}$(\mathbf{g},\mathbf{h},P_v',n',\mathbf{s},\mathbf{q})$ with the updated variables. Note that the vectors $\mathbf{g},\mathbf{h},\mathbf{s},\mathbf{q}$ now have the dimension $n'=n/2$, hence performing the recursion until one-dimensional vectors will require $log\:n$ iterations.
 \end{itemize}
-\item\text{\textbf{Verify} $(g,h,C,\textit{proof})\xrightarrow[]{}\{0,1\}$}\\
-For $i\in\{0,log(n)\}$ put $n=n/2$ and $x=\text{Hash}(\bm{l}[i],\bm{r}[i])$, then update the vectors $\bm{g}$ and $\bm{h}$ as well as the  variable $P$ according to, $\bm{g}= \bm{g}_{[:,n]}^{x^{-1}}\bm{g}_{[n,:]}^{x}$, $\bm{h}= \bm{h}_l{[:,n]}^{x}\bm{h}_{[n,:]}^{x^{-1}}$ and $ P = L^{x^2}PR^{x^{-2}}  $. After iterating over all $i$ the dimension of the vectors $\bm{g},\bm{h}$ is one and we can drop the bold font. Accept if $c=\langle s,r\rangle$ and $P =g^sh^r$.
+\item\text{\textbf{Verify} $(g,h,C,\textit{proof}_{IP})\xrightarrow[]{}\{0,1\}$}\\
+For $i\in\{0,log(n)\}$ put $n=n/2$ and $y=\text{Hash}(\bm{l}[i],\bm{r}[i])$, then update the vectors $\bm{g}$ and $\bm{h}$ as well as the  variable $P$ according to, $\bm{g}= \bm{g}_{[:,n]}^{y^{-1}}\bm{g}_{[n,:]}^{y}$, $\bm{h}= \bm{h}_l{[:,n]}^{x}\bm{h}_{[n,:]}^{y^{-1}}$ and $ P = L^{y^2}PR^{y^{-2}}  $. After iterating over all $i$ the dimension of the vectors $\bm{g},\bm{h}$ is one and we can drop the bold font. Accept if $c=\langle s,r\rangle$ and $P =g^sh^r$.
 \end{itemize}
 \label{alg:inner_product}
 \end{algorithm}
@@ -378,7 +384,7 @@ Note that $t_0 = z^2\cdotx + \delta(y,z)$ which is equal to the right hand side 
 
 \begin{algorithm}[]
 \caption{\textbf{: Bulletproof}}
-\textbf{Goal:} Given a Pedersen vector  commitment $P=g^xh^R$ and a value $c$ prove that the two vectors $\bm{x},\bm{R}$ satisfies $c=\langle\bm{x},\bm{R}\rangle$.
+\textbf{Goal:}  Given a Pedersen commitment $C=g^x h^R$ and a number $n$, prove that the secret $x$ in the commitment belongs to the range  $[0,2^n)$ without revealing anything else about $x$.
 \vspace{2pt}
 \hline
 \vspace{2pt}
