@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  23 APR 2021 10:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  23 APR 2021 14:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1041,7 +1041,11 @@ File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count378
 \l__pdf_internal_box=\box69
 )
-(./main.aux)
+(./main.aux
+
+LaTeX Warning: Label `alg:VAHSS-HSS' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
@@ -1060,8 +1064,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
-
-(/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+ (/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count379
 \scratchdimen=\dimen316
@@ -1214,7 +1217,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 30--31
 
  []
 
-<figure/auxiliary/frontpage_gu_eng_vec_m2.pdf, id=134, 597.23125pt x 845.15756p
+<figure/auxiliary/frontpage_gu_eng_vec_m2.pdf, id=146, 597.23125pt x 845.15756p
 t>
 File: figure/auxiliary/frontpage_gu_eng_vec_m2.pdf Graphic file (type pdf)
 <use figure/auxiliary/frontpage_gu_eng_vec_m2.pdf>
@@ -1228,7 +1231,7 @@ input line 44.
 e/auxiliary/frontpage_gu_eng_vec_m2.pdf>] [2
 
 ]
-<figure/auxiliary/ChGULogoHog.pdf, id=153, 142.26349pt x 199.1691pt>
+<figure/auxiliary/ChGULogoHog.pdf, id=165, 142.26349pt x 199.1691pt>
 File: figure/auxiliary/ChGULogoHog.pdf Graphic file (type pdf)
 <use figure/auxiliary/ChGULogoHog.pdf>
 Package pdftex.def Info: figure/auxiliary/ChGULogoHog.pdf  used on input line 6
@@ -1289,19 +1292,18 @@ Overfull \hbox (9.85062pt too wide) in paragraph at lines 15--15
 ship and range 
  []
 
-)
+[9
+
+])
 \tf@toc=\write7
 \openout7 = `main.toc'.
 
- [9
-
-] [10
-
-] (./main.lof)
+ [10] (./main.lof)
 \tf@lof=\write8
 \openout8 = `main.lof'.
 
  [11
+
 
 ] [12
 
@@ -1326,18 +1328,8 @@ LaTeX Font Info:    Trying to load font information for U+dsrom on input line 1
 5.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
-)
-! Undefined control sequence.
-l.17 ... in the protocol, and the variable $R\in\R
-                                                  \mathds{F}$ will denote a ...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 73--75
+) [3]
+Underfull \hbox (badness 10000) in paragraph at lines 77--79
 
  []
 
@@ -1345,24 +1337,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 73--75
 Missing character: There is no 2 in font dsrom8!
  [5]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-21.
+25.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [6]
-
-Package caption Warning: \label without proper reference on input line 158.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `alg:VAHSS-HSS' on page 7 undefined on input line 143.
-
-
+[7]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 159.
+put line 162.
+
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.162 \hline
+l.166 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1370,7 +1356,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 \adl@hline ...mpcnta \xdef \adl@rowsL {\adl@rowsL 
                                                   (#1/\number \@tempcnta );}...
-l.162 \hline
+l.166 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1381,7 +1367,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.162 \hline
+l.166 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1392,7 +1378,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 \adl@hline ...nta );}\xdef \adl@rowsR {\adl@rowsR 
                                                   (#1/\number \@tempcnta );}
-l.162 \hline
+l.166 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1403,118 +1389,68 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.162 \hline
+l.166 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
-
-[7]
-
-! LaTeX Error: \mathbb allowed only in math mode.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.191 ...obability $1$ the output $y$ from \mathbb
-                                                  {FinalEval} is accepted gi...
-
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
 
 [8]
-
-! LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.202 T
-       he VHASS in Construction \ref{alg:VAHSS-HSS} satisfies the correctnes...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-Package caption Warning: \label without proper reference on input line 158.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `alg:VAHSS-HSS' on page 9 undefined on input line 202.
-
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 202--204
-
- []
-
-
-Package caption Warning: \label without proper reference on input line 158.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `alg:VAHSS-HSS' on page 9 undefined on input line 206.
-
-
-
-Overfull \hbox (5.42398pt too wide) in paragraph at lines 244--244
+Overfull \hbox (5.42398pt too wide) in paragraph at lines 246--246
 |[]\T1/lmr/bx/n/14.4 Set mem-ber-ship proof and Signature-based range proof| 
- []
-
-
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 253.
-
-! Misplaced \noalign.
-\hline ->\noalign 
-                  {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.256 \vspace{2pt} \hline
-                          \vspace{2pt}
-I expect to see \noalign only after the \cr of
-an alignment. Proceed, and I'll ignore this case.
-
-! Undefined control sequence.
-<argument> \adl@connect 
-                        
-l.256 \vspace{2pt} \hline
-                          \vspace{2pt}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-<argument> \adl@connect 
-                        
-l.256 \vspace{2pt} \hline
-                          \vspace{2pt}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 264--266
-[][] \T1/lmr/m/n/12 Check if $\OML/lmm/m/it/12 D [] C[]h[]g[] \OMS/lmsy/m/n/12 
-^ \OML/lmm/m/it/12 a []
  []
 
 [9]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 277.
+               Default added (so using `htbp') on input line 255.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.281 \hline
+l.258 \vspace{2pt} \hline
+                          \vspace{2pt}
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Undefined control sequence.
+<argument> \adl@connect 
+                        
+l.258 \vspace{2pt} \hline
+                          \vspace{2pt}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \adl@connect 
+                        
+l.258 \vspace{2pt} \hline
+                          \vspace{2pt}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 266--268
+[][] \T1/lmr/m/n/12 Check if $\OML/lmm/m/it/12 D [] C[]h[]g[] \OMS/lmsy/m/n/12 
+^ \OML/lmm/m/it/12 a []
+ []
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `htbp') on input line 279.
+
+! Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
+l.283 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1522,7 +1458,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.281 \hline
+l.283 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1533,7 +1469,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.281 \hline
+l.283 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1542,41 +1478,21 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 287.
+(Font)              <10> on input line 289.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 287.
+(Font)              <7> on input line 289.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 287.
-! Missing $ inserted.
-<inserted text> 
-                $
-l.288 ...Finally output the proof: \textit{proof}_
-                                                  {RP}$=(\{V_j\},\{a_j\},D,\...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.288 ...put the proof: \textit{proof}_{RP}$=(\{V_
-                                                  j\},\{a_j\},D,\{z_{x_j}\},...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
+(Font)              <5> on input line 289.
 [10]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 298.
+               Default added (so using `tbp') on input line 300.
 
-
-Underfull \vbox (badness 6859) has occurred while \output is active []
-
- [11]
-[12]
+[11] [12]
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.371 \hline
+l.373 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1584,7 +1500,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.371 \hline
+l.373 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1595,7 +1511,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.371 \hline
+l.373 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1604,7 +1520,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 1199) in paragraph at lines 374--376
+Underfull \hbox (badness 1199) in paragraph at lines 376--378
 \T1/lmr/m/n/12 Let $\OML/lmm/m/it/12 y \OT1/lmr/m/n/12 = [][](\OT1/lmr/bx/n/12 
 g\OML/lmm/m/it/12 ; \OT1/lmr/bx/n/12 h\OML/lmm/m/it/12 ; P[]; c\OT1/lmr/m/n/12 
 ) \OMS/lmsy/m/n/12 2 \U/dsrom/m/n/12 F[]$ \T1/lmr/m/n/12 and com-pute $\OML/lmm
@@ -1612,34 +1528,20 @@ g\OML/lmm/m/it/12 ; \OT1/lmr/bx/n/12 h\OML/lmm/m/it/12 ; P[]; c\OT1/lmr/m/n/12
  []
 
 
-Underfull \hbox (badness 3701) in paragraph at lines 374--376
+Underfull \hbox (badness 3701) in paragraph at lines 376--378
 \OT1/lmr/bx/n/12 l\OML/lmm/m/it/12 ; \OT1/lmr/bx/n/12 r$ \T1/lmr/m/n/12 be two 
 empty vec-tors. Run the re-cur-sive al-go-rithm \T1/lmr/bx/n/12 Gen-er-
  []
 
-! Double superscript.
-l.382 ...= \bm{g}_{[:,n]}^{y^{-1}}\bm{g}'_{[n,:]}^
-                                                  {y}$, $\bm{h}= \bm{h}_l{[:...
-I treat `x^1^2' essentially like `x^1{}^2'.
-
 [13]
-! Undefined control sequence.
-l.412 Note that $t_0 = z^2\cdotx
-                                 + \delta(y,z)$ which is equal to the right ...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 414.
+               Default added (so using `htbp') on input line 416.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.418 \hline
+l.420 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1647,7 +1549,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.418 \hline
+l.420 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1658,7 +1560,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.418 \hline
+l.420 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1666,82 +1568,12 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-! Missing { inserted.
-<to be read again> 
-                   \gdef 
-l.422 ...alpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}
-                                                  $, where $\alpha\in_R\math...
-A left brace was mandatory here, so I've put one in.
-You might want to delete and/or insert some corrections
-so that I will find a matching right brace soon.
-(If you're confused by all this, try typing `I}' now.)
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.422 ...lpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}$
-                                                  , where $\alpha\in_R\mathd...
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-! Missing { inserted.
-<to be read again> 
-                   \begingroup 
-l.422 ...S=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}
-                                                  $. Let $y=\text{Hash}(A,S)...
-A left brace was mandatory here, so I've put one in.
-You might want to delete and/or insert some corrections
-so that I will find a matching right brace soon.
-(If you're confused by all this, try typing `I}' now.)
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.422 ...=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}$
-                                                  . Let $y=\text{Hash}(A,S)$...
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-! Missing { inserted.
-<to be read again> 
-                   \begingroup 
-l.422 ...tment $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}
-                                                  $, run the algorithm  \tex...
-A left brace was mandatory here, so I've put one in.
-You might want to delete and/or insert some corrections
-so that I will find a matching right brace soon.
-(If you're confused by all this, try typing `I}' now.)
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.422 ...ment $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}$
-                                                  , run the algorithm  \text...
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
 ) (./include/Methods.tex [14] [15] [16
 
 ]
 Chapter 3.
 
 LaTeX Warning: Reference `sec:implement' on page 17 undefined on input line 4.
-
-
-Package caption Warning: \label without proper reference on input line 158.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `alg:VAHSS-HSS' on page 17 undefined on input line 7.
 
 [17] [18]
 Overfull \hbox (9.8559pt too wide) in paragraph at lines 64--64
@@ -1753,19 +1585,23 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [19]
 [20]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [21]
+[22]
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.88 \hline
-           
+l.137 \hline
+            
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.88 \hline
-           
+l.137 \hline
+            
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1775,125 +1611,155 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.88 \hline
-           
+l.137 \hline
+            
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
+[23]
+Overfull \hbox (27.59709pt too wide) detected at line 174
+[]
+ []
 
-! LaTeX Error: \mathbb allowed only in math mode.
+[24] [25]
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.119 ...obability $1$ the output $y$ from \mathbb
-                                                  {FinalEval} is accepted gi...
-
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+LaTeX Warning: Reference `Git:MyCode' on page 26 undefined on input line 192.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [21]
-[22] [23]
-Overfull \hbox (27.59709pt too wide) detected at line 176
-[]
- []
+ [26])
+(./include/Results.tex [27] [28
 
-[24]
-! Undefined control sequence.
-l.188 ...rove $x_i\in [a,b]$ for all $i\in\marhcal
-                                                  {N}$  is useless. The valu...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-l.188 ...mply $x_i\in [a,b]$ for all $i\in\marhcal
-                                                  {N}$.
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-Package caption Warning: \label without proper reference on input line 158.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `alg:VAHSS-HSS' on page 25 undefined on input line 191
-.
-
-
-Package caption Warning: \label without proper reference on input line 158.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `alg:VAHSS-HSS' on page 25 undefined on input line 193
-.
-
-[25]
-
-Package caption Warning: \label without proper reference on input line 158.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `alg:VAHSS-HSS' on page 26 undefined on input line 199
-.
-
-
-LaTeX Warning: Reference `Git:MyCode' on page 26 undefined on input line 199.
-
-) (./include/Results.tex [26]
+]
 Chapter 4.
-) (./include/Conclusion.tex [27
-
-] [28
+) (./include/Conclusion.tex [29] [30
 
 ]
 Chapter 5.
-) [29] [30
+) [31] [32
 
 ] (./main.bbl
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [31
+ [33
 
 ])
-[32] (./include/backmatter/Appendix_1.tex
+[34] (./include/backmatter/Appendix_1.tex
 Appendix A.
-) [1
+) (./include/backmatter/Appendix_2.tex [1
 
+
+] [2
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 87.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 87.
+Appendix B.
+! Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
+l.8 \hline
+          
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Undefined control sequence.
+<argument> \adl@connect 
+                        
+l.8 \hline
+          
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \adl@connect 
+                        
+l.8 \hline
+          
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing { inserted.
+<to be read again> 
+                   \gdef 
+l.22 ...oose at random $s_i\in_R\mathds{Z}_\hat{N}
+                                                  $ and use the secret key $...
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.22 ...ose at random $s_i\in_R\mathds{Z}_\hat{N}$
+                                                   and use the secret key $s...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing { inserted.
+<to be read again> 
+                   \gdef 
+l.39 ...id)$. Check that $y,s\in\mathds{Z}_\hat{N}
+                                                  $ and $\tilde{x}^{eN} = g^...
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.39 ...d)$. Check that $y,s\in\mathds{Z}_\hat{N}$
+                                                   and $\tilde{x}^{eN} = g^s...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+Overfull \hbox (25.22075pt too wide) in paragraph at lines 50--51
+[]\T1/lmr/bx/n/12 Correctness \T1/lmr/m/n/12 Need to show $[]\OT1/lmr/m/n/12 [[
+](\OML/lmm/m/it/12 vk; f; ^^[; y^^Y[]; :::; ^^Y[]; proof[]; :::; proof[]\OT1/lm
+r/m/n/12 ) =
+ []
+
+) [3] [4]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 88.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 88.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 87.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 87.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 88.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 88.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 2B8BFEB5C380637CA4F9B9A9F2773A78;1753.
+(rerunfilecheck)             Checksum: CD91587DF9F606BE477E57429B1B7B76;1914.
 
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 24940 strings out of 480608
- 461521 string characters out of 5903631
- 789703 words of memory out of 5000000
- 40057 multiletter control sequences out of 15000+600000
+ 24960 strings out of 480608
+ 461783 string characters out of 5903631
+ 793791 words of memory out of 5000000
+ 40062 multiletter control sequences out of 15000+600000
  666053 words of font info for 114 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,19n,85p,1891b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,19n,85p,2022b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -1926,10 +1792,10 @@ e1/public/lm/lmtt12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/
 lm/lmtti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic/uhv
 b8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb
 >
-Output written on main.pdf (47 pages, 1352802 bytes).
+Output written on main.pdf (52 pages, 1368099 bytes).
 PDF statistics:
- 720 PDF objects out of 1000 (max. 8388607)
- 600 compressed objects within 6 object streams
- 127 named destinations out of 1000 (max. 500000)
- 327 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 765 PDF objects out of 1000 (max. 8388607)
+ 639 compressed objects within 7 object streams
+ 139 named destinations out of 1000 (max. 500000)
+ 351 words of extra memory for PDF output out of 10000 (max. 10000000)
 

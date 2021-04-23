@@ -80,43 +80,10 @@ In Construction \ref{alg:VAHSS-HSS-RP} the extended VAHSS is described in detail
 
 %In the VAHSS Construction \ref{alg:VAHSS-HSS} the verifiability property includes verification of the servers. In this section this will be extended to also include the clients. The value $\pi_i$ published by the clients will be modified into a Pedersen commitment on the form $\pi_i = g^{x_i}h^{R_i}$, remember $\pi_i=g^{x_i+R_i}$ in the original construction presented in \cite{SumItUp}. The clients will apart from the previous commitments  also construct and publish a range proof for $\pi_i$. This allows any verifier to apart from verifying the servers also verify that the secret shared by the clients is in an certain range.  
 
-\begin{algorithm}
-\caption{\textbf{: Client and Server Verifiable additive homomorphic secret sharing}}
-
-\textbf{Goal:} Construct and share the sum $\sum_{i=1}^n x_i$, where $x_i$ is a secret value known by client $c_i$, where $i\in\mathcal{N}$ without any client needing to revealing their individual secret. Servers and clients computations are verified. 
-\vspace{2pt}
-\hline
-\vspace{2pt}
-\begin{itemize}
- \item\textbf{ShareSecret $(1^\lambda,i,x_i) \mapsto \{x_{ij}\}_{j\in\mathcal{M}}$} \\
-Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in_R\mathds{F}$ to be the coefficients to a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Define  the shares as $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$ for $j\in\mathcal{M}$, the parameters $\theta_{ij}$ and Lagrange coefficients $\lambda_{ij}$ is chosen such that equation \ref{eq:pi(0)} is satisfied.
-Output $\{x_{i,j}\}_{j\in\mathcal{M}}$.
-\item\textbf{GenereteCommitment$(1^\lambda,i,x_i) \mapsto \pi_i$ }\\
-Let $P : x,y \to g^xh^y$ be a Pedersen commitment . Let $R_i\in\mathds{F}$ be the output of a PRF wuch that $R_n\in \mathds{F}$  satisfies $R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute and output $\pi_i = P(x_i,R_i)$.
-\item\textbf{RangeProof $(x_i,\pi_i) \mapsto Proof_{RP}$}\\
-Construct a range proof, denoted $RP_i$, for  $\pi_i$ to the  range $[0,B]$ using Construction \ref{alg:ZKSM}, \ref{alg:ZKRP} or \ref{alg:bullet}. All required  parameters and setup is assumed to be pre-shared and known by all parties.
-\item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
-Compute and output $y_j = \sum_{i=1}^n x_{ij}$.
-
-\item\textbf{PartialProof $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}\sigma_j$}\\
-Compute and output $\sigma_j = \prod_{i=1}^n g^{x_{ij}} =  g^{\sum_{i=1}^n x_{ij}}= g^{y_j}=H(y_j)$.
-
-\item\textbf{FinalEval $(\{y_j\}_{j\in\mathcal{M}})\xrightarrow[]{}y$}\\
-Compute and output $y = \sum_{j=1}^m y_{j}$.
-
-\item\textbf{FinalProof $(\{\sigma_j\}_{j\in\mathcal{M}})\xrightarrow[]{}\sigma$}\\
-Compute and output $\sigma = \prod_{j=1}^m \sigma_j = \prod_{j=1}^m g^{y_{j}} =  g^{\sum_{j=1}^m y_{j}}= g^{y}=H(y)$.
-
-\item\textbf{Verify $(\{\pi_i\}_{i\in\mathcal{N}},x,y)\xrightarrow[]{}\{0,1\}$}\\
-Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y)\wedge \textbf{Verify}(RP_i)$. Where \textbf{Verify} is the verification step of the range proof used by the client to construct $RP_i$.
-\end{itemize}
-\label{alg:VAHSS-HSS-RP}
-\end{algorithm}
-
-
+Given this construction the correctness, security and verification requirements that should be fulfilled is redefined below.  The difference to the requirements for the server verifiable AHSS is that additional demands for the clients behaviour is included. 
 
 \begin{itemize}
-    \item \textbf{Correctness} It must hold that Pr$\Big[\textbf{Verify}(\{\pi_i\}_{i\in\mathcal{N}},\sigma,y,\{RP_i\}_{i\in\mathcal{N}})=1\Big]=1$. This means that 					with probability $1$ the output $y$ from \mathbb{FinalEval} is accepted given all parties where honest and the protocol were executed correctly.
+    \item \textbf{Correctness} It must hold that Pr$\Big[\textbf{Verify}(\{\pi_i\}_{i\in\mathcal{N}},\sigma,y,\{RP_i\}_{i\in\mathcal{N}})=1\Big]=1$. This means that 					with probability $1$ the output $y$ from \textbf{FinalEval} is accepted given all parties (clients and servers) where honest and the protocol were executed correctly.
     \item \textbf{Security} 
     			\begin{itemize}
     						\item \textbf{Malicious Servers } Let $T$ define the set of corrupted servers such that $|T|<m$, i.e at 					least one server is honest.  										Denote a PPT adversary by $\mathcal{A}_1$ and let the Adv$(1^			\lambda,\mathcal{A},T):= \text{Pr}[b' = b]-1/2$ be the advantage 										of $\mathcal{A}=\{\mathcal{A}_1,\mathcal{D}\}$ in guessing $b$ in the following experiment:
@@ -126,7 +93,7 @@ Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y
         										\item Given the shares from the corrupted servers T and $\hat{\tau}_i$ the adversary distinguisger outputs a guess 																			$b'\xleftarrow[]{}\mathcal{D}((\hat{\text{share}_{ij}})_{j|s_j\in T},\hat{\tau}_i)$.
    									 \end{enumerate}
     									A VAHSS-construction is $t$-secure if for all $T\subset \{s_1,...,s_m\}$ with $|T|<t$ it holds that Adv$(1^\lambda,\mathcal{A},T)<												\varepsilon(\lambda)$ for some negligible $\varepsilon(\lambda)$.
-  					  \item \textbf{Malicious Clients}
+  					  \item \textbf{Malicious Clients}  The security  comes from the security of range proofs. Since the construction does not clarify the exact range proof used, the security argument is refereed to the original papers for the used range proof. What needs to be argued is that the combining with VAHSS does not compromise this security argument, r since the proof is generated completely separate from the VAHSS given the Pedersen commitment this is realised trivially. 
    		 \end{itemize} 
  	\item \textbf{Verifiability} 
  			\begin{itemize}
@@ -162,12 +129,43 @@ For the $\pi_i$, whose construction has been modified compared to \cite{VAHSS} w
 The proof of \textit{\textbf{Verifiability Severs}} is the same as in \cite{SumItUp} and the proof of \textit{\textbf{Verifiability Clients}} follows from the properties of  the range proof.
 \end{proof}
 
+\begin{algorithm}
+\caption{\textbf{: Client and Server Verifiable additive homomorphic secret sharing}}
 
-\section{Aggregate proofs}
+\textbf{Goal:} Construct and share the sum $\sum_{i=1}^n x_i$, where $x_i$ is a secret value known by client $c_i$, where $i\in\mathcal{N}$ without any client needing to revealing their individual secret. Servers and clients computations are verified. 
+\vspace{2pt}
+\hline
+\vspace{2pt}
+\begin{itemize}
+ \item\textbf{ShareSecret $(1^\lambda,i,x_i) \mapsto \{x_{ij}\}_{j\in\mathcal{M}}$} \\
+Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in_R\mathds{F}$ to be the coefficients to a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Define  the shares as $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$ for $j\in\mathcal{M}$, the parameters $\theta_{ij}$ and Lagrange coefficients $\lambda_{ij}$ is chosen such that equation \ref{eq:pi(0)} is satisfied.
+Output $\{x_{i,j}\}_{j\in\mathcal{M}}$.
+\item\textbf{GenereteCommitment$(1^\lambda,i,x_i) \mapsto \pi_i$ }\\
+Let $P : x,y \to g^xh^y$ be a Pedersen commitment . Let $R_i\in\mathds{F}$ be the output of a PRF wuch that $R_n\in \mathds{F}$  satisfies $R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute and output $\pi_i = P(x_i,R_i)$.
+\item\textbf{RangeProof $(x_i,\pi_i) \mapsto Proof_{RP}$}\\
+Construct a range proof, denoted $RP_i$, for  $\pi_i$ to the  range $[0,B]$ using Construction \ref{alg:ZKSM}, \ref{alg:ZKRP} or \ref{alg:bullet}. All required  parameters and setup is assumed to be pre-shared and known by all parties.
+\item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
+Compute and output $y_j = \sum_{i=1}^n x_{ij}$.
+
+\item\textbf{PartialProof $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}\sigma_j$}\\
+Compute and output $\sigma_j = \prod_{i=1}^n g^{x_{ij}} =  g^{\sum_{i=1}^n x_{ij}}= g^{y_j}=H(y_j)$.
+
+\item\textbf{FinalEval $(\{y_j\}_{j\in\mathcal{M}})\xrightarrow[]{}y$}\\
+Compute and output $y = \sum_{j=1}^m y_{j}$.
+
+\item\textbf{FinalProof $(\{\sigma_j\}_{j\in\mathcal{M}})\xrightarrow[]{}\sigma$}\\
+Compute and output $\sigma = \prod_{j=1}^m \sigma_j = \prod_{j=1}^m g^{y_{j}} =  g^{\sum_{j=1}^m y_{j}}= g^{y}=H(y)$.
+
+\item\textbf{Verify $(\{\pi_i\}_{i\in\mathcal{N}},x,y)\xrightarrow[]{}\{0,1\}$}\\
+Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y)\wedge \textbf{Verify}(RP_i)$. Where \textbf{Verify} is the verification step of the range proof used by the client to construct $RP_i$.
+\end{itemize}
+\label{alg:VAHSS-HSS-RP}
+\end{algorithm}
+\section{Aggregate range proofs}
 A desired property for the above presented server and clients verifiable AHSS would be to aggregate the range proofs into one, since then the verifier would have to perform one range proof verification instead of one for each client. This would decrease the runtime significantly in implementations where often hundred clients participate. Aggregating the range proofs would require the proofs to be homomorphic, such that the verification remains valid after the aggregation. 
 
 First lets examine the possibility to aggregate the set membership and signature based range proofs, the construction of these two are similar and hence it is sufficient to consider one of them, due to  its simpler notation the set membership proof is considered. Assume two range proofs $RP_1$ and $RP_2$ generated by the algorithm \textbf{Prove} in construction \ref{alg:ZKSM}, recall that $RP_i = (V_i,a_i,D_i,z_{x_i},z_{\tau _i},z_{R_i}, )$ for $i=1,2$,  additionally the commitment $C_i, \:\: i=1,2$ and group elements $h,g$ are know to the verifier. To aggregate the proof each element building the proof would need to be aggregated such that the verification of the aggregated proof can be carried out in the same way as before. 
-Hence lets define the aggregated  $RP = (V,a,D,z_{x},z_{\tau },z_{R})$, where $V, a, D$ are the multiplication of the corresponding elements in the two non aggregated range proofs and $z_{x},z_{\tau },z_{R}$ are the addition of the corresponding elements in the two non aggregated range proofs. To clarify two examples are, $D=D_1*D_2 =g^{s_1}h^{m_1}*g^{s_2}h^{m_2} = g^{s_1+s_2}h^{m_1+m_2}$, and the two exponentials are now refereed to as $s,m$, more over $z_x = z_{x_1}+z_{x_2} = (s_1-x_1c_1 )+ (s_2-x_2c_2) = s- x_1c_1-x_2c_2 $. Remark that challenges $c_1$ and $c_2$ has been calculated before aggregating and summed, if the hash function used to calculate the challenges is homomorphic then they could be calculated based on the aggregated values. It is straight forward to realize that the commitment $C$ and the two group elements $V,D$ are homomorphic in the scene that the multiplying the corresponding elements from separate range proofs in equivalent to construction a range proof where the exponentials are the sum of the exponentials of the proof, this follows directly from the discussion about the homomorphic properties of the Pedersen commitment. It is less obvious to see that the bilinear map can be aggregated, but this has been shown and the security proven in \cite{aggregate_bm}. But although bilinear maps can be aggregated it turns out that the set membership proof does not have this property, this follows from design of $z_x,z_\tau $ and $z_R$ using addition and subtraction, when multiplying two sums the crossterms will not cancel as desired, this is seen below. Lets continue with the example of the aggregated proof $RP$. For the verification to success it must hold that, $1)$ $D= C^ch^{z_R}g^{z_x}$ and $2)$ $ a = e(V,y)^ce(V,g)^{-z_x}e(g,g)^{z_\tau}$, so lets check if it holds staring with the first.
+Hence lets define the aggregated  $RP = (V,a,D,z_{x},z_{\tau },z_{R})$, where $V, a, D$ are the multiplication of the corresponding elements in the two non aggregated range proofs and $z_{x},z_{\tau },z_{R}$ are the addition of the corresponding elements in the two non aggregated range proofs. To clarify two examples are, $D=D_1*D_2 =g^{s_1}h^{m_1}*g^{s_2}h^{m_2} = g^{s_1+s_2}h^{m_1+m_2}$, and the two exponentials are now refereed to as $s,m$, more over $z_x = z_{x_1}+z_{x_2} = (s_1-x_1c_1 )+ (s_2-x_2c_2) = s- x_1c_1-x_2c_2 $. Remark that challenges $c_1$ and $c_2$ has been calculated before aggregating and summed, if the hash function used to calculate the challenges is homomorphic then they could be calculated based on the aggregated values. It is straight forward to realize that the commitment $C$ and the two group elements $V,D$ are homomorphic in the scene that the multiplying the corresponding elements from separate range proofs in equivalent to construction a range proof where the exponentials are the sum of the exponentials of the proof, this follows directly from the discussion about the homomorphic properties of the Pedersen commitment. It is less obvious to see that the bilinear map can be aggregated, but this has been shown and the security proven in \cite{aggregate_bm}. But although bilinear maps can be aggregated it turns out that the set membership proof does not have this property, this follows from design of $z_x,z_\tau $ and $z_R$ using addition and subtraction, when multiplying two sums the cross-terms will not cancel as desired, this is seen below. Lets continue with the example of the aggregated proof $RP$. For the verification to success it must hold that, $1)$ $D= C^ch^{z_R}g^{z_x}$ and $2)$ $ a = e(V,y)^ce(V,g)^{-z_x}e(g,g)^{z_\tau}$, so lets check if it holds staring with the first.
 
 \begin{align*}
 D &= D_1*D_2 = g^{s_1+s_2}*h^{m_1+m_2} = C^ch^{z_R}g^{z_x} = (C_1*C_2)^{c_1+c_2}h^{z_{R_1}+z_{R_2}}g^{z_{x_1}+z_{x_2}}\\ 
@@ -176,16 +174,11 @@ D &= D_1*D_2 = g^{s_1+s_2}*h^{m_1+m_2} = C^ch^{z_R}g^{z_x} = (C_1*C_2)^{c_1+c_2}
 \end{align*}
 This is since $ cx = (x_1+x_2)(c_1+c_2) = x_1c_1+x_1c_2+x_2c_1+x_2c_2 \neq x_1c_1 + x_2c_2$ and hence the terms does not cancel such that the RHS is independent of $x_1,x_2,c_1,c_2$ unlike the LHS. Neither the  second equality test including  bilinear mapping holds after aggregation, this equality will not hold even if the challenges are equal, i.e $c_1=c_2$ unlike the first. This can also be seen in Construction \ref{alg:ZKRP} where the verification of first equlity is aggregated while the second is done for each $j\in\mathds{Z}_l$. This concludes that the neither set membership nor signature based range proof can be straight forward aggregated without modifications.  
 
-Next lets examine the possibility to aggregate Bulletproofs. The original paper about Bulletproofs \cite{bulletProofs_theory} presents a method to aggregate Bulletproofs such that $n$ parties each having a Pedersen commitment $C_i,\: i=1,...,n$ can generate a single bulletproof verifying that each commitment hides a secret in an allowed range. This however only works if all parties uses the same challenge $c$ in the proof construction, this is achieved by introducing a dealer. The dealer can be either one of the clients of another party. 
+Next lets examine the possibility to aggregate Bulletproofs. The original paper about Bulletproofs \cite{bulletProofs_theory} presents a method to aggregate Bulletproofs such that $n$ parties each having a Pedersen commitment $C_i,\: i=1,...,n$ can generate a single bulletproof verifying that each commitment hides a secret in an allowed range. This however only works if all parties uses the same challenge $c$ in the proof construction, this is achieved by introducing a dealer. The dealer can be either one of the clients or another party. During the constructions of the proofs when computing the challenges each client sends their proof of to this point to the dealer who aggregates the proofs and computes the challenges based on the aggregated proofs. For example, assume $n$ clients and denote their respective proofs with a subscript $i$, then to compute the challenges $y_i$ in construction \ref{alg:bullet} instead of each client computing $y_i = Hash(A_i,S_i)$, each client sends $A_i,S_i$ to the dealer who adds then homomorphically $A = \prod_{i=1}^n A_i, S = \prod_{i=1}^n S_i$ and the send back the challenge $y =Hash(A,S)$ to be use by all clients. This procedure is repeated for each challenge. The following steps is not describe here instead it is noted that although the Fiat-Shamir heuristic is used to generate the challenges it is interactive since communication between the dealer and the clients is required during the construction of the aggregated range proof. If this procedure was ignored and each client instead computed their own challenges via Fiat-Shamir heuristic and the proof where aggregated after they were fully constructed,  then the challenges would differ between parties and the verification fail. Concluding, it has been seen that the  bulletproof can be aggregated with the cost on an  interactive construction, however this is not a desirable property for the the server and client verifiable AHSS construction.
 
+This concludes that neither of the considers range proofs can be aggregated  (in a naive way) such that the verifier can perform one single verification instead of one for each client, at least not without some cost. Remark that this conclusion is not final and their may very well exist small or large modifications of the range proof that will allow them to be aggregated and still remaining non-interactive. The investigation of such modification is outside the scope of this paper but the reader is endorsed to explore this possibility. 
 
-the case when the challenge is being provided by the verifier, i.e in an interactive construction of Bulletproof. In a non-interactive construction, as considered here the challenges is the hash of the previous calculated proof elements, hence not the same of different parties. 
-
-This means that bulletproof can be aggregated for interactive constructions, however this is not a desirable property for the the server and client verifiable AHSS construction. 
-
-This concludes that neither of the considers range proofs can be aggregated  (in a naive way) such that the verifier can perform one single verification instead of one for each client. Remark that this conclusion is not final and their may very well exist small or large modifications of the range proof that will allow them to be aggregated. The investigation of such modification is outside the scope of this paper but the reader is endorsed to explore this possibility. 
-
-A final remark that the naive approach to aggregate the commitments $\pi_i, \: i\in\mathcal{N}$ to $\pi = \prod_{i=1}^n \pi_i$ and then construct a range proof for the aggregated commitment $\pi = g^{\sum_{i=1}^n x_i}$ over the range $[n\cdot a,n\cdot b]$, to prove $x_i\in [a,b]$ for all $i\in\marhcal{N}$  is useless. The value $y=\sum_{i=1}^n x_i$ is publicly known so to construct a zero knowledge range proof for $y $ provides no new information and given that $y\in [n\cdot a,n\cdot b]$ does not imply $x_i\in [a,b]$ for all $i\in\marhcal{N}$. 
+A final remark that the naive approach to aggregate the commitments $\pi_i, \: i\in\mathcal{N}$ to $\pi = \prod_{i=1}^n \pi_i$ and then construct a range proof for the aggregated commitment $\pi = g^{\sum_{i=1}^n x_i}$ over the range $[n\cdot a,n\cdot b]$, to prove $x_i\ in [a,b]$ for all $i \in\mathcal{N}$  is useless. The value $y=\sum_{i=1}^n x_i$ is publicly known so to construct a zero knowledge range proof for $y $ provides no new information and given that $y\in [n\cdot a,n\cdot b]$ does not imply $x_i\in [a,b]$ for all $i\in\mathcal{N}$. 
 
 \section{Implementation}
 To practically investigate the combining of the vahss construction \ref{alg:VAHSS-HSS} with a range proof, an implementation of construction \ref{alg:VAHSS-HSS-RP} is provided written in Golang. Remark that this construction is written without specifying which range proof that is used, and works for all different range proofs that provides a proof for a Pedersen commitment, which is true for every range proof discussed above. From the analysis of the range proofs given above XXX. Since all three constructions have there advantages and disadvantages all will be used to implement the client and server verifiable additive homomorphic secret sharing construction \ref{alg:VAHSS-HSS-RP}. The set membership proof will be considered and used to verify clients honesty, yet sometimes is may be refereed to 

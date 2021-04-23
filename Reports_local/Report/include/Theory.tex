@@ -14,17 +14,21 @@ To make the text more comprehensible notation that is used throughout the paper 
 
 Let $\mathds{F}=\mathds{Z}_p$ denote a finite field, where $p$ is a large prime and let $\mathds{G}$ denote a unique subgroup of order $q$.  Define $g\in\mathds{G}$ to be a group generator and $h\in\mathds{G}$ a group element such that  $log_g\:h$ is unknown. 
 
-The variable $x\in\mathds{F}$ will consistently denote a secret, i.e the value is not know to all parties in the protocol, and the variable $R\in\R\mathds{F}$ will denote a randomly chosen value that hides the secret $x$. The notation $y\in_R\mathds{Y}$, means that an element $y$ in chosen at random from the set $\mathds{Y}$.
+The variable $x\in\mathds{F}$ will consistently denote a secret, i.e the value is not know to all parties in the protocol, and the variable $R\in_R\mathds{F}$ will denote a randomly chosen value that hides the secret $x$. The notation $y\in_R\mathds{Y}$, means that an element $y$ in chosen at random from the set $\mathds{Y}$.
 
 \subsection*{Definitions, Theorems and Assumptions}
 %TODO INTRO
 
 The discrete logarithm assumption and q-strong Diffie Hellman assumption define below does not hold in the presence of quantum computers. All cryptographic constructions presented in this paper relies on one or both of these two assumptions, hence the security is not guaranteed post quantum. 
-
+\vspace{10pt}
 \begin{Mydef}[\textbf{Pseudorandom Function (PRF)}]
-%TODO
+Let $S$ be a  distribution over $\{0,1\}^l$ and $F_s\: :\: \{0,1\}^m\to\{0,1\}^n$ a family of functions indexed by a string $s$ in the support $S$. It is defined that $\{F_s\}$ is a pseudo random function family if, for every PPT adversary $\mathcal{A}$, there exists a negligable function $\varepsilon$ such that:
+\begin{align*}
+|\text{Pr}[\mathcal{A}^{F_s}(\cdot) = 1] - \text{Pr}[\mathcal{A}^{R}(\cdot) = 1] | \leq \varepsilon,
+\end{align*}
+where $s$ in distributed according to $S$ and $R$ is a function sampled uniformly at random from the set of all functions mapping from $\{0,1\}^n$ to $\{0,1\}^m$.
 \end{Mydef}
-
+\vspace{10pt}
 \begin{Mydef}[\textbf{Euler's totient function}]
 The function $\Phi(n)$ is defined as the counter of the number of integers that are relative primes to $n$ in the set $\{1,...,n\}$ . Note if $n$ is a prime number $\phi(n) = n-1$.
 \end{Mydef}
@@ -155,11 +159,11 @@ Note that is the step \textbf{ShareSecret} the shares are put to $x_{ij}= \lambd
 
 
 \begin{algorithm}
-\label{alg:VAHSS-HSS}
 \caption{\textbf{: Verifiable additive homomorphic secret sharing}}
+\label{alg:VAHSS-HSS}
 \textbf{Goal:} Construct and share the sum $\sum_{i=1}^n x_i$, where $x_i$ is a secret value known by client $c_i$, where $i\in\mathcal{N}$ without any client needing to revealing their individual secret. The servers, used to sharing the secrets, computations are verified so they must be honest. 
 \vspace{2pt}
-\hline
+\hline 
 \vspace{2pt}
 \begin{itemize}
   \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\tau_i,\{x_{ij}\}_{j\in\mathcal{M}})$}\\
@@ -188,7 +192,7 @@ Compute and output $\sigma= \prod_{i=1}^n \tau_i \wedge \prod_{i=1}^n \tau_i = \
 \subsection*{Correctness, Security and Verifiability}
 A HSS/additive-HSS construction should satisfy  two requirements: \textit{Correctness} and \textit{Security}. A verifiable additive HSS should also satisfy \textit{Verifiability}. The requirements are defined as:
 \begin{itemize}
-    \item \textbf{Correctness} It must hold that Pr$\Big[\textbf{Verify}(\{\tau_i\}_{i\in\mathcal{N}},\sigma,y)=1\Big]=1$. This means that with probability $1$ the output $y$ from \mathbb{FinalEval} is accepted given all parties where honest and the protocol were executed correctly.
+    \item \textbf{Correctness} It must hold that Pr$\Big[\textbf{Verify}(\{\tau_i\}_{i\in\mathcal{N}},\sigma,y)=1\Big]=1$. This means that with probability $1$ the output $y$ from \textbf{FinalEval} is accepted given all parties where honest and the protocol were executed correctly.
     \item \textbf{Security} Let $T$ define the set of corrupted servers such that $|T|<m$, i.e at least one server is honest.  Denote a PPT adversary by $\mathcal{A}_1$ and let the Adv$(1^\lambda,\mathcal{A},T):= \text{Pr}[b' = b]-1/2$ be the advantage of $\mathcal{A}=\{\mathcal{A}_1,\mathcal{D}\}$ in guessing $b$ in the following experiment:
     \begin{enumerate}
         \item The adversary $\mathcal{A}_1$ gives $(i,x_i,x_i')$ to the challenger, where $i\in[n], x_i\neq x_i'$ and $|x_i|=|x_i'|$.
@@ -198,9 +202,8 @@ A HSS/additive-HSS construction should satisfy  two requirements: \textit{Correc
     A VAHSS-construction is $t$-secure if for all $T\subset \{s_1,...,s_m\}$ with $|T|<t$ it holds that Adv$(1^\lambda,\mathcal{A},T)<\varepsilon(\lambda)$ for some negligible $\varepsilon(\lambda)$.
  \item \textbf{Verifiability} Let $\mathcal{A}$ denote any PPT  adversary and $T$ denote the set of corrupted servers with $T\leq m$. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(x_1,...,x_n)$ with negligible probability.   
 \end{itemize}
-\\
-The VHASS in Construction \ref{alg:VAHSS-HSS} satisfies the correctness, security and verifiability requirements defined above, this is stated in Theorem \ref{thm:VAHSS_CSV} 
-\\
+The VHASS in Construction \ref{alg:VAHSS-HSS} satisfies the correctness, security and verifiability requirements defined above, this is stated in Theorem \ref{thm:VAHSS_CSV} .
+
 \begin{thm}
 \label{thm:VAHSS_CSV}
 Construction \ref{alg:VAHSS-HSS} satisfies the correctness, security and verifiability requirements described above.
@@ -221,8 +224,7 @@ See section $4.1$ in \cite{VAHSS}.
 \section{Constructions for verifying clients input}
 \label{sec:RF_theory}
 Range proofs allows a prover to convince a verifier that the value of a secret is in an allowed range, zero knowledge range proofs (ZKRP) does this with out revealing any other information about the secret. Here ZKRP constructed to prove the following statement about a secret $x$ is considered:
-\begin{align}
-\label{eq:RP_statement}
+\begin{align} \label{eq:RP_statement}
     \{(g,h\in\mathds{G},C;x,R\in\mathds{F})\::\:C= g^x h^R \wedge x \in \{\textit{"predetermined allowed range"}\}
 \end{align}
 Note that in the above statement  it is assumed that $x$ is the secret in a Pedersen commitment, which is not required for range proofs however only such range proof will be studied in this paper. The range which $x$ is proved to belong to may vary between different constructions and will be more precisely defied below for the separate constructions. 
@@ -285,7 +287,7 @@ Using this notation it follows that if $x_j\in[0,u)\: \forall j\in\mathds{Z}_l$,
 Pick uniformly at random $\chi\in_R\mathds{F}$. Define $y=g^\chi$ and $A_i=g^{\frac{1}{\chi+i}} \: \forall i\in\mathds{Z}_u$, output $y$ and $\{A_i\}$.
 
 \item\text{\textbf{Prove} $(g,h,C,u,l)\xrightarrow[]{}\textit{ proof}_{RP}=(\{V_j\},\{a_j\},D,\{z_{x_j}\},\{z_{\tau_j}\},z_R)$}\footnote{$\forall j\in\mathds{Z}_l$}\\
- For every $j\in\mathds{Z}_l$: pick uniformly at random $\tau_j\in_R\mathds{F}$ and compute $V_j=A_{x_j}^{\tau_j}$. Then pick uniformly at random three more values $s_j,t_j,m_j\in_R\mathds{F}$ and compute $a_j=e(V_j,g)^{-s_j}e(g,g)^{t_j}$ for all $j\in\mathds{Z}_l$ and $D=\prod_{j\in\mathds{Z}_l}(g^{u^js_j})h^{m_j}$ Given this let $c=\text{Hash}(\{V_j\},\{a_j\},D)$. Then for all $j\in\mathds{Z}_l$ compute $z_{x_j}=s_j-x_jc$,$z_{\tau_j}=t_j-\tau_jc$ tand $z_R=m-Rc$, where $m=\sum_{j\in\mathds{Z}_l}m_j$. Finally output the proof: \textit{proof}_{RP}$=(\{V_j\},\{a_j\},D,\{z_{x_j}\},\{z_{\tau_j}\},z_R)$ 
+ For every $j\in\mathds{Z}_l$: pick uniformly at random $\tau_j\in_R\mathds{F}$ and compute $V_j=A_{x_j}^{\tau_j}$. Then pick uniformly at random three more values $s_j,t_j,m_j\in_R\mathds{F}$ and compute $a_j=e(V_j,g)^{-s_j}e(g,g)^{t_j}$ for all $j\in\mathds{Z}_l$ and $D=\prod_{j\in\mathds{Z}_l}(g^{u^js_j})h^{m_j}$ Given this let $c=\text{Hash}(\{V_j\},\{a_j\},D)$. Then for all $j\in\mathds{Z}_l$ compute $z_{x_j}=s_j-x_jc$,$z_{\tau_j}=t_j-\tau_jc$ and $z_R=m-Rc$, where $m=\sum_{j\in\mathds{Z}_l}m_j$. Finally output the proof: \textit{proof}$_{RP}=(\{V_j\},\{a_j\},D,\{z_{x_j}\},\{z_{\tau_j}\},z_R)$ 
 
 \item\text{\textbf{Verify} $(g,h,C,\textit{proof})\xrightarrow[]{}\{0,1\}$}\\
 Check if $D\overset{?}{=}C^ch^{z_R}\prod_{j\in\mathds{Z}_l}(g^{u^j z_{x_j}})\wedge a_j \overset{?}{=} e(V_j,y)^c e(V_j,g)^{-z_{x_j}}e(g,g)^{z_{\tau_j}}$ for all $j\in\mathds{Z}_l$.  If the equality holds the prover has convinced the verifier that $x\in [0,u^l)$ return $1$ otherwise return $0$.
@@ -379,7 +381,7 @@ Let $y=\text{Hash}_{IP}(\mathbf{g},\mathbf{h},P_v,c) \in\mathds{F}^*$ and comput
     \item  Otherwise:  Let $n'=n/2$ and define  $c_L=\langle \bm{s}_{[:,n']},\bm{q}_{[n',:]} \rangle$ and $c_R=\langle \mathbf{s}_{[n',:]},\mathbf{q}_{[:,n']} \rangle$. Then use these variables to calculate $L=\mathbf{g}_{[n':]}^{\mathbf{s}_{[:n']}} \mathbf{h}_{[:n']}^{\mathbf{q}_{[n':]}} u^{c_L}$ and $R=\mathbf{g}_{[:n']}^{\mathbf{s}_{[n':]}} \mathbf{h}_{[n':]}^{\mathbf{q}_{[:n']}} u^{c_R}$. Append  $L,R\in\mathds{G}$ to the vectors $\mathbf{l}$ resp $\mathbf{r}$. Now update $y=\text{Hash}_{BP}(L,R)$, and update $\mathbf{g}' = \mathbf{g}_{[:n']}^{y^{-1}}\mathbf{g}_{[n':]}^{y}$, $\mathbf{h}' = \mathbf{h}_{[:n']}^{y}\mathbf{h}_{[n':]}^{y^{-1}}$ and the commitment $P_v'=L^{y^2}PR^{y^{-2}}$. Finally update the vectors $\mathbf{s},\mathbf{q}$ to $\mathbf{s}' = \mathbf{s}_{[:n']}y+\mathbf{s}_{[n':]}y^{-1}$ and $\mathbf{q}' = \mathbf{q}_{[:n']}y^{-1}+\mathbf{q}_{[n':]}y$. Run the algorithm recursively, \textbf{GenerateProof}$(\mathbf{g}',\mathbf{h}',u,P_v',\mathbf{s}',\mathbf{q}',\mathbf{l},\mathbf{r})$ with the updated variables. Note that the vectors $\mathbf{g},\mathbf{h},\mathbf{s},\mathbf{q}$ now have the dimension $n'=n/2$, hence performing the recursion until one-dimensional vectors will require $log\:n$ iterations.
 \end{itemize}
 \item\text{\textbf{Verify} $(\textit{proof}_{IP} = (\mathbf{g},\mathbf{h},u,P_v,s,q,\mathbf{l},\mathbf{r}))\xrightarrow[]{}\{0,1\}$}\\
-For $i\in\{0,log(n)\}$ put $n=n/2$ and $y=\text{Hash}(\bm{l}[i],\bm{r}[i])$, then update the vectors $\bm{g}$ and $\bm{h}$ as well as the  variable $P_v'$ according to, $\bm{g}'= \bm{g}_{[:,n]}^{y^{-1}}\bm{g}'_{[n,:]}^{y}$, $\bm{h}= \bm{h}_l{[:,n]}^{x}\bm{h}_{[n,:]}^{y^{-1}}$ and $ P_v' = L^{y^2}PR^{y^{-2}}  $. After iterating over all $i$ the dimension of the vectors $\bm{g},\bm{h}$ is one and we can drop the bold font. Compute  $c=\langle s, q\rangle$ and  accept if $P_v' =g^sh^ru^c$.
+For $i\in\{0,log(n)\}$ put $n=n/2$ and $y=\text{Hash}(\bm{l}[i],\bm{r}[i])$, then update the vectors $\bm{g}$ and $\bm{h}$ as well as the  variable $P_v'$ according to, $\bm{g}'= \bm{g}_{[:,n]}^{y^{-1}} \bm{g}_{[n,:]}^{'y}$, $\bm{h}= \bm{h}_l{[:,n]}^{x}\bm{h}_{[n,:]}^{y^{-1}}$ and $ P_v' = L^{y^2}PR^{y^{-2}}  $. After iterating over all $i$ the dimension of the vectors $\bm{g},\bm{h}$ is one and we can drop the bold font. Compute  $c=\langle s, q\rangle$ and  accept if $P_v' =g^sh^ru^c$.
 \end{itemize}
 \label{alg:inner_product}
 \end{algorithm}
@@ -409,7 +411,7 @@ Directly using  a inner product argument presented in Construction \ref{alg:inne
     l(X) &= \bm{x} -z\cdot \bm{1}^n +\bm{s}_1\cdot X\\
     r(X) &= \bm{y}^n\circ (\bm{\bar{x}} + z \cdot\bm{1}^n + \bm{s}_2\cdot X)+ z^2\cdot\bm{2}^n,\\
 \end{align*}
-Note that $t_0 = z^2\cdotx + \delta(y,z)$ which is equal to the right hand side of equation \eqref{eq:range_non_zero}. Further it holds that $t_1 = \langle \bm{x}-z\cdot \bm{1}^n , \bm{y}^n\circ \bm{s_R}\rangle + \langle\bm{s_L},\bm{y}^n\circ (\bm{a_R}+z\cdot\bm{1}^n) + z\cdot \bm{2}^n\rangle$ and $t_2 =\langle \bm{s_L}, \bm{y}^n \circ \bm{s_R}\rangle $. Given these vectors and innner product Construction \ref{alg:bullet} gives a non interactive zero knowledge range proof that the secret $x$ belongs to the interval $[0,2^n]$.
+Note that $t_0 = z^2 \cdot x + \delta(y,z)$ which is equal to the right hand side of equation \eqref{eq:range_non_zero}. Further it holds that $t_1 = \langle \bm{x}-z\cdot \bm{1}^n , \bm{y}^n\circ \bm{s_R}\rangle + \langle\bm{s_L},\bm{y}^n\circ (\bm{a_R}+z\cdot\bm{1}^n) + z\cdot \bm{2}^n\rangle$ and $t_2 =\langle \bm{s_L}, \bm{y}^n \circ \bm{s_R}\rangle $. Given these vectors and innner product Construction \ref{alg:bullet} gives a non interactive zero knowledge range proof that the secret $x$ belongs to the interval $[0,2^n]$.
 
 \begin{algorithm}[]
 \caption{\textbf{: Bulletproof}}
@@ -419,7 +421,7 @@ Note that $t_0 = z^2\cdotx + \delta(y,z)$ which is equal to the right hand side 
 \vspace{2pt}
 \begin{itemize}
 \item\text{\textbf{Prove} $(g,h,\mathbf{g},\mathbf{h},P,n,x,R,u)\xrightarrow[]{}\textit{ proof}_{RP}$}\\
-Let $\bm{x}$ denote the binary representation of the secret $x$ in the commitment $P$ and $\bar{\bm{x}}$ the component-wise complement such  that $\bm{x}\circ \bar{\bm{x}} = 0$. Construct the commitment $A= h^\alpha \bm{g}^{\bm{x}} \bm{h}^\bar{\bm{x}}$, where $\alpha\in_R\mathds{F}$. Then chose the two blinding vectors $\bm{s_R},\bm{s_L}\in_R\mathds{F}^n$ and the value $\rho\in_R\mathds{F}$ and compute the commitment $S=h^\rho \bm{g}^{\bm{s_L}}\bm{h}^\bm{s_R}$. Let $y=\text{Hash}(A,S)$, $z=\text{Hash}(A,S,y)$ and $\tau_1,\tau_2\in_R\mathds{F}$. Now the it is possible to construct $t_1,t_2$ defined above. Given this let $T_1=g^{t_1}h^{\tau_1}$ and $T_2=g^{t_2}h^{\tau_2}$, next let $X=\text{Hash}(T_1,T_2)$. Now construct the two vectors for the inner product argument: $\bm{l} = \bm{x}-z\cdot \bm{1}^n-\bm{s_L}\cdot X$, $\bm{r}= \bm{y}^n\circ(\bar{\bm{x}}+ z\cdot \bm{1}^n+\bm{s_R}\cdot X ) + z^2\ X $ and calculate the inner product $\hat{t} = \langle \bm{l},\bm{r}\rangle$. Finally compute $\tau_X = \tau_2 x^2 + \tau_1 X + z^2 R$ and $\mu = \alpha+ R\:X$.  Now use the inner product argument to prove that $\hat{t}$ is indeed the inner product of the two vectors $\mathbf{l},\mathbf{r}$ using the commitment $P_v = \bm{g}^{\bm{l}}\bm{h}^\bm{r}$, run the algorithm  \textbf{Prove}  defined Construction \ref{alg:inner_product} with the input $(\bm{g},\bm{h},u,P_v,\hat{t},\bm{l},\bm{r})$ to construct such a proof denoted  \textit{proof$_{IP}$}. Combine and publish  the proof: $\textit{proof}_{RP} = (\tau_X, \mu , \hat{t}, P, A, S, T_1, T_2 , P_v ,\textit{proof}_{IP}) $.
+Let $\bm{x}$ denote the binary representation of the secret $x$ in the commitment $P$ and $\bar{\bm{x}}$ the component-wise complement such  that $\bm{x}\circ \bar{\bm{x}} = 0$. Construct the commitment $A= h^{\alpha} \bm{g}^{ \bm{x} } \bm{h}^{ \bar{\bm{x}} }$, where $\alpha \in_R \mathds{F}$. Then chose the two blinding vectors $\bm{s_R},\bm{s_L}\in_R\mathds{F}^n$ and the value $\rho\in_R\mathds{F}$ and compute the commitment $S=h^{\rho} \bm{g}^{\bm{s_L}} \bm{h}^{\bm{s_R}}$. Let $y=\text{Hash}(A,S)$, $z=\text{Hash}(A,S,y)$ and $\tau_1,\tau_2\in_R\mathds{F}$. Now the it is possible to construct $t_1,t_2$ defined above. Given this let $T_1=g^{t_1}h^{\tau_1}$ and $T_2=g^{t_2}h^{\tau_2}$, next let $X=\text{Hash}(T_1,T_2)$. Now construct the two vectors for the inner product argument: $\bm{l} = \bm{x}-z\cdot \bm{1}^n-\bm{s_L}\cdot X$, $\bm{r}= \bm{y}^n\circ(\bar{\bm{x}}+ z\cdot \bm{1}^n+\bm{s_R}\cdot X ) + z^2\ X $ and calculate the inner product $\hat{t} = \langle \bm{l},\bm{r}\rangle$. Finally compute $\tau_X = \tau_2 x^2 + \tau_1 X + z^2 R$ and $\mu = \alpha+ R\:X$.  Now use the inner product argument to prove that $\hat{t}$ is indeed the inner product of the two vectors $\mathbf{l},\mathbf{r}$ using the commitment $P_v = \bm{g}^{\bm{l}}\bm{h}^{\bm{r}}$, run the algorithm  \textbf{Prove}  defined Construction \ref{alg:inner_product} with the input $(\bm{g},\bm{h},u,P_v,\hat{t},\bm{l},\bm{r})$ to construct such a proof denoted  \textit{proof$_{IP}$}. Combine and publish  the proof: $\textit{proof}_{RP} = (\tau_X, \mu , \hat{t}, P, A, S, T_1, T_2 , P_v ,\textit{proof}_{IP}) $.
 
 \item\text{\textbf{Verify} $(g,h,C,\textit{proof}_{RP})\xrightarrow[]{}\{0,1\}$}\\
 Compute the three hash functions $y= \text{Hash}(A,S)$, $z= \text{Hash}(A,S,y)$ and $X= \text{Hash}(T_1,T_2)$. Then given  $y,z,X$ compute $h_i' = h_i ^{y^{-i+1}}$ for all $i\in\{1,...,n\}$, $P_l = P\cdot h\mu$ and $P_r = A\cdot S ^x \bm{g}^ {-z}\bm{h'}^{z\bm{y}^n+z^2\cdot \bm{2}^n}$. Then check if the following equalities hold: $P_l\overset{?}{=} P_r \wedge g^{\hat{t}}h^{\tau_X} \overset{?}{=}  P ^{z^2}\:g^{\delta(y,z)}\:T_1^x\:T_2^{x^2}$ and if the output of \textbf{Verify} in Construction \ref{alg:inner_product} on the input $(\text{proof}_{IP})$ is $1$. If all three criterion is fulfilled then the secret  $x$ in the commitment $P$ is in the range $[0,2^n]$.

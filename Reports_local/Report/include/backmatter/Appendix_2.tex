@@ -1,0 +1,76 @@
+\chapter{LHSS}
+\label{appendix:VHASS-LSS}
+
+\begin{algorithm}
+\caption{\textbf{: Verifiable additive homomorphic secret sharing}}
+\textbf{Goal:} Construct and share the sum $\sum_{i=1}^n x_i$, where $x_i$ is a secret value known by client $c_i$, where $i\in\mathcal{N}$ without any client needing to revealing their individual secret. The servers, used to sharing the secrets, computations are verified so they must be honest. 
+\vspace{2pt}
+\hline
+\vspace{2pt}
+\begin{itemize}
+    \item\textbf{SetUp $1^\lambda, N$}
+    Let $N$ be the product of two safe primes ($p,q$)  each of length $k'/2$. Choose at random two random safe primes $\hat{p},\hat{q}$ of length $k/2$, such that $\text{gcd}(N,\Phi(\hat{N}))=1$, where $\hat{N}=\hat{p}\hat{q}$. Then choose $g,g_1,g_2,h_1,...,h_n$ in $\mathds{Z}_{\hat{N}}$ at random. Choose an (efficiently computational) injective function $H:\{0,1\}^* \mapsto \{0,1\}^l$, with $l<k'/2$. Define the public verification key $vk= (N,H,\hat{N},g,g_1,g_2,h_1,...,h_n)$ and the private signing key to $sk=(\hat{p},\hat{q})$. 
+  \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\{x_{ij}\}_{j\in\mathcal{M}})$}\\
+Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree, put $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$.  Output $x_{i,j}$ for $j\in\mathcal{M}$. 
+
+%, be a collision-resistant homomorphic hash function. Let $R_i\in\mathds{F}$ be the output of a PRF.$R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute $\tau_i = \mathcal{H}(x_i+R_i)$, 
+
+\item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
+Compute and output $y_j = \sum_{i=1}^n x_{ij}$.
+
+\item\textbf{PartialProof $(sk,vk,fid,x_i,i)\xrightarrow[]{}\sigma_j$}\\
+Parse the verification key $vk$. Use the injective function $H$ to compute the prime $e=H(fid)$. Let $R_i\in\mathds{F}$ be the output of a PRF. $R_n, = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $.  Choose at random $s_i\in_R\mathds{Z}_\hat{N}$ and use the secret key $sk$ to solve for $x$ in the equation $x^{eN}= g^{sj}\prod_{j=1}^n h_j^{f_j^{(i)}}g_1^{x_i+R_i} \: \text{mod}(\hat{N})$. Let the vector $f^{(i)}$ be the canonical bases $e_i$ of $\mathds{Z}^n$, this reduced the equation to $x^{eN}= g^{s_j} h_i g_1^{x_i+R_i} \: \text{mod}(\hat{N})$, set $\tilde{x}_i=x$ 
+and output the partial proof $\sigma_i= (e,s_i,fid,\tilde{x}_i)$.
+
+\item\textbf{ConstructRangeProof $x_i,i \mapsto proof_{RP}$}\\
+Let $r_i\in\mathds{F}$ be the output of a PRF. $r_n, = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}r_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}r_i $ and compute the Fujisaki-Okamoto commitment $\pi_i=g_1^{x_i}g_2^{r_i}$.
+Use the commitment $\pi_i$ to construct a square-based range proof for the secret $x_i$ denoted $proof_{RP}$. Output $(\pi_i,proof_{RP_i})$.
+ 
+\item\textbf{FinalEval $(\{y_j\}_{j\in\mathcal{M}})\xrightarrow[]{}y$}\\
+Compute and output $y = \sum_{j=1}^m y_{j}$.
+
+\item\textbf{FinalProof $(vk,\sigma_1,...,\sigma_n)\xrightarrow[]{}\sigma$}\\
+Parse the partial proofs $\sigma_i$ to get $(e,s_i,fid,\tilde{x}_i,\pi_i)$.  
+Let $\hat{f}= (\alpha_1,...,\alpha_n)\in\mathds{Z}^n$ and define $f' = ( \sum_{i=1}^n \alpha_if^(i)-f)/(eN)$, where $f=\sum_{i=1}^n\alpha f^{(i)} \: \text{mod}\:eN$. Set $s= \sum_{i=1}^n\alpha_is_i \: \text{mod}\:eN$, $s' = (\sum_{i=1}^n \alpha_i s_i -s)/eN \: \text{mod}\: eN$ and $\tilde{x} = \frac{\prod_{i=1}^n \tilde{x}_i^{\alpha_i}}{g^{s'}\prod_{j=1}^n h_j ^{f'}} \: \text{mod}\: \hat{N}$. Let $\alpha_i =1 \: \forall i\in\{1,...,n\}$, then compute  $\tilde{x} = \frac{\prod_{i=1}^n \tilde{x}_i}{g^{s'}\prod_{j=1}^n h_j ^{f'}} \: \text{mod}\: \hat{N}$.
+
+Output the final proof $\sigma = (e,s,fid,\tilde{x})$.
+
+\item\textbf{Verify $(vk,f,\sigma,y,\pi_i,...,\pi_n,proof_{RP_1},...,proof_{RP_n})\xrightarrow[]{}\{0,1\}$}\\
+Compute $e=H(fid)$. Check that $y,s\in\mathds{Z}_\hat{N}$ and $\tilde{x}^{eN} = g^s\prod_{j=1}^n h_j^{f}g_1^y$. Further check that $g_1^y =\prod_{i=1}^n \pi_i$ and \textbf{VerifyRP}$(\pi_i,proof_{RP_i})\: \forall i\in\mathcal{N}$ 
+\end{itemize}
+\label{alg:VAHSS-HSS}
+\end{algorithm}
+
+\section*{Questions}
+\begin{itemize}
+\item Would it be possible to let $x$ be the solution to $x^{eN} = g^{s_j}h_ig_1^{x_i}g_2^{R_i} =  g^{s_j}h_i\pi_i $
+\end{itemize}
+\section*{Correctness, Securist and Verifiability}
+\begin{itemize}
+    \item \textbf{Correctness} Need to show $\text{Pr}[\textbf{Verify}(vk,f,\sigma,y\pi_1,...,\pi_n,proof_{RP_1},...,proof_{RP_n}) = 1] = 1$. For this it requires to show that all three following holds at the same time
+    \begin{enumerate}
+        \item $\tilde{x}^{eN} \overset{?}{=} g^s (\prod_{i=1}^n h_i^f )g_1^y$ \quad \quad (\textit{Holds given that} $y=\sum_{i=1}^n x_i$ ) 
+        \item $g_1^y \overset{?}{=} \prod_{i=1}^n \pi_i$ \quad \quad (\textit{Holds given that $x_i=\sum_{j=1}^m x_{ij}$ and $\pi_i = g_1^{\hat{x}_i}g_2^{r_i}$ such that $x_i = \hat{x}_i$} ) 
+        \item $\textbf{VerifyRP}(\pi_i,proof_{RP_i})\overset{?}{=}1 \: \forall i\in\mathcal{N}$ (\textit{Holds given that $x_i\in [a,b]\: \forall i\in\mathcal{N}$} ) 
+    \end{enumerate}  
+    The first statement is proved to hold by original VAHSS-LHS. For the seconds statment it holds that;
+    \begin{align*}
+        LHS = g_1^y = g_1^{\sum_{j=1}^m y_{j}} \overset{*}{=} g_1^{\sum_{j=1}^m \sum_{i=1}^n x_{ij}}
+ = g_1^{\sum_{i=1}^n x_{i}} \text{ *Due to first statement.} \\
+ RHS = \prod_{i=1}^n \pi_i = \prod_{i=1}^n g_1^{x_i}g_2^{r_i} = g_1^{\sum_{i=1}^n x_i} g_2 ^{\sum_{i=1}^n r_i} =  g_1^{\sum_{i=1}^n x_i}.  \implies LHS = RHS
+ \end{align*} 
+ 
+ The last follows from the verification of a correctly constructed range proof.
+ 
+ \item\textbf{Security} 
+ 
+ \item \textbf{Verifiability}
+    \begin{itemize}
+        \item If $x_i=\sum_{j=1}^m x_{ij}$,  $\pi_i = g_1^{\hat{x}_i}g_2^{r_i}$  and  $x_i \neq \hat{x}_i$, then,
+        \begin{align*}
+            g_1^y = \prod_{i=1}^n \pi_i \implies
+            g^{\sum_{i=1}^n x_{i}} =  g^{\sum_{i=1}^n \hat{x}_{i}} \implies \\
+            \sum_{i=1}^n x_{i} = \sum_{i=1}^n \hat{x}_{i} \text{ (Contraction)}
+        \end{align*}
+    \end{itemize}
+\end{itemize}

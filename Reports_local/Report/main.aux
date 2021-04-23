@@ -38,13 +38,13 @@
 \citation{pedersen}
 \newlabel{thm:euler}{{1}{4}{\textbf {Euler's Theorem}}{thm.1}{}}
 \newlabel{ass:DLA}{{1}{4}{\textbf {Discrete logarithmic assumption}}{Ass.1}{}}
-\newlabel{thm:C=g^xh^R}{{2}{4}{}{thm.2}{}}
 \citation{pedersen}
 \citation{SumItUp}
-\citation{Bohen-Boyen}
+\newlabel{thm:C=g^xh^R}{{2}{5}{}{thm.2}{}}
 \newlabel{eq:pedersen_binidng}{{2.1}{5}{}{equation.2.1.1}{}}
 \newlabel{sec:bilinear}{{2.1}{5}{}{equation.2.1.1}{}}
 \newlabel{def:AdmissibleBM}{{3}{5}{\textbf {Admissible Bilinear Map}}{Mydef.3}{}}
+\citation{Bohen-Boyen}
 \citation{OG_ZKP}
 \citation{Fiat-Shamir}
 \newlabel{def:ZKP}{{4}{6}{}{Mydef.4}{}}
@@ -53,9 +53,9 @@
 \@writefile{toc}{\contentsline {section}{\numberline {2.2}Verifiable additive homomorphic secret sharing}{7}{section.2.2}\protected@file@percent }
 \newlabel{sec:VAHSS}{{2.2}{7}{Verifiable additive homomorphic secret sharing}{section.2.2}{}}
 \newlabel{eq:pi(0)}{{2.2}{7}{}{equation.2.2.2}{}}
-\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{alg:VAHSS-HSS}{{\caption@xref {alg:VAHSS-HSS}{ on input line 158}}{8}{}{equation.2.2.2}{}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textbf  {: Verifiable additive homomorphic secret sharing}\relax }}{8}{algorithm.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{alg:VAHSS-HSS}{{1}{8}{\textbf {: Verifiable additive homomorphic secret sharing}\relax }{algorithm.1}{}}
 \citation{VAHSS}
 \citation{Efficient_proof_interval}
 \citation{FSS}
@@ -105,34 +105,36 @@
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}Additive homomorphic secret sharing with verification of both clients and severs }{20}{section.3.2}\protected@file@percent }
 \newlabel{sec:combination}{{3.2}{20}{Additive homomorphic secret sharing with verification of both clients and severs }{section.3.2}{}}
 \citation{SumItUp}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {6}{\ignorespaces \textbf  {: Client and Server Verifiable additive homomorphic secret sharing}\relax }}{22}{algorithm.6}\protected@file@percent }
-\newlabel{alg:VAHSS-HSS-RP}{{6}{22}{\textbf {: Client and Server Verifiable additive homomorphic secret sharing}\relax }{algorithm.6}{}}
 \citation{SumItUp}
 \citation{VAHSS}
 \citation{VAHSS}
+\newlabel{eq:y=sum(x_ij)}{{3.1}{22}{Additive homomorphic secret sharing with verification of both clients and severs }{equation.3.2.1}{}}
 \citation{SumItUp}
-\newlabel{eq:y=sum(x_ij)}{{3.1}{23}{Additive homomorphic secret sharing with verification of both clients and severs }{equation.3.2.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Aggregate proofs}{23}{section.3.3}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {6}{\ignorespaces \textbf  {: Client and Server Verifiable additive homomorphic secret sharing}\relax }}{23}{algorithm.6}\protected@file@percent }
+\newlabel{alg:VAHSS-HSS-RP}{{6}{23}{\textbf {: Client and Server Verifiable additive homomorphic secret sharing}\relax }{algorithm.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Aggregate range proofs}{23}{section.3.3}\protected@file@percent }
 \citation{aggregate_bm}
 \citation{bulletProofs_theory}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Implementation}{25}{section.3.4}\protected@file@percent }
 \citation{Git:RP}
 \citation{Git:python_vahss}
 \citation{Git:C_vahss}
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Implementation}{25}{section.3.4}\protected@file@percent }
 \citation{Git:RP}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Results}{27}{chapter.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Results}{29}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{ch:results}{{4}{27}{Results}{chapter.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Runtime}{27}{section.4.1}\protected@file@percent }
-\newlabel{tab:BenchBP}{{\caption@xref {tab:BenchBP}{ on input line 8}}{27}{Runtime}{table.caption.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Timing in seconds for server and client verifiable-AHSS. Verfication of clients is done by usingBulletProofs\relax }}{27}{table.caption.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Conclusion}{29}{chapter.5}\protected@file@percent }
+\newlabel{ch:results}{{4}{29}{Results}{chapter.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Combining}{29}{section.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Runtime}{29}{section.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Comparisson}{29}{section.4.3}\protected@file@percent }
+\newlabel{tab:BenchBP}{{\caption@xref {tab:BenchBP}{ on input line 14}}{29}{Comparisson}{table.caption.8}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Timing in seconds for server and client verifiable-AHSS. Verfication of clients is done by usingBulletProofs\relax }}{29}{table.caption.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Conclusion}{31}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{ch:Conslusion}{{5}{29}{Conclusion}{chapter.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Discussion}{29}{section.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Conclusion}{29}{section.5.2}\protected@file@percent }
+\newlabel{ch:Conslusion}{{5}{31}{Conclusion}{chapter.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Discussion}{31}{section.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Conclusion}{31}{section.5.2}\protected@file@percent }
 \bibstyle{abbrv}
 \bibdata{ref.bib}
 \bibcite{Fiat-Shamir}{1}
@@ -147,7 +149,7 @@
 \bibcite{ZKRP_Morais}{10}
 \bibcite{Git:RP}{11}
 \bibcite{pedersen}{12}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{31}{section.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{33}{section.5.2}\protected@file@percent }
 \bibcite{How_share_A_secret}{13}
 \bibcite{Git:C_vahss}{14}
 \bibcite{Git:python_vahss}{15}
@@ -158,3 +160,9 @@
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \newlabel{appendix:range}{{A}{I}{Proof of range in signature based range proof}{appendix.A}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}LHSS}{III}{appendix.B}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{appendix:VHASS-LSS}{{B}{III}{LHSS}{appendix.B}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {7}{\ignorespaces \textbf  {: Verifiable additive homomorphic secret sharing}\relax }}{IV}{algorithm.7}\protected@file@percent }
+\newlabel{alg:VAHSS-HSS}{{7}{IV}{\textbf {: Verifiable additive homomorphic secret sharing}\relax }{algorithm.7}{}}
