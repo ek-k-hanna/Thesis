@@ -1,6 +1,7 @@
 % CREATED BY DAVID FRISK, 2016
 \chapter{Theory}
-This chapter will present the theory behind the client and server verifiable additive homomorphic secret sharing construction described in section \ref{sec:Methods}.  First  the preliminaries are described, including notation, theorems/definitions, assumptions  and cryptographic preliminaries /concepts. Then the VAHSS \cite{SumItUp} \cite{VAHSS} construction, which this reports aims to extend to include  a verification of clients input   Finally two  range proof constructions, refereed to as \textit{signature-based range proof} and \textit{bulletproof}, is described. 
+\label{ch:theory}
+This chapter will present the theory behind the client and server verifiable additive homomorphic secret sharing construction described in chapter \ref{ch:Methods}.  First  the preliminaries are described, including notation, theorems/definitions, assumptions  and cryptographic preliminaries /concepts. Then the VAHSS \cite{SumItUp} \cite{VAHSS} construction, which this reports aims to extend to include  a verification of clients input   Finally two  range proof constructions, refereed to as \textit{signature-based range proof} and \textit{bulletproof}, is described. 
 
 
 \section{Preliminaries}
@@ -41,10 +42,13 @@ From Theorem \ref{thm:euler} it follows that for arbitrary $y$ it holds that $x^
 \label{ass:DLA}
 Let $\mathds{G}$ be a group of prime order $q$, a generator $g\in \mathds{G}$ and an arbitrary element $y \in\mathds{G}$, it is  infeasible to find $x \in \mathds{Z}_q$, such that $y=g^x$
 \end{Ass}
+
 \vspace{10pt}
 \begin{Ass}[\textbf{q-strong Diffie Hellman Assumption}]
  Given a group $\mathds{G}$, a random generator $g\in \mathds{G}$ and powers $g^x,...,g^{x_q}$, for $x \in_R \mathds{F}$ and  $q= |\mathds{G}|$. It is then  infeasible for an adversary to find $(c, g^{\frac{1}{x+c}})$, where $c \in \mathds{F}$.
 \end{Ass}
+
+
 
 
 \subsection*{Homomorphic Secret Sharing}
@@ -66,7 +70,7 @@ A such function satisfying the thee properties is $\mathcal{H}_1(x):\mathds{F}\m
 
 
 \subsection*{Pedersen Commitment scheme}
-Define a commitment to a secret $x\in\mathds{F}$ as $\mathds{E}(x,R)=g^xh^R$, where $R\in_R\mathds{F}$, this commitment is known as \textit{Pedersen commitment} and originally presented in \cite{pedersen}. This commitment satisfies the following theorem;
+A commitment to a secret $x\in\mathds{F}$ is the \textit{Pedersen commitment scheme} defined as $\mathds{E}(x,R)=g^xh^R$, where $R\in_R\mathds{F}$,  originally presented in \cite{pedersen}. This commitment satisfies the following theorem;
 \\
 \begin{thm}
 \label{thm:C=g^xh^R}
@@ -84,27 +88,46 @@ Theorem \ref{thm:C=g^xh^R} implies that if someone knows the discrete logarithm 
 
 Further note that Pedersen commitment is homomorphic. Hence for arbitrary messages $x_1,x_2\in\mathds{F}$, random values $R_1,R_2\in_R\mathds{F}$ and the commits $C_i=\mathds{E}(x_i,R_i),\:i\in\{1,2\}$, it holds that $C_1\cdot C_2 = \mathds{E}(x_1+x_2,R_1+R_2)$.
 
-A final remark is the similarity between the hash function $\mathcal{H}_1$ and the Pedersen commitment $\mathds{E}$, the hash function can be seen as a generalisation of the Pedersen commitment. This will be used to including verification of client in the VAHSS construction \cite{SumItUp}.
+A final remark about the Pedersen commitment is the similarity between the hash function $\mathcal{H}_1$ and the Pedersen commitment $\mathds{E}$, the hash function can be seen as a generalisation of the Pedersen commitment. This will be used to including verification of client in the VAHSS construction \cite{SumItUp}.
 
-\subsubsection*{Vector Pedersen Commitment scheme}
-%TODO
+A Pedersen commitment scheme can also be defined for vectors and is then called \textit{Pedersen vector commitment}. Lets consider a $n$ dimensional vector $\mathbf{x}\in\mathbf{F}^n$, let $\mathbf{g}=(g_1,...,g_n) \in\mathds{G}^n$ and $h\in\mathds{G}$ where $\mathds{G}$ is a group of order $p$ as above. A commitment to the vector  $\mathbf{x}=(x_1,...,x_n)$  with the random value $R\in_R \mathds{F}$ is then defined as $\mathds{E}(\mathbf{x},R) = \mathbf{g}^\mathbf{x}h^R = h^R\prod_{i=1}^n g_i^{x_i}$ and the commitment is a value in the one-dimensional group $\mathds{G}$. 
+
 \subsection*{Bilinear mapping}
-%TODO
 \label{sec:bilinear}
+Bilinear mapping (also commonly refereed to as bilinear pairing) maps two group elements from one group to an element in another group. In this paper admissible bilinear mapping fulfilling Definition \ref{def:AdmissibleBM} will be used in the construction of cryptography protocols.	The Definition maps two elements from the same group to another group, generally the definition of admissible bilinear maps two elements from different groups to a third group, i.e $e: \: \mathds{G}_1\times \mathds{G}_1 \to \mathds{G}_T$, but in this paper it will always hold that $\mathds{G}_1=\mathds{G_2}$ and hence the definition is given on this form. 
+\begin{Mydef}[\textbf{Admissible Bilinear Map}]
+	\label{def:AdmissibleBM}
+	Let $\mathds{G}_1,\mathds{G}_T$ be two multiplicative cyclic groups of prime order $p$ such that there exist an admissible bilinear map $e: \: \mathds{G}_1\times \mathds{G}_1 \to \mathds{G}_T$. Let $\mathds{G}_1^*=\mathds{G}_1\backslash \{1\}$.  Then the bilinear map $e$ fulfils:
+	\begin{itemize}
+		\item Bilinear: for any group element  $g\in\mathds{G}_1^*$ and $a,b \in \mathds{Z}_p$,
+		\begin{align*}
+			e(g^a,g^b) = e(g,g)^{ab}
+		\end{align*}	
+		\item Non-degenerated: $e(g,g)\neq 1$	 
+		\item The bilinear map is efficiently computable
+	\end{itemize}
+\end{Mydef}
+
+The bilinear property of the mapping $e$ will later be used to create digital signatures, therefore the idea to  behind is explained briefly.  Bohen-Boyen presented a a signature scheme that exploits the bilinear property of the mapping $e$ to verify the signatures \cite{Bohen-Boyen}. Shorty the scheme is constructed as, the signer knows the secret key $x$ and distributed the public key $g^x$, then to sign a message $m$ computes $\sigma = g^{1/(x+m)}$, this signature is $q-secure$ to forgery under the q-Strong Diffie Hellman Assumption. Verification is done by checking that $e(\sigma,y\cdot g^m) = e(g,g)$, which holds due to the bilinearity of $e$. 
+
 
 \subsection*{Zero knowledge proof}
-Zero-knowledge proofs  (ZKP) was first presented in \cite{OG_ZKP}. A ZKP consist of two parties: \textit{Prover} \& \textit{Verifier} and satisfies the properties  in Definition \ref{def:ZKP}. After successfully performing a ZKP the prover has convinced the verifier that a certain statement of a secret $x$ is true without having relieved any other information about $x$. This is done by providing a witness $w$ of the statement. In this paper ZKP that ensures proof of knowledge (PoK) is of interest,  this means that the verifier is now only convinced that the statement is true but also that the prover knows the value of secret $x$.  Further this paper will study zero knowledge range proof (ZKRP) where the statement that the prover convinces the verifier of is that the value of secret belongs to a predetermined interval.
+Zero-knowledge proofs (ZKP) is a cryptographic primitive that was first presented in \cite{OG_ZKP}. The idea behind a ZKP is that after successfully performing a ZKP a certain statement about a secret $x$ has been verified to be true (or false) without having revealed any other information about the secret $x$ beyond the statement. Here non interactive ZKP that ensures proof of knowledge (PoK) is of interest. Before closer defining what this means lets consider the set up and environment of ZKP protocol. A ZKP consists of two parties a \textit{prover} and a \textit{verifier}, further assume both parties has access to the protocol parameters generated by a set up algorithm and a language $\mathcal{L}\in \text{ NP}$, additionally the prover know a secret $x\in \mathcal{L}$. The prover constructs a proof that $x$ belongs to $\mathcal{L}$, by using a witness $w$ of $x$, then the verifier can in polynomial time determine if the proof is valid or not. 
+For a ZKP to be non-interactive means that there is no communication required between the prover and verifier during the construction of the proof and PoK means thet the verifier is not only convinces there exist a witness $w$ but also that the prover knows such a witness. A ZKP should fulfil the thee properties defined in Definition \ref{def:ZKP}, these definitions informally means that, a correctly constructed proof of an instance $x\in\mathcal{L}$ should be accepted with probability $1$, an incorrect constructed proof of an instance $x\notin\mathcal{L}$ should have a negligable proability of being accepted and the verifier should learn nothing about the secret beyond the statement being proved.
+ 
 
 \begin{Mydef}
 \label{def:ZKP}
-%TODO
-A ZKP should fulfill the three properties: 
+First define the two algorithms;  \texttt{Prove}$(x,w)$ to be the algorithm for generating a ZKP of instance $x\in\mathcal{L}$ and witness $w$, and  \texttt{Verify} to be the verification algortihm of the correctnes sof the ZKP. Such a ZKP scheme  should fulfil the three properties: 
 \begin{itemize}
-\item \textbf{Completeness} 
-\item \textbf{Soundness} 
-\item  \textbf{Zero-knowledge}
+\item \textbf{Completeness} Given a witness $w$ of the instance $x\in\mathcal{L}$, it should hold that \texttt{Verify}$($\texttt{Prove}$(x,w)) = 1$. 
+\item \textbf{Soundness} If $w$ is not an witness of the instance $x\notin\mathcal{L}$, then the probability  Prob$[$\texttt{Verify}$($\texttt{Prove}$(x,w)) = 1] < \varepsilon$, for a sufficiently small $\varepsilon$. 
+\item  \textbf{Zero-knowledge} %TODO
 \end{itemize}
 \end{Mydef}
+ 
+This paper will consider zero knowledge range proof (ZKRP) and zero knowledge set membership proofs (ZKSM) where the statement that the prover convinces the verifier of is that the secret belongs to a predetermined range or set.
+
 
 \subsection*{Fiat-Shamir heuristic}
  Fiat-Shamir heuristic \cite{Fiat-Shamir} can be used to convert an interactive protocol into non interactive, here it will be used to construct non-interactive ZKP. A non interactive  ZKP requires no communication between the prover and verifier during the construction of the proof. In Interactive constructions the verifier sends a challenge $c\in_R\mathds{F}$ to the prover that is included in the proof in order to convince the verifier that the prover did not cheat. The Fiat-Shamir heuristic replaces the random challenge sent by the verifier with the output of a hash-function of the partial-proof up to this point. The Fiat-Shamir heuristic converts an interactive ZKP to non-interactive plus preserves security and full zero-knowledge relying on the random oracle model (ROM). 
@@ -132,6 +155,7 @@ Note that is the step \textbf{ShareSecret} the shares are put to $x_{ij}= \lambd
 
 
 \begin{algorithm}
+\label{alg:VAHSS-HSS}
 \caption{\textbf{: Verifiable additive homomorphic secret sharing}}
 \textbf{Goal:} Construct and share the sum $\sum_{i=1}^n x_i$, where $x_i$ is a secret value known by client $c_i$, where $i\in\mathcal{N}$ without any client needing to revealing their individual secret. The servers, used to sharing the secrets, computations are verified so they must be honest. 
 \vspace{2pt}
@@ -159,9 +183,7 @@ Compute and output $\sigma = \prod_{j=1}^m \sigma_j = \prod_{j=1}^m g^{y_{j}} = 
 \item\textbf{Verify $(\{\tau_i\}_{i\in\mathcal{N}},\sigma,y)\xrightarrow[]{}\{0,1\}$}\\
 Compute and output $\sigma= \prod_{i=1}^n \tau_i \wedge \prod_{i=1}^n \tau_i = \mathcal{H}(y)$.
 \end{itemize}
-\label{alg:VAHSS-HSS}
 \end{algorithm}
-
 
 \subsection*{Correctness, Security and Verifiability}
 A HSS/additive-HSS construction should satisfy  two requirements: \textit{Correctness} and \textit{Security}. A verifiable additive HSS should also satisfy \textit{Verifiability}. The requirements are defined as:
@@ -219,14 +241,14 @@ In the subsections below theory and construction of \textit{Signature based rang
 
 %The Fujisaki-Okamoto Commitment Scheme differense from pedersen? 
 
-\subsection{Signature-based  range proof}
+\subsection{Set membership proof and Signature-based  range proof}
 First the zero knowledge set membership (ZKSM) is described and then extended to a ZKRP, originally presented in \cite{RANGE-SET}. Both the ZKSM and ZKRP constructions presented are modified compared to the original construction according to the Fiat-Shamir heuristic to be non-interactive.
 
 The idea behind the ZKSM (and also the later derived ZKRP) is that for each element in the allowed set $\Phi$ there exist a public commitment, denoted $A_i\: \forall i\in\Phi$.  These commitments are made public in the set-up phase by the verifier. The prover who aims to prove that the secret hidden by a pre published Pedesen commitment, denoted $C$, is in the allowed set $\Phi$ chooses the commitment representing the the secret $x$, i.e $A_x$. Then hides this choice by raising $A_x$  to a random value $\tau\in_R\mathds{F}$, this gives $V = A_x^\tau$, and publishes $V$. Then the prover has to convince the verifier that  1) the published value $V$ is indeed equal to  $A_x^\tau$ where $A_x$ is from the allowed set  2) the secret in the Pedersen commitment $C$  is the same as the secret hidden by $V$.
 %The first two constructions that will be considered here are based on the range proofs presented in \cite{RANGE-SET} and adjusted to a non-interactive construction described by \cite{ZKRP_Morais}. The transformation from a interactive protocol to a non interactive is done via the Fiat-Schit principle \cite{fiat-schmit}.  Non-interactive means that there communication between the prover and verifies while XXX Find. 
 %Construction \ref{alg:ZKSM} is a non interactive set membership proof of a Pedersen commitment $C=g^\sigma h^R$, where $\sigma$ is the secret and $R\in_R\mathds{F}$ is chosen uniformly at random.
 %The construction allows a prover, that knows the secret $x$, to convince the verifier, who has access to the commitment $C$, that $x\in\Phi$ for some predetermined set $\Phi$ without revealing any other information regarding the secret $x$.  
-In Construction \ref{alg:ZKSM}  a detailed description of the ZKSM algorithms that both constructs the public commitments and convinces the verifier of the above statements is given. 
+In Construction \ref{alg:ZKSM}  a detailed description of the ZKSM algorithms that both constructs the public commitments and convinces the verifier of the above statements is given.  The notation $e(\cdot,\cdot)$ in Construction \ref{alg:ZKSM} and \ref{alg:ZKRP} refers to an admissible bilinear mapping as defined previously in section \ref{sec:bilinear}.
 %This construction fulfils the zero knowledge requirements described in \ref{sec:ZK} and is a non interactive zero knowledge set membership proof. 
 \begin{algorithm}[]
 \caption{\textbf{: Non interactive set membership proof}}
@@ -240,7 +262,7 @@ Pick uniformly at random $\chi\in_R\mathds{F}$. Define $y=g^\chi$ and $A_i=g^{\f
 Pick uniformly at random $\tau\in_R\mathds{F}$, choose from the set $\{A_i\}$ the element $A_x$ and calculate $V=A_x^\tau$. Pick uniformly random three values $s,t,m\in_R\mathds{F}$. Put $a=e(V,g)^{-s}e(g,g)^t$ ($e(\cdot,\cdot)$ is a bilinear mapping as described above), $D=g^sh^m$, and $c=\text{Hash}(V,a,D)$. Finally compute $z_x = s-x c$, $z_R = m-Rc$ and $z_\tau= t-\tau c$ then construct and publish $\textit{proof}_{SM} = (V,a,D,z_x,z_tau,z_R)$.
 
 \item\text{\textbf{Verify} $(g,h,C,\textit{proof})\xrightarrow[]{}\{0,1\}$}
-Check if $D\overset{?}{=}C^ch^{z_R}g^{z_x}\wedge a \overset{?}{=} e(V,g)^c e(V,g)^{-z_x}e(g,g)^{z_\tau}$. If the equality holds the prover has convinced the verifier that $x\in\Phi$ return $1$ otherwise return $0$.
+Check if $D\overset{?}{=}C^ch^{z_R}g^{z_x}\wedge a \overset{?}{=} e(V,y)^c e(V,g)^{-z_x}e(g,g)^{z_\tau}$. If the equality holds the prover has convinced the verifier that $x\in\Phi$ return $1$ otherwise return $0$.
 \end{itemize}
 \label{alg:ZKSM}
 \end{algorithm}

@@ -1,7 +1,7 @@
 \chapter{Methods}
-\label{sec:Methods}
-Based on the theory presented in the previous chapter .
-Evaluate and choose one to implement, do implementation and construct proofs
+\label{ch:Methods}
+
+The purpose of this chapter is to based on the theory given in the chapter present an extended VAHSS construction that ensures honest clients by verifying that their inputs is from an allowed range or set. This will be done by first evaluating the performance of the range proofs discussed above to get an understanding of their advantages and disadvantages plus some indications to their runtime. Then in section \ref{sec:combination} details on how to create a construction of a VAHSS that ensures honest clients is presented and its correctness is proven. In section \ref{sec:implement} details about how to implement this construction is discussed. 
 
 \section{Comparison of range proofs}
 In this section the different constructions for verifying clients honesty presented in section \ref{sec:RF_theory} will be analysed and compared in order to evaluate  their suitability to combine with the VAHSS scheme described in Construction \ref{alg:VAHSS-HSS} to verify clients honesty. First a theoretical analysis of each range proofs will given and then a prototype analysis where the range proofs are compares.  
@@ -13,7 +13,7 @@ The aspects that will be considered in the evaluation of the range proofs and th
     \item Flexibility of range
 \end{itemize}
 
-Remark that all of the range proof considered aim to prove that the secret in a Pedersen commitment is in an allowed range. Thus to combine any of the range proofs with the VAHSS construction, the clients needs beyond previously computed and published values also publish a Pedersen commitment of their secret $x_i$. This is investigated further in section \ref{sec:combination}. Since the adaptation of the VAHSS construction is the same independent of the considered range proof it is not relevant in the evaluation of range proofs expect in terms of runtime. 
+Remark that all of the range proof considered aim to prove that the secret in a Pedersen commitment is in an allowed range. Thus to combine any of the range proofs with the VAHSS construction, the clients needs to published Pedersen commitment of their secret $x_i$. This is investigated further in section \ref{sec:combination} and it will be shown that the adaptation of the VAHSS construction to include a range proof is the same independent of the range proof used, hence the adaptability to VAHSS in not relevant in the evaluation in this section.
 
 The considerable difference between the bulletproof and the signature based range proofs makes the comparison between them not straightforward.  Signature based range proofs requires bilinear mappings unlike bulletproofs, bilinear mappings are relative expensive operation compared to for example group exponentials which are dominating  the computational complexity for bulletproofs. Therefore it is not straightforward to compare them in aspects of number of operations performed and an explicit comparison will only be made with respect to runtime. But first the theoretical performance of the range proofs will be discussed individually.
 
@@ -26,7 +26,7 @@ The signature based range proof reduces this to only needing to publish $u$ digi
 For ZKSM the communicational complexity for the proof is lower then for the ZKRP, given $l>1$. In some practical applications the digital signatures shared in the setup phase can be assumed to be pre shared, for example in applications where $\Phi$ is used many times. This leads that ZKSM is to prefer over ZKRP in such applications or when $\Phi$ is a relative small. 
 
 Next consider the computational complexity for algorithms \textbf{Prove} and \textbf{Verify} in the ZKSM and ZKRP. constructions  In the set membership construction both the prover and verifier has to perform one bilinear paring and two exponentials over the group $\mathds{G}$. While in the range proof construction the prover need to perform $l$ bilinear mappings and $5l$ exponentials to prove a secret is in the range $[0,u^l)$ and additionally $3l$ exponentials for arbitrary ranges $[a,b]$. The verifier need to ?? Discuss on meeting.
- 
+ %TODO
 An advantage of the set membership construction is that it can prove membership of non continuous sets. An example could be that the set $\Phi$ represents all odd numbers in a certain interval and then the prover can insure the verifier that the secret is an odd number in a given range. This is an illustrative example of the flexibility of set membership proofs compared to range proofs.
 
 \subsection{Theoretical analysis: Bulletproof}
@@ -38,61 +38,45 @@ The computational effort for the inner product argument is dominated by $8n$ gro
 
 Using the inner product argument to build bullet proofs result in a communication complexity of $2\lceil log_2 n \rceil +4$ group elements and $5$ field elements, where $n$ is such that a secret is proved to be in the range $[0,2^n)$.  A remark is that in a bulletproof construction the range always has to be an exponent on $2$, if the length of the binary representation of the secret is not a two-exponent this can be solved with padding. IWhen extending the bulletproof to prove a secret is in an arbitrary range $[a,b]$ the communication complexity is increased by an additive term of size $2$.  
 
-\subsection{Prototype Analysis TODO}
-\begin{table}
-\label{tab:compare}
-\caption{Communication Complexity TODO}
-\begin{tabular}{| *{3}{c|}}
-			 \hline
-    									&Proof Size 		&		Set up  \\ \hline		
-  Signature based SM  	&   $\mathcal{O} (1) $ 					 &			 $\mathcal{O} (n)$				\\ \hline 
-  Signature based RP  	&   $\mathcal{O} (l)$   	&	$\mathcal{O} (u)$ 
-  	\\ \hline
-  Bulletproof   				&   $ \mathcal{O} (  log_2\: n ) $  & $\mathcal{O} (1)$ 	\\
-  \hline			
-\end{tabular}
- \end{table}
-	
+\subsection{Prototype Analysis}
+\label{sec:PrototypeAnalysis}
+Implementation of Bulletproofs and signature-based range proof has been done  and compared between them self in \cite{RANGE-SET}. Table \ref{tab:runtime} shows the time complexity comparison between Bulletproofs and signature-based range proofs implemented in Golang (Go) with $128$- bit security level.  Details about the settings for the implementation can be found at \cite{RANGE-SET} \cite{Git:RP}. The comparison made by \cite{RANGE-SET} does not does not include results about the runtime for the set membership proof. The runtime for set membership proof included in Table \ref{tab:runtime} is obtained by the author of this paper by benchmarking the code found at \cite{Git:RP}. The settings used are the same as used to obtain the time complexity for the other two range proofs except the hardware parameters. The computer used has a $1.6$ GHz Dual-Core Intel Core i$5-5250$U CPU, $8$GB $1600$ MHz DDR3 RAM  and running macOS $10.15$. 
+
+
+
 
 \begin{table}
-\label{tab:compare}
-\caption{Operations of proof construction TODO}
-\begin{tabular}{| *{8}{c|}}
-			 \hline
-    										&   \multicolumn{2}{c|}{exponentials} 	& \multicolumn{2}{c|}{Fiels Operations}    & \multicolumn{2}{c|}{Bilinear mapping }        	\\
-&  Prover & Verifier & Prover & Verifier&	Prover & Verifier 						 	\\ \hline
-  Signature based SM  			&   b1  &   b2  											&   c1  &   c2    & $1$							 &d						\\ \hline 
-  Signature based RP  	&   b1  &   b2 							&   $5l$ &     	 & $l$	& d	 										\\ \hline
-  Bulletproof   						& b1  &   b2 												&   c1 &   c2     & d					&d2								\\ \hline	
-\end{tabular}
+	\centering
+	\caption{Time Complexity comparison for range proof, values above the dotted line taken from \cite{RANGE-SET} and below 				computed as described in section \ref{sec:PrototypeAnalysis}. The runtime are for implementations written in Golang. The values in parentheses for the bullet proof scheme is is for an optimised implementation of bulletproofs. }
+	\label{tab:runtime}
+	\begin{tabular}[t]{ l c c }
+			 \toprule
+    									 		&Generate Proof (ms)	&		Verification  (ms)\\ \midrule		
+  			Bulletproof   				&   $ 96.25 \: (22.38)$   & $ 51.86 \: (3.27)$ 	\\
+    			Signature-based 		&   $ 70.18 $   				&	$98.95$  \\ \cdashline{1-3}
+    			Set Membership 		&		$70.82$				&	$97.01$	\\
+			\bottomrule		
+	\end{tabular}
  \end{table}
-	
-	\begin{table}
-\label{tab:compare}
-\caption{Operations of proof construction TODO}
-\begin{tabular}{| *{8}{c|}}
-			 \hline
-    										&   \multicolumn{2}{c|}{exponentials} 	& \multicolumn{2}{c|}{Fiels Operations}    & \multicolumn{2}{c|}{Bilinear mapping }        	\\
-&  Prover & Verifier & Prover & Verifier&	Prover & Verifier 						 	\\ \hline
-  Signature based SM  			&   b1  &   b2  											&   c1  &   c2    & $1$							 &d						\\ \hline 
-  Signature based RP  	&   b1  &   b2 							&   $5l$ &     	 & $l$	& d	 										\\ \hline
-  Bulletproof   						& b1  &   b2 												&   c1 &   c2     & d					&d2								\\ \hline	
-\end{tabular}
- \end{table}
+
 	
 
 \section{Additive homomorphic secret sharing with verification of both clients and severs }
 \label{sec:combination}
 
-The  VAHSS constructions  discussed in section \ref{sec:VAHSS} assumes honest clients but verifiers that the servers where honest. The aim of this paper is to present an extended this VAHSS construction to verify both client and servers honesty.  To achieve this range proofs has been studied, extending the VAHSS construction with a range proof  forces potential malicious client to submit a value still within the allowed range. This means that even if a client submits a false value the amount of impact this haves on the final output $y$ is limited by the size of the range.
+The  VAHSS constructions  discussed in section \ref{sec:VAHSS} assumes honest clients and verifiers that the servers computations are correct. The aim of this paper is to extended the VAHSS construction to verify both client and servers honesty.  A method for testing clients honesty is range proof of clients input,. If a range proof was included to the VAHSS construction then, under the assumption that there exist an allowed rang or set to which the input must belong, a potentially malicious client can only have limited influence on the computed sum. This is due to that a malicious input must still belong to the allowed range or set and hence the impact on the sum is bounded by the size of the range. 
 
-The considered range proofs emanate from a Pedersen commitment hiding a secret and then generate a zero knowledge proof that the secret belongs to an pre-specified interval. In order to combine the VAHSS construction with a range proof a link between the shares hiding the secret generated in the algorithm \textbf{ShareSecret} in the VAHSS construction and  the Pedersen commitment in the range proof need to be establoshed to convince the verifier that the shares  represents a secret that is in the allowed range, without revealing the secret. Individual shares themselves does not contain information about the secret and therefore a Pedersen commitment hiding a share would not be useful use in a range proof. The clients except from the shares also publishes the checksum $\tau_i$ for the secret $x_i$, more precisely the definition of $\tau_i=g^{x_i+R_i}$, where $R_i$ chosen uniformly at random. This checksum is indeed equal to a Pedersen commitment where $g=h$. Performing a range proof of $\tau_i$ assuming $g=h$ would be sound. However if $g=h$ the computationally hiding property of a Pedersen commitment would not hold since $log_g(h)=log_g(g)=1$ which leads to that the LHS in equation \eqref{eq:pedersen_binidng} is equal to $1$. Therefore to construct two commits $\mathds{E}(x,R)$ and $\mathds{E}(x',R')$ such that $\mathds{E}(x,R) = \mathds{E}(x',R')$ but $x='$ it is sufficient to solve, 
+Next the combining of range proofs and the VAHSS construction will be discussed, it is not sufficient to perform and publish a range proof and the output VAHSS separately, since then the verifier cannot be sure that the secret proven to be in the allowed range is the same as the secret hidden by the shares. Remark that all considered range proofs emanate from a Pedersen commitment hiding a secret and generates a zero knowledge proof that this secret belongs to an pre-specified interval or set. Besides this common feature the range proofs construction differ considerably, hence the possibility to exploit the Pedersen commitment to link the VAHSS construction with a range proof is investigated, more precisely a link between the shares hiding the secret generated in the algorithm \textbf{ShareSecret} in the VAHSS construction and the Pedersen commitment in the range proof is desired to  convince the verifier that the shares represents a secret that is in the allowed range, naturally without revealing the secret. As mentioned publishing a Pedersen commitment of the secret itself does not provide any guarantee that it is indeed the secret hidden in the commitment for the verifier, but hiding the shares in the commitment is neither an option since nature of the shares is that individual shares themselves does not reveal information about the secret they are hiding. This leads to that there is not guarantee that shares belongs to the allowed range given that he secret does and the other way around proving that a share belongs to a range does not imply that the secret does. The aggregation used in the VAHSS construction to prove the honesty of the servers can be used to also connect the range proofs to the VAHSS construction, as will be seen below. 
+
+Recall that the clients except from the shares also publishes the checksum $\tau_i$ for the secret $x_i$, more precisely the definition of the checksum is  $\tau_i=g^{x_i+R_i}$, where $R_i$ chosen uniformly at random. This checksum is indeed equal to a Pedersen commitment where $g=h$. Using this checksum as the Pedersen commitment in the constructing of a range proof would be sound. However if $g=h$ the computationally hiding property of a Pedersen commitment would not hold since $log_g(h)=log_g(g)=1$ which leads to that the LHS in equation \eqref{eq:pedersen_binidng} is equal to $1$. Therefore to construct two commits $\mathds{E}(x,R)$ and $\mathds{E}(x',R')$ such that $\mathds{E}(x,R) = \mathds{E}(x',R')$ but $x\neq x'$ it is sufficient to solve, 
 \begin{align*}
 1 = \frac{x-x'}{R-R'}\:mod \:N \implies x' = \frac{x}{R'-R} \:mod\: N.
 \end{align*}
-In other words it is straightforward to create a false commitment hence also a false range proof. Lets instead investigate modifying the checksum $\tau_i$ to a Pedersen commitment. Let the clients compute and output $\pi_i=g^{x_i}h^{R_i}$, where $x_i,R_i,g,h$ are as defined above instead of $\tau_i$ as before.  Now a range proof can easily be constructed for the commitment $\pi_i$. Below it will be shown that Theorem \ref{thm:VAHSS_CSV} still hold after replacing $\tau_i$ with $\pi_i$. 
+In other words it is straightforward to create a false commitment hence also a false range proof. Lets instead investigate modifying the checksum $\tau_i$ to a Pedersen commitment. Let the clients compute and output $\pi_i=g^{x_i}h^{R_i}$, where $x_i,R_i,g,h$ are as defined above, instead of $\tau_i$ as before.  Now a range proof can easily be constructed for the commitment $\pi_i$. Below it will be shown that Theorem \ref{thm:VAHSS_CSV} still hold after replacing $\tau_i$ with $\pi_i$. It remains to argue that this method ensures the verifier that the secret hidden by the shares is the same secret proven to be in the allowed range by the range proof. 
 
-In Construction \ref{alg:VAHSS-HSS-RP} the extended VAHSS is described in detail. Compared to the construction presented n \cite{SumItUp} the algorithms \textbf{ShareSecret} and \textbf{Verify} has been modified and the algorithm \textbf{ConstructRangeProof} has been added. More precisely in the algorithm \textbf{ShareSecret} the client computes the commitment $\pi_i$ instead of the checksum $\tau_i$ as motivated above. The algorithm \textbf{ConstructRangeProof} constructs a range proof (or set membership proof) denoted $RP_i$ of the commitment $\pi_i$. It is not specified which range proof construction that is used since will not affect the rest of construction as long as the verification algorithm used to verify range proof is the algorithm \textbf{Verify} is the same as used to construct the proof. This algorithm will be run by the client. The algorithm \textbf{Verify} contains an call to the verification algorithms corresponding to the one used to generate the range proof $RP_i$ and an additional \texttt{AND} operator. 
+Assume that client $k$ commits to the value $\hat{x}_k$ in the Pedersen commitment $\pi_k$ and generates a range proof that the secret hidden in the commitment belongs to the interval $[a,b]$ but constructs shares $\{x_{kj}\}_{j=1}^m$ such that $\sum_{j=1}^m x_{kj} = x_k \neq \hat{x}_k$. Then when verification of the servers honest it will not hold that $\prod_{i=1}^m \pi_i = g^y$. Therefore the verification will return false and the protocol will not succeed even if the range proof does. Although any cheating party will be detected, it will not be possible do determined which party that cheated more precisely not even if the cheating party was a client or a server. This paper will not lie any value to whether this is a desired property or not. 
+
+In Construction \ref{alg:VAHSS-HSS-RP} the extended VAHSS is described in detail. In order to clarify the modifications made to include a range proof, lets briefly mention some differences to the VAHSS construction presented in \cite{SumItUp}.  The algorithms \textbf{ShareSecret} and \textbf{Verify} has been modified,  and the algorithms \textbf{RangeProof} and \textbf{GenerateCommitment} have been added. More precisely in the algorithm \textbf{ShareSecret} does not output the checksum $\tau_i$, instead the Pedersen commitment $\pi_i$ is computed in the algorithm \textbf{GenerateCommitment}, this algorithm can be included in either \textbf{ShareSecret}  or \textbf{RangeProof} in an implementation, in the implementation discussed below the commitment is generated while constructing the range proof and not explicitly. The algorithm \textbf{RangeProof} constructs a range proof (or set membership proof) denoted $RP_i$ given the commitment $\pi_i$ and secret $x_i$. Note that it is not specified which range proof construction that is used since it does not affect the rest of construction as long as the verification algorithm used to verify the range proof is the algorithm \textbf{Verify} is the compatible with the construction of the proof. Both algorithms \textbf{ConstructRangeProof} and \textbf{RangeProof} are executed by the clients.. The algorithm \textbf{Verify} also verifies the correctness of the range proof $RP_i$ and an additional \texttt{AND} operator to compute the total verification. 
 
 %In the VAHSS Construction \ref{alg:VAHSS-HSS} the verifiability property includes verification of the servers. In this section this will be extended to also include the clients. The value $\pi_i$ published by the clients will be modified into a Pedersen commitment on the form $\pi_i = g^{x_i}h^{R_i}$, remember $\pi_i=g^{x_i+R_i}$ in the original construction presented in \cite{SumItUp}. The clients will apart from the previous commitments  also construct and publish a range proof for $\pi_i$. This allows any verifier to apart from verifying the servers also verify that the secret shared by the clients is in an certain range.  
 
@@ -104,16 +88,12 @@ In Construction \ref{alg:VAHSS-HSS-RP} the extended VAHSS is described in detail
 \hline
 \vspace{2pt}
 \begin{itemize}
-  \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\pi_i,\{x_{ij}\}_{j\in\mathcal{M}})$}\\
-Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$.
-%Let $H:x\to g^x$
-% (g generator the multiplicative group of $\mathds{F}$)
-% be a collision-resistant homomorphic hash function.
-Let $P : x,y \to g^xh^y$ be a Pedersen commitment function.
- Let $R_i\in\mathds{F}$ be the output of a PRF. Where it is required that  $R_n\in \mathds{F}$  satisfies
-$R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute $\pi_i = P(x_i,R_i)$, and $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$. \\
-Output $\pi_i$ and $\{x_{i,j}\}_{j\in\mathcal{M}}$.
-\item\textbf{ConstructRangeProof $x \mapsto Proof_{RP}$}\\
+ \item\textbf{ShareSecret $(1^\lambda,i,x_i) \mapsto \{x_{ij}\}_{j\in\mathcal{M}}$} \\
+Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in_R\mathds{F}$ to be the coefficients to a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Define  the shares as $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$ for $j\in\mathcal{M}$, the parameters $\theta_{ij}$ and Lagrange coefficients $\lambda_{ij}$ is chosen such that equation \ref{eq:pi(0)} is satisfied.
+Output $\{x_{i,j}\}_{j\in\mathcal{M}}$.
+\item\textbf{GenereteCommitment$(1^\lambda,i,x_i) \mapsto \pi_i$ }\\
+Let $P : x,y \to g^xh^y$ be a Pedersen commitment . Let $R_i\in\mathds{F}$ be the output of a PRF wuch that $R_n\in \mathds{F}$  satisfies $R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute and output $\pi_i = P(x_i,R_i)$.
+\item\textbf{RangeProof $(x_i,\pi_i) \mapsto Proof_{RP}$}\\
 Construct a range proof, denoted $RP_i$, for  $\pi_i$ to the  range $[0,B]$ using Construction \ref{alg:ZKSM}, \ref{alg:ZKRP} or \ref{alg:bullet}. All required  parameters and setup is assumed to be pre-shared and known by all parties.
 \item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
 Compute and output $y_j = \sum_{i=1}^n x_{ij}$.
@@ -133,13 +113,35 @@ Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y
 \label{alg:VAHSS-HSS-RP}
 \end{algorithm}
 
+
+
+\begin{itemize}
+    \item \textbf{Correctness} It must hold that Pr$\Big[\textbf{Verify}(\{\pi_i\}_{i\in\mathcal{N}},\sigma,y,\{RP_i\}_{i\in\mathcal{N}})=1\Big]=1$. This means that 					with probability $1$ the output $y$ from \mathbb{FinalEval} is accepted given all parties where honest and the protocol were executed correctly.
+    \item \textbf{Security} 
+    			\begin{itemize}
+    						\item \textbf{Malicious Servers } Let $T$ define the set of corrupted servers such that $|T|<m$, i.e at 					least one server is honest.  										Denote a PPT adversary by $\mathcal{A}_1$ and let the Adv$(1^			\lambda,\mathcal{A},T):= \text{Pr}[b' = b]-1/2$ be the advantage 										of $\mathcal{A}=\{\mathcal{A}_1,\mathcal{D}\}$ in guessing $b$ in the following experiment:
+    									\begin{enumerate}
+       										 \item The adversary $\mathcal{A}_1$ gives $(i,x_i,x_i')$ to the challenger, where $i\in[n], x_i\neq x_i'$ and $|x_i|=|x_i'|$.
+        										\item The challenger picks a bit $b\in\{0,1\}$ uniformly at random chooses and computes $\textbf{ShareSecret}(1^\lambda,i,																\hat{x}_i) = (\hat{\text{share}}_{i1},...,\hat{\text{share}}_{im},\tau_i)$, where $\hat{\textbf{x}}_i$ is  such that $\hat{x}_i = 																\begin{cases}x_i, \text{ if } b=0 \\ x_i' \text{ else} \end{cases}$. 
+        										\item Given the shares from the corrupted servers T and $\hat{\tau}_i$ the adversary distinguisger outputs a guess 																			$b'\xleftarrow[]{}\mathcal{D}((\hat{\text{share}_{ij}})_{j|s_j\in T},\hat{\tau}_i)$.
+   									 \end{enumerate}
+    									A VAHSS-construction is $t$-secure if for all $T\subset \{s_1,...,s_m\}$ with $|T|<t$ it holds that Adv$(1^\lambda,\mathcal{A},T)<												\varepsilon(\lambda)$ for some negligible $\varepsilon(\lambda)$.
+  					  \item \textbf{Malicious Clients}
+   		 \end{itemize} 
+ 	\item \textbf{Verifiability} 
+ 			\begin{itemize}
+ 						\item \textbf{Verify Servers }Let $\mathcal{A}$ denote any PPT  adversary and $T$ denote the set of corrupted servers with $T\leq m$. The verifiability 							property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as 							$y=f(x_1,...,x_n)$ with negligible probability.   
+ 						\item \textbf{Verify Clients} Let $\mathcal{A}$ denote any PPT adversary and $T$ denote the set of corrupted clients. The verifiability property requires that any $\mathcal{A}$ who can modify the Pedersen commitments $\pi_i$  to any $\pi_i^{'} \:\forall  i\in T$ has a negligible probability at choosing a commitment $\pi_i^{'}$ such that Verify$( \{\pi^{'}_i\}_{i\in\mathcal{N}},x,y)=1$.
+ 			\end{itemize} 
+\end{itemize}
+
 \begin{thm}
 \vspace{10pt}
-The client and server verifiable AHSS presented in Construction \ref{alg:VAHSS-HSS-RP} satisfies the same correctness, security and requirements as Construction \ref{alg:VAHSS-HSS} as well as the verifiability requirements: 
-\begin{itemize}
- \item \textbf{Verifiability Servers}  Let $\mathcal{A}$ denote any PPT  adversary and $T$ denote the set of corrupted servers with $T\leq m$. Note that if $|T|=m$, the verifiability property holds but not the security property. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(x_1,...,x_n)$ with negligible probability.  
- \item  \textbf{Verifiability Clients} 
-\end{itemize} 
+The client and server verifiable AHSS presented in Construction \ref{alg:VAHSS-HSS-RP} satisfies the same correctness, security and verifiability requirements given above.
+%\begin{itemize}
+ %\item \textbf{Verifiability Servers}  Let $\mathcal{A}$ denote any PPT  adversary and $T$ denote the set of corrupted servers with $T\leq m$. Note that if $|T|=m$, the verifiability property holds but not the security property. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(x_1,...,x_n)$ with negligible probability.  
+ %\item  \textbf{Verifiability Clients} 
+%\end{itemize} 
 \end{thm}
 \begin{proof}
 The proof of security is the same as in \cite{SumItUp} since the pedersen commitment is perfectly hiding. For proving the correctness it is sufficient to show that $\sigma= \prod_{i=1}^n \pi_i \:\bigwedge\: \prod_{i=1}^n \pi_i = \mathcal{H}(y)$. Both $y$ and $\sigma$ are the same as in construction as in \cite{VAHSS}. Hence by construction:
@@ -160,5 +162,50 @@ For the $\pi_i$, whose construction has been modified compared to \cite{VAHSS} w
 The proof of \textit{\textbf{Verifiability Severs}} is the same as in \cite{SumItUp} and the proof of \textit{\textbf{Verifiability Clients}} follows from the properties of  the range proof.
 \end{proof}
 
+
+\section{Aggregate proofs}
+A desired property for the above presented server and clients verifiable AHSS would be to aggregate the range proofs into one, since then the verifier would have to perform one range proof verification instead of one for each client. This would decrease the runtime significantly in implementations where often hundred clients participate. Aggregating the range proofs would require the proofs to be homomorphic, such that the verification remains valid after the aggregation. 
+
+First lets examine the possibility to aggregate the set membership and signature based range proofs, the construction of these two are similar and hence it is sufficient to consider one of them, due to  its simpler notation the set membership proof is considered. Assume two range proofs $RP_1$ and $RP_2$ generated by the algorithm \textbf{Prove} in construction \ref{alg:ZKSM}, recall that $RP_i = (V_i,a_i,D_i,z_{x_i},z_{\tau _i},z_{R_i}, )$ for $i=1,2$,  additionally the commitment $C_i, \:\: i=1,2$ and group elements $h,g$ are know to the verifier. To aggregate the proof each element building the proof would need to be aggregated such that the verification of the aggregated proof can be carried out in the same way as before. 
+Hence lets define the aggregated  $RP = (V,a,D,z_{x},z_{\tau },z_{R})$, where $V, a, D$ are the multiplication of the corresponding elements in the two non aggregated range proofs and $z_{x},z_{\tau },z_{R}$ are the addition of the corresponding elements in the two non aggregated range proofs. To clarify two examples are, $D=D_1*D_2 =g^{s_1}h^{m_1}*g^{s_2}h^{m_2} = g^{s_1+s_2}h^{m_1+m_2}$, and the two exponentials are now refereed to as $s,m$, more over $z_x = z_{x_1}+z_{x_2} = (s_1-x_1c_1 )+ (s_2-x_2c_2) = s- x_1c_1-x_2c_2 $. Remark that challenges $c_1$ and $c_2$ has been calculated before aggregating and summed, if the hash function used to calculate the challenges is homomorphic then they could be calculated based on the aggregated values. It is straight forward to realize that the commitment $C$ and the two group elements $V,D$ are homomorphic in the scene that the multiplying the corresponding elements from separate range proofs in equivalent to construction a range proof where the exponentials are the sum of the exponentials of the proof, this follows directly from the discussion about the homomorphic properties of the Pedersen commitment. It is less obvious to see that the bilinear map can be aggregated, but this has been shown and the security proven in \cite{aggregate_bm}. But although bilinear maps can be aggregated it turns out that the set membership proof does not have this property, this follows from design of $z_x,z_\tau $ and $z_R$ using addition and subtraction, when multiplying two sums the crossterms will not cancel as desired, this is seen below. Lets continue with the example of the aggregated proof $RP$. For the verification to success it must hold that, $1)$ $D= C^ch^{z_R}g^{z_x}$ and $2)$ $ a = e(V,y)^ce(V,g)^{-z_x}e(g,g)^{z_\tau}$, so lets check if it holds staring with the first.
+
+\begin{align*}
+D &= D_1*D_2 = g^{s_1+s_2}*h^{m_1+m_2} = C^ch^{z_R}g^{z_x} = (C_1*C_2)^{c_1+c_2}h^{z_{R_1}+z_{R_2}}g^{z_{x_1}+z_{x_2}}\\ 
+&=(g^{x_1}h^{R_1}g^{x_2}h^{R_2}) ^{c_1+c_2}  h^{m_1-R_1c_1+m_2-R_2c_2} g^{s_1- x_1c_1+s_2-x_2c_2} \\
+&=(g^{x}h^{R})^{c}  h^{m-R_1c_1-R_2c_2} g^{s-x_1c_1-x_2c_2} = g^{cx+s-x_1c_1-x_2c_2}h^{cR+m-R_1c_1-R_2c_2} \implies \text{LHS}\neq \text{RHS}.
+\end{align*}
+This is since $ cx = (x_1+x_2)(c_1+c_2) = x_1c_1+x_1c_2+x_2c_1+x_2c_2 \neq x_1c_1 + x_2c_2$ and hence the terms does not cancel such that the RHS is independent of $x_1,x_2,c_1,c_2$ unlike the LHS. Neither the  second equality test including  bilinear mapping holds after aggregation, this equality will not hold even if the challenges are equal, i.e $c_1=c_2$ unlike the first. This can also be seen in Construction \ref{alg:ZKRP} where the verification of first equlity is aggregated while the second is done for each $j\in\mathds{Z}_l$. This concludes that the neither set membership nor signature based range proof can be straight forward aggregated without modifications.  
+
+Next lets examine the possibility to aggregate Bulletproofs. The original paper about Bulletproofs \cite{bulletProofs_theory} presents a method to aggregate Bulletproofs such that $n$ parties each having a Pedersen commitment $C_i,\: i=1,...,n$ can generate a single bulletproof verifying that each commitment hides a secret in an allowed range. This however only works if all parties uses the same challenge $c$ in the proof construction, this is achieved by introducing a dealer. The dealer can be either one of the clients of another party. 
+
+
+the case when the challenge is being provided by the verifier, i.e in an interactive construction of Bulletproof. In a non-interactive construction, as considered here the challenges is the hash of the previous calculated proof elements, hence not the same of different parties. 
+
+This means that bulletproof can be aggregated for interactive constructions, however this is not a desirable property for the the server and client verifiable AHSS construction. 
+
+This concludes that neither of the considers range proofs can be aggregated  (in a naive way) such that the verifier can perform one single verification instead of one for each client. Remark that this conclusion is not final and their may very well exist small or large modifications of the range proof that will allow them to be aggregated. The investigation of such modification is outside the scope of this paper but the reader is endorsed to explore this possibility. 
+
+A final remark that the naive approach to aggregate the commitments $\pi_i, \: i\in\mathcal{N}$ to $\pi = \prod_{i=1}^n \pi_i$ and then construct a range proof for the aggregated commitment $\pi = g^{\sum_{i=1}^n x_i}$ over the range $[n\cdot a,n\cdot b]$, to prove $x_i\in [a,b]$ for all $i\in\marhcal{N}$  is useless. The value $y=\sum_{i=1}^n x_i$ is publicly known so to construct a zero knowledge range proof for $y $ provides no new information and given that $y\in [n\cdot a,n\cdot b]$ does not imply $x_i\in [a,b]$ for all $i\in\marhcal{N}$. 
+
 \section{Implementation}
-The implementations is done in Golang. Specify all parameters used for the implementation. 
+To practically investigate the combining of the vahss construction \ref{alg:VAHSS-HSS} with a range proof, an implementation of construction \ref{alg:VAHSS-HSS-RP} is provided written in Golang. Remark that this construction is written without specifying which range proof that is used, and works for all different range proofs that provides a proof for a Pedersen commitment, which is true for every range proof discussed above. From the analysis of the range proofs given above XXX. Since all three constructions have there advantages and disadvantages all will be used to implement the client and server verifiable additive homomorphic secret sharing construction \ref{alg:VAHSS-HSS-RP}. The set membership proof will be considered and used to verify clients honesty, yet sometimes is may be refereed to 
+
+Implementations of Bulletproofs, set membership proofs and signature based range proofs written in Golang (Go) are all available on Github \cite{Git:RP}, there is also   implementations of the vahss construction \ref{alg:VAHSS-HSS}, written in both python and C++, is available at Github \cite{Git:python_vahss} \cite{Git:C_vahss}.
+Because the implementation of the range proofs and the vahss construction to be extended is not written in the same programming languages one of the two following modifications needs to be done. The first alternative is to write a wrapper for either the Go code so that it can be interpreted by a C++ (or Pyhton) compiler, or wrap the CC++ (or Python) code such that it can be interpreted by a Golang compiler. The second alternative is to translate either the Go implementations to C++ (or Python) or the other way around. The first alternative appears to be a simpler approach hence this is first tested. In 2016 \textit{cgo} was released which enables calling C functions from Go code. 
+
+The Go command \textit{cgo} enables Go packages to call C code. 
+
+
+This lead to instead test the second alternative, translating  the Go implementations to C++ (or Python) or the other way around. Since the vahss construction is more straight forward, much shorter to translate than all three range proofs all together this direction was chosen, in other words construction \ref{alg:VAHSS-HSS} was implemented in Go. Besides translating the vahss implementations to Go smaller adjustments of the already existing Go implementations of the range proofs had to be done to merge with the vahss construction. These adjustments are merely to merge the codes and does not change the semantics of the range proofs. These exact changes can be seen by comparing the code with the implementations given in \cite{Git:RP} to the code for the range proofs used in the implementation of construction \ref{alg:VAHSS-HSS-RP}. The full code for combination of range proofs and vahss is available at Git \ref{Git:MyCode}. 
+
+Just as in construction \ref{alg:VAHSS-HSS-RP} the implementation is coded in a general way such that all three concerned range proofs can be used to verify clients honesty and the merge of the range proof to the vahss construction is the same for all range proofs. 
+
+In order to be able to compare the performance of the vahss construction including a range proof with the one not the parameters has been chosen to make two implementations comparable. Therefore the number of servers is set to $3$ and the number of clients to $500$.  For the prototype analysis of the server verifiable ahss the finite field $\mathds{F}$ used for the secret shares generation is based on a $64$-bit prime number, i.e $\mathds{F}=\mathds{Z}_p$, where $p$ is a $64$-bit prime number,  but in the server and client verifiable ahss the finite field is formed by a $256$-bit prime number.  The range proofs are based in libsecp256k1 library available in Go-Ethereum and uses elliptic curves and $128$-bit security,to provide this security level the underlying field has to be of size $\sim 256$-bits since the fastest known algorithm to solve elliptic curve discrete logarithm problem (ECDLP) requires $\mathcal{O}(\sqrt{n})$ steps. To use a common underlying field the size of the field for the vahss is $256$-bit instead of $64$-bit.
+The size of the range will vary to investigate the impact it has on runtime, both the complexity for the bulletproof and signature-based range proof depends on the size of the range  unlike the set-membership as discussed above. 
+
+A final remark about the implementation is that its purpose is to test the concept on the above proposed construction and provide runtime evaluations, the code has not been tested enough to be used as secure implementation.
+
+%bulletproofs, set membership proofs and signature based range proofs to  verify the clients input. in written in Golang. All three mentioned range proofs has previously been implemented in Golang and the code is available on Github at \cite{RP_code}. The server verifiable secret sharing construction has been implemented in python and c++ and is available at Github at \cite{Vahsss_code}. 
+
+
+%The implementations is done in Golang. Specify all parameters used for the implementation. 

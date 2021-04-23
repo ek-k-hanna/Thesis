@@ -1,3 +1,24 @@
 % CREATED BY DAVID FRISK, 2016
 \chapter{Results}
-\section{Runtime and complexity}
+
+\label{ch:results}
+\section{Runtime}
+
+\begin{table}
+\label{tab:BenchBP}
+\caption{Timing in seconds for server and client verifiable-AHSS. Verfication of clients is done by usingBulletProofs}
+\begin{center}
+\begin{tabular}{*{3}{c}}
+\hline
+    										&  \textbf{Executer}   & \textbf{Time}    		\\ \hline
+  GenerateShares 				&  client  					&   100 [$\mu$s]																	\\ \hline 
+  GenerateRangeProof  		&  clients  					&   56 /	106 /  207 [ms]												\\ \hline 
+  PartialEval  						&  server  					&   78	[$\mu$s]																\\ \hline 
+  PartialProof 					&  server 					&   273[$\mu$s]														\\ \hline 
+  FinalEval  						&  x  							&   689 [ns]					 													\\ \hline 
+  FinalProof  						&  x 							&   50/59/65	[$\mu$s]																\\ \hline 
+  VerifyClients 					&  x 							&   3215/ x/ x[ms]																	\\ \hline 
+  VerifyServers					&  x 							&   1830 [$\mu$s]															\\ \hline 
+\end{tabular}
+\end{center}
+ \end{table}

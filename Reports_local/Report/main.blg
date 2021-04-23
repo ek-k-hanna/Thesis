@@ -3,46 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: abbrv.bst
 Database file #1: ref.bib
-Warning--I didn't find a database entry for "PR"
-You've used 13 entries,
+You've used 18 entries,
             2118 wiz_defined-function locations,
-            600 strings with 6313 characters,
-and the built_in function-call counts, 5800 in all, are:
-= -- 600
-> -- 240
-< -- 9
-+ -- 93
-- -- 78
-* -- 367
-:= -- 880
-add.period$ -- 46
-call.type$ -- 13
-change.case$ -- 75
+            629 strings with 7149 characters,
+and the built_in function-call counts, 7674 in all, are:
+= -- 783
+> -- 347
+< -- 11
++ -- 133
+- -- 113
+* -- 481
+:= -- 1183
+add.period$ -- 63
+call.type$ -- 18
+change.case$ -- 106
 chr.to.int$ -- 0
-cite$ -- 13
-duplicate$ -- 269
-empty$ -- 447
-format.name$ -- 78
-if$ -- 1312
+cite$ -- 18
+duplicate$ -- 334
+empty$ -- 590
+format.name$ -- 113
+if$ -- 1721
 int.to.chr$ -- 0
-int.to.str$ -- 13
-missing$ -- 13
-newline$ -- 68
-num.names$ -- 36
-pop$ -- 85
+int.to.str$ -- 18
+missing$ -- 15
+newline$ -- 93
+num.names$ -- 50
+pop$ -- 132
 preamble$ -- 1
-purify$ -- 62
+purify$ -- 88
 quote$ -- 0
-skip$ -- 228
+skip$ -- 286
 stack$ -- 0
-substring$ -- 367
-swap$ -- 116
-text.length$ -- 9
+substring$ -- 448
+swap$ -- 137
+text.length$ -- 11
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 52
+type$ -- 72
 warning$ -- 0
-while$ -- 54
-width$ -- 15
-write$ -- 161
-(There was 1 warning)
+while$ -- 72
+width$ -- 20
+write$ -- 217

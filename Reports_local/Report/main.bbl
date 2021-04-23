@@ -8,6 +8,19 @@ M.~Bellare and P.~Rogaway.
   Communications Security}, CCS '93, page 62–73, New York, NY, USA, 1993.
   Association for Computing Machinery.
 
+\bibitem{Bohen-Boyen}
+D.~Boneh and X.~Boyen.
+\newblock Short signatures without random oracles.
+\newblock In C.~Cachin and J.~L. Camenisch, editors, {\em Advances in
+  Cryptology - EUROCRYPT 2004}, pages 56--73, Berlin, Heidelberg, 2004.
+  Springer Berlin Heidelberg.
+
+\bibitem{aggregate_bm}
+D.~Boneh, C.~Gentry, B.~Lynn, and H.~Shacham.
+\newblock Aggregate and verifiably encrypted signatures from bilinear maps.
+\newblock In E.~Biham, editor, {\em Advances in Cryptology --- EUROCRYPT 2003},
+  pages 416--432, Berlin, Heidelberg, 2003. Springer Berlin Heidelberg.
+
 \bibitem{Efficient_proof_interval}
 F.~Boudot.
 \newblock Efficient proofs that a committed number lies in an interval.
@@ -51,6 +64,11 @@ E.~Morais, T.~Koens, C.~van Wijk, and A.~Koren.
 \newblock A survey on zero knowledge range proofs and applications.
 \newblock {\em SN Applied Sciences}, 1(946), 2019.
 
+\bibitem{Git:RP}
+E.~Morais, T.~Koens, C.~van Wijk, A.~Koren, P.~Rudgers, and C.~Ramaekers.
+\newblock Zero knowledge range proof implementation.
+\newblock \url{https://github.com/ing-bank/zkrp}, 2020.
+
 \bibitem{pedersen}
 T.~P. Pedersen.
 \newblock Non-interactive and information-theoretic secure verifiable secret
@@ -62,6 +80,16 @@ T.~P. Pedersen.
 A.~Shamir.
 \newblock How to share a secret.
 \newblock {\em Commun. ACM}, 22(11):612–613, Nov. 1979.
+
+\bibitem{Git:C_vahss}
+G.~Tsaloli and G.~Banegas.
+\newblock Additative vhsss implemented in c++.
+\newblock \url{https://github.com/tsaloligeorgia/AddVHSS}, 2020.
+
+\bibitem{Git:python_vahss}
+G.~Tsaloli and G.~Banegas.
+\newblock Additative vhsss implemented in python.
+\newblock \url{https://github.com/gbanegas/VHSSS_temp}, 2020.
 
 \bibitem{VAHSS}
 G.~Tsaloli, G.~Banegas, and A.~Mitrokotsa.
