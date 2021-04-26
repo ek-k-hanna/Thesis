@@ -220,21 +220,29 @@ See section $4.1$ in \cite{VAHSS}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+%TODO fixa inledningen
 \section{Constructions for verifying clients input}
 \label{sec:RF_theory}
-Range proofs allows a prover to convince a verifier that the value of a secret is in an allowed range, zero knowledge range proofs (ZKRP) does this with out revealing any other information about the secret. Here ZKRP constructed to prove the following statement about a secret $x$ is considered:
+Range proofs allows a prover to convince a verifier that the value of a secret is in an allowed range. Zero knowledge range proofs (ZKRP) does this with out revealing any other information about the secret beyond the fact that the secret belongs to the range. Here ZKRP constructed to prove the following statement about a secret $x$ is considered:
 \begin{align} \label{eq:RP_statement}
-    \{(g,h\in\mathds{G},C;x,R\in\mathds{F})\::\:C= g^x h^R \wedge x \in \{\textit{"predetermined allowed range"}\}
+    \{(g,h\in\mathds{G},C;x,R\in\mathds{F})\::\:C= g^x h^R \wedge x \in \{\textit{"predetermined allowed range"}\}.
 \end{align}
-Note that in the above statement  it is assumed that $x$ is the secret in a Pedersen commitment, which is not required for range proofs however only such range proof will be studied in this paper. The range which $x$ is proved to belong to may vary between different constructions and will be more precisely defied below for the separate constructions. 
+Zero knowledge set memberships  proof will also be considered, unlike range proof set membership proofs proves that a secret belongs to a set, instead of a range, which does not need to be continuous.Miore formaly a zero knowledge set membership (ZKSM) prove the following statement:
+\begin{align} \label{eq:SM_statement}
+    \{(g,h\in\mathds{G},C;x,R\in\mathds{F})\::\:C= g^x h^R \wedge x \in \Phi\},
+\end{align}
+where $\Phi$ is some set. 
+ 
+Note that in the above statements  it is assumed that $x$ is the secret hidden in a Pedersen commitment, which is not required for range proofs however only such range proof will be studied in this paper. The range which $x$ is proved to  belong to in ZKRPs may vary between different constructions and will be more precisely defied below for the separate constructions. 
 
-Let's denote the two parties prover and verifier as  $\mathcal{P}$ respectively $\mathcal{V}$. After successfully performing a range proof  $\mathcal{P}$ has convinced $\mathcal{V}$, that the secret $x$ in a Pedersen commitment $C$ is in an predetermined allowed range (or set) without $\mathcal{V}$ learning anything else about $x$.
+Let's denote two parties prover and verifier as  $\mathcal{P}$ respectively $\mathcal{V}$ and explain the statements in equations \eqref{eq:RP_statement}, \eqref{eq:SM_statement} informally: After successfully performing a range proof  $\mathcal{P}$ has convinced $\mathcal{V}$, that the secret $x$ in a Pedersen commitment $C$ is in an predetermined allowed range (or set) without $\mathcal{V}$ learning anything else about $x$.
 
-There exists several constructions for range proofs and this paper will only investigate two for potential extensions of the VAHSS-construction described above to ensure clients honesty. Before presenting these two a XXX will be given to motivate the choice of these two ZKRP. (TODO )Square based range proofs \cite{Efficient_proof_interval} %what is is and why do not use. 
-Another construction which could be used to construct a prove that a value is in an allowed range is function secret sharing \cite{FSS} % explain what and why not use.
+There exists several constructions for range proofs and set membership proofs however this paper will only investigate two different construction. These constructions will then be investigated if they could combined with a VAHSS-construction described above to ensure clients honesty.
 
-In the subsections below theory and construction of \textit{Signature based range proofs} and \textit{bulletproofs} are presented. Both range proofs satisfies the three conditions \textit{completeness}, \textit{soundness} and \textit{zero-knowledge} stated in Definition \ref{def:ZKP} and proves a statement on the form given in equation \eqref{eq:RP_statement}.
+% Before presenting these two a XXX will be given to motivate the choice of these two ZKRP. (TODO )Square based range proofs \cite{Efficient_proof_interval} %what is is and why do not use. 
+%Another construction which could be used to construct a prove that a value is in an allowed range is function secret sharing \cite{FSS} % explain what and why not use.
+
+In the two subsections below the theory and construction of \textit{Set mebership proofs \& Signature based range proofs}  and \textit{bulletproofs} are presented. Both range proofs satisfies the three conditions \textit{completeness}, \textit{soundness} and \textit{zero-knowledge} stated in Definition \ref{def:ZKP} and proves a statement on the form given in equation \eqref{eq:RP_statement} or \eqref{eq:SM_statement}.
 
 %\subsection{Square based}
 %\cite{Effifient_proof_interval} Based on strong RSA-assumption --> not strong any more removed by %\cite{remove_strong_RSA}
@@ -261,7 +269,7 @@ In Construction \ref{alg:ZKSM}  a detailed description of the ZKSM algorithms th
 Pick uniformly at random $\chi\in_R\mathds{F}$. Define $y=g^\chi$ and $A_i=g^{\frac{1}{\chi+i}} \:\forall i\in\Phi$, output $y$ and $\{A_i\}_{i\in\Phi}$.
 
 \item\text{\textbf{Prove} $(g,h,C,\Phi)\xrightarrow[]{}\textit{ proof}_{SM}=(V,a,D,z_x,z_\tau,z_R)$}\\
-Pick uniformly at random $\tau\in_R\mathds{F}$, choose from the set $\{A_i\}$ the element $A_x$ and calculate $V=A_x^\tau$. Pick uniformly random three values $s,t,m\in_R\mathds{F}$. Put $a=e(V,g)^{-s}e(g,g)^t$ ($e(\cdot,\cdot)$ is a bilinear mapping as described above), $D=g^sh^m$, and $c=\text{Hash}(V,a,D)$. Finally compute $z_x = s-x c$, $z_R = m-Rc$ and $z_\tau= t-\tau c$ then construct and publish $\textit{proof}_{SM} = (V,a,D,z_x,z_tau,z_R)$.
+Pick uniformly at random $\tau\in_R\mathds{F}$, choose from the set $\{A_i\}$ the element $A_x$ and calculate $V=A_x^\tau$. Pick uniformly random three values $s,t,m\in_R\mathds{F}$. Put $a=e(V,g)^{-s}e(g,g)^t$ ($e(\cdot,\cdot)$ is a bilinear mapping as described above), $D=g^sh^m$, and $c=\text{Hash}(a,D)$. Finally compute $z_x = s-x c$, $z_R = m-Rc$ and $z_\tau= t-\tau c$ then construct and publish $\textit{proof}_{SM} = (V,a,D,z_x,z_tau,z_R)$.
 
 \item\text{\textbf{Verify} $(g,h,C,\textit{proof})\xrightarrow[]{}\{0,1\}$}
 Check if $D\overset{?}{=}C^ch^{z_R}g^{z_x}\wedge a \overset{?}{=} e(V,y)^c e(V,g)^{-z_x}e(g,g)^{z_\tau}$. If the equality holds the prover has convinced the verifier that $x\in\Phi$ return $1$ otherwise return $0$.
@@ -287,7 +295,7 @@ Using this notation it follows that if $x_j\in[0,u)\: \forall j\in\mathds{Z}_l$,
 Pick uniformly at random $\chi\in_R\mathds{F}$. Define $y=g^\chi$ and $A_i=g^{\frac{1}{\chi+i}} \: \forall i\in\mathds{Z}_u$, output $y$ and $\{A_i\}$.
 
 \item\text{\textbf{Prove} $(g,h,C,u,l)\xrightarrow[]{}\textit{ proof}_{RP}=(\{V_j\},\{a_j\},D,\{z_{x_j}\},\{z_{\tau_j}\},z_R)$}\footnote{$\forall j\in\mathds{Z}_l$}\\
- For every $j\in\mathds{Z}_l$: pick uniformly at random $\tau_j\in_R\mathds{F}$ and compute $V_j=A_{x_j}^{\tau_j}$. Then pick uniformly at random three more values $s_j,t_j,m_j\in_R\mathds{F}$ and compute $a_j=e(V_j,g)^{-s_j}e(g,g)^{t_j}$ for all $j\in\mathds{Z}_l$ and $D=\prod_{j\in\mathds{Z}_l}(g^{u^js_j})h^{m_j}$ Given this let $c=\text{Hash}(\{V_j\},\{a_j\},D)$. Then for all $j\in\mathds{Z}_l$ compute $z_{x_j}=s_j-x_jc$,$z_{\tau_j}=t_j-\tau_jc$ and $z_R=m-Rc$, where $m=\sum_{j\in\mathds{Z}_l}m_j$. Finally output the proof: \textit{proof}$_{RP}=(\{V_j\},\{a_j\},D,\{z_{x_j}\},\{z_{\tau_j}\},z_R)$ 
+ For every $j\in\mathds{Z}_l$: pick uniformly at random $\tau_j\in_R\mathds{F}$ and compute $V_j=A_{x_j}^{\tau_j}$. Then pick uniformly at random three more values $s_j,t_j,m_j\in_R\mathds{F}$ and compute $a_j=e(V_j,g)^{-s_j}e(g,g)^{t_j}$ for all $j\in\mathds{Z}_l$ and $D=\prod_{j\in\mathds{Z}_l}(g^{u^js_j})h^{m_j}$ Given this let $c=\text{Hash}(\{a_j\},D)$. Then for all $j\in\mathds{Z}_l$ compute $z_{x_j}=s_j-x_jc$,$z_{\tau_j}=t_j-\tau_jc$ and $z_R=m-Rc$, where $m=\sum_{j\in\mathds{Z}_l}m_j$. Finally output the proof: \textit{proof}$_{RP}=(\{V_j\},\{a_j\},D,\{z_{x_j}\},\{z_{\tau_j}\},z_R)$ 
 
 \item\text{\textbf{Verify} $(g,h,C,\textit{proof})\xrightarrow[]{}\{0,1\}$}\\
 Check if $D\overset{?}{=}C^ch^{z_R}\prod_{j\in\mathds{Z}_l}(g^{u^j z_{x_j}})\wedge a_j \overset{?}{=} e(V_j,y)^c e(V_j,g)^{-z_{x_j}}e(g,g)^{z_{\tau_j}}$ for all $j\in\mathds{Z}_l$.  If the equality holds the prover has convinced the verifier that $x\in [0,u^l)$ return $1$ otherwise return $0$.
@@ -331,27 +339,31 @@ This ZKRP construction can be generalised to  prove membership to an arbitrary i
 Bulletproof is a range proof, logarithmic in the size of the range. The proof relies on the inner product argument which allows a prove to convince a verifier that he knows the opening $\bm{s},\bm{q}\in\mathds{F}^n$ to a Pedersen vector commitment $P_v = \bm{g}^{\bm{s}}\bm{h}^{\bm{q}}$ such that the inner product of $\bm{s},\bm{q}$ is equal to a known value, $c$. This can be done with a proof of size $log\: n$, compare to the trivial solution of publishing $\bm{s},\bm{q}$ which is a proof of size $n$.
 
 \subsubsection*{Notation and SetUp}
-The description and construction or bulletproofs requires additional notation which will be presented here. First let lowercase bold font variables denote vectors, i.e $\mathbf{a}\in\mathds{F}^n$ is a vector with element $a_1,..,a_n \in \mathds{F}$, and uppercase bold font variables denote matrices, i.e $\mathbf{A}\in\mathds{F}^{n\times m}$ is a matrix and $a_{ij}$ the element of $\mathbf{A}$ at row $i$ and column $j$. Given this notation denote scalar multiplication with a vector as $\mathbf{b}=c\cdot \mathbf{a}\in\mathds{F}^n$, where $c\in\mathds{F}$ and  $b_i=c\cdot a_i, \: i\in\{1,...,n\}$. Denote the euclidean inner product of two vectors as $\langle \mathbf{a},\mathbf{b}\rangle$ and Hadamard product as $\mathbf{a}\circ \mathbf{b}$.
+The description and construction of Bulletproofs uses some additional notation,  the notation used here is equivalent to the notation used in original Bulletproof paper, so for a detailed review of the notations please see this \cite{bulletProofs_theory} . 
 
-Further consider vector polynomials $p(X)$ of degree $d$ on the form $p(X)=\sum_{i=0}^d \mathbf{p_i}\cdot X^i\in\mathds{F}^n[X]$, where the coefficients $\mathbf{p_i}\in\mathds{F}^n$. The inner product of two vector polynomials, $l(X),r(X)$ is defined as, 
-\begin{align*}
-    \langle l(X),r(X)\rangle = \sum_{i=0}^d\sum_{j=0}^n \langle l_i,r_j\rangle \cdot X^{i+j}\in\mathds{F}[X].
-\end{align*}
-The following is equivalent: evaluating two polynomials at $x$ then taking the inner product versus taking the inner product polynomial at $x$.
 
-Let $\mathbf{a}||\mathbf{b}$ denote the concatenation of two vectors. Python notation will be used to denote sections of vectors such that $\mathbf{a}_{[:l]} = (a_1,...,a_l)$ and $\mathbf{a}_{[l:]} = (a_{l+1},...,a_n)$ for $l\in[1,n]$. 
+% and will not be redefined instead the reader is encurraged to .  which will be presented here. First let lowercase bold font variables denote vectors, i.e $\mathbf{a}\in\mathds{F}^n$ is a vector with element $a_1,..,a_n \in \mathds{F}$, and uppercase bold font variables denote matrices, i.e $\mathbf{A}\in\mathds{F}^{n\times m}$ is a matrix and $a_{ij}$ the element of $\mathbf{A}$ at row $i$ and column $j$. Given this notation denote scalar multiplication with a vector as $\mathbf{b}=c\cdot \mathbf{a}\in\mathds{F}^n$, where $c\in\mathds{F}$ and  $b_i=c\cdot a_i, \: i\in\{1,...,n\}$. Denote the euclidean inner product of two vectors as $\langle \mathbf{a},\mathbf{b}\rangle$ and Hadamard product as $\mathbf{a}\circ \mathbf{b}$.
 
-For $k\in\mathds{F}^*$ let $\mathbf{k}^n=(1,k,k^2,...,k^{n-1})$, i.e the vector containing the $n$ fist powers of $k$. 
+%Further consider vector polynomials $p(X)$ of degree $d$ on the form $p(X)=\sum_{i=0}^d \mathbf{p_i}\cdot X^i\in\mathds{F}^n[X]$, where the coefficients $\mathbf{p_i}\in\mathds{F}^n$. The inner product of two vector polynomials, $l(X),r(X)$ is defined as, 
+%\begin{align*}
+  %  \langle l(X),r(X)\rangle = \sum_{i=0}^d\sum_{j=0}^n \langle l_i,r_j\rangle \cdot X^{i+j}\in\mathds{F}[X].
+%\end{align*}
+%The following is equivalent: evaluating two polynomials at $x$ then taking the inner product versus taking the inner product polynomial at $x$.
 
-Let $\mathbf{g},\mathbf{h}\in\mathds{G}^n$ and remember that $\mathbf{a}\in\mathds{F}^n$ then define $C= \mathbf{g}^\mathbf{a} = \prod_{i=1}^ng_i^{a_i}\in\mathds{G}$, where $C$ can be interpreted as a commitment to the vector $\mathbf{a}$. In this section the two vectors $\mathbf{g},\mathbf{h}$ will be considered to be generators of the space $\mathds{G}^n$.
+%Let $\mathbf{a}||\mathbf{b}$ denote the concatenation of two vectors. Python notation will be used to denote sections of vectors such that $\mathbf{a}_{[:l]} = (a_1,...,a_l)$ and $\mathbf{a}_{[l:]} = (a_{l+1},...,a_n)$ for $l\in[1,n]$. 
 
-Remark that in here $n$ denotes the dimension of the room not the number of clients as earlier, further remark that the dimension of the room is the length of the bit representation of the secret in the Pedersen vector commitment considered below or if not the bit representation is padded with zeros.
+%For $k\in\mathds{F}^*$ let $\mathbf{k}^n=(1,k,k^2,...,k^{n-1})$, i.e the vector containing the $n$ fist powers of $k$. 
+
+%Let $\mathbf{g},\mathbf{h}\in\mathds{G}^n$ and remember that $\mathbf{a}\in\mathds{F}^n$ then define $C= \mathbf{g}^\mathbf{a} = \prod_{i=1}^ng_i^{a_i}\in\mathds{G}$, where $C$ can be interpreted as a commitment to the vector $\mathbf{a}$. In this section the two vectors $\mathbf{g},\mathbf{h}$ will be considered to be generators of the space $\mathds{G}^n$.
+
+
+Remark that in this section $n$ will denotes the dimension of the room not the number of clients as earlier. Further remark that the dimension of the room is the length of the bit representation of the secret in the Pedersen vector commitment, potentially padded with zeros.
 
 Both the construction of the inner product argument and the bullet proof the parameters $g,h,\mathbf{g},\mathbf{h},u$ are assumed to be pre-shared and known by both verifier and prover. The assumptions about $g,h$ are before. Further the two vectors $\mathbf{g}, \mathbf{h} \in \mathds{G}^n$ are assumed to be independent generators of the space $\mathds{G}^n$. The variable $u\in\mathds{G}$ is such that there is no known discrete logarithm relation among $\mathbf{g},\mathbf{h}$. In order to ensure the fairness and correctness of the parameters $g,h,\mathbf{g},\mathbf{h},u$ they can be  assumed to be chosen by some trusted third party. Another possibility that drops the assumption of a trusted setup is to use the \textit{Nothing Up My Sleeve} (NUMS) stategy, \cite{ZKRP_Morais}.
 
 \subsubsection*{Inner product argument}
 \label{sec:inner_prod}
-The bulletproof construction is based on the inner product argument which will be closer presented in this section. Remember that the inner product argument is a argument of knowledge of $\textbf{s},\mathbf{q}$ in a  Pedersen vector commitment $P_v=\mathbf{g}^\mathbf{s}\mathbf{h}^\mathbf{q}$ satisfying a given inner product denoted $c$. 
+The bulletproof construction is based on the inner product argument which will be closer presented in this section. The inner product argument is a argument of knowledge of $\textbf{s},\mathbf{q}$ in a  Pedersen vector commitment $P_v=\mathbf{g}^\mathbf{s}\mathbf{h}^\mathbf{q}$ satisfying a given inner product denoted $c$. 
 %(To differ from the Pedersen vector commitment considered here and the Pedersen commitment in the range proofs the exponents in the commit are denoted $\mathbf{s},\mathbf{r}$ instead of $\sigma,R$, and the commitment by $P_v$) 
 More formally the argument is a proof system of the statement,
 \begin{align*}
@@ -394,7 +406,7 @@ For $i\in\{0,log(n)\}$ put $n=n/2$ and $y=\text{Hash}(\bm{l}[i],\bm{r}[i])$, the
 Remark that the inner product argument is sound but not zero-knowledge since information about two exponentials $\mathbf{s},\mathbf{q}$ is relieved.
 
 \subsubsection*{Inner product rang proof}
-Lets present a logarithmic sized range proof called \textit{bulletproof}, based, on the inner product argument. This construction allows a prover, given a Pedersen commitment $C=g^x h^R$ to convince a verifier that the secret $x$ belongs to the interval $[0,2^n)$. By convincing the verifier that  $\bm{x}\in\{0,1\}^n$ is the binary representation of the secret $x$, or equivalently that $x= \langle \bm{x},\mathbf{2}^n\rangle $ and that the prover knows $\bm{x}$.
+Here the logarithmic sized range proof called \textit{bulletproof}, based  on the inner product argument, is presented. This construction allows a prover, given a Pedersen commitment $C=g^x h^R$, of the secret $x$, to convince a verifier that the secret belongs to the interval $[0,2^n)$. By convincing the verifier that  $\bm{x}\in\{0,1\}^n$ is the binary representation of the secret $x$, or equivalently that $x= \langle \bm{x},\mathbf{2}^n\rangle $ and that the prover knows $\bm{x}$.
    % \item $\bm{\bar{x}}$ is the component-wise complement of $\bm{x}$. This is equivalent to show that $\bm{\bar{x}}$ satisfies the two conditions: $\bm{\bar{x}}\circ \bm{x}=\bm{0}^n$ and $\bm{\bar{x}} = \bm{x} -\bm{1}^n \: \text{mod }2$.
 %\end{itemize}
 This can be shown to be done by proving the following statement;
@@ -429,7 +441,7 @@ Compute the three hash functions $y= \text{Hash}(A,S)$, $z= \text{Hash}(A,S,y)$ 
 \label{alg:bullet}
 \end{algorithm}
 
-An optimised version of bulletproof where one prover wishes to verify the range of several commitments reduces the proof size from growing multiplicatively in the number of commits to additive. More precisely lets a assume a prover wants to prove the range of $k$ commits a naive implementation would lead to a proof size of $k\cdot log_2 n $, but an optimised implementation reduces this to $log_2 n + 2 log_2 k$.  With a similar approach as presented for the signature based range proofs, illustrated in  Figure \ref{fig:interval},  bulletproof can also be generalised to arbitrary ranges $[a,b]$, where $a>0$ and $b>a$.  This would then increase the proof size with the additive term $2log_2 2 = 2$. 
+Bulletproofs can be modified to prove that a secret belongs to an arbitrary range, $[a,b]$, with a similar approach as presented for the signature based range proofs and illustrated in Figure \ref{fig:interval}. Remember that the range cannot be completely arbitrary it must hold that $a>0$ and $b>a$. A bulletproof where one prover wishes to verify the range of several commitments can be optimised such that the  proof size does not growing multiplicatively in the number of commits but instead grows additive. More precisely lets a assume a prover wants to prove the range of $k$ commits a naive implementation would lead to a proof size of $k\cdot log_2 n $, but an optimised implementation reduces this to $log_2 n + 2 log_2 k$.  Hence for the case of arbitrary intervals  proof size is increased with the additive term $2log_2 2 = 2$. 
 
 
 %Optimise when one proving much!

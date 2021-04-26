@@ -38,7 +38,7 @@ Output the final proof $\sigma = (e,s,fid,\tilde{x})$.
 \item\textbf{Verify $(vk,f,\sigma,y,\pi_i,...,\pi_n,proof_{RP_1},...,proof_{RP_n})\xrightarrow[]{}\{0,1\}$}\\
 Compute $e=H(fid)$. Check that $y,s\in\mathds{Z}_\hat{N}$ and $\tilde{x}^{eN} = g^s\prod_{j=1}^n h_j^{f}g_1^y$. Further check that $g_1^y =\prod_{i=1}^n \pi_i$ and \textbf{VerifyRP}$(\pi_i,proof_{RP_i})\: \forall i\in\mathcal{N}$ 
 \end{itemize}
-\label{alg:VAHSS-HSS}
+\label{alg:VAHSS-LSS}
 \end{algorithm}
 
 \section*{Questions}

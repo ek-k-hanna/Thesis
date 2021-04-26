@@ -4,7 +4,7 @@
 The purpose of this chapter is to based on the theory given in the chapter present an extended VAHSS construction that ensures honest clients by verifying that their inputs is from an allowed range or set. This will be done by first evaluating the performance of the range proofs discussed above to get an understanding of their advantages and disadvantages plus some indications to their runtime. Then in section \ref{sec:combination} details on how to create a construction of a VAHSS that ensures honest clients is presented and its correctness is proven. In section \ref{sec:implement} details about how to implement this construction is discussed. 
 
 \section{Comparison of range proofs}
-In this section the different constructions for verifying clients honesty presented in section \ref{sec:RF_theory} will be analysed and compared in order to evaluate  their suitability to combine with the VAHSS scheme described in Construction \ref{alg:VAHSS-HSS} to verify clients honesty. First a theoretical analysis of each range proofs will given and then a prototype analysis where the range proofs are compares.  
+In this section the different constructions for verifying clients honesty presented in section \ref{sec:RF_theory} will be analysed and compared in order to evaluate  their suitability to combine with the VAHSS scheme described in Construction \ref{alg:VAHSS-HSS} to verify clients honesty. First a theoretical analysis of each range proofs will given and then a prototype analysis where the range proofs are compared.  
 
 The aspects that will be considered in the evaluation of the range proofs and their compatibility with the VAHSS construction is presented is the below list;
 \begin{itemize}
@@ -13,9 +13,9 @@ The aspects that will be considered in the evaluation of the range proofs and th
     \item Flexibility of range
 \end{itemize}
 
-Remark that all of the range proof considered aim to prove that the secret in a Pedersen commitment is in an allowed range. Thus to combine any of the range proofs with the VAHSS construction, the clients needs to published Pedersen commitment of their secret $x_i$. This is investigated further in section \ref{sec:combination} and it will be shown that the adaptation of the VAHSS construction to include a range proof is the same independent of the range proof used, hence the adaptability to VAHSS in not relevant in the evaluation in this section.
+Remark that all of the range proof considered aim to prove that the secret in a Pedersen commitment is in an allowed range (or set). Thus to combine any of the range proofs with the VAHSS construction, the clients needs to published Pedersen commitment of their secret $x_i$. This is investigated further in section \ref{sec:combination} and it will be shown that the adaptation of the VAHSS construction to include a range proof is the same independent of the range proof used, hence the adaptability to VAHSS in not relevant in the evaluation in this section.
 
-The considerable difference between the bulletproof and the signature based range proofs makes the comparison between them not straightforward.  Signature based range proofs requires bilinear mappings unlike bulletproofs, bilinear mappings are relative expensive operation compared to for example group exponentials which are dominating  the computational complexity for bulletproofs. Therefore it is not straightforward to compare them in aspects of number of operations performed and an explicit comparison will only be made with respect to runtime. But first the theoretical performance of the range proofs will be discussed individually.
+The considerable difference between the bulletproof and the signature based range proofs makes the comparison between them not straightforward.  Signature based range proofs requires bilinear mappings unlike bulletproofs, bilinear mappings are relative expensive operation compared to for example group exponentials which are dominating  the computational complexity for bulletproofs. Therefore it is not straightforward to compare them in aspects of number of operations performed and an explicit comparison will only be made with respect to runtime. But first the theoretical performance  and properties of the range proofs will be discussed individually.
 
 \subsection{Theoretical analysis: Signature-based set membership and range proof}
 
@@ -40,11 +40,13 @@ Using the inner product argument to build bullet proofs result in a communicatio
 
 \subsection{Prototype Analysis}
 \label{sec:PrototypeAnalysis}
-Implementation of Bulletproofs and signature-based range proof has been done  and compared between them self in \cite{RANGE-SET}. Table \ref{tab:runtime} shows the time complexity comparison between Bulletproofs and signature-based range proofs implemented in Golang (Go) with $128$- bit security level.  Details about the settings for the implementation can be found at \cite{RANGE-SET} \cite{Git:RP}. The comparison made by \cite{RANGE-SET} does not does not include results about the runtime for the set membership proof. The runtime for set membership proof included in Table \ref{tab:runtime} is obtained by the author of this paper by benchmarking the code found at \cite{Git:RP}. The settings used are the same as used to obtain the time complexity for the other two range proofs except the hardware parameters. The computer used has a $1.6$ GHz Dual-Core Intel Core i$5-5250$U CPU, $8$GB $1600$ MHz DDR3 RAM  and running macOS $10.15$. 
+Implementation of Bulletproofs and signature-based range proof has been done  and compared between them self in \cite{RANGE-SET}, this comparison does not include results about the runtime for the set membership proof. In order to obtain a fair comparison between Bulletproofs, signature-based range proofs and set membership proofs the code used by \cite{RANGE-SET} is benchmarked for all three constructions. The reason for redoing the benchmarking for Bulletproof and signature based range proofs is since else the hardware differences would not lead to a fair comparison. Table \ref{tab:runtime} shows the time complexity comparison between Bulletproofs and signature-based range proofs and set membership proofs implemented in Golang (Go) with $128$- bit security level.  The settings for the implementation is the same as in \cite{RANGE-SET}  and the code \cite{Git:RP} except the hardware. 
+% The comparison made by \cite{RANGE-SET} does not does not include results about the runtime for the set membership proof. The runtime for set membership proof included in Table \ref{tab:runtime} is obtained by the author of this paper by benchmarking the code found at \cite{Git:RP}. The settings used are the same as used to obtain the time complexity for the other two range proofs except the hardware parameters.
+The computer used has a $1.6$ GHz Dual-Core Intel Core i$5-5250$U CPU, $8$GB $1600$ MHz DDR3 RAM  and running macOS $10.15$. 
 
 
 
-
+%TODO test again
 \begin{table}
 	\centering
 	\caption{Time Complexity comparison for range proof, values above the dotted line taken from \cite{RANGE-SET} and below 				computed as described in section \ref{sec:PrototypeAnalysis}. The runtime are for implementations written in Golang. The values in parentheses for the bullet proof scheme is is for an optimised implementation of bulletproofs. }
@@ -52,15 +54,15 @@ Implementation of Bulletproofs and signature-based range proof has been done  an
 	\begin{tabular}[t]{ l c c }
 			 \toprule
     									 		&Generate Proof (ms)	&		Verification  (ms)\\ \midrule		
-  			Bulletproof   				&   $ 96.25 \: (22.38)$   & $ 51.86 \: (3.27)$ 	\\
-    			Signature-based 		&   $ 70.18 $   				&	$98.95$  \\ \cdashline{1-3}
-    			Set Membership 		&		$70.82$				&	$97.01$	\\
+  			Bulletproof   				&   $ 198$   & $ 79$ 	\\
+    			Signature-based 		&   $ 240 $   				&	$438$  \\
+    			Set Membership 		&		$66$				&	$90$	\\
 			\bottomrule		
 	\end{tabular}
  \end{table}
 
+ In Table \ref{tab:runtime} it is clear that the signature based range proof is much slower then Bulletproofs, especially  in the verification. The runtime for verifying the proofs is most important for applications with multiple clients since a verifier has to verify all clients. The runtime for verification between Bulletproofs and Set memberships proofs are rather similar, although Bulletproofs are somewhat faster, which as mentioned is of importance in applications with many clients. Although the set membership proofs allows proof of membership to non continuous sets hence the somewhat longer runtime might me overlooked in some applications. 
 	
-
 \section{Additive homomorphic secret sharing with verification of both clients and severs }
 \label{sec:combination}
 
@@ -68,9 +70,9 @@ The  VAHSS constructions  discussed in section \ref{sec:VAHSS} assumes honest cl
 
 Next the combining of range proofs and the VAHSS construction will be discussed, it is not sufficient to perform and publish a range proof and the output VAHSS separately, since then the verifier cannot be sure that the secret proven to be in the allowed range is the same as the secret hidden by the shares. Remark that all considered range proofs emanate from a Pedersen commitment hiding a secret and generates a zero knowledge proof that this secret belongs to an pre-specified interval or set. Besides this common feature the range proofs construction differ considerably, hence the possibility to exploit the Pedersen commitment to link the VAHSS construction with a range proof is investigated, more precisely a link between the shares hiding the secret generated in the algorithm \textbf{ShareSecret} in the VAHSS construction and the Pedersen commitment in the range proof is desired to  convince the verifier that the shares represents a secret that is in the allowed range, naturally without revealing the secret. As mentioned publishing a Pedersen commitment of the secret itself does not provide any guarantee that it is indeed the secret hidden in the commitment for the verifier, but hiding the shares in the commitment is neither an option since nature of the shares is that individual shares themselves does not reveal information about the secret they are hiding. This leads to that there is not guarantee that shares belongs to the allowed range given that he secret does and the other way around proving that a share belongs to a range does not imply that the secret does. The aggregation used in the VAHSS construction to prove the honesty of the servers can be used to also connect the range proofs to the VAHSS construction, as will be seen below. 
 
-Recall that the clients except from the shares also publishes the checksum $\tau_i$ for the secret $x_i$, more precisely the definition of the checksum is  $\tau_i=g^{x_i+R_i}$, where $R_i$ chosen uniformly at random. This checksum is indeed equal to a Pedersen commitment where $g=h$. Using this checksum as the Pedersen commitment in the constructing of a range proof would be sound. However if $g=h$ the computationally hiding property of a Pedersen commitment would not hold since $log_g(h)=log_g(g)=1$ which leads to that the LHS in equation \eqref{eq:pedersen_binidng} is equal to $1$. Therefore to construct two commits $\mathds{E}(x,R)$ and $\mathds{E}(x',R')$ such that $\mathds{E}(x,R) = \mathds{E}(x',R')$ but $x\neq x'$ it is sufficient to solve, 
+Recall that the clients except from the shares also publishes the checksum $\tau_i$ for the secret $x_i$, more precisely the definition of the checksum is  $\tau_i=g^{x_i+R_i}$, where $R_i$ chosen uniformly at random. This checksum is indeed equal to a Pedersen commitment where $g=h$. Using this checksum as the Pedersen commitment in the constructing of a range proof would be sound. However if $g=h$ the computationally hiding property of a Pedersen commitment would not hold since $log_g(h)=log_g(g)=1$ which leads to that the LHS in equation \eqref{eq:pedersen_binidng} is equal to $1$. Therefore to construct two commits $\mathds{E}(x,R)$ and $\mathds{E}(x',R')$ such that $\mathds{E}(x,R) = \mathds{E}(x',R')$ but $x\neq x'$ it is sufficient to solve sove $x'$ in, 
 \begin{align*}
-1 = \frac{x-x'}{R-R'}\:mod \:N \implies x' = \frac{x}{R'-R} \:mod\: N.
+1 = \frac{x-x'}{R-R'}\:mod \:N.
 \end{align*}
 In other words it is straightforward to create a false commitment hence also a false range proof. Lets instead investigate modifying the checksum $\tau_i$ to a Pedersen commitment. Let the clients compute and output $\pi_i=g^{x_i}h^{R_i}$, where $x_i,R_i,g,h$ are as defined above, instead of $\tau_i$ as before.  Now a range proof can easily be constructed for the commitment $\pi_i$. Below it will be shown that Theorem \ref{thm:VAHSS_CSV} still hold after replacing $\tau_i$ with $\pi_i$. It remains to argue that this method ensures the verifier that the secret hidden by the shares is the same secret proven to be in the allowed range by the range proof. 
 
@@ -110,6 +112,7 @@ The client and server verifiable AHSS presented in Construction \ref{alg:VAHSS-H
  %\item  \textbf{Verifiability Clients} 
 %\end{itemize} 
 \end{thm}
+%TODO fix proof before hand in to Seminar 2
 \begin{proof}
 The proof of security is the same as in \cite{SumItUp} since the pedersen commitment is perfectly hiding. For proving the correctness it is sufficient to show that $\sigma= \prod_{i=1}^n \pi_i \:\bigwedge\: \prod_{i=1}^n \pi_i = \mathcal{H}(y)$. Both $y$ and $\sigma$ are the same as in construction as in \cite{VAHSS}. Hence by construction:
 \begin{align}
@@ -140,10 +143,12 @@ The proof of \textit{\textbf{Verifiability Severs}} is the same as in \cite{SumI
  \item\textbf{ShareSecret $(1^\lambda,i,x_i) \mapsto \{x_{ij}\}_{j\in\mathcal{M}}$} \\
 Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in_R\mathds{F}$ to be the coefficients to a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Define  the shares as $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$ for $j\in\mathcal{M}$, the parameters $\theta_{ij}$ and Lagrange coefficients $\lambda_{ij}$ is chosen such that equation \ref{eq:pi(0)} is satisfied.
 Output $\{x_{i,j}\}_{j\in\mathcal{M}}$.
+
 \item\textbf{GenereteCommitment$(1^\lambda,i,x_i) \mapsto \pi_i$ }\\
 Let $P : x,y \to g^xh^y$ be a Pedersen commitment . Let $R_i\in\mathds{F}$ be the output of a PRF wuch that $R_n\in \mathds{F}$  satisfies $R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute and output $\pi_i = P(x_i,R_i)$.
-\item\textbf{RangeProof $(x_i,\pi_i) \mapsto Proof_{RP}$}\\
-Construct a range proof, denoted $RP_i$, for  $\pi_i$ to the  range $[0,B]$ using Construction \ref{alg:ZKSM}, \ref{alg:ZKRP} or \ref{alg:bullet}. All required  parameters and setup is assumed to be pre-shared and known by all parties.
+
+\item\textbf{RangeProof $(x_i,\pi_i) \mapsto RP_i$}\\
+Construct a range proof, denoted $RP_i$, for the commitment $\pi_i$ to the secret $x_i$, on the  range $[0,B]$ ( or a set $\Phi$) using Construction \ref{alg:ZKSM}, \ref{alg:ZKRP} or \ref{alg:bullet}. All required  parameters and setup is assumed to be pre-shared and known by all parties.
 \item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
 Compute and output $y_j = \sum_{i=1}^n x_{ij}$.
 
@@ -156,29 +161,108 @@ Compute and output $y = \sum_{j=1}^m y_{j}$.
 \item\textbf{FinalProof $(\{\sigma_j\}_{j\in\mathcal{M}})\xrightarrow[]{}\sigma$}\\
 Compute and output $\sigma = \prod_{j=1}^m \sigma_j = \prod_{j=1}^m g^{y_{j}} =  g^{\sum_{j=1}^m y_{j}}= g^{y}=H(y)$.
 
-\item\textbf{Verify $(\{\pi_i\}_{i\in\mathcal{N}},x,y)\xrightarrow[]{}\{0,1\}$}\\
-Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y)\wedge \textbf{Verify}(RP_i)$. Where \textbf{Verify} is the verification step of the range proof used by the client to construct $RP_i$.
+\item\textbf{Verify $(\{\pi_i\}_{i\in\mathcal{N}},x,y,\{RP_i\}_{i\in\mathcal{N}})\xrightarrow[]{}\{0,1\}$}\\
+Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y)\wedge \{\textbf{Verify}_{rp}(RP_i)\}_{i\in\mathcal{N}}$. Where $\textbf{Verify}_{rp}$ is the verification algorithm associated with the algorithm used by the clients to construct the range proofs, $\{RP_i\}_{i\in\mathcal{N}}$.
 \end{itemize}
 \label{alg:VAHSS-HSS-RP}
 \end{algorithm}
 \section{Aggregate range proofs}
-A desired property for the above presented server and clients verifiable AHSS would be to aggregate the range proofs into one, since then the verifier would have to perform one range proof verification instead of one for each client. This would decrease the runtime significantly in implementations where often hundred clients participate. Aggregating the range proofs would require the proofs to be homomorphic, such that the verification remains valid after the aggregation. 
+A desired property for the above presented server and clients verifiable AHSS would be to aggregate the range proofs into one, since then the verifier would have to perform one range proof verification instead of one for each client. This would decrease the runtime significantly in the verification step, especially in implementations where hundred clients participate. Aggregating the range proofs would require the proofs to be homomorphic, such that the verification remains valid after the aggregation. 
 
-First lets examine the possibility to aggregate the set membership and signature based range proofs, the construction of these two are similar and hence it is sufficient to consider one of them, due to  its simpler notation the set membership proof is considered. Assume two range proofs $RP_1$ and $RP_2$ generated by the algorithm \textbf{Prove} in construction \ref{alg:ZKSM}, recall that $RP_i = (V_i,a_i,D_i,z_{x_i},z_{\tau _i},z_{R_i}, )$ for $i=1,2$,  additionally the commitment $C_i, \:\: i=1,2$ and group elements $h,g$ are know to the verifier. To aggregate the proof each element building the proof would need to be aggregated such that the verification of the aggregated proof can be carried out in the same way as before. 
-Hence lets define the aggregated  $RP = (V,a,D,z_{x},z_{\tau },z_{R})$, where $V, a, D$ are the multiplication of the corresponding elements in the two non aggregated range proofs and $z_{x},z_{\tau },z_{R}$ are the addition of the corresponding elements in the two non aggregated range proofs. To clarify two examples are, $D=D_1*D_2 =g^{s_1}h^{m_1}*g^{s_2}h^{m_2} = g^{s_1+s_2}h^{m_1+m_2}$, and the two exponentials are now refereed to as $s,m$, more over $z_x = z_{x_1}+z_{x_2} = (s_1-x_1c_1 )+ (s_2-x_2c_2) = s- x_1c_1-x_2c_2 $. Remark that challenges $c_1$ and $c_2$ has been calculated before aggregating and summed, if the hash function used to calculate the challenges is homomorphic then they could be calculated based on the aggregated values. It is straight forward to realize that the commitment $C$ and the two group elements $V,D$ are homomorphic in the scene that the multiplying the corresponding elements from separate range proofs in equivalent to construction a range proof where the exponentials are the sum of the exponentials of the proof, this follows directly from the discussion about the homomorphic properties of the Pedersen commitment. It is less obvious to see that the bilinear map can be aggregated, but this has been shown and the security proven in \cite{aggregate_bm}. But although bilinear maps can be aggregated it turns out that the set membership proof does not have this property, this follows from design of $z_x,z_\tau $ and $z_R$ using addition and subtraction, when multiplying two sums the cross-terms will not cancel as desired, this is seen below. Lets continue with the example of the aggregated proof $RP$. For the verification to success it must hold that, $1)$ $D= C^ch^{z_R}g^{z_x}$ and $2)$ $ a = e(V,y)^ce(V,g)^{-z_x}e(g,g)^{z_\tau}$, so lets check if it holds staring with the first.
+A small remark is that the naive approach to aggregate the commitments $\pi_i, \: i\in\mathcal{N}$ to $\pi = \prod_{i=1}^n \pi_i$ and then construct a range proof for the aggregated commitment $\pi = g^{\sum_{i=1}^n x_i}$ over the range $[n\cdot a,n\cdot b]$, to prove $x_i\ in [a,b]$ for all $i \in\mathcal{N}$  is useless. The value $y=\sum_{i=1}^n x_i$ is publicly known so to construct a zero knowledge range proof for $y $ provides no new information and given that $y\in [n\cdot a,n\cdot b]$ does not imply $x_i\in [a,b]$ for all $i\in\mathcal{N}$. 
+
+Now lets examine the possibility to aggregate the set membership and signature based range proofs, the construction of these two are similar and hence it is sufficient to consider one of them, due to  its simpler notation the set membership proof is considered. Assume two range proofs $RP_1$ and $RP_2$ generated by the algorithm \textbf{Prove} in construction \ref{alg:ZKSM}, recall that $RP_i = (V_i,a_i,D_i,z_{x_i},z_{\tau _i},z_{R_i}, )$ for $i=1,2$,  additionally the commitment $C_i, \:\: i=1,2$ and group elements $h,g$ are know to the verifier. To aggregate the proof each element building the proof would need to be aggregated such that the verification of the aggregated proof can be carried out in the same way as before. First test the straight forward aggregation hence let$RP = (V,a,D,z_{x},z_{\tau },z_{R})$ be the aggregated range proof and  where $V, a, D,z_{x},z_{\tau },z_{R}$ be defined as,
+\begin{equation}
+\begin{aligned}
+\label{eq:naiveAgg}
+V =& V_1V_2 = g^{\frac{\tau_1}{\chi + x_1}}g^{\frac{\tau_2}{\chi + x_2}}  = g^{\frac{\tau_1}{\chi + x_1} + \frac{\tau_2}{\chi + x_2}}  \\
+a =& a_1a_2 = \big(e(V_1,g)^{-s_1})e(g,g)^{t_1}\big)  \big(e(V_2,g)^{-s_2})e(g,g)^{t_2}\big) \\
+& \big(e(V_1,y)^{c_1}e(V_1,g)^{-z_{x_1}}e(g,g)^{z_{\tau_1}} \big )   \big(e(V_2,y)^{c_2}e(V_2,g)^{-z_{x_2}}e(g,g)^{z_{\tau_2}} \big ) \\
+D =& D_1D_2 = ( g^{s_1}h^{m_1} ) (g^{s_2} h^{m_2}) = g^{s_1+s_2}h^{m_1+m_2}\\
+z_x =& z_{x_1} + z_{x_2} = (s_1-c_1x_1)+(s_2-c_2x_2)\\
+z_R =& z_{R_1} + z_{R_2} = (m_1-c_1R_1)+(m_2-c_2R_2)\\
+z_\tau =& z_{x_1} + z_{x_2} = (t_1-c_1\tau_1)+(t_2-c_2\tau_2)\\ 
+\end{aligned} 
+\end{equation}
+%are the multiplication of the corresponding elements in the two non aggregated range proofs and are the addition of the corresponding elements in the two non aggregated range proofs. To clarify two examples are, $D=D_1*D_2 =g^{s_1}h^{m_1}*g^{s_2}h^{m_2} = g^{s_1+s_2}h^{m_1+m_2}$, and the two exponentials are now refereed to as $s,m$, more over $z_x = z_{x_1}+z_{x_2} = (s_1-x_1c_1 )+ (s_2-x_2c_2) = s- x_1c_1-x_2c_2 $.
+Further also calculate the challenges $c_1$ and $c_2$ according to $c_i=Hash(V_i a_iD_i),\: i=1,2$ and remember that the  commitments $C_i$  are homomorphic, which  follows directly from the homomorphic properties of the Pedersen commitment. It is less obvious to see that the bilinear map can be aggregated, but this has been shown and the security proven in \cite{aggregate_bm}. However the homomorphic properties of the Pedersen commitment and bilinear maps does not guarantee that the range proofs is homomorphic. 
+
+
+%But although bilinear maps can be aggregated it turns out that the set membership proof does not have this property, this follows from design of $z_x,z_\tau $ and $z_R$ using addition and subtraction, when multiplying two sums the cross-terms will not cancel as desired, this is seen below. 
+
+Lets see if the  aggregated proof $RP$ can successfully be verified. For the verification to succeed it must hold that, $1)$ $D\overset{?}{=} C^ch^{z_R}g^{z_x}$ and $2)$ $ a \overset{?}{=} e(V,y)^ce(V,g)^{-z_x}e(g,g)^{z_\tau}$, so lets check if it holds starting with the first.
 
 \begin{align*}
-D &= D_1*D_2 = g^{s_1+s_2}*h^{m_1+m_2} = C^ch^{z_R}g^{z_x} = (C_1*C_2)^{c_1+c_2}h^{z_{R_1}+z_{R_2}}g^{z_{x_1}+z_{x_2}}\\ 
-&=(g^{x_1}h^{R_1}g^{x_2}h^{R_2}) ^{c_1+c_2}  h^{m_1-R_1c_1+m_2-R_2c_2} g^{s_1- x_1c_1+s_2-x_2c_2} \\
-&=(g^{x}h^{R})^{c}  h^{m-R_1c_1-R_2c_2} g^{s-x_1c_1-x_2c_2} = g^{cx+s-x_1c_1-x_2c_2}h^{cR+m-R_1c_1-R_2c_2} \implies \text{LHS}\neq \text{RHS}.
+LHS &= D = D_1*D_2 = g^{s_1+s_2}*h^{m_1+m_2} \\
+RHS &= C^ch^{z_R}g^{z_x} = (C_1*C_2)^{c_1c_2}h^{z_{R_1}+z_{R_2}}g^{z_{x_1}+z_{x_2}} \\ 
+&=(g^{x_1}h^{R_1}g^{x_2}h^{R_2}) ^{c_1c_2}  h^{m_1-R_1c_1+m_2-R_2c_2} g^{s_1- x_1c_1+s_2-x_2c_2} \\
+&= g^{c_1c_1(x_1+x_2)+s_1+s_2-x_1c_1-x_2c_2}h^{c_1c_2(R_1+R_2)+m-R_1c_1-R_2c_2} \\
+\implies \text{LHS}\neq \text{RHS}.
 \end{align*}
-This is since $ cx = (x_1+x_2)(c_1+c_2) = x_1c_1+x_1c_2+x_2c_1+x_2c_2 \neq x_1c_1 + x_2c_2$ and hence the terms does not cancel such that the RHS is independent of $x_1,x_2,c_1,c_2$ unlike the LHS. Neither the  second equality test including  bilinear mapping holds after aggregation, this equality will not hold even if the challenges are equal, i.e $c_1=c_2$ unlike the first. This can also be seen in Construction \ref{alg:ZKRP} where the verification of first equlity is aggregated while the second is done for each $j\in\mathds{Z}_l$. This concludes that the neither set membership nor signature based range proof can be straight forward aggregated without modifications.  
+This is since $ c_1c_2(x_1+x_2) = c_1c_2x_1+c_1c_2x_2 \neq x_1c_1 + x_2c_2$ and hence the terms does not cancel such that the RHS is independent of $x_1,x_2,c_1,c_2$ unlike the LHS. Further note that if $c_1=c_2$ then this would be an equality. Clearly it cannot be guaranteed that the two challenges will be equal since they depend on randomness in the proof construction. Lets instead investigate if some cleaver aggregation could circumvent this. Again consider the two range proofs $RP_1,RP_2$, but only the first equality test in the verification  is of interest. The reason only the first is considered is to simplify the procedure, and a remark is that although only half the verification is aggregated it can still lead to important reduce of computations for the verifier. The goal is now to combine the two range proofs into one aggregated proof such that the first equality holds. First calculate the challenges $c_1,c_1$ as $c_i =Hash(D_i,a_i,V_i),\:i=1,2$.
+Define the new aggregated range proof  $RP' =(D,z_x,z_R)$, since only the first equality is concerned, for now, the proof does not contain the bilinear map $a$ and the group element $z_{\tau}$. Further the aggregated proof is defined as, 
+\begin{align*}
+D &= D_1^{c_2}\cdot D_2^{c_1} = (g^{s_1}h^{m_1}) ^{c_2} \cdot (g^{s_2}h^{m_2}) ^{c_1}  =g^{s_1c_2+s_2c_1}h^{m_1c_2+m_2c_1} \\
+z_x &= c_2z_{x_1} +c_1 z_{x_2} = c_2(s_1-x_1c_1)  + c_1(s_2-x_2c_2) = s_1c_2 + s_2c_1 -c_1c_2(x_1+x_2)\\
+z_R &= c_2z_{R_1} +c_1 z_{R_2} = c_2(m_1-R_1c_1)  + c_1(m_2-R_2c_2) = m_1c_2 + m_2c_1 -c_1c_2(R_1+R_2)\\
+&= m_1c_2 + m_2c_1\\
+\end{align*}
+Additionally also define the aggregated challenge and commitment,
+\begin{align*}
+c &= c_1c_2 \\
+C &= C_1C_2 = (g^{x_1}h^{R_1}) (g^{x_2}h^{R_2}) = g^{x_1+x_2}h^{R_1+R_2}= g^{x_1+x_2}.
+\end{align*}
+Above it is assumed that the random values $R_i$ is chosen such that $\sum_i R_i = 0$, hence for $i=1,2$ if follows that $R_1+R_2 =0$. This property will not be required for the below calculations, however is does reduce notation and therefore the computations are done under this assumption. 
+Using this  aggregation of range proof to construct $RP'$ lets again evaluate if $D\overset{?}{=} C^ch^{z_R}g^{z_x}$,
+\begin{align*}
+LHS &= D = D_1^{c_2}\cdot D_2^{c_1} =g^{s_1c_2+s_2c_1}h^{m_1c_2+m_2c_1} \\
+RHS &= C^ch^{z_R}g^{z_x} = (C_1C_2)^{c_1c_2}h^{c_2z_{R_1}+c_1z_{R_2}}g^{c_2z_{x_1}+c_1z_{x_2}}\\ 
+&=(g^{x_1 + x_2})^{c_1c_2} h^{m_1c_2 +m_2c_1} g^{s_1c_2+ s_2c_1- c_1c_2(x_1+x_2)}  \\
+&= g^{(x_1+x_2)c_1c_2 - c_1c_2(x_1+x_2) +s_1c_2+s_2c_1} h^{m_1c_2 +m_2c_1} = g^{s_1c_2+s_2c_1} h^{m_1c_2 +m_2c_1} \\
+\\ \implies \text{LHS} =\text{RHS}&.
+\end{align*}
+This means that the new range proof $RP'$based on the two separate range proofs $RP_1,RP_2$ as above satisfies the first equality of the verification, further lets see if this can be extended to an aggregation on arbitrary number of range proofs, hence consider $n$ clients and hence $n$ range proofs denoted $RP_i,\: i\in\mathcal{N}$. 
+\begin{equation}
+\begin{aligned}
+\label{eq:aggDn}
+D &=\prod_{i=1}^n  D_i ^{\prod_{j=1, j\neq i}^n  c_j }  =  \prod_{i=1}^n  (g^{s_i}h^{m_i}) ^{\prod_{j=1, j\neq i}^n  c_j } = g ^ {\sum_{i=1}^n \Big(\prod_{j=1, j\neq i}^n   c_j \Big)s_i} h^ {\sum_{i=1}^n \Big(\prod_{j=1, j\neq i}^n   c_j \Big)m_i}\\
+z_x &= \sum_{i=1}^n \Big( \prod_{j=1,j\neq i}^n c_j \Big) z_{x_i} = \sum_{i=1}^n \Big( \prod_{j=1, j\neq i}^n c_j \Big)s_i - \big( \prod_{j=1}^n c_j \Big) \sum_{i=1}^n x_i\\
+z_R &=  \sum_{i=1}^n \Big( \prod_{j=1,j\neq i}^n c_j \Big) z_{R_i} = \sum_{i=1}^n \Big( \prod_{j=1, j\neq i}^n c_j \Big)m_i - \big( \prod_{j=1}^n c_j \Big) \sum_{i=1}^n R_i = \sum_{i=1}^n \Big( \prod_{j=1, j\neq i}^n c_j \Big)m_i.
+\end{aligned}
+\end{equation}
+Let $c=\prod_{i=1}^n c_i$ be the product of all challenges and $C= \prod_{i=1}^n C_i$ the product of the commitments.  Then define the aggregated range proof $RP = (D,z_x,z_r)$ and examine if it holds $D\overset{?}{=} C^ch^{z_R}g^{z_x}$, 
+\begin{align*}
+LHS =& D = g ^ {\sum_{i=1}^n \Big(\prod_{j=1, j\neq i}^n   c_j \Big)s_i} h^ {\sum_{i=1}^n \Big(\prod_{j=1, j\neq i}^n   c_j \Big)m_i}  \\
+RHS =& C^ch^{z_R}g^{z_x} =  \Big( \prod_{i=1}^n C_i \Big)^{\prod_{i=1}^n c_i}h^{\sum_{i=1}^n \Big( \prod_{j=1, j\neq i}^n c_j \Big)m_i}\\
+&g^{ \sum_{i=1}^n \Big( \prod_{j=1, j\neq i}^n c_j \Big)s_i - \big( \prod_{j=1}^n c_j \Big) \sum_{i=1}^n x_i}\\ 
+ =& \Big( g^{\sum_{i=1}^n x_i} \Big)^{\prod_{i=1}^n c_i}h^{\sum_{i=1}^n \Big( \prod_{j=1, j\neq i}^n c_j \Big)m_i} g^{ \sum_{i=1}^n \Big( \prod_{j=1, j\neq i}^n c_j \Big)s_i - \big( \prod_{j=1}^n c_j \Big) \sum_{i=1}^n x_i} \\
+=&  g^{  \sum_{i=1}^n \Big( \prod_{j=1, j\neq i}^n c_j \Big)s_i } h^{\sum_{i=1}^n \Big( \prod_{j=1, j\neq i}^n c_j \Big)m_i}  
+\\ \implies \text{LHS} =& \text{ RHS}.
+\end{align*}
 
-Next lets examine the possibility to aggregate Bulletproofs. The original paper about Bulletproofs \cite{bulletProofs_theory} presents a method to aggregate Bulletproofs such that $n$ parties each having a Pedersen commitment $C_i,\: i=1,...,n$ can generate a single bulletproof verifying that each commitment hides a secret in an allowed range. This however only works if all parties uses the same challenge $c$ in the proof construction, this is achieved by introducing a dealer. The dealer can be either one of the clients or another party. During the constructions of the proofs when computing the challenges each client sends their proof of to this point to the dealer who aggregates the proofs and computes the challenges based on the aggregated proofs. For example, assume $n$ clients and denote their respective proofs with a subscript $i$, then to compute the challenges $y_i$ in construction \ref{alg:bullet} instead of each client computing $y_i = Hash(A_i,S_i)$, each client sends $A_i,S_i$ to the dealer who adds then homomorphically $A = \prod_{i=1}^n A_i, S = \prod_{i=1}^n S_i$ and the send back the challenge $y =Hash(A,S)$ to be use by all clients. This procedure is repeated for each challenge. The following steps is not describe here instead it is noted that although the Fiat-Shamir heuristic is used to generate the challenges it is interactive since communication between the dealer and the clients is required during the construction of the aggregated range proof. If this procedure was ignored and each client instead computed their own challenges via Fiat-Shamir heuristic and the proof where aggregated after they were fully constructed,  then the challenges would differ between parties and the verification fail. Concluding, it has been seen that the  bulletproof can be aggregated with the cost on an  interactive construction, however this is not a desirable property for the the server and client verifiable AHSS construction.
+%TODO who aggregates, how do you ensure the aggregation is correct, challanges not possible for the verifier to compute since do not know the D_i and a_i and so on. Could you have a homoporphic hashfunction so this is not an issue? Or not since Di^{\prod{c_j}}... 
+
+%TODO cleatify who does who and how the new verification would look. Could servers do it? Or would they then be able to indluence to their favour ? 
+
+Now lets examines the possibilities to construct a method of aggregating range proof such that also the second equality in the verification also holds after the aggregation. Hence lets test if $a \overset{?}{=} e(V,y)^c e(V,g)^{-z_x}e(g,g)^{z_\tau}$, where $a,V,z_{x},z_\tau$  is as in equation \eqref{eq:naiveAgg}, under the assumption $c_1=c_2$. If it hold true if would be sufficient to use the same trick as above, namely aggregate such that the challenges appear ad a product.. After some calculation it is realised that the terms,
+\begin{align*}
+e(V_1,g)^{z_{x_2}}e(V_2,g)^{z_{x_1}} = e(g,g)^{\frac{\tau_1}{\chi + x_1}(-s_2+x_2c) +\frac{\tau_2}{\chi + x_2}(-s_1+x_1c)   } ,
+\end{align*}
+on the right side of the equality are not cancelled. This concludes that even if $c_1=c_2$ the verification will not hold after a naive aggregation as in equation \eqref{eq:naiveAgg}, which was the case for the other equality check,  hence it is realised that in order to aggregate the whole range proof additional trick is required, if at all possible. 
+%A hint can also be seen in Construction \ref{alg:ZKRP} where the verification of first equity is aggregated while the second is done for each $j\in\mathds{Z}_l$. 
+
+
+
+%Assuming that the 
+
+
+
+
+%Neither the  second equality test including  bilinear mapping holds after aggregation, this equality will not hold even if the challenges are equal, i.e $c_1=c_2$ unlike the first.  This concludes that the neither set membership nor signature based range proof can be straight forward aggregated without modifications.  Challange in included on both sides, is this an issue? But not yout own challange on LHS?
+
+The original paper about Bulletproofs \cite{bulletProofs_theory} presents a method to aggregate Bulletproofs such that $n$ parties each having a Pedersen commitment $C_i,\: i=1,...,n$ can generate a single bulletproof verifying that each commitment hides a secret in an allowed range. This however only works if all parties uses the same challenge $c$ in the proof construction, this is achieved by introducing a dealer. The dealer can be either one of the clients or another party. During the constructions of the proofs when computing the challenges each client sends their proof of to this point to the dealer who aggregates the proofs and computes the challenges based on the aggregated proofs. For example, assume $n$ clients and denote their respective proofs with a subscript $i$, then to compute the challenges $y_i$ in construction \ref{alg:bullet} instead of each client computing $y_i = Hash(A_i,S_i)$, each client sends $A_i,S_i$ to the dealer who adds then homomorphically $A = \prod_{i=1}^n A_i, S = \prod_{i=1}^n S_i$ and the send back the challenge $y =Hash(A,S)$ to be use by all clients. This procedure is repeated for each challenge. The following steps is not describe here instead it is noted that although the Fiat-Shamir heuristic is used to generate the challenges it is interactive since communication between the dealer and the clients is required during the construction of the aggregated range proof. If this procedure was ignored and each client instead computed their own challenges via Fiat-Shamir heuristic and the proof where aggregated after they were fully constructed,  then the challenges would differ between parties and the verification fail. Concluding, it has been seen that the  bulletproof can be aggregated with the cost on an  interactive construction, however this is not a desirable property for the the server and client verifiable AHSS construction.
 
 This concludes that neither of the considers range proofs can be aggregated  (in a naive way) such that the verifier can perform one single verification instead of one for each client, at least not without some cost. Remark that this conclusion is not final and their may very well exist small or large modifications of the range proof that will allow them to be aggregated and still remaining non-interactive. The investigation of such modification is outside the scope of this paper but the reader is endorsed to explore this possibility. 
-
-A final remark that the naive approach to aggregate the commitments $\pi_i, \: i\in\mathcal{N}$ to $\pi = \prod_{i=1}^n \pi_i$ and then construct a range proof for the aggregated commitment $\pi = g^{\sum_{i=1}^n x_i}$ over the range $[n\cdot a,n\cdot b]$, to prove $x_i\ in [a,b]$ for all $i \in\mathcal{N}$  is useless. The value $y=\sum_{i=1}^n x_i$ is publicly known so to construct a zero knowledge range proof for $y $ provides no new information and given that $y\in [n\cdot a,n\cdot b]$ does not imply $x_i\in [a,b]$ for all $i\in\mathcal{N}$. 
 
 \section{Implementation}
 To practically investigate the combining of the vahss construction \ref{alg:VAHSS-HSS} with a range proof, an implementation of construction \ref{alg:VAHSS-HSS-RP} is provided written in Golang. Remark that this construction is written without specifying which range proof that is used, and works for all different range proofs that provides a proof for a Pedersen commitment, which is true for every range proof discussed above. From the analysis of the range proofs given above XXX. Since all three constructions have there advantages and disadvantages all will be used to implement the client and server verifiable additive homomorphic secret sharing construction \ref{alg:VAHSS-HSS-RP}. The set membership proof will be considered and used to verify clients honesty, yet sometimes is may be refereed to 
@@ -197,6 +281,8 @@ In order to be able to compare the performance of the vahss construction includi
 The size of the range will vary to investigate the impact it has on runtime, both the complexity for the bulletproof and signature-based range proof depends on the size of the range  unlike the set-membership as discussed above. 
 
 A final remark about the implementation is that its purpose is to test the concept on the above proposed construction and provide runtime evaluations, the code has not been tested enough to be used as secure implementation.
+
+%TODO Describe changes in their code
 
 %bulletproofs, set membership proofs and signature based range proofs to  verify the clients input. in written in Golang. All three mentioned range proofs has previously been implemented in Golang and the code is available on Github at \cite{RP_code}. The server verifiable secret sharing construction has been implemented in python and c++ and is available at Github at \cite{Vahsss_code}. 
 
