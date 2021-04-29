@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  26 APR 2021 16:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  29 APR 2021 10:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1214,7 +1214,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 30--31
 
  []
 
-<figure/auxiliary/frontpage_gu_eng_vec_m2.pdf, id=142, 597.23125pt x 845.15756p
+<figure/auxiliary/frontpage_gu_eng_vec_m2.pdf, id=138, 597.23125pt x 845.15756p
 t>
 File: figure/auxiliary/frontpage_gu_eng_vec_m2.pdf Graphic file (type pdf)
 <use figure/auxiliary/frontpage_gu_eng_vec_m2.pdf>
@@ -1228,7 +1228,7 @@ input line 44.
 e/auxiliary/frontpage_gu_eng_vec_m2.pdf>] [2
 
 ]
-<figure/auxiliary/ChGULogoHog.pdf, id=161, 142.26349pt x 199.1691pt>
+<figure/auxiliary/ChGULogoHog.pdf, id=157, 142.26349pt x 199.1691pt>
 File: figure/auxiliary/ChGULogoHog.pdf Graphic file (type pdf)
 <use figure/auxiliary/ChGULogoHog.pdf>
 Package pdftex.def Info: figure/auxiliary/ChGULogoHog.pdf  used on input line 6
@@ -1283,24 +1283,20 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 8
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )) [4]
 (./include/frontmatter/Abstract.tex [5]) [6]
-(./include/frontmatter/Acknowledgements.tex [7]) [8] (./main.toc
-Overfull \hbox (9.85062pt too wide) in paragraph at lines 15--15
- [][] [][][]\T1/lmr/m/n/12 Theoretical anal-y-sis: Signature-based set mem-ber-
-ship and range 
- []
-
-[9
-
-])
+(./include/frontmatter/Acknowledgements.tex [7]) [8] (./main.toc)
 \tf@toc=\write7
 \openout7 = `main.toc'.
 
- [10] (./main.lof)
+ [9
+
+] [10
+
+]
+(./main.lof)
 \tf@lof=\write8
 \openout8 = `main.lof'.
 
  [11
-
 
 ] [12
 
@@ -1312,8 +1308,7 @@ ship and range
 
 ] [14
 
-]
-(./include/Introduction.tex
+] (./include/Introduction.tex
 Chapter 1.
 ) (./include/Theory.tex [1
 
@@ -1322,11 +1317,11 @@ Chapter 1.
 ]
 Chapter 2.
 LaTeX Font Info:    Trying to load font information for U+dsrom on input line 1
-5.
+6.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 ) [3]
-Underfull \hbox (badness 10000) in paragraph at lines 77--79
+Underfull \hbox (badness 10000) in paragraph at lines 76--78
 
  []
 
@@ -1334,18 +1329,31 @@ Underfull \hbox (badness 10000) in paragraph at lines 77--79
 Missing character: There is no 2 in font dsrom8!
  [5]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-25.
+24.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [6]
+)
+! Undefined control sequence.
+l.128 ...s input, such that output from the \textt
+                                                  {Simulator} and \texttt{Pr...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \vbox (badness 6775) has occurred while \output is active []
+
+ [6]
 [7]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 162.
+put line 161.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.166 \hline
+l.165 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1353,7 +1361,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 \adl@hline ...mpcnta \xdef \adl@rowsL {\adl@rowsL 
                                                   (#1/\number \@tempcnta );}...
-l.166 \hline
+l.165 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1364,7 +1372,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.166 \hline
+l.165 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1375,7 +1383,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 \adl@hline ...nta );}\xdef \adl@rowsR {\adl@rowsR 
                                                   (#1/\number \@tempcnta );}
-l.166 \hline
+l.165 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1386,7 +1394,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.166 \hline
+l.165 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1394,19 +1402,19 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[8] [9]
-Overfull \hbox (5.42398pt too wide) in paragraph at lines 254--254
+[8]
+Overfull \hbox (5.42398pt too wide) in paragraph at lines 255--255
 |[]\T1/lmr/bx/n/14.4 Set mem-ber-ship proof and Signature-based range proof| 
  []
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 263.
+               Default added (so using `htbp') on input line 264.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.266 \vspace{2pt} \hline
+l.267 \vspace{2pt} \hline
                           \vspace{2pt}
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1414,7 +1422,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.266 \vspace{2pt} \hline
+l.267 \vspace{2pt} \hline
                           \vspace{2pt}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1425,7 +1433,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.266 \vspace{2pt} \hline
+l.267 \vspace{2pt} \hline
                           \vspace{2pt}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1434,20 +1442,20 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 274--276
+Underfull \hbox (badness 10000) in paragraph at lines 275--277
 [][] \T1/lmr/m/n/12 Check if $\OML/lmm/m/it/12 D [] C[]h[]g[] \OMS/lmsy/m/n/12 
 ^ \OML/lmm/m/it/12 a []
  []
 
-[10]
+[9]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 287.
+               Default added (so using `htbp') on input line 288.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.291 \hline
+l.292 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1455,7 +1463,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.291 \hline
+l.292 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1466,7 +1474,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.291 \hline
+l.292 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1475,20 +1483,20 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 297.
+(Font)              <10> on input line 298.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 297.
+(Font)              <7> on input line 298.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 297.
+(Font)              <5> on input line 298.
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 308.
+               Default added (so using `tbp') on input line 309.
 
-[11]
+[10] [11]
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.385 \hline
+l.386 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1496,7 +1504,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.385 \hline
+l.386 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1507,7 +1515,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.385 \hline
+l.386 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1516,7 +1524,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 1199) in paragraph at lines 388--390
+Underfull \hbox (badness 1199) in paragraph at lines 389--391
 \T1/lmr/m/n/12 Let $\OML/lmm/m/it/12 y \OT1/lmr/m/n/12 = [][](\OT1/lmr/bx/n/12 
 g\OML/lmm/m/it/12 ; \OT1/lmr/bx/n/12 h\OML/lmm/m/it/12 ; P[]; c\OT1/lmr/m/n/12 
 ) \OMS/lmsy/m/n/12 2 \U/dsrom/m/n/12 F[]$ \T1/lmr/m/n/12 and com-pute $\OML/lmm
@@ -1524,7 +1532,7 @@ g\OML/lmm/m/it/12 ; \OT1/lmr/bx/n/12 h\OML/lmm/m/it/12 ; P[]; c\OT1/lmr/m/n/12
  []
 
 
-Underfull \hbox (badness 3701) in paragraph at lines 388--390
+Underfull \hbox (badness 3701) in paragraph at lines 389--391
 \OT1/lmr/bx/n/12 l\OML/lmm/m/it/12 ; \OT1/lmr/bx/n/12 r$ \T1/lmr/m/n/12 be two 
 empty vec-tors. Run the re-cur-sive al-go-rithm \T1/lmr/bx/n/12 Gen-er-
  []
@@ -1532,12 +1540,12 @@ empty vec-tors. Run the re-cur-sive al-go-rithm \T1/lmr/bx/n/12 Gen-er-
 [12] [13]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 428.
+               Default added (so using `htbp') on input line 429.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.432 \hline
+l.433 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1545,7 +1553,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.432 \hline
+l.433 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1556,7 +1564,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.432 \hline
+l.433 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1569,21 +1577,21 @@ and I'll forget about whatever was undefined.
 ]
 Chapter 3.
 
-LaTeX Warning: Reference `sec:implement' on page 17 undefined on input line 4.
+Underfull \vbox (badness 1924) has occurred while \output is active []
 
-[17] [18] [19]
-Overfull \hbox (9.8559pt too wide) in paragraph at lines 66--66
+ [17]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [18]
+Overfull \hbox (9.8559pt too wide) in paragraph at lines 78--78
 |[]\T1/lmr/bx/n/17.28 Additive ho-mo-mor-phic se-cret shar-ing with ver-
  []
 
-[20] [21]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [22]
+[19] [20]
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.140 \hline
+l.127 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1591,7 +1599,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.140 \hline
+l.127 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1602,7 +1610,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.140 \hline
+l.127 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1610,8 +1618,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[23] [24]
-Overfull \hbox (16.30241pt too wide) in paragraph at lines 193--194
+[21] [22]
+Overfull \hbox (16.30241pt too wide) in paragraph at lines 231--232
 \T1/lmr/m/n/12 tion to suc-ceed it must hold that, $\OT1/lmr/m/n/12 1)$ $\OML/l
 mm/m/it/12 D [] C[]h[]g[]$ \T1/lmr/m/n/12 and $\OT1/lmr/m/n/12 2)$ $\OML/lmm/m/
 it/12 a [] e\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 V; y\OT1/lmr/m/n/12 )[]\OML/lmm/m
@@ -1619,48 +1627,66 @@ it/12 a [] e\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 V; y\OT1/lmr/m/n/12 )[]\OML/lmm/m
 12 e\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 g; g\OT1/lmr/m/n/12 )[]$\T1/lmr/m/n/12 ,
  []
 
-
-Overfull \hbox (8.3469pt too wide) detected at line 209
+[23]
+Overfull \hbox (8.3469pt too wide) detected at line 247
 []
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Overfull \hbox (20.2265pt too wide) in paragraph at lines 252--255
+\T1/lmr/m/n/12 Above it is as-sumed that the ran-dom val-ues $\OML/lmm/m/it/12 
+R[]$ \T1/lmr/m/n/12 is cho-sen such that $\OML/lmm/m/it/12 R[] \OT1/lmr/m/n/12 
+= \OML/lmm/m/it/12 ^^^\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 N\OT1/lmr/m/n/12 )\OMS/
+lmsy/m/n/12 d[]e ^^@
+ []
 
- [25]
-Overfull \hbox (9.6648pt too wide) detected at line 232
+[24]
+Overfull \hbox (9.6648pt too wide) detected at line 270
 [][]
  []
 
 
-Overfull \hbox (12.65308pt too wide) detected at line 241
+Overfull \hbox (12.65308pt too wide) detected at line 279
 []
  []
 
+[25]
+! Extra }, or forgotten $.
+l.307 ...an be that $D = (C_1C_2)^ch^{z_R}g^{z_x}}
+                                                  $, where $C_i = g^{x_i}h^{...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
-Underfull \vbox (badness 1796) has occurred while \output is active []
+[26]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [26]
-[27]
+ [27]
 
-LaTeX Warning: Reference `Git:MyCode' on page 28 undefined on input line 276.
+LaTeX Warning: Reference `Git:MyCode' on page 28 undefined on input line 346.
 
-[28]) (./include/Results.tex [29] [30
+
+Underfull \vbox (badness 3407) has occurred while \output is active []
+
+ [28])
+(./include/Results.tex [29] [30
 
 ]
 Chapter 4.
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 14.
+               Default added (so using `tbp') on input line 15.
 
-<./figure/verification_nrClients.png, id=597, 1445.4pt x 852.18375pt>
+<./figure/verification_nrClients.png, id=582, 1445.4pt x 852.18375pt>
 File: ./figure/verification_nrClients.png Graphic file (type png)
 <use ./figure/verification_nrClients.png>
 Package pdftex.def Info: ./figure/verification_nrClients.png  used on input lin
-e 15.
+e 16.
 (pdftex.def)             Requested size: 426.79135pt x 251.62608pt.
 
-Overfull \hbox (16.51671pt too wide) in paragraph at lines 23--36
+Overfull \hbox (16.51671pt too wide) in paragraph at lines 24--37
  [][] 
  []
 
@@ -1772,20 +1798,20 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 88.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 88.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 88.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 879DB102829D248FDCDD05E328E85A9F;1856.
+(rerunfilecheck)             Checksum: 95D4A0A7FF43A235D24E8F6235CEA236;1749.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 24976 strings out of 480608
- 462120 string characters out of 5903631
- 794002 words of memory out of 5000000
+ 24972 strings out of 480608
+ 462075 string characters out of 5903631
+ 792869 words of memory out of 5000000
  40070 multiletter control sequences out of 15000+600000
  666053 words of font info for 114 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,19n,85p,1955b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,16n,85p,2151b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -1818,10 +1844,10 @@ e1/public/lm/lmtt12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/
 lm/lmtti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic/uhv
 b8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb
 >
-Output written on main.pdf (54 pages, 1413594 bytes).
+Output written on main.pdf (54 pages, 1407777 bytes).
 PDF statistics:
- 777 PDF objects out of 1000 (max. 8388607)
- 648 compressed objects within 7 object streams
- 144 named destinations out of 1000 (max. 500000)
- 348 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 762 PDF objects out of 1000 (max. 8388607)
+ 640 compressed objects within 7 object streams
+ 140 named destinations out of 1000 (max. 500000)
+ 340 words of extra memory for PDF output out of 10000 (max. 10000000)
 
