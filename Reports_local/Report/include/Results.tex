@@ -5,26 +5,21 @@
 First the purpose of the paper is repeated to motivate the results obtained below. The main purpose of this paper is to investigate if  and how the VAHSS construction \ref{alg:VAHSS-HSS} can be extended with a range proof to ensure honest clients. Beside this main purpose the aim is also to provide an implementation of such a combined construction and to compare different range proofs and their compatibility to VAHSS. The results for there three questions will be given below in three sub sections. 
 
 \section{Combining}
-The main result of this paper is that it is possible to combine a VAHSS construction as described in section \ref{sec:VAHSS} with a range proof to reduce the potential impact of malicious clients. Using range proofs (or set membership proofs) that assumes a Pedersen commitment the combining with the VAHSS construction becomes almost parallel in the sence that the VAHSS and range proof (or set membership proof) are run almost independent of each other. It was also found that the combination could be done without specifying the details about the range proof, hence any range proof that assumes a Pedersen commitment can be used, which leads to a highly flexible combination.  
+The main result of this paper is that it is possible to combine a VAHSS construction as described in section \ref{sec:VAHSS} with a range proof to reduce the potential impact of malicious clients. Using range proofs (or set membership proofs) that assumes a Pedersen commitment the combining with the VAHSS construction becomes almost parallel in the scene that the VAHSS and range proof (or set membership proof) are run almost independent of each other. It was also found that the combination could be done without specifying the details about the range proof, hence any range proof that assumes a Pedersen commitment can be used, which leads to a highly flexible combination.  
 %Note that although the construction does not specify which range proof that is used the implementation does due o the choice of group in the set up, the signature-based range proofs and set membership proof uses pairing friendly elliptic curve groups in the implementation which is not the case for Bulletproofs.
 
 The main factor determining the suitability of different range proofs is their runtime and their possibility to be aggregated, since all can be combined using the same approach to the VAHSS construction. The two range proofs studied are Bulletproofs and signature-based range proofs and the runtime comparison between them showed that Bulletproofs were significantly faster, hence more suitable for using in server and client verifiable AHSS presented in Construction \ref{alg:VAHSS-HSS-RP}. 
 
 \section{Runtime}
 
-\begin{figure}[]
-\includegraphics[width=\linewidth]{./figure/verification_nrClients.png}
-\end{figure}
-
-
 \begin{table}
-\label{tab:BenchBP}
 \caption{Timing in seconds for server and client verifiable-AHSS. Verfication of clients is done by usingBulletProofs}
 \centering
 \begin{tabular}{*{5}{c}}
+\label{tab:BenchBP}
 \hline
     										&  \textbf{Executer}   & \multicolumn{3}{c}{\textbf{Time}}   		\\ 
-    										& 								& Bullet proof  & signature based & Set membership \\	\hline
+    										& 								& Bulletproofs  & Signature-based & Set membership \\	\hline
   GenerateShares 				&  client  					&   95 [$\mu$s]			 &96[$\mu$s]  &98 [$\mu$s]												\\ \hline 
   GenerateRangeProof  		&  clients  					&   53 [ms]				& 	241 [ms]	&66 [ms]			\\ \hline 
   PartialEval  						&  server  					&   78	[$\mu$s]				&72[$\mu$s]	 		&	71	 [$\mu$s]							\\ \hline 
@@ -34,4 +29,14 @@ The main factor determining the suitability of different range proofs is their r
   VerifyRP							&  x 							&   2979[ms]					&  &					9288 [ms]							\\ \hline 
   VerifyServers					&  x 							&   1672 [$\mu$s]					&		7990 [ms] 	&		7947 [$\mu$s]					\\ \hline 
 \end{tabular}
- \end{table}
+\end{table}
+ 
+
+To obtain the values in Table \ref{tab:BenchBP} the maximum upper bound for Bulletproof is $2^{n=8}=256$, which  is sufficiently large maximum upper bound  for the range $[18,200]$. However is would be interesting to investigate how the runtime of the verification in Construction \ref{alg:VAHSS-HSS-RP} is affected if this maximum bound of the range was increased. This is seen by the top curve in Figure \ref{fig:NrClients}. 
+% The Bulletproofs has computational complexity $\mathcal{O}(log_2 n)$, thus an expected increase of a factor $5/3\:(=log_2\: 32/ log_2\: 8)$ would be expected, however in Figure \ref{fig:NrClients} an increase of a factor approximately $4$ is seen for the algorithm \texttt{Verify} in Construction \ref{alg:VAHSS-HSS-RP} when increasing $n$ form $8$ to $32$, why this result is obtained is not clear.
+ An interesting remark is that  the runtime for Bulletproofs, when $n=32$, are longer then for set membership proofs independent of the number of clients considered and as mentioned earlier the runtime for verification using the set membership protocol in independent of both the size of the set and the values of the elements in the set.
+ \begin{figure}[]
+\caption{TODO}
+\label{fig:NrClients}
+\includegraphics[width=\linewidth]{./figure/verification_nrClients.png}
+\end{figure}
