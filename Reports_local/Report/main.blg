@@ -3,44 +3,46 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: abbrv.bst
 Database file #1: ref.bib
-You've used 18 entries,
+Warning--I didn't find a database entry for "zkStark"
+You've used 17 entries,
             2118 wiz_defined-function locations,
-            629 strings with 7149 characters,
-and the built_in function-call counts, 7674 in all, are:
-= -- 783
-> -- 347
-< -- 11
-+ -- 133
-- -- 113
-* -- 481
-:= -- 1183
-add.period$ -- 63
-call.type$ -- 18
-change.case$ -- 106
+            623 strings with 7049 characters,
+and the built_in function-call counts, 7213 in all, are:
+= -- 729
+> -- 341
+< -- 10
++ -- 131
+- -- 112
+* -- 460
+:= -- 1121
+add.period$ -- 59
+call.type$ -- 17
+change.case$ -- 103
 chr.to.int$ -- 0
-cite$ -- 18
-duplicate$ -- 334
-empty$ -- 590
-format.name$ -- 113
-if$ -- 1721
+cite$ -- 17
+duplicate$ -- 307
+empty$ -- 548
+format.name$ -- 112
+if$ -- 1608
 int.to.chr$ -- 0
-int.to.str$ -- 18
-missing$ -- 15
-newline$ -- 93
-num.names$ -- 50
-pop$ -- 132
+int.to.str$ -- 17
+missing$ -- 14
+newline$ -- 88
+num.names$ -- 46
+pop$ -- 127
 preamble$ -- 1
-purify$ -- 88
+purify$ -- 86
 quote$ -- 0
-skip$ -- 286
+skip$ -- 262
 stack$ -- 0
-substring$ -- 448
-swap$ -- 137
-text.length$ -- 11
+substring$ -- 407
+swap$ -- 123
+text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 72
+type$ -- 68
 warning$ -- 0
-while$ -- 72
-width$ -- 20
-write$ -- 217
+while$ -- 66
+width$ -- 19
+write$ -- 204
+(There was 1 warning)

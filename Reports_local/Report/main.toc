@@ -2,27 +2,26 @@
 \contentsline {chapter}{List of Figures}{xi}{chapter*.3}%
 \contentsline {chapter}{List of Tables}{xiii}{chapter*.4}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Contribution}{1}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Organisation}{1}{section.1.2}%
 \contentsline {chapter}{\numberline {2}Theory}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Preliminaries}{3}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Verifiable additive homomorphic secret sharing}{7}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Constructions for verifying clients input}{8}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Set membership proof and Signature-based range proof}{9}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Bulletproofs}{10}{subsection.2.3.2}%
-\contentsline {chapter}{\numberline {3}Methods}{17}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Comparison of constructions for verify clients honesty}{17}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Theoretical analysis}{18}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Prototype Analysis}{19}{subsection.3.1.2}%
-\contentsline {section}{\numberline {3.2}Additive homomorphic secret sharing with verification of both clients and severs }{20}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Aggregate range proofs}{23}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Implementation}{28}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Results}{31}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Combining}{31}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Runtime}{31}{section.4.2}%
-\contentsline {chapter}{\numberline {5}Conclusion}{33}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Discussion}{33}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Conclusion}{33}{section.5.2}%
-\contentsline {chapter}{Bibliography}{35}{section.5.2}%
-\contentsline {chapter}{\numberline {A}Proof of range in signature based range proof}{I}{appendix.A}%
+\contentsline {subsection}{\numberline {2.3.2}Bulletproofs}{11}{subsection.2.3.2}%
+\contentsline {chapter}{\numberline {3}Methods}{15}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Comparison of constructions for verify clients honesty}{15}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Theoretical analysis}{16}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Prototype Analysis}{17}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Additive homomorphic secret sharing with verification of both clients and severs }{18}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Improving runtime}{21}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Implementation}{30}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Results}{33}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Combining}{33}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Runtime}{34}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Conclusion}{37}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Discussion}{37}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Conclusion}{37}{section.5.2}%
+\contentsline {chapter}{Bibliography}{39}{section.5.2}%
+\contentsline {chapter}{\numberline {A}Aggregated VHASS}{I}{appendix.A}%
 \contentsline {chapter}{\numberline {B}LHSS}{III}{appendix.B}%
+\contentsline {chapter}{\numberline {C}Aggregation }{V}{appendix.C}%

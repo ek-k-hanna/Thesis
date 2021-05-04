@@ -8,6 +8,14 @@ M.~Bellare and P.~Rogaway.
   Communications Security}, CCS '93, page 62–73, New York, NY, USA, 1993.
   Association for Computing Machinery.
 
+\bibitem{zkSnark}
+N.~Bitansky, R.~Canetti, A.~Chiesa, and E.~Tromer.
+\newblock From extractable collision resistance to succinct non-interactive
+  arguments of knowledge, and back again.
+\newblock In {\em Proceedings of the 3rd Innovations in Theoretical Computer
+  Science Conference}, ITCS '12, page 326–349, New York, NY, USA, 2012.
+  Association for Computing Machinery.
+
 \bibitem{Bohen-Boyen}
 D.~Boneh and X.~Boyen.
 \newblock Short signatures without random oracles.
@@ -20,19 +28,6 @@ D.~Boneh, C.~Gentry, B.~Lynn, and H.~Shacham.
 \newblock Aggregate and verifiably encrypted signatures from bilinear maps.
 \newblock In E.~Biham, editor, {\em Advances in Cryptology --- EUROCRYPT 2003},
   pages 416--432, Berlin, Heidelberg, 2003. Springer Berlin Heidelberg.
-
-\bibitem{Efficient_proof_interval}
-F.~Boudot.
-\newblock Efficient proofs that a committed number lies in an interval.
-\newblock In B.~Preneel, editor, {\em Advances in Cryptology --- EUROCRYPT
-  2000}, pages 431--444, Berlin, Heidelberg, 2000. Springer Berlin Heidelberg.
-
-\bibitem{FSS}
-E.~Boyle, N.~Gilboa, and Y.~Ishai.
-\newblock Function secret sharing: Improvements and extensions.
-\newblock In {\em Proceedings of the 2016 ACM SIGSAC Conference on Computer and
-  Communications Security}, CCS '16, page 1292–1303, New York, NY, USA, 2016.
-  Association for Computing Machinery.
 
 \bibitem{bulletProofs_theory}
 B.~{Bünz}, J.~{Bootle}, D.~{Boneh}, A.~{Poelstra}, P.~{Wuille}, and

@@ -2,9 +2,10 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Time Complexity comparison for range proof, values are computed as described in section \ref {sec:PrototypeAnalysis}. The runtime are for implementations written in Golang and the implementations are not guaranteed to be optimized in runtime. \relax }}{19}{table.caption.7}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Time Complexity comparison for range proof, values are computed as described in section \ref {sec:PrototypeAnalysis}. The runtime are for implementations written in Golang and the implementations are not guaranteed to be optimized in runtime. \relax }}{17}{table.caption.7}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Timing in seconds for server and client verifiable-AHSS. Verfication of clients is done by usingBulletProofs\relax }}{32}{table.caption.8}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Timing in seconds for server and client verifiable-AHSS. Verification of clients is done using three different constructions namely by implementing Bulletproofs, signature based range proofs and set membership proofs\relax }}{34}{table.caption.9}%
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

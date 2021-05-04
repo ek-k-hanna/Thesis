@@ -1,11 +1,49 @@
-\chapter{Proof of range in signature based range proof}
+\chapter{Aggregated VHASS}
 \label{appendix:range}
-
+\begin{comment}
 Let $x=\sum_{j=0}^{l-1} x_j u^j$, where $x_j$ is an integer and $x_j\in[0,u)$, $u,l$ are integers and $j\in[0,l-1] (=\mathds{Z}_l)$. Then it holds that $x\in[0,u^l)$.
-
 \begin{align*}
 x =& \sum_{j=0}^{l-1} x_j u^j \leq \sum_{j=0}^{l-1}  (u-1)u^j = \sum_{j=0}^{l-1} u^{j+1} - \sum_{j=0}^{l-1} u^j = (u-1) \sum_{j=0}^{l-1} u^j =\\
  &(u-1) \frac{u^l-1}{u-1} = u^l-1< u^l 
 \end{align*}
-
 Hence the  statement is proved and it is trivial to see that if $j\in[0,l]$ the value of $x$ could exceed $u^l$.
+\end{comment}
+\begin{algorithm}
+\caption{\textbf{: Client and Server Verifiable additive homomorphic secret sharing}}
+
+\textbf{Goal:} Construct and share the sum $\sum_{i=1}^n x_i$, where $x_i$ is a secret value known by client $c_i$, where $i\in\mathcal{N}$ without any client needing to revealing their individual secret. All parties are verified to be honest in the construction.
+\vspace{2pt}
+\hline
+\vspace{2pt}
+\begin{itemize}
+ \item\textbf{ShareSecret $(1^\lambda,i,x_i) \mapsto \{x_{ij}\}_{j\in\mathcal{M}}$} \\
+Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in_R\mathds{F}$ to be the coefficients to a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Define  the shares as $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$ for $j\in\mathcal{M}$, the parameters $\theta_{ij}$ and Lagrange coefficients $\lambda_{ij}$ is chosen such that equation \ref{eq:pi(0)} is satisfied.
+Output $\{x_{ij}\}_{j\in\mathcal{M}}$.
+
+\item\textbf{GenereteCommitment$(1^\lambda,i,x_i) \mapsto \pi_i$ }\\
+Let $\mathds{E} : x,y \to g^xh^y$ be a Pedersen commitment . Let $R_i\in\mathds{F}$ be the output of a PRF such that $R_n\in \mathds{F}$  satisfies $R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute and output $\pi_i = \mathds{E}(x_i,R_i)$.
+
+\item\textbf{RangeProof $(x_i,\pi_i) \mapsto RP_i$}\\
+Construct a range proof, denoted $RP_i$, for the commitment $\pi_i$ to the secret $x_i$, on the set $\Phi$ using the agorithm \textbf{Prove} in Construction \ref{alg:ZKSM-Agg}. All required  parameters and setup is assumed to be pre-shared and known by all parties.
+
+\item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
+Compute and output $y_j = \sum_{i=1}^n x_{ij}$.
+
+\item\textbf{PartialProof $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}\sigma_j$}\\
+Compute and output $\sigma_j = \prod_{i=1}^n g^{x_{ij}} =  g^{\sum_{i=1}^n x_{ij}}= g^{y_j}=H(y_j)$.
+
+\item \text{\textbf{PartialAggregate} $(g,h, \mathcal{S}\{ \textit{proof}_{SM,i}\}_{i\in\mathcal{S}} \xrightarrow[]{} \texit{proof}_{SM,a}$} \\
+Given a subset of range proofs  $\{ \textit{proof}_{SM,i}\}_{i\in\mathcal{S}}$ where $\mathcal{S}\subseteq \{1,...,n\}$. Aggregate the values $\{D_i \}_{i\in\mathcal{S} } \{ z_{x_i}\}_{i\in\mathcal{S} } \{ z_{r_i}\}_{i\in\mathcal{S} } \mapsto D_a,z_{x_a},z_{R_a}$ according to equation \eqref{eq:aggDn}. Then construct and publish the aggregated range proof $\texit{proof}_{SM,a} = (\{V_i\}_{i\in\mathcal{S} },\{a_i\}_{i\in\mathcal{S} },D_a,\{z_{x_i}\}_{i\in\mathcal{S} }, z_{x_a}, \{z_{\tau_i}\}_{i\in\mathcal{S} },z_{R_a})$.
+
+
+\item\textbf{FinalEval $(\{y_j\}_{j\in\mathcal{M}})\xrightarrow[]{}y$}\\
+Compute and output $y = \sum_{j=1}^m y_{j}$.
+
+\item\textbf{FinalProof $(\{\sigma_j\}_{j\in\mathcal{M}})\xrightarrow[]{}\sigma$}\\
+Compute and output $\sigma = \prod_{j=1}^m \sigma_j = \prod_{j=1}^m g^{y_{j}} =  g^{\sum_{j=1}^m y_{j}}= g^{y}=H(y)$.
+
+\item\textbf{Verify $(\{\pi_i\}_{i\in\mathcal{N}},x,y,\{RP_{a_i}\}_{i\in\mathcal{M}})\xrightarrow[]{}\{0,1\}$}\\
+Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y)\wedge \{\textbf{VerifyAggregatedProof}(RP_{a_i})\}_{i\in\mathcal{M}}$. Where $\textbf{VerifyAggregatedProof}$ is the verification algorithm in Construction \ref{alg:VAHSS-HSS-RP-Agg}.
+\end{itemize}
+\label{alg:VAHSS-HSS-RP-Agg}
+\end{algorithm}

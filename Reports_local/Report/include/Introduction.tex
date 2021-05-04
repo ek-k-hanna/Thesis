@@ -42,8 +42,25 @@ Range proofs are used to verify that a value is withing a given range without re
 Interactive / non-interactive. Move from general to wich one/ones we will cosider.
 
 \end{comment}
-\section{Contribution}
-\section{Organisation}
+
+\section*{Problem}
+This paper will investigate the possibility to ensure honest clients in the VAHSS construction where the servers computations are verified using a homomorphic hash function. 
+
+
+\section*{Limitations}
+To concretize and limit the work two major restrictions has been made. First only one construction for  VAHSS is considered. Three different constructions for verifying servers computations in AHSS is presented in \cite{SumItUp}, based on homophobic hash functions, linear homophobic signatures and threshold signature sharing.  However only  the construction based on homomorphic hash functions will be considered in this paper. 
+
+The second limitation is that only range proofs and set membership proofs has been considered as possible methods for verifying the the clients input. Other potential methods could be to consider zero knowledge proofs such as zkSNARK and zkSTARK \cite{zkSnark} \cite{zkStark}. Although not investigated here these protocols are seen as potentials methods for verifying the clients in a AHSS construction.  
+
+\section*{Contribution}
+Given the problem formulated above and the lets here state contributions and results obtained in this paper:
+\begin{itemize}
+	\item Showing that (and how) range proofs and set membership proofs can be combined with a VAHSS construction to verify clients honest. 
+\item Presenting an aggregation of multiple set membership proof, that reduces the verification time when multiple set membership proofs are verified at once. 
+\item Implementing and benchmarking client and server verifiable AHSS, for two different range proofs and one set membership proof and additionally implementing and benchmarking the proposed aggregated version of set membership proof. 
+\end{itemize}
+
+\section*{Organisation}
 In chapter \ref{ch:theory} the theoretical background is presented, first general cryptographic principles is treated then a more detailed description of the vahss protocol is given followed by a section where different range proofs are explained. In the next chapter both a theoretical and practical evaluation of range proofs is given, then a combination of range proofs and vahss is presented, i.e a server and client verifiable additive homomorphic secret sharing construction, and finally an implementation of this construction in Go is discussed. In the following chapter, chapter  \ref{ch:results}, runtime results from implementing the presented construction is given. Runtime impact of different parameters such as number clients and range size is also given. Finally in chapter  \ref{ch:Conslusion} the result obtained is discussed and some conclusions and still remaining questions are given. 
 
 %\paragraph{Paragraph}
