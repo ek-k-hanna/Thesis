@@ -11,7 +11,7 @@
 \BOOKMARK [1][-]{section.3.1}{Comparison of constructions for verify clients honesty}{chapter.3}% 11
 \BOOKMARK [2][-]{subsection.3.1.1}{Theoretical analysis}{section.3.1}% 12
 \BOOKMARK [2][-]{subsection.3.1.2}{Prototype Analysis}{section.3.1}% 13
-\BOOKMARK [1][-]{section.3.2}{Additive homomorphic secret sharing with verification of both clients and severs }{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.2}{Additive homomorphic secret sharing with verification of both clients and servers }{chapter.3}% 14
 \BOOKMARK [1][-]{section.3.3}{Improving runtime}{chapter.3}% 15
 \BOOKMARK [1][-]{section.3.4}{Implementation}{chapter.3}% 16
 \BOOKMARK [0][-]{chapter.4}{Results}{}% 17

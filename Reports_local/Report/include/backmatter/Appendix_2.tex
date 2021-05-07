@@ -1,6 +1,28 @@
 \chapter{LHSS}
-\label{appendix:VHASS-LSS}
+%\label{appendix:VHASS-LSS}
+\label{App:innerP}
 
+\begin{algorithm}
+\caption{\textbf{: Inner-product argument}}
+\textbf{Goal:} Given a Pedersen vector  commitment $P_v=\bm{g}^{\bm{s}} \bm{h}^{\bm{q}}$ and a value $c$ prove that the two vectors $\bm{s},\bm{q}$ satisfies $\langle\bm{s},\bm{q}\rangle=c$.
+\vspace{2pt}
+\hline
+\vspace{2pt}
+\begin{itemize}
+\item\text{\textbf{Prove} $(\mathbf{g},\mathbf{h},u,P_v,c,\mathbf{s},\mathbf{q})\xrightarrow[]{}\textit{proof}_{IP}$}\\
+Let $y=\text{Hash}_{IP}(\mathbf{g},\mathbf{h},P_v,c) \in\mathds{F}^*$ and compute $P_v'= u^{y\cdot c}P$. Let $\mathbf{l},\mathbf{r}$ be two empty vectors. Run the recursive algorithm \textbf{GenerateProof}$(\mathbf{g},\mathbf{h},u^{x\cdot c},P_v,c,\mathbf{s},\mathbf{q},\mathbf{l},\mathbf{r})$ use the output $(g',h',u',P_v',s',q',\mathbf{l},\mathbf{r})$ to construct the inner product proof $\text{proof}_{IP} =(\mathbf{g},\mathbf{h},u',P_v,s',q',\mathbf{l},\mathbf{r} )$ and output $\textit{proof}_{IP}$. 
+\item\text{\textbf{GenerateProof}$(\mathbf{g},\mathbf{h},u,P_v,\mathbf{s},\mathbf{q},\mathbf{l},\mathbf{r}) \xrightarrow[]{}  (g,h,u,P_v,s,q,\mathbf{l},\mathbf{r})$}
+\begin{itemize}
+    \item If the dimension of the vectors $\mathbf{g},\mathbf{h},\mathbf{s},\mathbf{q}$  drop the bold font and publish the proof $\textit{ proof}_{IP}=(g,h,P_v,u,s,q,\mathbf{l},\mathbf{r})$.
+    \item  Otherwise:  Let $n'=n/2$ and define  $c_L=\langle \bm{s}_{[:,n']},\bm{q}_{[n',:]} \rangle$ and $c_R=\langle \mathbf{s}_{[n',:]},\mathbf{q}_{[:,n']} \rangle$. Then use these variables to calculate $L=\mathbf{g}_{[n':]}^{\mathbf{s}_{[:n']}} \mathbf{h}_{[:n']}^{\mathbf{q}_{[n':]}} u^{c_L}$ and $R=\mathbf{g}_{[:n']}^{\mathbf{s}_{[n':]}} \mathbf{h}_{[n':]}^{\mathbf{q}_{[:n']}} u^{c_R}$. Append  $L,R\in\mathds{G}$ to the vectors $\mathbf{l}$ resp $\mathbf{r}$. Now update $y=\text{Hash}_{BP}(L,R)$, and update $\mathbf{g}' = \mathbf{g}_{[:n']}^{y^{-1}}\mathbf{g}_{[n':]}^{y}$, $\mathbf{h}' = \mathbf{h}_{[:n']}^{y}\mathbf{h}_{[n':]}^{y^{-1}}$ and the commitment $P_v'=L^{y^2}PR^{y^{-2}}$. Finally update the vectors $\mathbf{s},\mathbf{q}$ to $\mathbf{s}' = \mathbf{s}_{[:n']}y+\mathbf{s}_{[n':]}y^{-1}$ and $\mathbf{q}' = \mathbf{q}_{[:n']}y^{-1}+\mathbf{q}_{[n':]}y$. Run the algorithm recursively, \textbf{GenerateProof}$(\mathbf{g}',\mathbf{h}',u,P_v',\mathbf{s}',\mathbf{q}',\mathbf{l},\mathbf{r})$ with the updated variables. Note that the vectors $\mathbf{g},\mathbf{h},\mathbf{s},\mathbf{q}$ now have the dimension $n'=n/2$, hence performing the recursion until one-dimensional vectors will require $log\:n$ iterations.
+\end{itemize}
+\item\text{\textbf{Verify} $(\textit{proof}_{IP} = (\mathbf{g},\mathbf{h},u,P_v,s,q,\mathbf{l},\mathbf{r}))\xrightarrow[]{}\{0,1\}$}\\
+For $i\in\{0,log(n)\}$ put $n=n/2$ and $y=\text{Hash}(\bm{l}[i],\bm{r}[i])$, then update the vectors $\bm{g}$ and $\bm{h}$ as well as the  variable $P_v'$ according to, $\bm{g}'= \bm{g}_{[:,n]}^{y^{-1}} \bm{g}_{[n,:]}^{'y}$, $\bm{h}= \bm{h}_l{[:,n]}^{x}\bm{h}_{[n,:]}^{y^{-1}}$ and $ P_v' = L^{y^2}PR^{y^{-2}}  $. After iterating over all $i$ the dimension of the vectors $\bm{g},\bm{h}$ is one and the bold font can be dropped. Compute  $c=\langle s, q\rangle$ and  accept if $P_v' =g^sh^ru^c$.
+\end{itemize}
+\label{alg:inner_product}
+\end{algorithm}
+
+\begin{comment}
 \begin{algorithm}
 \caption{\textbf{: Verifiable additive homomorphic secret sharing}}
 \textbf{Goal:} Construct and share the sum $\sum_{i=1}^n x_i$, where $x_i$ is a secret value known by client $c_i$, where $i\in\mathcal{N}$ without any client needing to revealing their individual secret. The servers, used to sharing the secrets, computations are verified so they must be honest. 
@@ -74,3 +96,4 @@ Compute $e=H(fid)$. Check that $y,s\in\mathds{Z}_\hat{N}$ and $\tilde{x}^{eN} = 
         \end{align*}
     \end{itemize}
 \end{itemize}
+\end{comment}
