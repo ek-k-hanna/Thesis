@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2020)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: abbrv.bst
+Database file #1: ref.bib
+Warning--I didn't find a database entry for "zkStark"
+You've used 17 entries,
+            2118 wiz_defined-function locations,
+            624 strings with 7038 characters,
+and the built_in function-call counts, 7115 in all, are:
+= -- 722
+> -- 325
+< -- 10
++ -- 125
+- -- 106
+* -- 447
+:= -- 1103
+add.period$ -- 59
+call.type$ -- 17
+change.case$ -- 100
+chr.to.int$ -- 0
+cite$ -- 17
+duplicate$ -- 307
+empty$ -- 548
+format.name$ -- 106
+if$ -- 1591
+int.to.chr$ -- 0
+int.to.str$ -- 17
+missing$ -- 14
+newline$ -- 88
+num.names$ -- 46
+pop$ -- 124
+preamble$ -- 1
+purify$ -- 83
+quote$ -- 0
+skip$ -- 262
+stack$ -- 0
+substring$ -- 407
+swap$ -- 123
+text.length$ -- 10
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 68
+warning$ -- 0
+while$ -- 66
+width$ -- 19
+write$ -- 204
+(There was 1 warning)

@@ -1,0 +1,109 @@
+\begin{thebibliography}{10}
+
+\bibitem{Fiat-Shamir}
+M.~Bellare and P.~Rogaway.
+\newblock Random oracles are practical: A paradigm for designing efficient
+  protocols.
+\newblock In {\em Proceedings of the 1st ACM Conference on Computer and
+  Communications Security}, CCS '93, page 62–73, New York, NY, USA, 1993.
+  Association for Computing Machinery.
+
+\bibitem{zkSnark}
+N.~Bitansky, R.~Canetti, A.~Chiesa, and E.~Tromer.
+\newblock From extractable collision resistance to succinct non-interactive
+  arguments of knowledge, and back again.
+\newblock In {\em Proceedings of the 3rd Innovations in Theoretical Computer
+  Science Conference}, ITCS '12, page 326–349, New York, NY, USA, 2012.
+  Association for Computing Machinery.
+
+\bibitem{Bohen-Boyen}
+D.~Boneh and X.~Boyen.
+\newblock Short signatures without random oracles.
+\newblock In C.~Cachin and J.~L. Camenisch, editors, {\em Advances in
+  Cryptology - EUROCRYPT 2004}, pages 56--73, Berlin, Heidelberg, 2004.
+  Springer Berlin Heidelberg.
+
+\bibitem{Efficient_proof_interval}
+F.~Boudot.
+\newblock Efficient proofs that a committed number lies in an interval.
+\newblock In B.~Preneel, editor, {\em Advances in Cryptology --- EUROCRYPT
+  2000}, pages 431--444, Berlin, Heidelberg, 2000. Springer Berlin Heidelberg.
+
+\bibitem{bulletProofs_theory}
+B.~{Bünz}, J.~{Bootle}, D.~{Boneh}, A.~{Poelstra}, P.~{Wuille}, and
+  G.~{Maxwell}.
+\newblock Bulletproofs: Short proofs for confidential transactions and more.
+\newblock In {\em 2018 IEEE Symposium on Security and Privacy (SP)}, pages
+  315--334, 2018.
+
+\bibitem{RANGE-SET}
+J.~Camenisch, R.~Chaabouni, and a.~shelat.
+\newblock Efficient protocols for set membership and range proofs.
+\newblock In J.~Pieprzyk, editor, {\em Advances in Cryptology - ASIACRYPT
+  2008}, pages 234--252, Berlin, Heidelberg, 2008. Springer Berlin Heidelberg.
+
+\bibitem{arbitary_range_opt}
+R.~Chaabouni, H.~Lipmaa, and A.~Shelat.
+\newblock Additive combinatorics and discrete logarithm based range protocols.
+\newblock In R.~Steinfeld and P.~Hawkes, editors, {\em Information Security and
+  Privacy}, pages 336--351, Berlin, Heidelberg, 2010. Springer Berlin
+  Heidelberg.
+
+\bibitem{OG_ZKP}
+S.~Goldwasser, S.~Micali, and C.~Rackoff.
+\newblock The knowledge complexity of interactive proof systems.
+\newblock {\em SIAM Journal on Computing}, 18(1):186--208, 1989.
+
+\bibitem{ZKRP_Morais}
+E.~Morais, T.~Koens, C.~van Wijk, and A.~Koren.
+\newblock A survey on zero knowledge range proofs and applications.
+\newblock {\em SN Applied Sciences}, 1(946), 2019.
+
+\bibitem{Git:RP}
+E.~Morais, T.~Koens, C.~van Wijk, A.~Koren, P.~Rudgers, and C.~Ramaekers.
+\newblock Zero knowledge range proof implementation.
+\newblock \url{https://github.com/ing-bank/zkrp}, 2020.
+
+\bibitem{pedersen}
+T.~P. Pedersen.
+\newblock Non-interactive and information-theoretic secure verifiable secret
+  sharing.
+\newblock In J.~Feigenbaum, editor, {\em Advances in Cryptology --- CRYPTO
+  '91}, pages 129--140, Berlin, Heidelberg, 1992. Springer Berlin Heidelberg.
+
+\bibitem{How_share_A_secret}
+A.~Shamir.
+\newblock How to share a secret.
+\newblock {\em Commun. ACM}, 22(11):612–613, Nov. 1979.
+
+\bibitem{Git:C_vahss}
+G.~Tsaloli and G.~Banegas.
+\newblock Additative vhsss implemented in c++.
+\newblock \url{https://github.com/tsaloligeorgia/AddVHSS}, 2020.
+
+\bibitem{Git:python_vahss}
+G.~Tsaloli and G.~Banegas.
+\newblock Additative vhsss implemented in python.
+\newblock \url{https://github.com/gbanegas/VHSSS_temp}, 2020.
+
+\bibitem{VAHSS}
+G.~Tsaloli, G.~Banegas, and A.~Mitrokotsa.
+\newblock Practical and provably secure distributed aggregation: Verifiable
+  additive homomorphic secret sharing.
+\newblock {\em Cryptography}, 4(3), 2020.
+
+\bibitem{SumItUp}
+G.~Tsaloli and A.~Mitrokotsa.
+\newblock Sum it up: Verifiable additive homomorphic secret sharing.
+\newblock In J.~H. Seo, editor, {\em Information Security and Cryptology --
+  \text{ICISC} 2019}, pages 115--132, Cham, 2020. Springer International
+  Publishing.
+
+\bibitem{HHF}
+H.~{Yao}, C.~{Wang}, B.~{Hai}, and S.~{Zhu}.
+\newblock Homomorphic hash and blockchain based authentication key exchange
+  protocol for strangers.
+\newblock In {\em 2018 Sixth International Conference on Advanced Cloud and Big
+  Data (CBD)}, pages 243--248, 2018.
+
+\end{thebibliography}

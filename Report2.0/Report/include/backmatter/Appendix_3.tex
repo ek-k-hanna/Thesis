@@ -1,0 +1,28 @@
+\chapter{Aggregation }
+\label{appendix:aggregate_a}
+Consider two set membership proofs $\Sigma_1$ and $\Sigma_2$. Remember that for $i=1,2$ it hold that $\Sigma_i = (V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i})$ and $V_i =  g^{\frac{\tau_i}{q+x_i}}, 
+a_i = e(V_i,g)^{s_i}e(g,g)^{t_i}, \:
+D_i =  g^{s_i}h^{m_i}, \:
+z_{x_i} =  s_i- c x_i, \:
+z_{\tau_i} = t_i- c \tau_i$ and 
+$z_{R_i} =  m_i+ c R_i$, 
+where $s_i,t_i,m_i \in_R \mathds{F}$ ,  $g,h$ are group elements of the group $\mathds{G}$, $q$ is a secret key not known by any party, $y=g^q$ is the public key known to any party. The, here assumed same for both parties, challenge is denoted$c$ and is publicly known, and finally $x_i, R_i$ denoted the secret and randomness of prover $i=1,2$ 
+
+The aim is to investigate is an aggregated proof, called $\Sigma$ without subscript, of $\Sigma_1$ and $\Sigma_2$ such that $\Sigma=(V,a,D,z_x, z_\tau, z_R)$ ,$a \overset{?}{=} e(V,y)^c e(V,g)^{-z_x}e(g,g)^{z_\tau}$ and if equality it implies that $x_i\in\Phi$ for $i=1,2$. 
+The aggregation is done  according equation \eqref{eq:naiveAgg}, it follows that,
+\begin{align*}
+LHS =& a_1a_2 =\Big( e(V_1,g)^{s_1}e(g,g)^{t_1}   \Big) \Big( e(V_2,g)^{s_2}e(g,g)^{t_2}   \Big)\\
+ =&  \Big( e(g,g)^{\frac{\tau_1 s_1}{q+x_1}}e(g,g)^{t_1}   \Big)   \Big( e(g,g)^{\frac{\tau_2 s_2}{q+x_2}}e(g,g)^{t_2}   \Big)  = e(g,g) ^{\frac{\tau_1 s_1}{q+x_1} \frac{\tau_2 s_2}{q+x_2} +t_1+t_2} \\
+RHS = &e(V,y)^ce(V,g)^{-z_x}e(g,g)^{z_\tau}  = e(V_1V_2,y)^ce(V_1V_2,g)^{-z_{x_1}- z_{x_2}}e(g,g)^{z_\tau_1+z_\tau_2} \\
+=& e(g,g)^{cq \big (  \frac{\tau_1}{q+x_1} + \frac{\tau_2}{q+x_2}\big) } e(g,g)^{ \big(-(s_1- c x_1) - (s_2 - c x_2)  \big) \big (  \frac{\tau_1}{q+x_1} + \frac{\tau_2}{q+x_2}\big) } e(g,g)^{ (t_1- c \tau_1) +(t_2- c \tau_2)} \\
+ = & e(g,g)^{ \frac{\tau_1}{q+x_1} \Big(  cq- (s_1-cx_1) -(s_2-cx_2) -c(q+x_1) \Big)+ t_1 }  e(g,g)^{ \frac{\tau_2}{q+x_2} \Big(  cq - (s_1-cx_1)- (s_2-cx_2) + c)(q+x_2) \Big)+ t_2 } \\
+ = &  e(g,g)^{ \frac{s_1 \tau_1}{q+x_1}+t_1}  e(g,g)^{ \frac{\tau_1}{q+x_1} \Big(  cq + cx_1 - c(q+x_1) - (s_2-cx_2) \Big) }  \\
+ &e(g,g)^{ \frac{s_2 \tau_2}{q+x_2} + t_2  }  e(g,g)^{ \frac{\tau_2}{q+x_2} \Big(  cq + cx_2 - c(q+x_2) - (s_1-cx_1) \Big) } \\
+ = &  e(g,g)^{ \frac{s_1 \tau_1}{q+x_1}+t_1} e(g,g)^{ \frac{s_2 \tau_2}{q+x_2}+t_2}   e(g,g)^{ \frac{\tau_1}{q+x_1} \Big(  - (s_2-cx_2) \Big) }   e(g,g)^{ \frac{\tau_2}{q+x_2} \Big( - (s_2-cx_2) \Big) } \\
+ = &   e(g,g)^{ \frac{s_1 \tau_1}{q+x_1}+t_1} e(g,g)^{ \frac{s_2 \tau_2}{q+x_2}+t_2}   e(V_1,g)^{- z_{x_2} }   e(V_2,g)^{ - z_{x_1} } \\
+ & \implies LHS \neq RHS
+\end{align*}
+It is seen that the terms $e(V_1,g)^{- z_{x_2} }   e(V_2,g)^{ - z_{x_1} }$ are not cancelled, which results in that the left hand side does not equal the right hand side. 
+
+
+

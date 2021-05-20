@@ -1,0 +1,14 @@
+\babel@toc {english}{}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Illustration of generalisation to arbitrary intervals $[a,b]$ for range proofs\relax }}{11}{figure.caption.6}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Provers outsourcing their set membership proofs to their assigned servers that in turn outputs aggregated set membership proof. \relax }}{22}{figure.caption.7}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Runtime for the verification of set membership proofs and range proofs depending on the number of provers. The runtime is compared between aggregated and not aggregated set membership proofs and two different instances of Bulletproofs, the maximal upper bound of the range is equal to $2^8$ respective $2^{32}$.\relax }}{32}{figure.caption.10}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

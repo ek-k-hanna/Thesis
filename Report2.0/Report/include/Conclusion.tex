@@ -1,0 +1,39 @@
+%You may consider to instead divide this chapter into discussion of the results and a summary. 
+\chapter{Discussion}
+\label{ch:Conslusion}
+
+In this chapter the results obtained will be discussed as well as limitation and decision made during the work. Finally a short conclusion will be given. 
+
+% shifting the computation from verifier
+In Table \ref{tab:tradeoff} it is noted that the aggregation itself is a very computationally demanding procedure. The runtime required to aggregate $100$ proofs is almost one minute, while the reduction in runtime using the aggregated proof is just above one second. % many server, does not appear to be lienar altough the algorithm is theretically. could be max load on computer, not sure. test other hardware same result? 
+
+
+
+
+% only considred one SMP, perhsp other tha cna be fully aggrgated.
+
+
+% VAHSS diff dep on library, used bilinear frideny so cannot be same. It has not been investigated if they could be optimised. 
+
+\subsection*{Future work}
+A full aggregation, such that the verification is completely independent of the number of proofs has not been found for the signature based set membership proofs. The bilinear paring is the most time consuming operation in the verification of a set membership proof hence an aggregation of this part of the proofs would have a significant impact of the runtime. 
+
+Another question that arise during the work is if an non-interactive aggregation of Bulletproofs can be obtained. To the knowledge of the author no such construction exist. Considering the efficiency of Bulletproofs it would be interesting to compare an aggregated implementation of Bulletproofs to the aggregated signature based set membership proofs. 
+
+
+
+ 
+
+\subsection*{Conclusion}
+To conclude it has been seen how to construct aggregated set membership proofs and what requirements such an construction should satisfy. Further an partly aggregated construction of a signature based set membership proof was derived. If it is possible to construct an fully aggregated construction of signature based set membership proofs was unanswered and remains an open question. 
+
+It was also seen that aggregated set membership proof can be used to verify clients in a VAHSS construction. 
+
+
+
+%Limit, only considerd range proof using pedersen commitment scheme.
+
+
+%\textbf{FFS for intervals: }Need comunication between servers. We do not want 
+
+%TODO very short

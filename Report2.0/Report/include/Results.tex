@@ -1,0 +1,142 @@
+% CREATED BY DAVID FRISK, 2016
+\chapter{Implementation and Evaluation}
+\label{ch:results}
+In this chapter the aggregated signature based set membership proposed in the previous chapter will be implemented and evaluated in terms of runtime. The construction will be compared with itself for different settings and compared to the state of the art Bulletproofs. 
+
+\section{Implementation}
+A prototype implementation of the aggregated signature based set membership proof  has been implemented in Golang. The implementation is based on the code for the signature based set membership available on GitHub, \cite{Git:RP}. Both for the construction where one aggregating party is considered and where multiples parties aggregates subsets of the proves proofs are implemented. The code for the aggregated signature based set membership proof is available at \cite{Git:MyCode}. 
+
+\subsection*{Implementation parameters}
+This section will definte the parameter setting  used for the implementation. The number of provers will be fixed to $100$, unless otherwise stated, and the verification will always be  performed by one single party. The number of aggregating parties, $|\mathcal{K}|$, will vary between $|\mathcal{K}| = 1,5,10,20$ and it will always be assumed that all aggregating parties aggregates the same amount of proofs. I.e if $|\mathcal{K}|=10$ each aggregating party will aggregate $100/10 =10 $ proofs and if $|\mathcal{K}|=5$ each aggregating party will aggregate $100/5 =20 $ proofs. 
+
+The set $\Phi$ will consist of $182$ elements in the interval $[0,1000]$.  
+
+The signature based set membership proofs are based on elliptic curve group, libsecp256k1 library available in Go-Ethereum. To obtain a $128$-bit security the underlying field has to be of size $\sim 256$-bits since the fastest known algorithm to solve elliptic curve discrete logarithm problem (ECDLP) requires $\mathcal{O}(\sqrt{n})$ steps. Therefore the finite field $\mathds{F}= \mathds{Z}_p$, where $p$ is a $256$-bit prime number. 
+ 
+The hardware used throughout the entire paper is: the computer used has a $1.6$ GHz Dual-Core Intel Core i$5-5250$U CPU, $8$GB $1600$ MHz DDR3 RAM  and running macOS $10.15$. 
+
+
+%The main purpose of this paper is to investigate if and how the VAHSS protocol given in Construction \ref{alg:VAHSS-HSS} can be extended to ensure honest clients. In this paper zero knowledge range proofs and set membership proofs has been studied as potential methods for ensuring honest clients. This paper has also aimed to investigate if such an implementation can be improved, in terms of runtime for the verification, by aggregating range proofs and set membership proofs.
+%Another goal is to provide an implementation of such a combined construction. Then given such an implementation perform runtime comparison for the VAHSS combined with different range proofs and set membership proofs. 
+
+
+
+
+%After constructing a client and server VAHSS, it was investigatedif it could be improved.  The verification of clients honesty is by fare the most time consuming algorithm in Construction \ref{alg:VAHSS-HSS-RP}. The main reason for it being a bottleneck is that the verifier has to verify each clients separately.  To reduce the  computational complexity for the verifier, it was investigated in the verification of clients could be aggregated. 
+
+%It was found that the set membership proof could be partly aggregated, as described in Construction \ref{alg:ZKSM-Agg}. Note that due to  the similarity between set membership proofs and signature-based range proof, signature-based range proof can be aggregated according to the same principle.
+
+%Under the assumption that the aggregation is done by a trusted third part and that clients cannot communicate it was found that the aggregated set membership fulfil the correctness, soundness and zero knowledge in Definition \ref{def:ZKP}. 
+
+%TODO not trused third party.
+%If the aggregation is not assumed to be performed by a trusted party then some additional requirements has to hold in order for the soundness property of set membership proofs to hold. This has been stated and proved i Theorem \ref{thm:aggrgeation}. An assumption required for the proof is that the sum of the secrets and random values  in the Pedersen commitments for the aggregating proofs is unknown to the aggregation party.  If one party aggregated all clients set membership proofs in a client and server VAHSS construction these sums are public and thus the theorem does not hold. Thus the aggregation can not be performed by one single party. 
+
+%A construction where the servers aggregates different subsets of clients proofs was proposed and illustrated in Figure \ref{fig:workflow} and presented i Construction \ref{alg:VAHSS-HSS-RP-Agg} in Appendix \ref{appendix:range}. 
+%The sum of the secrets and randomness of any true subsets of clients in a VAHSS construction in unknown and therefore Theorem \ref{thm:aggrgeation} holds for Construction \ref{alg:VAHSS-HSS-RP-Agg}.
+
+
+%It was noted that in the original paper about Bulletproofs, \cite{bulletProofs_theory}, a method to aggregate bulletproof was proposed. This method lead to an interactive proof construction and thereby using this method to aggregate the Bulletproofs for a client and server VAHSS was dismissed.  The possibility to adjust this method such that it becomes non-interactive has not been studied in this paper. 
+
+
+%The main factor determining the suitability of different range proofs is their runtime and their possibility to be aggregated, since all can be combined using the same approach to the VAHSS construction. The two range proofs studied are Bulletproofs and signature-based range proofs and the runtime comparison between them presented in Table \ref{tab:runtime} showed that Bulletproofs were significantly faster both in the proof construction and verification algorithm. The insight that a straight forward combination as in Construction \ref{alg:VAHSS-HSS-RP} leads to that the verifier has to verify all range proofs separately lead to the attempt to aggregate the range proof, i.e combine the individual range proofs such that the verifier could instead verify one combined range proof. This can be compared to the the idea of the two algorithms \textbf{PartialProof} and \textbf{FinalProof} in the VAHSS construction, where the partial proofs are combined before the verification. It was found that the set membership proof and signature-based range proof could be partly aggregated such that the verifier only had to check one of the two equalities, in the algorithm \textbf{Verify} in construction \ref{alg:ZKSM} and \ref{alg:ZKRP}, for all clients and the other only once. The aggregation has been argued not ro weaken the completeness, soundness and zero knowledge requirements of the set membership and signature-based range proof.
+
+%The main result of this paper is that it is possible to combine a VAHSS construction as described in section \ref{sec:VAHSS} with a range proof to reduce the potential impact of malicious clients. Using range proofs (or set membership proofs) that assumes a Pedersen commitment the combining with the VAHSS construction becomes almost parallel in the scene that the VAHSS and range proof (or set membership proof) are run almost independent of each other. It was also found that the combination could be done without specifying the details about the range proof, hence any range proof that assumes a Pedersen commitment can be used, which leads to a highly flexible combination.  
+
+\section{Trade-off between Aggregation and Verification}
+The aggregation of set membership proofs is computational heavy. Henceforth to reduce the computations for a single party the aggregation can be split between several aggregating parties. Such a generalised construction of the aggregated signature based set membership has been given in Appendix \ref{app:manyAggregatingParties} in Construction \ref{alg:ZKSM-Agg-Many}. It has also been noted that if the set $\mathcal{K}$ in Construction \ref{alg:ZKSM-Agg-Many} consists of one single element and $\mathcal{S}_k=\mathcal{S}$, then Construction \ref{alg:ZKSM-Agg} and \ref{alg:ZKSM-Agg-Many} are the same. Given this henceforth this section will focus on Construction \ref{alg:ZKSM-Agg-Many}. 
+
+The reduced computation for any individual aggregating party obtained by having several parties aggregating subsets of the proofs will be compared to the increased verification time of having the verifier party verifying multiple aggregated proofs. Such a comparison of the runtime of the algorithm \textbf{Aggregate} and the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM-Agg-Many} is seen in Table \ref{tab:tradeoff}. The runtime has been examined for number of aggregating parties varying between $1,2,5$ and $10$, while the number of provers is held fix to $100$. Each aggregating party has been assigned equally many proofs. Leading to that the each aggregating party is responsible to aggregate $100,50,20$ and $10$ in the respective settings. 
+
+In Table \ref{tab:tradeoff} the runtime for the algorithm \textbf{Aggregate} is given per aggregating party and the runtime \textbf{Verify} if for performing the algorithm for all aggregated proofs. 
+%TODO MORE???
+
+
+
+%The runtime for the algorithm \textbf{Verify} in the non aggregated signature based set membership, in Construction \ref{alg:ZKSM}, looped over $100$  times to verify all to provers will be used as a point of comparison to measure the reduction of the computational complexity for algorithm \textbf{Verify} due to aggregation. 
+
+
+\begin{table}
+\caption{Timing in seconds for algorithms  \textbf{Aggregate} and \textbf{VerifyAggregated} in Construction \ref{alg:ZKSM-Agg}. $100$ provers are considered and one trusted party performing the aggregation of all set membership proofs. 
+ }
+\centering
+\label{tab:tradeoff}
+\begin{tabular}{c | c c}
+\toprule
+$|\mathcal{K}|$ &  \textbf{Aggregate} & \textbf{Verify }\\	\midrule
+  1					 							&   58.84[s] 	&	8.09\\ 
+  2												&   19.10 [s]	&	8.15\\ 
+  5												&   2.22 [s]	& 8.16\\
+  10												&   0.60 [s]	& 8.33\\ \cdashline{1-3}
+  Not aggregated												&   -	& 9.29\\ 
+  \bottomrule 
+\end{tabular}
+\end{table}
+
+
+
+% 20 procnt speed up by aggrgegating. 
+%The aggregated version of the set membership and signature-based range proof has not been implemented thus result about how this aggregation affects the runtime can not be determined. In order to still get some idea of the runtime reduction, the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM} was reduced to: 
+%\begin{itemize}
+%\item\text{\textbf{Verify} $(g,h,C,\textit{proof})\xrightarrow[]{}\{0,1\}$}
+%Check if $a \overset{?}{=} e(V,y)^c e(V,g)^{-z_x}e(g,g)^{z_\tau}$. If the equality holds the prover has convinced the verifier that $x\in\Phi$ return $1$ otherwise return $0$.
+%\end{itemize}
+%Then the runtime of this algorithm ran $100$ times, once for each clinet, was compared to the original version ran $100$ times. This gave the result that the modified version was approximately $20\%$ faster. This given some indication of the speed up obtained by aggregating since the equality check $D\overset{?}{=} C^ch^{z_\tau}g^{z_x}$ will only have to be ran once thus this runtime might be ignored in the context. 
+
+\section{Comparison to Bulletproofs}
+\label{sec:ComparetOBullet}
+In this section the aggregated set membership proofs will be compared to the state of the art range proofs, Bulletproofs. The focus of comparison will be the runtime of verification of multiple proving parties executed by one verifier. Before presenting the results for the comparison some discussion about Bulletproofs will be made. This serves the purpose of clarifying what is being compared and explain the parameters used for the implementation of Bulletproofs. 
+
+\subsection*{Bulleproofs settings}
+
+% Regarding aggregation of Bulletproos
+The original paper about Bulletproofs \cite{bulletProofs_theory} presents a method for aggregating Bulletproofs such that $n$ parties, each having committed to a Pedersen commitment $C_i,\: i=1,...,n$, can generate a single Bulletproof verifying that each commitment hides a secret in an allowed range. 
+
+The proposed method for aggregation is an interactive construction. This construction will be interactive   although the Fiat-Shamir heuristic is used to generate the challenges, since communication between the aggregating party and the provers is required during the construction of the aggregated Bulletproof. This is since it is required that all provers constructs their proofs using  for the same challenges. If the provers where to use different challenges the verification would fail and the construction would not be complete. 
+
+Concluding, Bulletproof can be aggregated with the cost on an interactive construction. Since this paper aims to investigate non-interactive constructions, non aggregated Bulletproofs will be considered for the below comparison. Therefore the verifier will have to verify all Bulletproofs separately, i.e once for each prover. 
+
+
+%Regadring compelxity depending on n in Bulletproofs
+The computational complexity for verification of Bulletproofs depends on the maximal upper bound of the range.  This motivates to see how the runtime is affected by considering different  upper bounds.  The maximal upper bound of Bulletproofs is $2^n$, for some $n$ that is a power of $2$. Two different values of $n$ will be considered for evaluating the runtime, namely $n=8 $ and $n= 32$. 
+
+Bulletproofs can also be modified to allow arbitrary range, $[a,b]$, with a similar approach as presented for the signature based range proofs and illustrated in Figure \ref{fig:interval}. Further the range for the Bulletproofs will be fixed to  $[18,200]$. 
+
+ 
+ %, however this is not a desirable property for the the server and client verifiable AHSS. Investigation about whether this construction can be modified to be completely non-interactive has not been done and remains an open question.  
+
+%This concludes that neither of the considered range proofs has be sucessfully fully aggregated aggregated  such that the verifier can perform one single verification instead of one for each client, at least not without some cost. Remark that this conclusion is not final and their may very well exist small or large modifications of the range proof that will allow them to be aggregated and still remaining non-interactive. The investigation of such modification is outside the scope of this paper but the reader is endorsed to explore this possibility. 
+
+%Uniformly for Bulletproofs, signature-based range poofs and set membership proofs the runtime for \textbf{VerifyRP} is longer then \textbf{VerifyServers}. This is despite the fact that \textbf{VerifyRP} corresponds to the runtime of verifying one clients while \textbf{VerifyServers} is the runtime to verify all severs. This highlights how expensive the verification of clients are and motivates the  attempts to aggregate the verification of clients. 
+
+\subsection*{Runtime Comparison}
+The runtime results presented is a comparison between how long the verification time is depending on which construction provers uses to prove that their secret is in an allowed range or set.  Evidently the construction used to provide the proofs determines the construction used for the verification. Four different constructions will be considered, Bulletproofs with an upper bound equal to $2^8$ and $2^{32}$, and aggregated and not aggregated signature based set membership proofs. 
+
+Table \ref{tab:CompareToBulletproof} shows the runtime for the verification of $100$ provers constructing their proof using the four considered constructions. The verification algorithm used is the verification corresponding to the algorithm used to provide the proof. 
+
+The Bulletproofs allowing for ranges of upper bound lower than $2^8$ is considerable faster than all other constructions, however it is highly limited in the applications since the upper bound is fairly low. The runtime for Bulletproof of an upper bound equal to $2^{32}$ is longer than for both aggregated and non aggregated set membership proofs. 
+
+In Figure \ref{fig:NrClients} the runtime for verification is given as a function of the number of provers for the  four considered constructions. The runtime has been measured considering  $1,25,50,75,100,125$ respective $150$ provers.  From the figure it is seen that there is a almost a linear relationship between the number of provers and the runtime for verification. It is also seen that the runtime comparison between the different constructions seen in Table \ref{tab:CompareToBulletproof}  appears to hold independent of the numbers of provers. 
+
+%TODO deside if use this, plus rerun all values!
+% The Bulletproofs has computational complexity $\mathcal{O}(log_2 n)$, thus an expected increase of a factor $5/3\:(=log_2\: 32/ log_2\: 8)$ would be expected, however in Figure \ref{fig:NrClients} an increase of a factor approximately $4$ is seen for the algorithm \texttt{Verify} in Construction \ref{alg:VAHSS-HSS-RP} when increasing $n$ form $8$ to $32$, why this result is obtained is not clear.
+´
+\begin{table}
+\caption{The table shows the runtime for verification of $100$ proofs, using four different constructions to provide the proofs and a verification algorithm compatible with the proof construction. }
+\centering
+\label{tab:CompareToBulletproof}
+\begin{tabular}{l | r }
+\toprule
+	  											& Time\\	\midrule
+  Bulletproofs $n=8$					&   2.98[s] 		\\ 
+  Bulletproofs $n=32$					&   10.22 [s]		\\ 
+  Set Membership					&   9.29 [s] \\
+  Aggregated Set Membership	&   8.09 [s]	 \\ 
+  \bottomrule 
+\end{tabular}
+\end{table}
+
+ \begin{figure}[]
+\caption{Runtime for the verification of set membership proofs and range proofs depending on the number of provers. The runtime is compared between aggregated and not aggregated set membership proofs and two different instances of Bulletproofs, the maximal upper bound of the range is equal to $2^8$ respective $2^{32}$.}
+\label{fig:NrClients}
+\includegraphics[width=0.9\linewidth]{./figure/newverification_nrClients.png}
+\end{figure}

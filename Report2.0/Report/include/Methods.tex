@@ -1,0 +1,134 @@
+\chapter{Methods}
+\label{ch:Methods}
+
+The purpose of this chapter is, based on the theory given in the previous chapter present an extended VAHSS construction that ensures honest clients by verifying that their inputs is from an allowed range or set. This will be done by first evaluating the performance of the range proofs and set membership proofs discussed the previous chapter to get an understanding of their advantages and disadvantages. In section \ref{sec:combination} details on how to construct a  client and server verifiable AHSS scheme is discussed. Section \ref{sec:aggregation} investigates the possibility of  improving of the combined construction by aggregating the  clients individual range proofs into one combined range proof. Then the final section discuss details about how to implement the construction presented in section \ref{sec:combination}.
+
+\section{Comparison of constructions for verify clients honesty}
+In this section the different constructions for verifying clients honesty presented in section \ref{sec:RF_theory} will be compared and discussed based on the purpose of including them the VAHSS Construction \ref{alg:VAHSS-HSS} . This is to obtain an understanding of their suitability to be combined with the VAHSS scheme to verify clients honesty. The aspects that  is of interest in when evaluating the compatibility with the VAHSS construction are:
+\begin{itemize}
+    \item Computation complexity  
+    \item Proof size (communication complexity)
+    \item Flexibility of range
+\end{itemize}
+The computational complexity affects the runtime, i.e it is important since it gives information about the runtime and what parameters that affects the runtime. Remark that the computational complexity in the verification will become important when used in a VAHSS construction. There are usually many clients participating and thus the verification will grow linear with the number of clients. This is further discussed later in section \ref{sec:aggregation}. The size of the proof affects how many bits that needs to be sent by the prover to the verifier. This is not the most crucial aspects here, but it is still desired to keep this as low as possible. Finally the flexibility of the range determines the application areas, if for example a range proof can only be used to prove that a value is between $[0,10]$, and no other ranges. The application areas for such a range proof is highly limited. Further discussion will be made in the next sections where the considered range proofs and set membership proofs are compared.
+
+Remark that all of the range proofs and set membership proofs considered aims to prove that the secret in a Pedersen commitment is in an allowed range (or set). Thus to combine any such proof with the VAHSS construction, the clients needs to publish a Pedersen commitment of their secret $x_i$. This is investigated further in section \ref{sec:combination} and it will be shown that the adaptation of the VAHSS construction to include a range proof is the same independent of the range proof used, hence the adaptability to VAHSS in not considers in the  following discussion and evaluation.
+
+%The considerable difference between the Bulletproof and the signature based range proofs makes the comparison between them not straightforward.  Signature based range proofs requires bilinear mappings unlike Bulletproofs, bilinear mappings are relative expensive operation compared to for example group exponentials which are dominating  the computational complexity for Bulletproofs. Therefore it is not straightforward to compare them in aspects of number of operations performed and an explicit comparison will only be made with respect to runtime. But first the theoretical performance  and properties of the range proofs will be discussed individually.
+
+
+\subsection{Theoretical analysis}
+In this section the proofs will be discussed theoretically and then in the following section runtime for prototype implementations is  discussed.
+
+A disadvantage for set membership proofs is the time consuming Setup phase, this phase has computational complexity of $\mathcal{O}(n)$, where $n=|\Phi|$. This comes from that the set membership proof requires digital signatures to be known by both prover and verifier, one signature for each elements in $\Phi$. The signatures are usually shared by the verifier in the Setup phase. Sharing the digital signatures of the elements in the set $\Phi$ becomes intractable when the set is large.  If it can be assumed that these signatures has been pre-shared, for example in applications where the same set of signatures are used many times, then the set membership can still be competitive to range proofs for applications requiring large sets. Large sets refers to sets of size $>100$. 
+
+The computational complexity will not be compared  theoretically since the Bulletproofs are considerably different compared to the set membership proof and signature based range proof. The latter requires bilinear mappings unlike Bulletproofs. Bilinear mappings are comparatively expensive operations compared to group exponentials which is the operation dominating the computational complexity for Bulletproofs. Instead of comparing the theoretical computational complexity the runtime for prototype implementation of the different proof is considered in the next section. 
+
+The communicational complexity of the proofs is not the most relevant feature of comparison for the aims of this paper, but it is still an important factor and hence the proof size is briefly discussed  for the different proofs. Given that the digital signatures are pre-shared the set membership provides a $\mathcal{O}(1)$-size set membership proof. The proof size for the signature based range proof is $\mathcal{O}\big(\frac{k}{log\: k- log\:log\:k}\big)$, where $l = \frac{k}{log\: u}, u = \frac{k}{log\: k}$ and for Bulletproofs $\mathcal{O}(log_2n)$. Thus it can be realised that the proof size for set membership is asymptotically smallest and signature based range proofs largest. 
+
+Discussing the flexibility of the different constructions, it is found that  an advantage of the set membership is that it allows to prove that a secret belongs to a set instead of a range and this is much more general. For example a set can be all prime numbers from $1-1000$, all odd numbers or just a random set of numbers. While the signature-based range proof and Bulletproof can only be use to prove belonging to a continuous range. In the paper presenting signature-based range proof is seen that a secret can be proven to belong to arbitrary ranges $[a,b]$ ,where that $a>0$ and $b>a$, and not only ranges where the lower bound is $0$. Considering arbitrary boundaries leads to a doubling of the computational complexity and communication complexity. 
+
+Bulletproofs can also be modified to allow arbitrary range, $[a,b]$, with a similar approach as presented for the signature based range proofs and illustrated in Figure \ref{fig:interval}. A Bulletproof where one prover wishes to verify the range of several commitments can be optimised such that the  proof size does not growing multiplicatively in the number of commits but instead grows additive. More precisely, assume a prover wants to prove the range of $k$ commits a naive implementation would lead to a proof size of $k\cdot log_2 n $. An optimised implementation reduces this to $log_2 n + 2 log_2 k$.  Hence for the case of arbitrary intervals  proof size is increased with the additive term $2log_2 2 = 2$. 
+
+Both for signature-based range proof and for Bulletproofs it is not the  size of interval that a secret is proved to belong to ($[a,b]$) that determines the complexity, it is the size of $u^l$ respective $2^n$ in the constructions. This is seen by how the bounds $a,b$ are just used for rewriting the secret and does not accurately affect the construction.
+It is required that $b< u^l$ for the signature based range proof and $b<2^n$ for the Bulletproofs. Thus the complexity is not dependent on the size of the range but rather the upper limit, this leads to that a small range of large numbers results in longer runtime then a larger range of smaller numbers. Set membership proofs does not have this property since the runtime for the proof construction and verification is independent of the size and values of the elements in the set. 
+%Concluding set membership proof allows proving belonging to much more flexible sets than the range proofs, but both range proofs considered can prove belonging to ranges $[a,b]$, where $a>0$ and $b>a$. 
+
+\begin{comment}
+\subsection{Theoretical analysis: Signature-based set membership and range proof}
+First the communication complexity and proof is discussed, size starting with the signature based set membership . This construction allows for a $\mathcal{O}(1)$- size proof that a committed value belongs to a given set $\Phi$. In order to construct such a proof $n=|\Phi|$ digital signatures needs to be known by both prover and verifier, one signature for each elements in $\Phi$. This signatures are usually shared by the verifier in the Setup phase. Sharing the digital signatures of the elements in the set $\Phi$ becomes intractable when the set is large.  A large set in this context would be a set consisting of a few hundred elements since the verifier has to publish $n$ digital signatures in the SetUp phase. 
+
+The signature based range proof reduces this to only needing to publish $u$ digital signatures to prove a commitment is in the range $[0,u^l]$ in the SetUp phase. In the algorithm \textbf{Prove} in Construction \ref{alg:ZKRP} the prover sends $l+1$ elements from the group $\mathds{G}_1$, $l$ elements from the group $\mathds{G}_T$ and $2l+1$ field elements. Comparing to the algorithm \textbf{Prove} in Construction \ref{alg:ZKSM} where the prover sends two elements from the group $\mathds{G}_1$, one elements from the group $\mathds{G}_T$ and three field elements. For the ZKRP the communication complexity depends on the choice of $u,l$. Asymptotic analysis gives a communication complexity $\mathcal{O}(\frac{k}{log\:k-log\:log\:k})$, where $l=\frac{k}{log\:u}$ and $u$ put to $u=\frac{k}{log\: k}$ Here $k$ satisfies $u^l \geq 2^{k-1}$.
+
+For ZKSM the communicational complexity for the proof is lower then for the ZKRP, given $l>1$. In some practical applications the digital signatures shared in the setup phase can be assumed to be pre shared, for example in applications where $\Phi$ is used many times. This leads that ZKSM is to prefer over ZKRP in such applications or when $\Phi$ is a relative small. 
+
+Next consider the computational complexity for algorithms \textbf{Prove} and \textbf{Verify} in the ZKSM and ZKRP. constructions  In the set membership construction both the prover and verifier has to perform one bilinear paring and two exponentials over the group $\mathds{G}$. While in the range proof construction the prover need to perform $l$ bilinear mappings and $5l$ exponentials to prove a secret is in the range $[0,u^l)$ and additionally $3l$ exponentials for arbitrary ranges $[a,b]$. The verifier need to ?? Discuss on meeting.
+ %TODO
+An advantage of the set membership construction is that it can prove membership of non continuous sets. An example could be that the set $\Phi$ represents all odd numbers in a certain interval and then the prover can insure the verifier that the secret is an odd number in a given range. This is an illustrative example of the flexibility of set membership proofs compared to range proofs.
+
+\subsection{Theoretical analysis: Bulletproof}
+First the communication and computational complexity of the inner product argument which is used in the Bulletproof is considered. Then based on this the Bulletproofs will be analysed.
+
+The inner product argument as described in Construction \ref{alg:inner_product}, compared to the naive approach, reduces the communication complexity for proving the statement in equation \eqref{eq:IPA} from linear to logarithmic size in terms of the vecotrs length.  More precisely the prover has to send $2\lceil log_2 n \rceil$ group elements and $2$ field elements to the verifier when proving the statement, thus the commutation complexity id of order $\mathcal{O}(log_2 n)$, where $n$ is the length of the vectors. 
+
+The computational effort for the inner product argument is dominated by $8n$ group exponentiations for the prover and  $4n$ group exponentiations for the  verifier. In a non-interactive construction this can be optimised such that the verifier instead perform only one multidimensional-exponent of size $2n+ 2log_2n +1$. This leads to a significant speed up of the verification of the argument.     
+
+Using the inner product argument to build Bulletproofs result in a communication complexity of $2\lceil log_2 n \rceil +4$ group elements and $5$ field elements, where $n$ is such that a secret is proved to be in the range $[0,2^n)$.  A remark is that in a Bulletproof construction the range always has to be an exponent on $2$, if the length of the binary representation of the secret is not a two-exponent this can be solved with padding. When extending the Bulletproof to prove a secret is in an arbitrary range $[a,b]$ the communication complexity is increased by an additive term of size $2$.  
+
+\end{comment}
+
+\subsection{Prototype Analysis}
+\label{sec:PrototypeAnalysis}
+Implementation of Bulletproofs and signature-based range proof has been done  and compared between themselves in \cite{RANGE-SET}. That comparison  does not include results about the runtime for the set membership proof. In order to obtain a fair comparison between Bulletproofs, signature-based range proofs and set membership proofs the code used by \cite{RANGE-SET} is benchmarked for all three constructions on the same hardware. 
+
+he reason for redoing the benchmarking for Bulletproof and signature based range proofs is since hardware differences would not lead to a fair comparison. Table \ref{tab:runtime} shows the time complexity comparison between Bulletproofs, signature-based range proofs and set membership proofs implemented in Golang (Go) with $128$- bit security level.  The settings for the benchmarking is the same as in \cite{RANGE-SET}  and the code obtain at \cite{Git:RP} is unchanged. The only difference compared to the comparison in \cite{RANGE-SET} is the hardware used and that set memberships proof are included in the comparison. 
+
+The set used in the set membership proofs contains $182$ elements, which thereby the same amount of elements in the set as in the range, which is $[18,200]$, for the two range proofs 
+% The comparison made by \cite{RANGE-SET} does not does not include results about the runtime for the set membership proof. The runtime for set membership proof included in Table \ref{tab:runtime} is obtained by the author of this paper by benchmarking the code found at \cite{Git:RP}. The settings used are the same as used to obtain the time complexity for the other two range proofs except the hardware parameters.
+The computer used has a $1.6$ GHz Dual-Core Intel Core i$5-5250$U CPU, $8$GB $1600$ MHz DDR3 RAM  and running macOS $10.15$. 
+
+
+
+%TODO test again
+\begin{table}
+	\centering
+	\caption{Time complexity comparison for Bullerproofs, signature-based range proofs and set membership proofs. The benchmarking is done as  are described in section \ref{sec:PrototypeAnalysis}. The runtime are for implementations written in Golang and the code s are not optimized in runtime. }
+	\label{tab:runtime}
+	\begin{tabular}[t]{ l c c }
+			 \toprule
+    									 		&Generate Proof (ms)	&		Verification  (ms)\\ \midrule		
+  			Bulletproofs  				&   $ 198$   & $ 79$ 	\\
+    			Signature-based 		&   $ 240 $   				&	$438$  \\
+    			Set Membership 		&		$66$				&	$90$	\\
+			\bottomrule		
+	\end{tabular}
+ \end{table}
+
+ In Table \ref{tab:runtime} it is clear that the signature based range proof is much slower than Bulletproofs, especially  in the verification algorithm. In  applications with many clients the verification runtime  is important since a verifier has to verify all clients. Bulletproofs has slightly faster runtime compared to Set memberships proofs in the verification algorithm, although their performance is still comparable and the set membership has he advantage that the runtime is indepenent of the size of the set, unlike Bulletproofs. This concludes that the Bulletproofs and set membership proofs are the best candidates found for combining with the VAHSS, in order  to verify the clients.
+
+
+\section{Implementation}
+\label{sec:implementation}
+To practically investigate the proposed clients and server VAHSS, presented in Construction \ref{alg:VAHSS-HSS-RP}, an implementation of the construction is produced. %is provided written in Golang. 
+%Remark that this construction is written without specifying which range proof that is used, and works for all different range proofs that provides a proof for a Pedersen commitment, which is true for all range proof discussed above.
+ From the prototype analysis given above it is clear that Bulletproofs is faster than signature-based range proof. Considering the aggregation possibility for signature based range proofs, Construction \ref{alg:VAHSS-HSS-RP} will be implemented using all three considered proofs to ensure honest clients. 
+ 
+%  all three constructions will hence be used to implement the client and server verifiable additive homomorphic secret sharing construction \ref{alg:VAHSS-HSS-RP}. 
+
+Implementations of Bulletproofs, set membership proofs and signature based range proofs written in Golang (Go) are publically available, the code can be found on Github at \cite{Git:RP}. Implementations of the VAHSS construction is available in both python and C++, the python code is available at  \cite{Git:python_vahss} and the C++ code at \cite{Git:C_vahss}. It does not exists implementations of the range proofs and set membership proofs  written in the same language as the  VAHSS construction. 
+
+To implement Construction \ref{alg:VAHSS-HSS-RP} the Bulletproofs, signature-based range proofs and set membership proofs algorithms needs to be callable from the same program as VAHSS algorithms. To achieve this one of the two following modifications needs to be done. The first alternative is to \texit{wrap} the code from one programming language such that it can be compiled and used by another programming language. This would then mean to either write a wrapper for Go code such that it can be interpreted by a C++ (or Python) compiler, or alternatively wrap the  CC++ (or Python) code such that it can be interpreted by a Go compiler. The second alternative is to translate the VAHSS implementation into the same language as the Bulletproofs, signature-based range proof and set membership proof or the other way around. 
+
+The first alternative appears to be a simpler approach hence this is first tested. In 2016 \textit{cgo} was released which enables calling C functions from Go code. 
+The Go command \textit{cgo} enables Go packages to call C code. TODO...
+
+Instead consider the second alternative, that translating the code of one of the implementations such that all code is available in the same programming language. Since the VAHSS construction is  shorter than the two range proofs and the set membership proof all together, the VAHSS code was converted to Go.
+
+To implement a client and server VAHSS, bedside translating the VAHSS construction into Go, additional adjumensts of the code has to be made. The adjustment are merely to merge the codes and does not change the semantics of the constructions. In order for the verification of servers to hold the randomness used in the Pedersen commitments must be chosen such that $R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i$. This leads to the randomness is regarded as input to the range proofs and set membership proofs. Other adjuments is that the publicity of methods has been modified. The full implementation for Construction \ref{alg:VAHSS-HSS-RP} is available at Git \ref{Git:MyCode}. 
+
+%Besides translating the VAHSS implementations to Go a small adjustments of the already existing Go implementations of the range proofs and set membership proof  had to be done to merge with the VAHSS construction. This adjustment are merely to merge the codes and does not change the semantics of the range proofs. What has been  modified is that the randomness used in the Pedersen commitments in the range proof must be chosen such that $R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i$, hence is is regarded as input to the proof constructions.The full code for combination of range proofs (or set membership proofs) and VAHSS is available at Git \ref{Git:MyCode}. 
+
+%Just as in construction \ref{alg:VAHSS-HSS-RP} the implementation of the code aims to be  general, such that all three concerned range proofs can be used to verify clients honesty and the merge of the range proof to the VAHSS construction is the same for all range proofs. However note that although the construction does not specify which range proof that is used the implementation does due o the choice of underlying group in the set up, the signature-based range proofs and set membership proof uses pairing friendly elliptic curve groups in the implementation which is not the case for Bulletproofs. This leads to minor modifications of the implementation to adapt to range proofs and set membership proofs.
+\subsection*{Implementation settings}
+
+In this section used in the implementation is specified. 
+
+The number of servers is set to $5$ and the number of clients to $100$. 
+
+The range is set to $[18,200]$ for both range proof implementations. This leads to that the parameter $n$ in the Bulletproof construction determining the complexity must be atleast $8$ since $2^8>200$, to keep runtime low it is put equal to eight and for the signature-based range proof, having fixed $u=57$ it is found sufficient to put $l=2$. To make the set membership implementation comparable the size of the set is equal to the length of the range , i.e $|\Phi|=200-18 = 182$.
+
+For the prototype analysis of the server verifiable AHSS, performed in \cite{VAHSS}, the finite field $\mathds{F}$ used for the secret shares generation is based on a $64$-bit prime number, i.e $\mathds{F}=\mathds{Z}_p$, where $p$ is a $64$-bit prime number,  but in the server and client verifiable AHSS the finite field is formed by a $256$-bit prime number.  The range proofs are based in libsecp256k1 library available in Go-Ethereum and uses elliptic curves and $128$-bit security, to provide this security level the underlying field has to be of size $\sim 256$-bits since the fastest known algorithm to solve elliptic curve discrete logarithm problem (ECDLP) requires $\mathcal{O}(\sqrt{n})$ steps. To use a common underlying field  for the both constructions,  the size of the field for the VAHSS is $256$-bit instead of $64$-bit. The hardware is the same as used above for benchmarking in section \ref{sec:PrototypeAnalysis}. For completeness it is repeated here; the computer used has a $1.6$ GHz Dual-Core Intel Core i$5-5250$U CPU, $8$GB $1600$ MHz DDR3 RAM  and running macOS $10.15$. 
+
+
+
+
+%The size of the underlying range will vary to investigate the impact it has on runtime, both the complexity for the Bulletproofs and signature-based range proof depends on the size of the range unlike the set-membership as discussed above. 
+
+A final remark about the implementation is that its purpose is to test the concept on the above proposed construction and provide runtime evaluations, the code has not been tested enough to be used as secure implementation.
+
+%TODO Describe changes in their code
+
+%bulletproofs, set membership proofs and signature based range proofs to  verify the clients input. in written in Golang. All three mentioned range proofs has previously been implemented in Golang and the code is available on Github at \cite{RP_code}. The server verifiable secret sharing construction has been implemented in python and c++ and is available at Github at \cite{Vahsss_code}. 
+
+
+%The implementations is done in Golang. Specify all parameters used for the implementation. 

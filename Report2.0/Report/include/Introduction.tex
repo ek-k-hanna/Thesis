@@ -1,0 +1,134 @@
+\chapter{Introduction}
+\begin{comment}
+This chapter presents the section levels that can be used in the template. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll} \hline\hline
+Name & Command\\ \hline
+Chapter & \textbackslash\texttt{chapter\{\emph{Chapter name}\}}\\
+Section & \textbackslash\texttt{section\{\emph{Section name}\}}\\
+Subsection & \textbackslash\texttt{subsection\{\emph{Subsection name}\}}\\
+Subsubsection & \textbackslash\texttt{subsubsection\{\emph{Subsubsection name}\}}\\
+%Paragraph & \textbackslash\texttt{paragraph\{\emph{Paragraph name}\}}\\
+%Subparagraph & \textbackslash\texttt{paragraph\{\emph{Subparagraph name}\}}\\ \hline\hline
+\end{tabular}
+\end{table}
+
+
+\subsection*{Idea}
+Data collection ---> security --> fast ---> VHASS ---> mallisious clients. Range proofs eliminate the amount of impact a evil client can have on the final output. History and background using sourcers. 
+
+
+
+Many companies collect data from their users in order to learn their clients behaviour, habit and preferences and use this for example  to target commercials or make their products/services more attractable. Sharing personal data is problematic, research show  that $87\%$ of the American citizen can be identified from XXX-data based on only their ZIP-code, XXX and XXX.
+If we do not agree with the XXX a companies collects our data we could delete out account and stop using their services in order to prevent the company for getting access to our data. Following this method for protecting data leads to trouble in situations when the service a company provides is necessary. Consider the situation when applying for a loan in order to get an approval from the bank we will have to present some information regarding our salary. Here it is clear that we will have to provide some information to the bank, but it might be the we do not wish to share our exact salary, then we could use a range proof. This enables us to prove that our salary is withing a certain range without specifying the exact amount.  
+
+
+Verifiable homomorphic secret sharing (VHASS) \cite{VHASS} is a protocol that verifies the servers computations is correct in homomorphic secret sharing protocol. 
+
+\section{Previous work}
+\cite{DRYNX}<- use for other similar approaches.
+
+
+In this section the most relevant works which this paper builds upon will be briefly presented.
+\subsection*{Verifiable additive homomorphic secret sharing}
+This paper aims to extend the Verifiable additive homomorphic secret sharing (VHASS) construction presented in \cite{SumItUp} and further analysed in \cite{VHASS}, to also ensure honest clients. In this section we will give a brief review of their construction for VHASS  based on homomorphic hash functions to verify the servers computations. All details of this protocol can be found in the original paper \cite{SumItUp}.  
+
+The aim of their protocol is to compute the sum $y=f(x_1,...,x_n)=\sum_{i=1}^n x_i$ of $n$ clients input denoted $x_i$ whiling keeping all $x_i$ secret and provide a proof $\sigma$ of the correctness of $y$. Each client split their secret $x_i$ between $m$ servers using homomorphic secret sharing, see section \ref{sec:secret_sharing}, such that no information about $x_i$ is obtained from any proper subset of the shares. The clients also computes and publishes $\tau_i=H(x_i+R_i)$, for a pseudorandom number $R_i$, $\tau_i$ will be used to verify the servers computations. Each servers computes the partial sum $y_j=\sum_{i=1}^n x_{ij}$ and a partial proof $\sigma_j$ and publishes $y_j$ and $\sigma_j$. Then any one can compute the sum of the clients input $y=\sum_{j=1}^m y_j$ and verify this sum is correct using $\sigma_j$ and $\tau_i$. This protocol assumes the clients are honest and does not provide any insurance that the clients input is correct and not malicious. 
+
+\subsection*{Range Proofs}
+Range proofs are used to verify that a value is withing a given range without reviling anything more about the value. 
+Interactive / non-interactive. Move from general to wich one/ones we will cosider.
+
+\end{comment}
+% Generellt om anvädning av nätet 
+The digitalisation of our society leads to a need of cryptographic protocols to obtain online security and privacy. In many   online applications users are required to provide some information to legitimise themselves. This could for example be to provide your membership number to verify that you are a member of a site. 
+
+%Today almost everybody uses the internet daily for various purposes both social and business. This results in that there is an tremendous amount of data produced about our behaviour, interests  and habits. Additionally in many applications the users are required to share some (often private) information to get access to the content. 
+
+In many application however it is sufficient to share more abstract information. Considering the example with the membership number. When proving that you are a member of a group instead of sharing your personal membership number, it would be sufficient to prove that you are one of the members, not specifying which one. %Another example is when performing a purchase or applying for a loan instead of revealing the precise amount of money you have on you account it would be sufficient to prove that is above a certain level or in a certain range.%Today almost everybody uses the internet daily for various purposes both social and business.  Consequently information that before digitalisation was shared orally or in writing between two parties offline, is now often send along public channels. This results in that there is an tremendous amount of data produced about our behaviour, interests  and habits. The traces of information we leave behind us are used in various contexts, some that help us and some that do not. For example the data can be used for training of social beneficial deep learning AI algorithms but it can also be used to violate our integrity. 
+% Provide much data combining different sourses.
+%Today almost everybody uses the internet daily, this results in that there is an tremendous amount of data produced about our behaviour, interests  and habits. Data that can be used to create an accurate characterisation of the user. Collect data can for example be used to learn peoples behaviour, habit and preferences that can in turn be used to target commercials or develop products that are more attractable to its target group. The data can also be used for machine learning, especially deep learning where training is done on  big data sets, 
+
+% pricavy ?
+% but it is also an invasion on privacy. 
+%In advance not know what it might be used to, combined woth outer itcan leak sensitive information-. 
+%It is a privacy concern. The data made available by us and about us  can be highly privacy invasion. Privacy concern. It might be hard not to generate data. For example when we buy something online, it is required to provide an insurance that we have the money required for the purshase. 
+
+%Vi måste dela information, men kanske mer abstarct
+%In many application it is sufficient to share more abstract information. Two illustrative examples are: When proving that you are a member of group instead of sharing your personal membership number, it would be sufficient to prove that you are one of a members. Another example is when performing a purchase or applying for a loan instead of revealing the precise amount of money you have on you account it would be sufficient to prove that is above a certain level or in a certain range.
+
+% Alice and Bob
+To illustrate the above idea consider two parties, Alice and Bob. Alice is a subscriber to Bobs paper. Alice wishes to convince Bob that she is a subscriber, but without revealing who she is. Bob has a list of all subscribers but without knowing who Alice is, he does not feel certain that she is on the list. Therefore Alice constructs a proof that her name is on the list. Bob receives this proof an checks its validity. Bob is now convinced that Alice's name is on the list, although Bob does not know which of the names it is, and allows Alice to get access to read the paper.  For the remaining Alice will be denote as the prover and Bob as the verifier.
+
+A cryptographic construction that allows a prover to convince a verifier that a secret is in a set without revealing the secret is \textit{set membership proofs}.  %Another construction that is very similar to set memberships are range proofs, that instead of proving that a secret belongs to a list proofs that the secret is in an allowed range. 
+%Kostsamt, speciellt för verifieraren
+Constructing set membership proofs are computationally expensive. Consequently a lot of research has been done to reduce the computation required to construct and verify set membership proofs. Usually the constructions are optimised considering  one prover  and one verifier, as in the example above with Alice and Bob. Considering instead the setting: one verifier is responsible to verify multiple provers. An example of such a construction could be verification of clients in a VAHSS protocol \cite{SumItUp}. In such an applications, using set membership proofs, the computational complexity of the verification grows linearly with the number of provers. This is due to that the verifier has to verify all received proofs separately.  %TODO one more sentence.
+
+A method for reducing the computation required by the the verifier, is to aggregated the proofs beforehand, such that the verifier only needs to verify the aggregated proof. The aggregated proof should be such that its validity should convince the verifier that all individual proofs are valid. 
+
+The aim of this paper is to investigate the possibilities to aggregate set membership, in order to reduce the computational complexity for verification of multiple set membership proofs. 
+
+
+%Many such work well when considering one prober one veifier %TODO bridge to next
+%An example of such an application is \texitit{Verifiable Additive Homomorphic Secret Sharing} (VHASS). In VAHSS multiple parties share data to a set of servers which outputs the sum of the data, without leaking information about individual data, \cite{SumItUp}.  Although the individual data shares from the parties should not be reveal a proof of their honesty might be required. To verify that the information shared by the parties  is correct each party provides a set membership proofs. These proofs would then need to be verified by a verifier.  
+
+%An concrete example of when such an application could be extracting medical information about a group of people without leaking classified information about clients but still ensuring that the received information is correct. 
+
+
+%is an application where multiple parties (data providers) each shares data such that a statistics of the joint set of data can be computed, without revealing the the value of any individual data.  A concrete example could be extracting medical information about a group of people without leaking classified information about clients. Although the individual data providers do not wish to reveal their individual information a proof of their honesty could be required.  To verify that the information shared by the data providers is correct set membership proofs or range proofs can be used.
+
+%A concrete protocol as the one described adove is \texitit{Verifiable Additive Homomorphic Secret Sharing} (VHASS), where multiple parties share data to one or several servers which outputs the sum of the data, without leaking information about individual data, \cite{SumItUp}. 
+
+%Returning to the example with Alice and Bob. Assuming Bob in the above example is responsible for verifying several parties instead of just Alice.. Then assuming that all parties have constructed individual set membership proofs or range proofs. Bob would then have to verify each proof separately. This results in that the computations required by the Bob to verify all proofs is linear in the number of proving parties.
+
+
+
+%It is noted that by aggregation the proofs the computation concerning all proofs is moved from the verifier to the aggregating party, which might in turn be shared between several parties.  Consequently the computation for the verifier is independent of the number of partied being verified.
+
+%The aim of this paper is to investigate the possibilities to aggregate set membership as described above. The problem formulation which this paper will consider is formally stated in the following section.
+
+
+%Digitalisation of the society leads to a need of cryptographic protocols to obtain online security and privacy. 
+
+
+
+%Many companies collect data from their users in order to learn their clients behaviour, habit and preferences and use this for example  to target commercials or make their products/services more attractable. Sharing personal data is problematic, research show  that $87\%$ of the American citizen can be identified from XXX-data based on only their ZIP-code, XXX and XXX.
+%If we do not agree with the XXX a companies collects our data we could delete out account and stop using their services in order to prevent the company for getting access to our data. Following this method for protecting data leads to trouble in situations when the service a company provides is necessary. Consider the situation when applying for a loan in order to get an approval from the bank we will have to present some information regarding our salary. Here it is clear that we will have to provide some information to the bank, but it might be the we do not wish to share our exact salary, then we could use a range proof. This enables us to prove that our salary is withing a certain range without specifying the exact amount.  
+
+\section*{Purpose}
+%This paper will investigate the possibility to ensure honest clients in the VAHSS construction where the servers computations are verified using a homomorphic hash function. 
+This primary purpose of this paper is to explore the possibilities to aggregate set membership proofs. This to have the computational complexity of the verification independent of the number of provers being verified.  At first a general description of an aggregate set membership proofs is seeked and then the goal is, given such a description to provide a concrete construction of an aggregated set membership proofs.
+
+A secondary purpose is to implement an aggregated set membership proof in a VAHSS construction, to verify the clients. Then compare such an implementation in terms of runtime with using the the state of the art range proofs, Bulletproofs, to verify clients in a VAHSS construction. To obtain this goal a method for extending the VAHSS construction, \cite{SumItUp}, to verify clients is has to be obtained. 
+
+
+\section*{Limitations}
+A limitation is that the exploration of obtaining a concrete construction of an aggregated set membership proofs is limited to an investigation if one specific set membership proof can be aggregated. 
+
+% Another limitations is... %TODO
+
+%To concretize and limit the work two major restrictions has been made. First only one construction for  VAHSS is considered. Three different constructions for verifying servers computations in AHSS is presented in \cite{SumItUp}, based on homophobic hash functions, linear homophobic signatures and threshold signature sharing.  However only  the construction based on homomorphic hash functions will be considered in this paper. 
+
+%The second limitation is that only range proofs and set membership proofs has been considered as possible methods for verifying the the clients input. Other potential methods could be to consider zero knowledge proofs such as zkSNARK and zkSTARK \cite{zkSnark} \cite{zkStark}. Although not investigated here these protocols are seen as potentials methods for verifying the clients in a AHSS construction.  
+
+\section*{Contribution}
+Given the purpose above the results obtained in this paper was:
+\begin{itemize}
+\item A General description of the a aggregated set membership proof construction and the completeness, soundness and zero-knowledge properties such a construction should satisfy. 
+
+\item A construction and implementation of specific construction of an aggregated set membership proof. Specifically a partial aggregation of  the signature based set membership proof, presented in \cite{Efficient_proof_interval} is presented. The presented construction is proved to satisfy the stated  correctness, soundness and zero-knowledge  properties for an aggregated set membership proof.
+
+\item The VAHSS construction using homomorphic hash functions to verify servers, presented i \cite{SumItUp}, is modified to additionally verifying clients. The clients are verified using either a range proof or a set membership proof. A construction such that aggregated set membership proofs can be used to verify the clients is presented and its security discussed. 
+\item Implementing of all proposed construction in Golang and runtime  comparison for all construction results
+\end{itemize}
+
+\section*{Organisation}
+In chapter \ref{ch:theory} the theoretical background is presented. First cryptographic principles is treated then a more detailed description of set membership proofs and range proofs is given. In chapter \ref{ch:generalAgg} a general description of aggregated set membership proofs is defined. Based on this definition chapter \ref{ch:AggSM} presents an aggregation of signature based set membership proofs. This construction is implemented and compared i runtime for different settings and to the state of the art Bulletproofs in chapter \ref{ch:results}. Chapter \ref{ch:VAHSS} presents a client and server VAHSS, where clients are verified using for instance aggregated signature based set membership proofs. In the last chapter chapter  \ref{ch:Conslusion},  a summary is given and some final conclusions. 
+
+%  the next chapter both a theoretical and practical evaluation of range proofs is given, then a combination of range proofs and vahss is presented, i.e a server and client verifiable additive homomorphic secret sharing construction, and finally an implementation of this construction in Go is discussed. In the following chapter, chapter  \ref{ch:results}, runtime results from implementing the presented construction is given. Runtime impact of different parameters such as number clients and range size is also given. Finally in chapter  \ref{ch:Conslusion} the result obtained is discussed and some conclusions and still remaining questions are given. 
+
+%\paragraph{Paragraph}
+%\subparagraph{Subparagraph}
+
