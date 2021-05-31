@@ -1,33 +1,59 @@
 %You may consider to instead divide this chapter into discussion of the results and a summary. 
-\chapter{Discussion}
+\chapter{Discussion and Conclusion}
 \label{ch:Conslusion}
+%In this chapter the a summary of the paper is given, where the most relevant results are pointed out and discussed. Followed by a section where possible extensions of the work and suggestions on related areas that would be interesting to investigate. Finally a short conclusion will be given. 
+\section*{Discussion}
+%naive aggregation
+The simplest aggregation of set membership proofs is to construct the aggregated proof as the element-wise product of all individual proofs. Appendix \ref{appendix:naiveAgg} states how such an aggregation can be implemented. It also shows that it results in a construction that does not satisfy the completeness requirement of aggregated set membership proofs, implying that cleverer aggregation is required.
 
-In this chapter the results obtained will be discussed as well as limitation and decision made during the work. Finally a short conclusion will be given. 
+ Moreover, it is noted that if the challenges are equal for all proofs, then the completeness requirement is satisfied for the  first part of the validation. The challenges depend on randomness in the proofs, thereby it cannot be guaranteed that they are equal. In the aggregated signature-based set membership proof presented in chapter \ref{ch:AggSM} the challenges appear as a product, which resolves the problem of unequal challenges.
 
-% shifting the computation from verifier
-In Table \ref{tab:tradeoff} it is noted that the aggregation itself is a very computationally demanding procedure. The runtime required to aggregate $100$ proofs is almost one minute, while the reduction in runtime using the aggregated proof is just above one second. % many server, does not appear to be lienar altough the algorithm is theretically. could be max load on computer, not sure. test other hardware same result? 
+%partly aggregation
+The complexity of the presented aggregated signature-based set membership proof depends on the number of provers, since  $a_i= e(V_i,y)^{c_i} e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ is checked separately for each proof $\Sigma_i$, $i\in\mathcal{S}$, in the verification. Therefore it can be interpreted as a partial aggregation  of the proofs. A complete aggregation of the signature-based set membership proofs fulfilling the completeness requirement has not been found nor proved impossible to construct. The reasoning of why a  complete aggregation of the signature-based set membership proofs does not fulfil the completeness requirement is given in appendix \ref{appendix:aggregate_a}. In the verification of the signature-based range proofs derived from the signature-based set membership proofs \cite{RANGE-SET}, the equality $a_i= e(V_i,y)^{c} e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ is checked separately for each $j\in\mathds{Z}_l$. This can be seen as an indicator that it is not possible to efficiently aggregate the entire signature-based set membership proofs. 
 
-
-
-
-% only considred one SMP, perhsp other tha cna be fully aggrgated.
-
-
-% VAHSS diff dep on library, used bilinear frideny so cannot be same. It has not been investigated if they could be optimised. 
-
-\subsection*{Future work}
-A full aggregation, such that the verification is completely independent of the number of proofs has not been found for the signature based set membership proofs. The bilinear paring is the most time consuming operation in the verification of a set membership proof hence an aggregation of this part of the proofs would have a significant impact of the runtime. 
-
-Another question that arise during the work is if an non-interactive aggregation of Bulletproofs can be obtained. To the knowledge of the author no such construction exist. Considering the efficiency of Bulletproofs it would be interesting to compare an aggregated implementation of Bulletproofs to the aggregated signature based set membership proofs. 
-
-
-
+%Also aggregate RP follows
+The presented construction of aggregated signature-based set membership proof can be translated to a construction of aggregated signature-based range proofs. The signature-based range proofs are very similar in construction to the signature-based set membership proofs and thereby the aggregation can easily be adjusted to aggregate the range proofs. Details on how to generalise the aggregation are not given, but it follows directly from inspection.
  
+ %VAHSS clients can lie but not cheat
+Using set membership proofs or range proofs to verify clients in a VAHSS construction prevents clients from cheating, but no requirement ensures that clients do not lie. Cheating means that a client shares a value not in the allowed set or range and lying means that the client shares a value in the allowed set or range, but not the truthful value
 
-\subsection*{Conclusion}
-To conclude it has been seen how to construct aggregated set membership proofs and what requirements such an construction should satisfy. Further an partly aggregated construction of a signature based set membership proof was derived. If it is possible to construct an fully aggregated construction of signature based set membership proofs was unanswered and remains an open question. 
+%TODO Include : VAHSS not secure?
+\section*{Conclusion}
 
-It was also seen that aggregated set membership proof can be used to verify clients in a VAHSS construction. 
+% General def of agg and requirements
+This paper has presented a definition of aggregated set membership proofs, including the completeness, soundness, and zero-knowlegde requirements that it should fulfil.
+
+% Aggregated signature based, partly wanted compleat
+According to the definition of aggregated set membership proofs, signature-based set membership proofs has been partly aggregated. Since a part of the proofs is verified separately for each prover, the complexity for verification depends on the number of provers. However, the computational complexity required per prover is decreased, due to that, a part of the proofs is aggregated, such that it is checked once to validate all provers. 
+
+% not trusted aggregation
+It has been proved that an untrusted party must perform the aggregation according to the protocol, for the verification to validate true. The assumptions made to prove this are that: the provers do not collaborate  with each other or the aggregating party and that the aggregated proof $\Sigma_a$ is such that $D_a\neq C^c$. $C$ is the product of all provers Pedersen commitments and $c$ is the product of all challenges. 
+
+% Proved C S ZK
+The completeness, soundness and zero-knowlegde requirements for aggregated set membership proofs are proved to hold for the presented construction of aggregated signature-based set membership proofs. This was proved under the assumptions that the aggregation was performed according to the algorithm \textbf{Aggregate}, proves does not collaborate and that the signature-based set membership, \cite{RANGE-SET}, satisfies the requirements in Definition \ref{def:ZKP}. 
+
+
+
+%TODO implementation , Since a part of the proof is verified for each prover, 
+The aggregated signature-based set membership proof has been implemented in Golang. Considering $100$ provers, each having constructed a signature-based set membership proof, the verification was found to be approximately $13\%$ faster for verifying an aggregated proof, computed according to algorithm \textbf{Agrgegate}, compared to verifying the proofs individually.  The prototype analysis also showed that splitting the aggregation between several parties decreased the runtime per aggregating party almost exponentially. The verification time, in tandem, does not increase exponentially.  
+
+% Extended VAHSS
+The second part of this paper focused on the verification of clients in VAHSS constructions and comparing different methods for verifying clients.  The VAHSS construction, presented in \cite{SumItUp} has been modified to additionally verify the clients. Clients are verified by publishing set membership proofs or range proofs. Then the verifier, in addition to validating the servers computations, validates all clients set membership proofs or range proofs. To reduce the computations required by the verifier aggregated set membership proofs are considered for verification of clients.
+
+% Implemnetd extention
+Implementations in Golang have been provided for the client and server VAHSS, considering Bulletproofs, aggregated and non-aggregated signature-based set membership proofs for verification of clients.
+
+
+
+\section*{Future work}
+In this section some question that has raised during the work is mentioned and discussed as possible future work.
+\begin{itemize}
+\item A complete aggregation of a set membership proofs. The presented aggregated signature-based set membership proof is partly aggregated and therefore the computational complexity of verification dependent on the number of provers.  Providing a full aggregation of the signature-based set membership proof or alternatively construct a complete aggregation of some other set membership proofs would be two interesting results.
+
+\item Constructing a non-interactive aggregation of Bulletproofs. Bulletproofs are state of the art range proofs aggregating them using a non-interactive construction would be useful in many applications. To the knowledge of the author no such construction exists. 
+
+\item Prio+, \cite{prioPlus}, constitutes the same purpose as client and server VAHSS. The computations required by the clients in Prio+ is smaller compare to client and server VAHSS, due to that they are not required to construct a ZKP. However, the servers must communicate to verify the clients.  An interesting topic would be to investigate if Prio+ can be modified such that the verification of clients can be obtained without communication between the servers and with a computational complexity independent of the number of clients. This would result in a construction highly efficient for both clients and servers. 
+\end{itemize}
 
 
 

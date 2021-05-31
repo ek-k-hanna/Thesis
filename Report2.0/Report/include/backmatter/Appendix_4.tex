@@ -1,0 +1,30 @@
+\chapter{Naive Aggregation }
+\label{appendix:naiveAgg}
+Consider two set membership proofs $\Sigma_1$ and $\Sigma_2$, computed according to the algorithm \textbf{Prove} in Construction \ref{alg:ZKSM-Agg}. The proofs are on the form $\Sigma_i = (V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i})$ for $i=1,2$.  Denote the challenges used to construct the proofs $c_i$ for $i=1,2$ and the related Pedersen commitments are denoted $C_i$  for $i=1,2$.
+
+The naive construction of the algorithm \textbf{Aggregate} is to
+define the aggregated proof, $\Sigma_a$, as the  element-wise product or addition of the two proof $\Sigma_1$ and $\Sigma_2$. This yields that $\Sigma_a = (V_a,a_a,D_a,z_{x_a},z_{\tau_a },z_{R_a})$, where $V_a, a_a, D_a,z_{x_a},z_{\tau_a },z_{R_a}$ are computed as,
+\begin{equation}
+\begin{aligned}
+\label{eq:naiveAgg}
+V_a =& V_1V_2 = g^{\frac{\tau_1}{\chi + x_1}}g^{\frac{\tau_2}{\chi + x_2}}\\
+a_a =& a_1a_2 = \big( e(g,g)^{\frac{-s_1\tau_i}{\chi+x_1}}e(g,g)^{t_1}\big) \big( e(g,g)^{\frac{-s_2\tau_2}{\chi+x_2}}e(g,g)^{t_2}\big) \\
+D_a =& D_1D_2 = ( g^{s_1}h^{m_1} ) (g^{s_2} h^{m_2}) = g^{s_1+s_2}h^{m_1+m_2}\\
+z_{x_a} =& z_{x_1} + z_{x_2} = (s_1-c_1x_1)+(s_2-c_2x_2)\\
+z_{R_a} =& z_{R_1} + z_{R_2} = (m_1-c_1R_1)+(m_2-c_2R_2)\\
+z_{\tau_a} =& z_{x_1} + z_{x_2} = (t_1-c_1\tau_1)+(t_2-c_2\tau_2)\\ 
+\end{aligned} 
+\end{equation}
+
+$C=C_1C_2 = g^{x_1+x_2}h^{R_1+R_2}$ is the product of the two Pedersen commitments and $c=c_1c_2$ denotes the product of the challenges .
+
+Investigated if the aggregated proof $\Sigma_a$ satisfies the equations: $D_a = C^ch^{z_{R_a}}g^{z_{x_a}}$ and  $a_a \overset{?}{=} e(V_a,y)^ce(V_a,g)^{-z_{x_a}}e(g,g)^{z_{\tau_a}}$.
+
+Considering the first equality it follows that.
+\begin{align*}
+&D_a = g^{s_1+s_2}h^{m_1+m_2} \\
+&C^ch^{z_{R_a}}g^{z_{x_a}} =\: ... \:= g^{s_1+s_2} h^{m_1+m_2} g^{c(x_1+x_2) - c_1x_1 -c_2x_2}h^{c(R_1+R_2)-R_1c_1-R_2c_2} \\
+\implies & D_a \neq C^ch^{z_{R_a}}g^{z_{x_a}} 
+\end{align*}
+
+Thereby the completeness property is not satisfied for the aggregated proof $\Sigma_a$. The equality does not hold due to the $ c(x_1+x_2)  \neq x_1c_1 + x_2c_2$. Note that if $c_1=c_2=c$ then the above is an equality.

@@ -4,23 +4,23 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {chapter}{\numberline {2}Background}{5}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Preliminaries}{5}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Set Membership Proof and Range Proofs}{9}{section.2.2}%
+\contentsline {section}{\numberline {2.2}Set Membership Proofs and Range Proofs}{9}{section.2.2}%
 \contentsline {chapter}{\numberline {3}Aggregated Set Membership Proofs}{13}{chapter.3}%
-\contentsline {chapter}{\numberline {4}Aggregated Signature Based Set Membership Proofs}{15}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Aggregation of signature based set membership proof}{15}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Construction}{19}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Completeness, Soundness and Zero-Knowledge}{21}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Implementation and Evaluation}{29}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Implementation}{29}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Trade-off between Aggregation and Verification}{30}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Comparison to Bulletproofs}{30}{section.5.3}%
+\contentsline {chapter}{\numberline {4}Aggregated Signature-Based Set Membership Proofs}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Construction}{17}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Soundness of Aggregation}{19}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Completeness, Soundness and Zero-Knowledge}{22}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Implementation and Evaluation}{27}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Implementation}{27}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Trade-off between Aggregation and Verification}{28}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Comparison to Bulletproofs}{29}{section.5.3}%
 \contentsline {chapter}{\numberline {6}Application in VAHSS}{33}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Construction of VAHSS Using Homomorphic Hash Functions}{33}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Additive homomorphic secret sharing with verification of both clients and servers }{34}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Implementation}{39}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Prototype analysis}{40}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Discussion}{43}{chapter.7}%
+\contentsline {section}{\numberline {6.1}VAHSS}{33}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Client and Server VAHSS}{33}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Implementation}{37}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Prototype analysis}{39}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Discussion and Conclusion}{41}{chapter.7}%
 \contentsline {chapter}{Bibliography}{45}{chapter.7}%
-\contentsline {chapter}{\numberline {A}Non-interactive Bulletproofs}{I}{appendix.A}%
-\contentsline {chapter}{\numberline {B}Aggregation }{III}{appendix.B}%
-\contentsline {chapter}{\numberline {C}Multiple aggregating parties construction}{V}{appendix.C}%
+\contentsline {chapter}{\numberline {A}Multiple Aggregating Parties}{I}{appendix.A}%
+\contentsline {chapter}{\numberline {B}Naive Aggregation }{III}{appendix.B}%
+\contentsline {chapter}{\numberline {C}Complete Aggregation }{V}{appendix.C}%

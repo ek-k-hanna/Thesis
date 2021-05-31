@@ -7,11 +7,11 @@
 \documentclass[12pt,a4paper,twoside,openright]{report}
 \input{include/settings/Settings}
 
-%\newcommand{\oneLineTitle}{A Chalmers University of Technology Master's thesis template for \LaTeX}
+\newcommand{\oneLineTitle}{Aggregated Set Membership Proofs}
 \newcommand{\multiLineTitle}[1]{Aggregated Set Membership Proofs \\[#1] }
 % The term [#1] indicates that there will be 1 rowbreak to split the title into two pieces, first part before \\[#1] and second part after. If you have a very long title and need to split it up into 3 rows, just use \\[#1] multiple times.
 
-\newcommand{\oneLineSubtitle}{Aggregated Signature Based Set Membership Proofs Implemented to Verify Clients in Client and Server Verifiable Additive Homomorphic Secret Sharing }
+\newcommand{\oneLineSubtitle}{Aggregated Signature-Based Set Membership Proofs and implementation in Client and Server Verifiable Additive Homomorphic Secret Sharing }
 
 
 \begin{document} 
@@ -89,12 +89,14 @@
 \setcounter{page}{1}
 \pagenumbering{Roman}			% Capitalized roman numbering starting from I (one)
 
-%Bulletproof apendix
-\input{include/backmatter/Appendix_2}
-%aggregation of a
-\input{include/backmatter/Appendix_3}
+%Bulletproof apendix instead refered to article
+%\input{include/backmatter/Appendix_2}
 % multiple aggregators
 \input{include/backmatter/Appendix_1}
+% naive aggrgeation element-wise
+\input{include/backmatter/Appendix_4}
+%aggregation of a
+\input{include/backmatter/Appendix_3}
 
 
 

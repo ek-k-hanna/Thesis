@@ -1,63 +1,114 @@
-\chapter{Aggregated Signature Based Set Membership Proofs}
+\chapter{Aggregated Signature-Based Set Membership Proofs}
 \label{ch:AggSM}
 \label{sec:ConstructAggregation}
 %TODO fix intro
-In the previous chapter  general description and definition of aggregated set membership proofs was described. In this chapter this general formulation will be used to propose a construction to aggregated a specific construction of set membership proof. More precisely it is investigated if the non-interactive construction of the set membership proposed in \cite{Efficient_proof_interval} can be aggregated according to Definition \ref{def:GeneralAggregation} such that it satisfies the completeness, soundness and zero knowledge in Definition \ref{def:ZKP_agg}. The specific set membership that will be considered is the signature based set membership in Construction \ref{alg:ZKSM}.
-
+%In the previous chapter, a definition of aggregated set membership proofs was presented and also the requirements it should fulfil. 
+This chapter presents a construction of aggregated set membership proofs derived from the non-interactive signature-based set membership proofs, \cite{RANGE-SET}.   In section \ref{sec:SecurityAggregation} it is proved that the aggregation is sound and in section \ref{sec:CSZKAgg} the completeness, soundness and zero-knowledge requirements, stated in the chapter \ref{ch:generalAgg}, is proved to hold for the aggregated signature-based set membership proofs.
 %It is seen that the verification algorithm in Construction \ref{alg:VAHSS-HSS-RP} will be time consuming, since each client is verified individually. Therefore a desired property for the above presented server and clients verifiable AHSS would be to aggregate the range proofs into one, since then the verifier would have to perform one range proof verification instead of one for each client as in Construction \ref{alg:VAHSS-HSS-RP}. This would decrease the runtime for the verification significantly, especially in implementations where many clients participate. 
 %TODO require the aggregated to filfil def 4. 
 %Aggregating the range proofs would require the proofs to be homomorphic, such that the verification remains valid also for an aggregated proof.
 
-\section{Aggregation of signature based set membership proof}
+%Argument security of aggregation 
+\section{Construction}
+%The previous section proposed a design of the algorithm \textbf{Aggregate}, such that the  public signature based set memberships proofs could be partly aggregated. 
+Construction \ref{alg:ZKSM-Agg} presents an aggregated signature-based set membership proof, derived from the non-interactive signature-based set membership proofs \cite{RANGE-SET}.
+
+The algorithm \textbf{Aggregate}, in Construction \ref{alg:ZKSM-Agg}, partly aggregates a group of set membership proofs by constructing the aggregated proof,
+$\Sigma_a $. The aggregated values $D_a,z_{x_a},z_{R_a}$ in $\Sigma_a$ are computed according to Equation \eqref{eq:aggDn}. 
+
+\begin{equation}
+\begin{aligned}
+\label{eq:aggDn}
+D_a &=\prod_{i\in\mathcal{S}}  D_i ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j }  =  g ^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i}
+ \\
+z_{x_a} &= \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{x_i} = \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i
+\\
+z_{R_a} &=  \sum_{i\in\mathcal{S}}  \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i} = \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)m_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} R_i 
+\end{aligned}
+\end{equation}
+
+The set $\mathcal{S}$ denotes the index set of the provers and each prover $p_i$ $i\in\mathcal{S}$ publishes a set membership proof $\Sigma_i = (V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i})$ constructed according to the algorithm \textbf{Prove}. %For all $i\in\mathcal{S}$ the proof $\Sigma_i$ published by the prover $p_i$ is on the form, $\Sigma_i = (V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i})$.
+The challenges, denoted $c_i$ for $i\in\mathcal{S}$, are computed according to algorithm \textbf{CalculateChallenges}.
+
+The above aggregation has the computational complexity $\mathcal{O}(|\mathcal{S}|^2)$. This is reduced to be linear in $|S|$, by considering the following optimization. Instead of computing the product $\prod_{\substack{j\in\mathcal{S},\: j\neq i}} c_j $ for each $i$, it is sufficient to compute the product $c=\prod_{\substack{j\in\mathcal{S}}} c_j $  once and then the truncated product can be obtained by noting that $ \prod_{\substack{j\in\mathcal{S},j\neq i}} c_j = c/c_i $. Thereby, for each $i\in\mathcal{S}$, it is sufficient to perform one division instead of computing the product $\prod_{\substack{j\in\mathcal{S},\:j\neq i}} c_j $.
+
+Due to the aggregation, the equality $D_a=C^ch^{z_{R_a}}g^{z_{x_a}}$ is checked once instead of once for each proving party in the protocol. This can bee seen by comparing the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM-Agg} with running the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM} once for each prover. 
+
+\begin{algorithm}[]
+\caption{\textbf{: Aggregation of non interactive set membership proof}}
+\textbf{Goal:}  Given  Pedersen commitments $C_i=g^{x_i} h^{R_i}$, for $i\in\mathcal{S}$. The construction  proves that all secrets $x_i$ belongs to the set $\Phi$, without revealing anything else about the secrets.
+\vspace{2pt} 
+\hline 
+\vspace{2pt}
+\begin{itemize}
+  \item\text{\textbf{SetUp} $(1^\lambda,\Phi)\xrightarrow[]{}(sk,pp)$}\\
+ Let g be a generator of the group $\mathds{G}$ and $h$ an element in the group such that $log_g(h)$ is unknown.  
+Pick uniformly at random $\chi\in_R\mathds{F}$ and put $sk=\chi$. Define $y=g^\chi$ and $A_i=g^{\frac{1}{\chi+i}} \:\forall i\in\Phi$, output $pp=(g,h,y,\{A_i\}_{i\in\Phi})$.
+
+\item\text{\textbf{Prove} $(pp,i,C_i,x_i,\Phi)\xrightarrow[]{}\Sigma_i$}\\
+Pick uniformly at random $\tau_i\in_R\mathds{F}$, choose from the set $\{A_i\}$ the element $A_{x_i}$ and calculate $V_i=A_{x_i}^{\tau_i}$. Pick uniformly at random three values $s_i,t_i,m_i\in_R\mathds{F}$. Put $a_i=e(V_i,g)^{-s_i}e(g,g)^{t_i}$,  $D=g^{s_i}h^{m_i}$, $c=\text{Hash}(C_i,V_i,a_i,D_i)$ and compute $z_{x_i} = s_i-x_i c_i$, $z_{R_i} = m_i-R_ic_i$ and $z_{\tau_i}= t_i-\tau_i c_i$.  Finally construct and publish the proof $\Sigma_i = (V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i})$.
+
+\item \text{\textbf{Aggregate} $( pp,\{ \Sigma_i\}_{i\in\mathcal{S}} ) \xrightarrow[]{} \Sigma_a$} \\
+Given a set of proofs  $\{\Sigma_i\}_{i\in\mathcal{S}}$. Aggregate the values $( \{D_i \}_{i\in\mathcal{S} }, \{ z_{x_i}\}_{i\in\mathcal{S} }, \{ z_{r_i}\}_{i\in\mathcal{S}  }) \mapsto$ $ D_a,z_{x_a},z_{R_a}$ according to equation \eqref{eq:aggDn}. Construct and publish the aggregated proof $\Sigma_a = (\{V_i\}_{i\in\mathcal{S} },\{a_i\}_{i\in\mathcal{S} },D_a,\{z_{x_i}\}_{i\in\mathcal{S} }, z_{x_a}, \{z_{\tau_i}\}_{i\in\mathcal{S} },z_{R_a})$.
+
+\item \text{ \textbf{CalculateChallenges} $(\{C_i\}_{i\in\mathcal{S}},\{\Sigma_i\}_{i\in\mathcal{S}} ) \xrightarrow[]{} \{c_i\}_{i\in\mathcal{S}}$ }\\
+For all $i\in\mathcal{S}$ parse the proof $\Sigma_i$, then compute the challenge $c_i = Hash(C_i,V_i,a_i,D_i)$. Finally output the set of all challenges $\{c_i\}_{i\in\mathcal{S}}$. 
+
+\item\text{\textbf{Verify} $(pp,\Sigma_a,\{C_i\}_{i\in\mathcal{S}},\{c_i\}_{i\in\mathcal{S}}) \xrightarrow[]{} \{0,1\}$} \\
+Compute the product of the challenges $c=\prod_{i\in\mathcal{S}} c_i$. Check if $D_a\overset{?}{=} \big( \prod_{i\in\mathcal{S}}C_i\big)^ch^{z_R_a}g^{z_x_a}\wedge a_i \overset{?}{=} e(V_i,y)^c_i e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$. If the equalities holds return $1$ otherwise return $0$.
+\end{itemize}
+\label{alg:ZKSM-Agg}
+\end{algorithm} 
 
 
-The considred set membership proofs can be used to construct a signature-based range proof as discussed previously and proposed in \cite{Efficient_proof_interval}. The strong similarity between the set membership proof and the derived range proof results in that the results obtained for the public signature based set membership proofs can easily be adjusted to also hold for the  for the signature-based range proof. This would then result in an aggregated range proof construction. Such a construction is not further investigates in this paper but it is stressed that the results follow directly from the results for the public signature based set membership proofs. 
+In Construction \ref{alg:ZKSM-Agg} the algorithm \textbf{Prove} is run by all provers, the algorithm \textbf{Aggregate} is run by the aggregating party and the algorithm \textbf{Verify} is performed by the verifier. The algorithm \textbf{SetUp} is assumed to be performed in advance by a trusted party.
+
+In the aggregated signature-based set membership proof the challenges are given as input to the verification algorithm, unlike Construction \ref{alg:ZKSM} where they are computed in the verification algorithm. This raises the question, which party should be responsible for computing the challenges?  It is not desired that the party performing the aggregation computes the challenges, since it opens up for cheating. For the same reason the proving parties  should not compute the challenges. Thereby, the algorithm \textbf{CalculateChallenges} in Construction \ref{alg:ZKSM-Agg} is assumed to be performed by an honest party independent of both the proving parties and the aggregating party. 
+
+Another alternative is to provide the entire proofs $\{\Sigma_i\}_{i\in\mathcal{S}}$ as input to the verification algorithm, enabling the verifier to compute the challenges. This would consequently increase the computations required by the verifier. For the rest of this paper, if noting else is mentioned, it is assumed that the algorithm \textbf{CalculateChallenges} is performed according to Construction \ref{alg:ZKSM-Agg} by a trusted party. 
+
+%Comparing the algorithm \textbf{VerifyAggregatedProof} with performing the algorithm \textbf{Verify} in set membership construction once for each clients, it is seen that the first equality check $D \overset{?}{=}( \prod_{i=1}^n C_i )^{c}h^{z_R}g^{z_x}$ is done once instead of once for $|\mathcal{S}|$ times. Construction \ref{alg:ZKSM-Agg} presents all algorithms ,  \textbf{Prove}, \textbf{Aggregate}, \textbf{CalulateChallenges} and \textbf{VerifyAggregatedProof}, needed to build the aggregated set membership proof. 
+
+
+
+% , that verifier all individual set membership proof by performing only one verification, resulted in a that a method for aggregating parts of the set membership proof. This method is compiled in Construction \ref{alg:ZKSM-Agg}, where the set membership proof originally presented in \cite{Efficient_proof_interval} is modified to reduce the computational complexity in applications where multiple  proofs are verified simultaneously.
+
+%This leads to that a verification algorithm for verifying the aggregated version of set membership proofs $RP_i$ for $i\in\mathcal{S}$ to be as the algorithm \textbf{VerifyAggregatedProof} in Construction \ref{alg:ZKSM-Agg}.  %TODO 
+%\begin{itemize}
+%\item\text{\textbf{VerifyAggregatedProof} $(g,h,\{C_i\}_{i\in\mathcal{S}},\{c_i\}_{i\in\mathcal{S}} ,\texit{proof}_{SM,a}) \xrightarrow[]{} \{0,1\}$} \\
+%Compute the product of the challenges $c=\prod_{i\in\mathcal{S}} c_i$. Check if $D_a\overset{?}{=} \big( \prod_{i\in\mathcal{S}}C_i\big)^ch^{z_R_a}g^{z_x_a}\wedge a_i \overset{?}{=} e(V_i,y)^c_i e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$. If the equalities holds the provers has convinced the verifier that $x_i\in\Phi$ for all $x_i$ such that $i\in\mathcal{S}$ return $1$ otherwise return $0$.
+%\end{itemize}
+ 
+ 
+\subsection*{Multiple aggregating parties}
+To reduce the computational load of the aggregating party it is possible to split the aggregation between multiple parties. %The computational complexity for the algorithm \textbf{Aggregate} is linear in the number of proofs that are aggregated. 
+
+Let the set $\mathcal{K}$ represents the set of parties performing the aggregation, and the set $\mathcal{S}_k$ represents the assigned set of set membership proofs to the $k^{th}$ aggregating party. The sets $\mathcal{S}_k$ for $k\in\mathcal{K}$ are such that $\bigcup_{k\in\mathcal{K}}\mathcal{S}_k = \mathcal{S}$ and $\mathcal{S}_i\bigcap \mathcal{S}_j= \emptyset$ for all $i,j\in\mathcal{K}$ such that $i\neq j$. 
+
+An aggregated signature-based set membership proof, where the aggregation is split between several parties, is presented in appendix \ref{app:manyAggregatingParties} in Construction \ref{alg:ZKSM-Agg-Many}. The adjustments made compared to Construction \ref{alg:ZKSM-Agg} are: the algorithm \textbf{Aggregate} is performed by each party in the set $\mathcal{K}$ on the input $(pp,\{\Sigma_i\}_{i\in\mathcal{S}_k})$, outputting the aggregated proof $\Sigma_{a_k}$. The algorithm \textbf{Verify} is performed once on the input $(pp,\{\Sigma_{a_k}\}_{k\in\mathcal{K}},\{C_i\}_{i\in\mathcal{S}},\{c_i\}_{i\in\mathcal{S}} )$ and  is modified, compared to Construction \ref{alg:ZKSM-Agg}, such that it verifies multiple aggregated proofs. By letting the set of aggregating parties $\mathcal{K}$ consist of one element $k$, and $\mathcal{S}_k  = \mathcal{S}$ construction \ref{alg:ZKSM-Agg} and \ref{alg:ZKSM-Agg-Many} are equivalent. 
+%TODO elaborate
+
+
+An illustrative figure of how the aggregation is split between the aggregating parties is seen in Figure \ref{fig:workflow}. Each prover generates a set membership proof, and then sends it to its assigned aggregating party. Then each aggregating party aggregates the received set membership proofs, according to the algorithm \textbf{Aggregate} in Construction \ref{alg:ZKSM-Agg-Many}, and sends the aggregated proof to the verifier. Finally the verifier validates all aggregated proofs.
+
+In Figure \ref{fig:workflow} the computation of the challenges is done by an independent party, which introduces a new party to the scheme. To compute the challenges without introducing a new party the aggregating parties can compute the challenges.  However, as discussed previously the same party that aggregates a set of proofs should not compute the challenges for these proofs. To use the aggregating parties for the computations, assume that they are not collaborating and linked in a closed chain. Then each aggregating party computes the challenges for the set of proofs aggregated by the consecutive party in the chain.  
+%As discussed previously it would be possible to have the verifier computing the challenges, by additionally giving the proofs $\{ \Sigma_i\}_{i\in\mathcal{N}}$ as input to the verification algorithm. 
+
+
+ \begin{figure}
+\includegraphics[width=\linewidth]{./figure/flowmultiple.png}
+\caption{Provers outsourcing their set membership proofs to their assigned servers that in turn publishes an aggregated set membership proof. }
+\label{fig:workflow}
+\end{figure} 
+
+
+
+%\section{Aggregation of signature based set membership proof}
 
 %In this section the possibility to aggregate the set membership and signature based range proofs  is examined.  The construction of these two are similar and it is sufficient to consider one of them and the conclusion will hold for both constructions. Due to its simpler notation the set membership proof is considered.
 
-To aggregate the public signature based set membership proofs possible constructions for the algorithm \textbf{Aggregate} is evaluated. The starting point for designing such a construction is that the aggregation of public signature set membership proofs according to the algorithm \textbf{Aggregate} should result in construction that satisfies the completeness requirement in Definition \ref{def:ZKP_agg}. Remark that it is assumed that the verification of the aggregated proof should be designed in the same way as the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM}. Having found an implementation of the algorithm \textbf{Aggregate} that satisfies the completeness it will then be examined under what assumptions the soundness and zero knowledge in Definition \ref{def:ZKP_agg} is satisfied. 
-
-To investigate different designs of the algorithm \textbf{Aggregate} and whether it  provides an aggregated set membership proof that satisfies the completeness the following is considered. 
-
-Two set membership proof $\Sigma_1$ and $\Sigma_2$ generated by the algorithm \textbf{Prove} in construction \ref{alg:ZKSM}, recall that the proofs are on the form $\Sigma_i = (V_i,a_i,D_i,z_{x_i},z_{\tau _i},z_{R_i}, )$ for $i=1,2$. In addition to the proofs also assume that $C_i$ for $i=1,2$ are two Pedersen commitments  published by the provers, $p_1$ and $p_2$, hiding the secrets $x_1$,$x_2$. The public parameters, $pp$, are generated by the algorithm \textbf{SetUp} in Construction \ref{alg:ZKSM}  and that the challenges $c_i, \:i=1,2$ which can be computed as a hash of the proofs. 
-
-Since it will be assumed that the verification of an aggregated public signature based set membership proofs is performed as the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM} the completeness property holds if an aggregates proof $\Sigma_a = (C,a,D,z_x,z_\tau,z_R)$ satisfies the two equalities  $D=C^{c}h^{z_{R}}g^{z_{x}}\wedge a = e(V,y)^ce(V,g)^{z_{x}}e(g,g)^{z_{\tau}}$, where $C=C_1C_2$ and $c=c_1c_2$.  Note that to reduce notation subscripts on the proof elements is omitted,
-
-%TODO verify starting with correctness
-%To aggregate the proof all elements constructing the proof would need to be aggregated such that the verification of the aggregated proof can be carried out in the same without aggregation. 
-
-%TODO snygga till formulering nedan
-The simplest design of the algorithm \textbf{Aggregate} for the two considered set membership proofs would be define the aggregated set membership proof as the element-wise product of the two set membership proofs. This yields an aggregated set membership proof on the form, $\Sigma_a = (V,a,D,z_{x},z_{\tau },z_{R})$,  where $V, a, D,z_{x},z_{\tau },z_{R}$ are computed as,
-\begin{equation}
-\begin{aligned}
-\label{eq:naiveAgg}
-V =& V_1V_2 = g^{\frac{\tau_1}{\chi + x_1}}g^{\frac{\tau_2}{\chi + x_2}}  = g^{\frac{\tau_1}{\chi + x_1} + \frac{\tau_2}{\chi + x_2}}  \\
-a =& a_1a_2 = \big(e(V_1,g)^{-s_1})e(g,g)^{t_1}\big)  \big(e(V_2,g)^{-s_2})e(g,g)^{t_2}\big) \\
-=&  \big( e(g,g)^{\frac{-s_1\tau_i}{\chi+x_1}}e(g,g)^{t_1}\big) \big( e(g,g)^{\frac{-s_2\tau_2}{\chi+x_2}}e(g,g)^{t_2}\big) \\
-D =& D_1D_2 = ( g^{s_1}h^{m_1} ) (g^{s_2} h^{m_2}) = g^{s_1+s_2}h^{m_1+m_2}\\
-z_x =& z_{x_1} + z_{x_2} = (s_1-c_1x_1)+(s_2-c_2x_2)\\
-z_R =& z_{R_1} + z_{R_2} = (m_1-c_1R_1)+(m_2-c_2R_2)\\
-z_\tau =& z_{x_1} + z_{x_2} = (t_1-c_1\tau_1)+(t_2-c_2\tau_2)\\ 
-\end{aligned} 
-\end{equation}
-%are the multiplication of the corresponding elements in the two non aggregated range proofs and are the addition of the corresponding elements in the two non aggregated range proofs. To clarify two examples are, $D=D_1*D_2 =g^{s_1}h^{m_1}*g^{s_2}h^{m_2} = g^{s_1+s_2}h^{m_1+m_2}$, and the two exponentials are now refereed to as $s,m$, more over $z_x = z_{x_1}+z_{x_2} = (s_1-x_1c_1 )+ (s_2-x_2c_2) = s- x_1c_1-x_2c_2 $.
-Further assume that the  challenges $c_1$ and $c_2$ has been calculated according to $c_i=Hash(C_i,V_i,a_i,D_i),\: i=1,2$.
-% and remember that the  commitments $C_i$  are homomorphic, which follows directly from the homomorphic properties of the Pedersen commitment. It is less obvious to see that the bilinear map can be aggregated, but this has been shown and the security proven in \cite{aggregate_bm}. However the homomorphic properties of the Pedersen commitment and bilinear maps does not guarantee that the set membership proofs are homomorphic. 
-
-
-%But although bilinear maps can be aggregated it turns out that the set membership proof does not have this property, this follows from design of $z_x,z_\tau $ and $z_R$ using addition and subtraction, when multiplying two sums the cross-terms will not cancel as desired, this is seen below. 
-
-Next it will be investigated if the aggregated proof $\Sigma_a$ derived as above satisfies the completeness in Definition \ref{def:ZKP_agg}. For the considered set membership proof this means that it must hold that, $1)$ $D \overset{?}{=} C^ch^{z_R}g^{z_x}$ and $2)$ $ a \overset{?}{=} e(V,y)^ce(V,g)^{-z_x}e(g,g)^{z_\tau}$. Evaluating the first of the two equalities it follows that,
-\begin{align*}
-LHS &= D = D_1*D_2 = g^{s_1+s_2}*h^{m_1+m_2} \\
-RHS &= C^ch^{z_R}g^{z_x} = (C_1*C_2)^{c_1c_2}h^{z_{R_1}+z_{R_2}}g^{z_{x_1}+z_{x_2}} \\ 
-&=(g^{x_1}h^{R_1}g^{x_2}h^{R_2}) ^{c_1c_2}  h^{m_1-R_1c_1+m_2-R_2c_2} g^{s_1- x_1c_1+s_2-x_2c_2} \\
-&= g^{c_1c_1(x_1+x_2)+s_1+s_2-x_1c_1-x_2c_2}h^{c_1c_2(R_1+R_2)+m-R_1c_1-R_2c_2} \\
-\implies \text{LHS}\neq \text{RHS}.
-\end{align*}
-
-The completeness property is not satisfied given an aggregation on the form in equation \eqref{eq:naiveAgg}. Studying the LHS and RHS above it is noted that the equality does not hold since  $ c_1c_2(x_1+x_2) = c_1c_2x_1+c_1c_2x_2 \neq x_1c_1 + x_2c_2$. Further note that if $c_1=c_2$ then this would be easy to fix. Clearly it cannot be guaranteed that the challenges for two different set membership proofs will be equal since they depend on randomness in the proof construction. However having pinpointing this source of inequality an aggregation that circumvent this issue is seeked.
-
+%2D example, removed.
+\begin{comment}
 Again consider the two set membership proofs $\Sigma_1,\Sigma_2$ as defined above, but now restrict the aggregation to only concern half the set membership proof. Namely only terms participating in the the first equality check, $D\overset{?}{=} C^ch^{z_R}g^{z_x}$, in the verification. 
 
 Note that if only a part of the proofs are aggregated it still leads to reduction of computational complexity for the verifier. The goal is now design the aggregation such that the aggregated proof satisfies $D = C^ch^{z_R}g^{z_x}$. 
@@ -91,30 +142,127 @@ RHS &= C^ch^{z_R}g^{z_x} = (C_1C_2)^{c_1c_2}h^{c_2z_{R_1}+c_1z_{R_2}}g^{c_2z_{x_
 
 %This means that this aggregation to construct the proof $RP$ , from the two range proofs $RP_1,RP_2$ as above satisfies the first equality of the verification. 
 Aggregation of the two set membership proof defined according to equation  \eqref{eq:aggD2} results in an aggregation that satisfies the  completeness. The next step is to check if this aggregation can be extended to aggregate an arbitrary number of set membership proofs and still satisfy the completeness. 
+\end{comment}
 
-Consider $|\mathcal{S}|$ provers and consequently  $|\mathcal{S}|$ set membership proofs denoted $\Sigma_i,\: i\in\mathcal{S}$. The aggregation in equation \eqref{eq:aggD2} extended to aggregate all proof results in the aggregation procedure below,
-\begin{equation}
-\label{eq:aggDn}
-\begin{aligned}
-D &=\prod_{i\in\mathcal{S}}  D_i ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j }  =  \prod_{i\in\mathcal{S}}  (g^{s_i}h^{m_i}) ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}  c_j } = g ^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i} \\
-z_x &= \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{x_i} = \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i\\
-z_R &=  \sum_{i\in\mathcal{S}}  \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i} = \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)m_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} R_i 
-\end{aligned}
-\end{equation}
-Let $C=\prod_{i\in\mathcal{S}} C_i$ be the product of all Pedersen commitments and $c= \prod_{i\in\mathcal{S}} c_i$ the product of the challenges.  The partly aggregated set membership proof $\Sigma_a = (D,z_x,z_r)$ computed according to equation \ref{eq:aggDn} satisfies $D= C^ch^{z_R}g^{z_x}$, 
+%A hint can also be seen in Construction \ref{alg:ZKRP} where the verification of first equity is aggregated while the second is done for each $j\in\mathds{Z}_l$. 
+
+
+
+
+\section{Soundness of Aggregation}
+\label{sec:SecurityAggregation}
+In this section it is proved that the aggregation must be performed according to the algorithm \textbf{Aggregate} if the aggregated proof $\Sigma_a$ validates true in Construction \ref{alg:ZKSM-Agg}. This is proved under the assumption that: proving parties are not communicating or collaborating between themselves, proving parties are communicating or collaborating with the aggregating party (or parties), the set membership proof in Construction \ref{alg:ZKSM} is sound and $D_a\neq C^c$.  In this section the product of the Pedersen commitments, $\prod_{i\in\mathcal{S}}C_i$, is denoted $C$ and the product of the challenges, $\prod_{i\in\mathcal{S}} c_i$, is denoted $c$.
+%,  where  $C_i$ is a Pedersen commitment of the secret $x_i$ and $c_i$ the challenges used to construct the proofs, $\Sigma_i$, proving that the secret $x_i\in\Phi$, for $i\in\mathcal{S}$. 
+
+
+If $D_a =  C^c$, it would be possible for an aggregating party to choose the values $D_a,z_{x_a},z_{R_a}$ according to: $D_a =C^c, z_{x_a} = \phi(p), z_{R_a} = \phi(p)$.
+%Note that $p$ is the prime underlying the field $\mathds{F}$, $C=\prod_{i\in\mathcal{S}}C_i$ and $c=\prod_{i\in\mathcal{S}}c_i$. 
+For the above choice of $D_a,z_{x_a},z_{R_a}$ the equation, $D_a\overset{?}{=} C^c h^{z_{R_a}}g^{z_{x_a}}$ holds trivially true, independent of whether the commitment $C_i$ and the values $z_{x_i}$, thereby $z_{x_a}$, hides the same secret for all $i\in\mathcal{S}$. Therefore it is required that $D_a \neq C^c$.
+
+
+Under the assumption discussed above, Theorem \ref{thm:aggrgeation} states that the  aggregation must be performed according to the algorithm \textbf{Aggregate} for the algorithm \textbf{Verify} to validate true, in Construction \ref{alg:ZKSM-Agg}. 
+
+\begin{thm}[\textbf{Soundness of aggregation}]
+\label{thm:aggrgeation}
+Let $\mathcal{A}$ be a PPT adversary. Assume $\mathcal{A}$ has access to the input to the algorithm \textbf{Aggregate} in Construction \ref{alg:ZKSM-Agg} and the Pedersen commitment, $\{C_i\}_{i\in\mathcal{S}}$, but no other information. Assume that the adversary  $\mathcal{A}$ cannot collaborate with the provers, that the provers cannot collaborate with each other and that the set membership proof in Construction \ref{alg:ZKSM} is sound. 
+
+%The provers are not assumed to be honest, but it is assumed that their published proofs are one the form $\Sigma_i = (V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i})$, where $V_i,D_i\in\mathds{G}$, $a_i\in\mathds{G}_T$ and $z_{x_i},z_{\tau_i},z_{R_i} \in\mathds{F}$, and that the Pedersen commitments $C_i=g^{x_i}h^{R_i}$.
+
+
+Under these assumptions the adversary $\mathcal{A}$ has a negligible probability of construction $\Sigma_a$ such that: Prob$($\textbf{Verify}$(pp,\Sigma_a,\{C_i\}_{i\in\mathcal{S}},\{c_i\}_{i\in\mathcal{S}}) )=1$, where $D_a\neq C^c$ and  $z_{x_a} \neq \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i}$. 
+
+
+\end{thm}
+
+\begin{proof}
+The soundness of signature-based set membership proofs and that the algorithm \textbf{Veirfy} checks that $a_i\overset{?}{=} e(V_i,y)^{c_i}e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$,  for all $i\in\mathcal{S}$, implies that the values $V_i,a_i,z_{x_i},z_{\tau_i}$ of $\Sigma_i$ must be computed according to the algorithm \textbf{Prove} in Construction \ref{alg:ZKSM-Agg}. The values $z_{R_i}$ and $D_i$ are not used directly in the verification, thus the only requirements are that $z_{R_i}\in\mathds{F}$ and $D_i\in\mathds{G}$, for all $i\in\mathcal{S}$.  Assume, without loss of generality that  $D_a=g^\alpha h^\beta$, where $\alpha,\beta\in\mathds{F}$. 
+
+Assume that the adversary $\mathcal{A}$, can construct a valid proof $\Sigma_a$, such that: $D_a\in\mathds{G}$, $z_{x_a},z_{R_a}\in\mathds{F}$ and  $z_{x_a} \neq \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i}$. 
+
+%The adversary $\mathcal{A}$ should construct a valid aggregated proof, $\Sigma_a$, i.e choosing the values $D,_az_{x_a},z_{R_a}$. These should be such that $D_a\in\mathds{G}$, $z_x,z_R\in\mathds{F}$ and  $z_{x_a} \neq \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i}$. Assume, without loss of generality that  $D_a=g^\alpha h^\beta$, where $\alpha,\beta\in\mathds{F}$. 
+
+For the aggregated proof to be valid it must hold that $D_a= C^ch^{z_{R_a}}g^{z_{x_a}}$ which implies that the values $\alpha,\beta,z_x,z_R$ must satisfy:
 \begin{align*}
-LHS =& D = g ^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i}  
-\\
-RHS =& C^ch^{z_R}g^{z_x} =  \Big( \prod_{i\in\mathcal{S}} C_i \Big)^{\prod_{i\in\mathcal{S}} c_i}h^ {\sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i}
-\\
-&g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i}
-\\ 
- =& \Big( g^{\sum_{i\in\mathcal{S}} x_i} h^{\sum_{i\in\mathcal{S}} R_i}\Big)^{\prod_{i\in\mathcal{S}} c_i} h^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)m_i - \big( \prod_{j\in\mathcal{S}} c_j \Big) \sum_{i\in\mathcal{S}} R_i  }
- \\
- &g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i}=  g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}  c_j \Big)s_i } h^{\sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i}  
-\\
- \implies \text{LHS} =& \text{ RHS}.
+g^\alpha h^\beta  = C^cg^{z_{x_a}}h^{z_{R_a}}.
 \end{align*}
+The values of $C^c $ cannot be modified by the adversary since it is sent directly from the provers to the verifier. The Pedersen commitments are assumed to be on the form $C_i= g^{x_i}h^{R_i}$ for all $i\in\mathcal{S}$ and the challenges are correctly computed and checked by a trusted party.
+
+Consequently, by expanding the right hand side of the equality it follows that,
+\begin{align*}
+g^\alpha h^\beta =  g^{c \sum_{i\in\mathcal{S}}x_i +z_{x_a} } h^{ c \sum_{i\in\mathcal{S}}R_i +z_{R_a}   }.
+\end{align*}
+
+If $\alpha \neq c \sum_{i\in\mathcal{S}} x_i+z_{x_a}$ and $\beta\neq c\sum_{i\in\mathcal{S}}R_i +z_{R_a}$, the above equality contradicts to the binding property of the Pedersen commitments.  %assumption that it is not possible to construct two equal Pedersen Commitments hiding different secrets.
+Thereby, the values $\alpha,\beta,z_{x_a}$ and $z_{R_a}$ must satisfy: $\alpha =  c\sum_{i\in\mathcal{S}}x_i+z_\x_a}$ and $\beta =  c\sum_{i\in\mathcal{S}}R_i +z_{R_a}$.  
+
+This can be rewritten as $\alpha-z_{x_a} =  c \sum_{i\in\mathcal{S}} x_i$ mod $\Phi(p)$ and  $\beta-z_{R_a} =  c \sum_{i\in\mathcal{S}} R_i$ mod $\Phi(p)$. The sums $ \sum_{i\in\mathcal{S}} x_i$ and $ \sum_{i\in\mathcal{S}} R_i$ are assumed to be unknown.  
+
+Thereby, under the assumption that $z_{x_a}\neq \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i} $ the adversary has a negligible probability of choosing $\alpha,\beta,z_{x_a},z_{R_a}$ such that $D_a= C^ch^{z_{R_a}}g^{z_{x_a}}$. It follows that  $z_{x_a} = \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i}$, which contradicts the assumption and proves the theorem. 
+
+
+\end{proof}
+Note that the theorem would still hold even if several untrusted parties aggregated subsets of the proofs and a verifier validated all the aggregated proofs. 
+
+\section{Completeness, Soundness and Zero-Knowledge}
+\label{sec:CSZKAgg}
+In this section, it is proved that Construction \ref{alg:ZKSM-Agg}  fulfils the completeness, soundness and zero-knowledge requirements stated in chapter \ref{ch:generalAgg}. This is proved under the  assumption that the aggregation is performed according to the algorithm \textbf{Aggregate},  provers cannot communicate or collaborate with each other and that Construction \ref{alg:ZKSM} satisfies the requirement stated in Definition \ref{def:ZKP}.
+% The assumption that the aggregation is performed by a trusted party %TODO
+ The requirements also holds for Construction \ref{alg:ZKSM-Agg-Many}, considering $|\mathcal{K}|>1$.
+
+\subsubsection*{Completeness}
+To prove the completeness of Construction \ref{alg:ZKSM-Agg}, it has to be proved that\\ \textbf{Verify}$ ( $\textbf{Aggrgeate}$ (\{ $\textbf{Prove}$ (pp,i,C_i,x_i,\Phi)\}_{i\in\mathcal{S}}) )= 1$. To prove this, let $\Sigma_i$ for $i\in\mathcal{S}$ denote proofs constructed by the algorithm \textbf{Prove} and $\Sigma_a $ denote the aggregation of these proofs obtained according to algorithm \textbf{Aggregate}. For all $i\in\mathcal{S}$, let $C_i$ denote the Pedersen commitment of the secrets $x_i$ and $c_i$ denote the challenge used in the proof.
+
+Then by the completeness property of the signature-based set membership proof \cite{RANGE-SET}, it holds that:
+\begin{align*}
+a_i = e(V_i,y)^{c_i}e(V,g)^{z_{x_i}}e(g,g)^{z_{\tau_i}} \:\: \forall \: i\in\mathcal{S}.
+\end{align*}
+
+It remains to argue that $D_a =C^ch^{z_{R_a}}g^{z_{x_a}}$, where $C=\prod_{i\in\mathcal{S}}C_i$ and $c=\prod_{i\in\mathcal{S}}c_i$. By construction it holds that:
+\begin{align*}
+D_a = &g ^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i}  ,
+\\
+ C^ch^{z_{R_a}}g^{z_{x_a}} =&\:  \Big( \prod_{i\in\mathcal{S}} C_i \Big)^{\prod_{i\in\mathcal{S}} c_i}h^ {\sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i}
+g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i}
+\\ 
+ = &\Big( g^{\sum_{i\in\mathcal{S}} x_i} h^{\sum_{i\in\mathcal{S}} R_i}\Big)^{\prod_{i\in\mathcal{S}} c_i} h^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)m_i - \big( \prod_{j\in\mathcal{S}} c_j \Big) \sum_{i\in\mathcal{S}} R_i  }
+ \\
+ &g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i} \\
+ =  &g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}  c_j \Big)s_i } h^{\sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i}  ,
+\\
+ \implies D_a \:=& \:C^ch^{z_{R_a}}g^{z_{x_a}}
+\end{align*}
+
+Combining the above results it has been shown that $D_a  = C^ch^{z_R_a}g^{z_x_a}\wedge a_i = e(V_i,y)^c_i e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$.
+Implying that \textbf{Verify}$ ( $\textbf{Aggrgeate}$ (\{ $\textbf{Prove}$($
+$pp,i,C_i,x_i,\Phi)\}_{i\in\mathcal{S}}) )= 1$.
+%To aggregate the public signature based set membership proofs possible constructions for the algorithm \textbf{Aggregate} is evaluated. The starting point for designing such a construction is that the aggregation of public signature set membership proofs according to the algorithm \textbf{Aggregate} should result in construction that satisfies the completeness requirement in Definition \ref{def:ZKP_agg}. Remark that it is assumed that the verification of the aggregated proof should be designed in the same way as the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM}. Having found an implementation of the algorithm \textbf{Aggregate} that satisfies the completeness it will then be examined under what assumptions the soundness and zero-knowledge in Definition \ref{def:ZKP_agg} is satisfied. 
+
+%To investigate different designs of the algorithm \textbf{Aggregate} and whether it  provides an aggregated set membership proof that satisfies the completeness the following is considered. 
+
+
+%Consider $|\mathcal{S}|$ provers and consequently  $|\mathcal{S}|$ set membership proofs denoted $\Sigma_i,\: i\in\mathcal{S}$. The aggregation in equation \eqref{eq:aggD2} extended to aggregate all proof results in the aggregation procedure below,
+%\begin{equation}
+%\label{eq:aggDn}
+%\begin{aligned}
+%D &=\prod_{i\in\mathcal{S}}  D_i ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j }  =  \prod_{i\in\mathcal{S}}  (g^{s_i}h^{m_i}) ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}  c_j } = g ^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i} \\
+%z_x &= \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{x_i} = \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i\\
+%z_R &=  \sum_{i\in\mathcal{S}}  \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i} = \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)m_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} R_i 
+%\end{aligned}
+%\end{equation}
+%Let $C=\prod_{i\in\mathcal{S}} C_i$ be the product of all Pedersen commitments and $c= \prod_{i\in\mathcal{S}} c_i$ the product of the challenges.  The partly aggregated set membership proof $\Sigma_a = (D,z_x,z_r)$ computed according to equation \ref{eq:aggDn} satisfies $D= C^ch^{z_R}g^{z_x}$, 
+%\begin{align*}
+%LHS =& D = g ^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i}  
+%\\
+%RHS =& C^ch^{z_R}g^{z_x} =  \Big( \prod_{i\in\mathcal{S}} C_i \Big)^{\prod_{i\in\mathcal{S}} c_i}h^ {\sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i}
+%\\
+%&g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i}
+%\\ 
+% =& \Big( g^{\sum_{i\in\mathcal{S}} x_i} h^{\sum_{i\in\mathcal{S}} R_i}\Big)^{\prod_{i\in\mathcal{S}} c_i} h^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)m_i - \big( \prod_{j\in\mathcal{S}} c_j \Big) \sum_{i\in\mathcal{S}} R_i  }
+% \\
+% &g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i}=  g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}  c_j \Big)s_i } h^{\sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i}  
+%\\
+% \implies \text{LHS} =& \text{ RHS}.
+%\end{align*}
 
 %TODO who aggregates, how do you ensure the aggregation is correct, challanges not possible for the verifier to compute since do not know the D_i and a_i and so on. Could you have a homoporphic hashfunction so this is not an issue? Or not since Di^{\prod{c_j}}... 
 
@@ -122,190 +270,64 @@ RHS =& C^ch^{z_R}g^{z_x} =  \Big( \prod_{i\in\mathcal{S}} C_i \Big)^{\prod_{i\in
 
 %TODO 1) assume aggregation correct, can client cheat? 
 % 2) can aggregation be done not correct?
-Above it has been seen that arbitrary many set memberships proofs can be aggregated according to equation \eqref{eq:aggDn} such that $D=C^ch^{z_R}g^{z_x}$,  holds after the aggregation. This results in a technique to aggregate  set membership proofs such that when verifying the signature based set membership proofs the first equality, $D=C^cg^{z_x}h^{z_R}$, only need to be verified once instead of once once for each proof.
+%Above it has been seen that arbitrary many set memberships proofs can be aggregated according to equation \eqref{eq:aggDn} such that $D=C^ch^{z_R}g^{z_x}$,  holds after the aggregation. This results in a technique to aggregate  set membership proofs such that when verifying the signature based set membership proofs the first equality, $D=C^cg^{z_x}h^{z_R}$, only need to be verified once instead of once once for each proof.
 
-Next examine if the entire construction of public signature based set membership proofs can be aggregated. This implies that in addition to the above aggregation the second equality should also be satisfied after aggregating. This leads to that aggregated proof should be equal to  $\Sigma_a = (a,V,D,z_x,z_\tau,z_R)$ where the values $a,V,z_x,z_\tau$ satisfies the equation $a = e(V,y)^c e(V,g)^{-z_x}e(g,g)^{z_\tau}$. 
-
-Again consider two set membership proofs $\Sigma_1,\Sigma_2$ computed according to the algorithm \textbf{Prove} in Construction \ref{alg:ZKSM}. Examine if an aggregated proof $\Sigma_a= ( a, V, D, z_x, z_\tau, z_R)$ computed according to equation \eqref{eq:naiveAgg} satisfies the second equality of the verification under the assumption $c_1=c_2$. If so it would imply that the same trick as above, namely aggregating such that the challenges appear only as a product, would yield a method for fully aggregating the public signature based set membership proofs.  After fully extending the expression $a \overset{?}{=} e(V,y)^c e(V,g)^{-z_x}e(g,g)^{z_\tau}$, see Appendix \ref{appendix:aggregate_a} for the details of the calculations, it is realised that the terms,
-\begin{align*}
-e(V_1,g)^{z_{x_2}}e(V_2,g)^{z_{x_1}} = e(g,g)^{\frac{\tau_1}{\chi + x_1}(-s_2+x_2c) +\frac{\tau_2}{\chi + x_2}(-s_1+x_1c)   } ,
-\end{align*}
-on the right side of the equality are not cancelled leading to that the equality in the verification is not satisfied.
-
-%TODO fix below to not use alg:ZKRP
-This concludes that even if $c_1=c_2$ the completeness property will not hold after aggregating according to equation \eqref{eq:naiveAgg}. This implies that in order to aggregate the whole set membership proof additional tricks are required. Several attempts to construct an aggregation that satisfy the completeness property has been made without any success. Therefore whether it can be done or not is left unanswered. What can be seen as an indicator to that it is not be possible is that in the algorithm \textbf{Verify} in the derived signature based range proof the bilinear mappings are checked separately for each $j\in\mathds{Z}_l$ \cite{Efficient_proof_interval}. 
-
-%A hint can also be seen in Construction \ref{alg:ZKRP} where the verification of first equity is aggregated while the second is done for each $j\in\mathds{Z}_l$. 
+%Next examine if the entire construction of public signature based set membership proofs can be aggregated. This implies that in addition to the above aggregation the second equality should also be satisfied after aggregating. This leads to that aggregated proof should be equal to  $\Sigma_a = (a,V,D,z_x,z_\tau,z_R)$ where the values $a,V,z_x,z_\tau$ satisfies the equation $a = e(V,y)^c e(V,g)^{-z_x}e(g,g)^{z_\tau}$. 
 
 
-%Argument security of aggregation 
-\section{Construction}
-%TODO intro
-The previous section proposed a design of the algorithm \textbf{Aggregate}, such that the  public signature based set memberships proofs could be partly aggregated. A full description of the aggrgeated public signature based set membership in given in Construction \ref{alg:ZKSM-Agg}. The algorithm \textbf{Prove} in the aggregated set membership proof is run by all proving parties wanting to prove that their secret is in the set. Then the aggregating party takes all the set membership proofs as input and outputs an aggregated proof. The verifier takes the aggregated proof as input, outputs either $1$ or $0$. Due to the aggregation  the verifier checks the equality $D=C^ch^{z_R}g^{z_x}$ once instead of once for each proving party in the protocol. 
+%Completeness follows from the argument given above, where it has been seen that $D\overset{?}{=}C^ch^{z_R}g^{z_x}$ given all parties where honest, and the completeness of the public signature based set membership proof. Thereby Construction \ref{alg:ZKSM-Agg} satisfies the completeness in Definition \ref{def:ZKP_agg}. 
 
-In Construction \ref{alg:ZKSM-Agg} the challenges are given as input to the verifier, unlike the original set membership proof where the verifier calculates the challenge $c_i=Hash(a_i,D_i)$. The reason for this is that the values arguments required to compute tha challenges are not not known to the verifier. This raises the question about which party that should be responsible for calculating the challenges.  It is not desired that the party performing the aggregation also computes the challenger since this opens up for cheating, for the same reason should the proving party not compute the challenge. Thus, the challenges are computed by a different party, independent of both the proving-parties and the aggregating party, and finally multiplied together by the verifier. Another possibility is to include the values entire set membership proofs $\{\Sigma_i\}_{i\in\mathcal{S}}$ in the input to the verification, leading to that the verifying party can compute the challenges. This would consequently increase the computations for in the verification. For the rest of this paper, if noting else mentioned, it is assumed that the algorithm \textbf{CalculateChallanges} is performed according to Construction \ref{alg:ZKSM-Agg} by a trusted party. 
+\subsubsection*{Zero-Knowledge}
+The zero-knowledge property of Construction \ref{alg:ZKSM-Agg} follows from the zero-knowledge property of Construction \ref{alg:ZKSM} and by realising that the algorithm \textbf{Aggregate} does not reveal any information about the secrets $x_i$ for any $i\in\mathcal{S}$. The latter follows from multiplying and adding elements perfectly hiding the secret $x_i$, with other elements independent of the secret $x_i$ does not reveal any information about the secret. 
 
-%Comparing the algorithm \textbf{VerifyAggregatedProof} with performing the algorithm \textbf{Verify} in set membership construction once for each clients, it is seen that the first equality check $D \overset{?}{=}( \prod_{i=1}^n C_i )^{c}h^{z_R}g^{z_x}$ is done once instead of once for $|\mathcal{S}|$ times. Construction \ref{alg:ZKSM-Agg} presents all algorithms ,  \textbf{Prove}, \textbf{Aggregate}, \textbf{CalulateChallenges} and \textbf{VerifyAggregatedProof}, needed to build the aggregated set membership proof. 
-
+\subsubsection*{Soundness}
+The aggregated set membership proof in Construction \ref{alg:ZKSM-Agg} satisfies the soundness property stated in chapter \ref{ch:generalAgg} under the assumptions that the aggregation is performed according to the algorithm \textbf{Aggregate} in Construction \ref{alg:ZKSM-Agg},  that provers cannot communicate or collaborate and that the set membership proof in Construction \ref{alg:ZKSM} satisfies the soundness in Definition \ref{def:ZKP}. To prove this is has to be shown that if for any $i\in\mathcal{S}$ the secret $x_i\notin\Phi$ then it holds that Prob$[ $\textbf{Verify}$($\textbf{Aggrgeate}$(\{$\textbf{Prove}$(pp,i,C_i,x_i,\Phi)\}_{i\in\mathcal{S}}) ) = 1] < \varepsilon$, for some negligible $\varepsilon$.
 
 
-% , that verifier all individual set membership proof by performing only one verification, resulted in a that a method for aggregating parts of the set membership proof. This method is compiled in Construction \ref{alg:ZKSM-Agg}, where the set membership proof originally presented in \cite{Efficient_proof_interval} is modified to reduce the computational complexity in applications where multiple  proofs are verified simultaneously.
+Let $T$ denote the index-set of the malicious provers. Assume that all honest provers $p_i$, such that $i\in\mathcal{S}\backslash T$, computes their set membership proofs, $\Sigma_i$, according to \textbf{Prove}.
 
-%This leads to that a verification algorithm for verifying the aggregated version of set membership proofs $RP_i$ for $i\in\mathcal{S}$ to be as the algorithm \textbf{VerifyAggregatedProof} in Construction \ref{alg:ZKSM-Agg}.  %TODO 
-%\begin{itemize}
-%\item\text{\textbf{VerifyAggregatedProof} $(g,h,\{C_i\}_{i\in\mathcal{S}},\{c_i\}_{i\in\mathcal{S}} ,\texit{proof}_{SM,a}) \xrightarrow[]{} \{0,1\}$} \\
-%Compute the product of the challenges $c=\prod_{i\in\mathcal{S}} c_i$. Check if $D_a\overset{?}{=} \big( \prod_{i\in\mathcal{S}}C_i\big)^ch^{z_R_a}g^{z_x_a}\wedge a_i \overset{?}{=} e(V_i,y)^c_i e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$. If the equalities holds the provers has convinced the verifier that $x_i\in\Phi$ for all $x_i$ such that $i\in\mathcal{S}$ return $1$ otherwise return $0$.
-%\end{itemize}
- 
-\begin{algorithm}[]
-\caption{\textbf{: Aggregation of non interactive set membership proof}}
-%This protocol is a modification of Construction \ref{alg:ZKSM}, such that when multiple parties wish to prove that their secret is in an allowed set, $\Phi$, to the same verifier, their proofs can be partly aggregated into one common proof to reduce the verification time. 
-\textbf{Goal:}  Given the Pedersen commitments $C_i=g^{x_i} h^{R_i}$ for $i\in\mathcal{S}$. The goal is to prove that all secrets $x_i$ belongs to the set $\Phi$. Without revealing anything else about the secrets $x_i$.
-\vspace{2pt} \hline \vspace{2pt}
-\begin{itemize}
-  \item\textbf{SetUp $(1^\lambda,\Phi)\xrightarrow[]{}(sk,pp)$}\\
- Let g be a generator of the group $\mathds{G}$ and $h$ and element in the group such that $log_g(h)$ is unknown.  
-Pick uniformly at random $\chi\in_R\mathds{F}$ and put $sk=\chi$. Define $y=g^\chi$ and $A_i=g^{\frac{1}{\chi+i}} \:\forall i\in\Phi$, output $pp=(g,h,y,\{A_i\}_{i\in\Phi})$.
-
-\item\text{\textbf{Prove} $(pp,i,C_i,\Phi)\xrightarrow[]{}}\Sigma_i$}\\
-Pick uniformly at random $\tau_i\in_R\mathds{F}$, choose from the set $\{A_i\}$ the element $A_{x_i}$ and calculate $V=A_{x_i}^{\tau_i}$. Pick uniformly random three values $s_i,t_i,m_i\in_R\mathds{F}$. Put $a_i=e(V_i,g)^{-s_i}e(g,g)^{t_i}$,  $D=g^{s_i}h^{m_i}$, and $c=\text{Hash}(C_i,V_i,a_i,D_i)$. Finally compute $z_{x_i} = s_i-x_i c_i$, $z_{R_i} = m_i-R_ic_i$ and $z_{\tau_i}= t_i-\tau_i c_i$ then construct and publish $\Sigma_i = (V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i})$.
-
-\item \text{\textbf{Aggregate} $( pp,\{ \Sigma_i\}_{i\in\mathcal{S}} ) \xrightarrow[]{} \Sigma_a$} \\
-Given a set of set membership proofs  $\{\Sigma_i\}_{i\in\mathcal{S}}$. Aggregate the values $( \{D_i \}_{i\in\mathcal{S} } \{ z_{x_i}\}_{i\in\mathcal{S} } \{ z_{r_i}\}_{i\in\mathcal{S}  }) \mapsto D_a,z_{x_a},z_{R_a}$ according to equation \eqref{eq:aggDn}. Then construct and publish the aggregated proof $\Sigma_a = (\{V_i\}_{i\in\mathcal{S} },\{a_i\}_{i\in\mathcal{S} },D_a,\{z_{x_i}\}_{i\in\mathcal{S} }, z_{x_a}, \{z_{\tau_i}\}_{i\in\mathcal{S} },z_{R_a})$.
-
-\item \text{ \textbf{CalculateChallenges} $(\{C_i\}_{i\in\mathcal{S}}\{\Sigma_i\}_{i\in\mathcal{S}} ) \xrightarrow[]{} \{c_i\}_{i\in\mathcal{S}}$ }\\
-For all $i\in\mathcal{S}$ parse the proof $\Sigma_i$, then compute the challange $c_i = Hash(C_i,V_i,a_i,D_i)$. Finally output the set of all challenges $\{c_i\}_{i\in\mathcal{S}}$. 
-
-\item\text{\textbf{Verify} $(pp,\Sigma_a,\{C_i\}_{i\in\mathcal{S}},\{c_i\}_{i\in\mathcal{S}}) \xrightarrow[]{} \{0,1\}$} \\
-Compute the product of the challenges $c=\prod_{i\in\mathcal{S}} c_i$. Check if $D_a\overset{?}{=} \big( \prod_{i\in\mathcal{S}}C_i\big)^ch^{z_R_a}g^{z_x_a}\wedge a_i \overset{?}{=} e(V_i,y)^c_i e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$. If the equalities holds the provers has convinced the verifier that $x_i\in\Phi$ for all $x_i$ such that $i\in\mathcal{S}$ return $1$ otherwise return $0$.
-\end{itemize}
-\label{alg:ZKSM-Agg}
-\end{algorithm} 
- 
-\subsection*{Many aggregating parties}
-The computational complexity for the algorithm \textbf{Aggregate} is linear in the number of set membership proof that are aggregated. To reduce the computation load of the aggregating party it is possible to split the aggregation between multiple aggregating parties. 
-
-Let the set $\mathcal{K}$ in represents the set of parties performing the aggregation, and the set $\mathcal{S}_k$ for $k\in\mathcal{K}$ represents the assigned set membership proofs to aggregate to the $k^{th}$ aggregating party. The sets $\mathcal{S}_k$ are such that $\bigcup_{k\in\mathcal{K}}\mathcal{S}_k = \mathcal{S}$ and $\mathcal{S}_i\bigcap \mathcal{S}_j= \emptyset$ for all $i,j\in\mathcal{K}$ such that $i\neq j$. 
-
-To split the aggregation between the aggregating parties in the set $\mathcal{K}$, the algorithm \textbf{Aggregate} is performed once for each party in the set $\mathcal{K}$ on the input $(pp,\{\Sigma_i\}_{i\in\mathcal{S}_k})$ and the output is $\Sigma_{a_k}$. Then the verification algorithm gets the input $(pp,\{\Sigma_{a_k}\}_{k\in\mathcal{K}},\{C_i\}_{i\in\mathcal{S}},\{c_i\}_{i\in\mathcal{S}} )$ and performs the verification once for each aggregated proof. A construction of this is seen in appendix \ref{app:manyAggregatingParties} in Construction \ref{alg:ZKSM-Agg-Many}. By letting the set of aggregating parties $\mathcal{K}$ consist of one element and $\mathcal{S}_k  = \mathcal{S}$ construction \ref{alg:ZKSM-Agg} and \ref{alg:ZKSM-Agg-Many} would be equal. 
-%TODO elaborate
-
-
-An illustrative figure of the aggregation procedure will look is given in  Figure \ref{fig:workflow}. Each client generates a set membership proof, and than sends it to its assigned server. Then each server will aggregate the received set membership proofs according to the algorithm \textbf{Aggregate} in Construction \ref{alg:ZKSM-Agg} and send the aggregated proof to the verifier. Finally the verifier verifies all the aggregates proofs and the severs computations.
-
-In Figure \ref{fig:workflow} the computation of the challenges is done by an independent party, next two approaches to compute the challenges without introducing any new parties. The first alternative is that the verifier computes the challenges, this would require that the verifies additionally gets $\{D_i\}_{i\in\mathcal{N}}$ as input. The second alternative is that the servers computes the challenges, however as discussed above the same party that aggregates the proofs should not compute the challenges. To use the server for the computation of challenges assume that the servers are linked in a closed chain. Then each server computes the challenges for the set membership proofs aggregated by the consecutive server.  
-
- \begin{figure}[]
-\caption{Provers outsourcing their set membership proofs to their assigned servers that in turn outputs aggregated set membership proof. }
-\label{fig:workflow}
-\includegraphics[width=\linewidth]{./figure/workflow_challanger.png}
-\end{figure} 
-
-\section{Completeness, Soundness and Zero-Knowledge}
-%TODO intro
-\subsection*{Trusted aggregating party}
-This section will investigate if the proposed aggregated set membership proof presented in Construction \ref{alg:ZKSM-Agg}  fulfils the completeness, soundness and zero-knowledge requirements stated in Definition \ref{def:ZKP_agg} under the  assumption that the aggregation has been done according to equation \eqref{eq:aggDn} by one trusted party. 
-
-Completeness follows from the argument given above, where it has been seen that $D\overset{?}{=}C^ch^{z_R}g^{z_x}$ given all parties where honest, and the completeness of the public signature based set membership proof. Thereby Construction \ref{alg:ZKSM-Agg} satisfies the completeness in Definition \ref{def:ZKP_agg}. 
-
-Zero-knowledge follows directly from the zero knowledge property of Construction \ref{alg:ZKSM} and by realising that multiplying and adding elements which perfectly hides the secret $x_i$, with other elements independent of the secret will not reveal any information about the secret. This leads to that it remains to see if the soundness property holds for Construction \ref{alg:ZKSM-Agg}. 
-
-The verification in Construction \ref{alg:ZKSM} consists of two equality checks. The first equality check $D\overset{?}{=}C^ch^{z_R}g^{z_x}$ convinces the verifier that the commitment and the proof element $z_x$ hides the same secret. The second equality check $a\overset{?}{=} e(V,y)^c(V,g)^{z_x}e(g,g)^{z_\tau}$ convinces the verifier that the secret used to compute $z_x$ is the same as the secret hidden in $V$ and the security of Bohen-Boyen signatures gives that this secret is a member of the set $\Phi$.  
-
-Considering the second equality check of the set membership proof, that has not been aggregated, the soundness follows directly from the soundness of construction \ref{alg:ZKSM}. This is since this part of the proof is send directly from the provers to the verifier. 
-%For the soundness of Construction \ref{alg:ZKSM-Agg} to hold, the verification of the aggregated proof $\Sigma_a$ should provide the same conviction to the verifier that all individual set membership proofs $\{\Sigma_i\}_{i\in\mathcal{S}}$. 
-
-The equality check $D\overset{?}{=}C^ch^{z_R}g^{z_x}$ in the original set membership construction as seen above servers the purpose of ensuring the verifier that the secret hidden in the commitment $C$ is the same as the secret used to construct the value $z_x$. 
-This property need to be checked that it remains after the aggregation. Meaning that the verifier should be sure that all secrets hidden in the commitments, are equal to the secrets used to compute the values $z_{x_i}$, in turn used in the aggregation to construct $z_x$. 
-%TODO fix margin? ¨
-
-To investigate this, consider two set membership proofs, $\Sigma_1$ and $\Sigma_2$, on the form $(V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i) $ for $i=1,2$. Given these proofs and the Pedersen commitment published by the provers the trusted aggregating party computes $\Sigma_a= (\{V_1,V_2\},\{a_1,a_2\}, D,z_x,\{z_{x_1,}z_{x_2}\}, \{z_{\tau_1},z_{\tau_2}\}, z_R))$, according to algorithm \textbf{Aggregate} in construction \ref{alg:ZKSM-Agg}. Given this set up, it will be investigated if it can hold that: $D = (C_1C_2)^ch^{z_R}g^{z_x}}$, where $C_i = g^{\tilde{x}_i}h^{\tilde{R}_i}$ and $z_{x_i} = s_i-c_ix_i$ such that $x_i\neq \tilde{x}_i$ for $i$ equal to either $1$, $2$ or both. Resulting in that the below equations must be equal while assuming that $\tilde{x}_i\neq x_i$, 
-\begin{align*}
-LHS =& g^{s_1c_2+s_2c_1}h^{m_1c_2+m_2c_1}\\
-RHS =& g^{c_1c_2(\tilde{x}_1+\tilde{x}_2)}h^{c_1c_2(\tilde{R}_1+\tilde{R}_2)} g^{ c_2(s_1-c_1x_1 ) + c_1(s_2-c_2x_2 ) } h^{ c_2(m_1-c_1R_1 ) + c_1(m_2-c_2\R_2 ) }\\
-=&  g^{ s_1c_2+ s_2c_1} h^{ m_1c_2+ m_2c_1 }g^{c_1c_1 (\tilde{x}_1+ \tilde{x}_2) - c_1c_2 (x_1+x_2) } h^{ c_1c_1 (\tilde{R}_1+ \tilde{R}_2)-c_1c_2 (R_1+R_2) }.
-\end{align*}
-Under the assumption that the aggregation was done correctly, one of the following cases has to hold in order for $LHS=RHS$,
-\begin{enumerate}
-\item $x_1= \tilde{x}_2$ and $x_2 = \tilde{x}_1$
-\item $(x_1+x_2) = (\tilde{x}_1+\tilde{x}_2)\: \text{mod} \: \Phi(N)$
-\end{enumerate}
-
-In the first case the provers are cheating, since they do not use the same secret in the commitments as in $z_{x_i}$. 
-%If this is considered in the context of using the aggregated set membership proof in combination to a VAHSS construction the sum $y$ calculated in the VAHSS construction evaluates to the same value in both case $1$ and $2$, and all used terms in the summation is proved to be in the set $\Phi$. 
-Despite cheating provers the result from the protocol is unaffected. This is since a cheating parties in this case only achieves to having their secret being committed to by another prover, as oneself commits to this prover's secret. It is not of relevance who committed what as long as all secrets is verified to be in the set. 
-
-The second case shows that two provers can collaborate in such a way that they ensured the verifier that the secrets $x_1$ and $x_2$ are in the set, by falsely proven that the secrets in $x_1,x_2$ are equal to $\tilde{x}_i,\tilde{x}_2$. I.e the equality $D\overset{?}{=} ( \prod_{i=1}^2 C_i)^ch^{z_R}g^{z_x}$ holds true without $\tilde{x}_i=x_i$. Thereby using $\tilde{x}_1$ and $\tilde{x}_2$ belong to the set $\Phi$ and $x_1,x_2$ not being in the set, the provers has successfully cheated.
-Thus it has to be assumed that provers cannot communicate in order for the soundness property to hold for the aggregated set membership. 
-
-The arguments above for the soundness of Construction \ref{alg:ZKSM-Agg} is formally stated and proved in Theorem \ref{thm:CSV_aggreated}. 
-
-\hspace{10pt}
-\begin{thm}
-\label{thm:CSV_aggreated}
-Assumed that  the aggregation is done according to algorithm \textbf{Aggregate} in Constrcution \ref{alg:ZKSM-Agg} by a trusted party,  that provers cannot communicate and that the set membership proof in Construction \ref{alg:ZKSM} is sound according to Definition \ref{def:ZKP}. Then the aggregated set membership proof in Construction \ref{alg:ZKSM-Agg} satisfies the soundness in Definition \ref{def:ZKP_agg}. 
-\end{thm}
-
-\begin{proof}
- Let $T$ denote the index-set of malicious provers.  Assume that a prover $c_i$, $i\in T$ can construct a set membership proof for the Pedersen commitment $C_i = g^{\tilde{x}_i}h^{\tilde{R}_i}$ such that $\tilde{x}_i \neq x_i}$ and $z_{x_i}=s_i-c_ix_i$.
 
 %TODO fixa mening
-The soundness of set membership proofs implies that the values of the malicious provers proofs used in the non aggregated equality check has to be computed according to the algorithm \textbf{Prove} in Construction $\ref{alg:ZKSM-Agg}$.
+If the algorithm \textbf{Verify} validates true then $a_i=e(V_i,y)^{c_i}e(V,g)^{z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$. Thereby the soundness assumption of the set membership proofs in Construction \ref{alg:ZKSM} implies that the values $a_i,V_i,z_{x_i},z_{\tau_i}$ must be computed according to the algorithm \textbf{Prove} in Construction $\ref{alg:ZKSM-Agg}$.
 %Thereby a malicious client has to commit values of $D_i,z_{R_i}$ such that after aggregation the the algorithm \textbf{VerifyAggregted} validates true while the Pedersen commitment $C_i$ and value $z_{x_i}$ are such that $x_i\neq\tilde{x_i}$, such that $x_i\in\Phi$ and $\tilde{x}_i \notin\Phi$.
-Assume further that all honest provers computes their set membership proof according to \textbf{Prove} and for the malicious provers the set membership proof and Pedersen commitment must, due to the soundness of Construction \ref{alg:ZKSM}, fulfil:
+Implying that the malicious provers, $p_i$ for $i\in T$, must construct their set membership proofs, $\Sigma_i$, and Pedersen commitments, $C_i$, such that the following is fulfilled:
 \begin{align*}
-V_i &= A_{x_i}^{\tau_i}\\
-a_i &= e(V_i,g)^{-s_i}e(g,g)^{t_i}\\
-D_i &= g^{\tilde{s}_i}h^{\tilde{m}_i}\\
-z_{x_i} &= s_i-x_ic_i\\
-z_{\tau_i} &= t_i- \tau_i c_i\\
-z_{R_i} &\in\mathds{F}\\
+V_i &= A_{x_i}^{\tau_i}, 				  		&a_i& = e(V_i,g)^{-s_i}e(g,g)^{t_i}, 		\\
+D_i &= g^{\tilde{s}_i}h^{\tilde{m}_i},		&z_{x_i}& = s_i-x_ic_i,							\\
+z_{\tau_i} &= t_i- \tau_i c_i, 					&z_{R_i}&\in \mathds{F},					\\
 C_i &= g^{\tilde{x}_i}h^{\tilde{R}_i},
 \end{align*}
-where $\tilde{x}_i\neq x_i$ and $x_i\in\Phi$. It is not required that $\tilde{s}_i =s_i$, $\tilde{m}_i =m_i$, $\tilde{R}_i =R_i$ nor required that they are not equal. 
+where $\tilde{x}_i\neq x_i$ and $x_i\in\Phi$. It is not required that $\tilde{s}_i =s_i$, $\tilde{m}_i =m_i$, $\tilde{R}_i =R_i$ are equalities nor inequalities.
 
-In order for the algorithm \textbf{VerifyAggregated} to validate true it has to hold that $D=C^ch^{z_R}g^{z_x}$, where $D,z_R,z_x$ is the aggregation according to equation \eqref{eq:aggDn} of all provers, honest and malicious,  set membership proofs. For this to be an equality it has to hold that the left hand side and right hand side below are equal, 
-\begin{comment}
-\begin{equation}
-\label{eq:}
-\begin{aligned}
-C &= \prod_{i\in T }  C_i  \prod_{i\in\mathcal{S}\backslash T }  C_i  =  \prod_{i\in T }  g^{\tilde{x}_i}h^{\tilde{R}_i}  \prod_{i\in\mathcal{S}\backslash T }  g^{x_i}h^{R_i} =  \prod_{i\in T }  g^{\tilde{x}_i}  \prod_{i\in\mathcal{S}\backslash T }  g^{x_i} 
- \\
-D &=\prod_{i\in T }  D_i ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j } \prod_{i\in\mathcal{S}\backslash T }  D_i ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j }  =  \prod_{i\in T }  (g^{\tilde{s}_i}h^{\tilde{m}_i}) ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}  c_j } \prod_{i\in\mathcal{S}\backslash T }  (g^{s_i}h^{m_i}) ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}  c_j }
- \\
-z_R &= \sum_{i\in T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i} +  \sum_{i\in\mathcal{S}\backslash T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i} \\
-\end{aligned}
-\end{equation}
-\end{comment}
-
+For the algorithm \textbf{Verify} to validate true it has to hold that $D_a=C^ch^{z_{R_a}}g^{z_{x_a}}$, where $D_a,z_{R_a},z_{x_a}$ is the aggregation of $\Sigma_i$ for all $i\in\mathcal{S}$  according to equation \eqref{eq:aggDn}.By expanding the equality it follows that:
 \begin{align*}
-LHS =& D = g ^ {\sum_{i\in T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)\tilde{s}_i + \sum_{i\in\mathcal{S}\backslash T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)\tilde{m}_i+ \sum_{i\in\mathcal{S}\backslash T} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i} 
+D_a =& g ^ {\sum_{i\in T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)\tilde{s}_i + \sum_{i\in\mathcal{S}\backslash T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)\tilde{m}_i+ \sum_{i\in\mathcal{S}\backslash T} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i} 
  \\
-RHS =& C^ch^{z_R}g^{z_x} =   \Big( g^{\sum_{i\in T} \tilde{x}_i + \sum_{i\in \mathcal{S}\backslash T} x_i} h^{\sum_{i\in T} \tilde{R}_i + \sum_{i\in \mathcal{S}\backslash T} R_i}  \Big) ^{\prod_{j\in\mathcal{S}} c_j}  h^{ \sum_{i\in T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i}}
+ C^ch^{z_{R_a}}g^{z_{x_a}} =&   \Big( g^{\sum_{i\in T} \tilde{x}_i + \sum_{i\in \mathcal{S}\backslash T} x_i} h^{\sum_{i\in T} \tilde{R}_i + \sum_{i\in \mathcal{S}\backslash T} R_i}  \Big) ^{\prod_{j\in\mathcal{S}} c_j}  h^{ \sum_{i\in T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i}}
  \\
 & h^{\sum_{i\in\mathcal{S}\backslash T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i- \sum_{i\in\marhcal{S}\backslash T} \big( \sum_{i\in\mathcal{S}} c_j\big)R_i}  
 g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \Big) \sum_{i\in\mathcal{S}} x_i}
 \\ 
- =&  g ^{\prod_{j\in\mathcal{S}} c_j \big(\sum_{i\in T} \tilde{x}_i + \sum_{i\in T} x_i\big) +  \sum_{i\in T} \big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j\big) s_i     } h^{ \big( \prod_{j\in\mathcal{S}} c_j\big)\sum_{i\in T} \tilde{R}_i  + \sum_{i\in T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i}}
+ &=  g ^{\prod_{j\in\mathcal{S}} c_j \big(\sum_{i\in T} \tilde{x}_i + \sum_{i\in T} x_i\big) +  \sum_{i\in T} \big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j\big) s_i     } h^{ \big( \prod_{j\in\mathcal{S}} c_j\big)\sum_{i\in T} \tilde{R}_i  + \sum_{i\in T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i}}
  \\
- & g ^ {\sum_{i\in\mathcal{S}\backslash T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ { \sum_{i\in\mathcal{S}\backslash T} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i} 
+ & g ^ {\sum_{i\in\mathcal{S}\backslash T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ { \sum_{i\in\mathcal{S}\backslash T} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i} .
 \end{align*}
-Both sides of the equality above can be interpreted as a Pedersen commitments.  It is assumed, under the discrete logarithm assumption, that two Pedersen commitments cannot be equal unless their arguments are equal. This implies that for the LHS to be equal to the RHS above the exponents of $g$ and $h$ has to be equal on both sides. Consider the exponent of $g$ this leads to,
+Both above both equations can be interpreted as Pedersen commitments.  It is assumed, under the discrete logarithm assumption, that two Pedersen commitments cannot be equal unless their arguments are equal. This implies that the exponents of $g$ and $h$ are equal for the two above equations. Consider the exponent of $g$ this leads to:
 \begin{align}
 \label{eq:cheatingCient}
 \sum_{i\in T} \big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \big) \tilde{s}_j =& \prod_{j\in\mathcal{S}} c_j \big(\sum_{i\in T} \tilde{x}_i + \sum_{i\in T} x_i\big) + \sum_{i\in T} \big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j\big) s_i  . 
 \end{align}
 
-It remain to argue that equality in equation \eqref{eq:cheatingCient} cannot hold unless $\tilde{x}_i= x_i$, which would lead to an contradiction. 
+It remain to argue that equality in equation \eqref{eq:cheatingCient} cannot hold unless $\tilde{x}_i= x_i$ for all $i\in\mathcal{S}$.
 
-First consider the case that the set $T$ only consist of one element, implying that there is only one malicious client. Without loss of generality assume that this is client $c_k$. Under this assumption equation \eqref{eq:cheatingCient} can be rewritten to, 
+First consider the case when the set $T$ only consists of one element, implying that there is only one malicious prover. Without loss of generality assume that this is the k$^{th}$ prover, $p_k$. Under this assumption equation \eqref{eq:cheatingCient} can be rewritten as, 
 \begin{align*}
 \big(\prod_{\substack{j\in\mathcal{S}\\ j\neq k}} c_j \big)  \tilde{s}_k  =& \big ( \prod_{\substack{j\in\mathcal{S}\\ j\neq k}} c_j \big)c_k \big( \tilde{x}_k + x_k\big) +\big( \prod_{\substack{j\in\mathcal{S}\\ j\neq k}} c_j\big) s_k  \implies   \tilde{s}_k  = c_k \big( \tilde{x}_k + x_k\big) + s_k
 \end{align*}
-If it would be possible to choose $\tilde{s}_k = c_k \big( \tilde{x}_k + x_k\big) + s_k $, it would be possible to cheat in the set membership in Construction \ref{alg:ZKSM}. Thereby if $|T|=1$, it must hold that $\tilde{x}_k=x_k$
+If it would be possible to choose $\tilde{s}_k = c_k \big( \tilde{x}_k + x_k\big) + s_k $, it would contradict the soundness assumption of Construction \ref{alg:ZKSM}. Thereby if $|T|=1$, it must hold that $\tilde{x}_k=x_k$
 
 %TODO define random more clear
-Instead assume that $|T|>1$ and that $c_k$ is a malicious client. Under the assumption that the provers cannot communicate and collaborate other clients set membership proof, $\{\Sigma_i\}_{\substack{i\in\mathcal{S}\\ i\neq k}}$, can be seen as random values for prover $c_k$ during the construction of $\Sigma_k$. Therefore under this assumptions equation \eqref{eq:cheatingCient} can be rewritten to, 
+Assume that $|T|>1$ and that $k\in T$ such that  $p_k$ is a malicious prover. Under the assumption that the provers cannot communicate or collaborate, the proofs $\{\Sigma_i\}_{\substack{i\in\mathcal{S}, i\neq k}}$, can be considered random values for the  prover $p_k$. Equation \eqref{eq:cheatingCient} can be rewritten as:
 \begin{align*}
 \big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \big) \tilde{s}_k +  \overbrace{\sum_{\substack{i\in T \\ i\neq k}} \big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \big) \tilde{s}_j}^{\text{Random }}  &=
   \big ( \prod_{\substack{j\in\mathcal{S}\\ j\neq k}} c_j \big)c_k \big( \tilde{x}_k + x_k\big) +\big( \prod_{\substack{j\in\mathcal{S}\\ j\neq k}} c_j\big) s_k 
@@ -313,23 +335,20 @@ Instead assume that $|T|>1$ and that $c_k$ is a malicious client. Under the assu
    &+ \overbrace{\prod_{j\in\mathcal{S}} c_j \big(\sum_{\substack{i\in T \\ i\neq k}} \tilde{x}_i + \sum_{\substack{i\in T \\ i\neq k}} x_i\big)}^{\text{Random}} \\
    & + \overbrace{\sum_{\substack{i\in T \\ i\neq k}} \big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j\big) s_i  }^{\text{Random}}
 \end{align*}
-If $\tilde{x}_k \neq x_k$, this would imply that the set membership proof can be broken by adding random values to $D$ and $z_x$ in Construction \ref{alg:ZKSM}. This is a contradiction to the soundness of set membership proofs. This implies that $\tilde{x}_k=x_k$. 
+If $\tilde{x}_k \neq x_k$, this would imply that it is possible to cheat in Construction \ref{alg:ZKSM} by adding random values to $D_i$ and $z_{x_i}$. This is a contradiction to the soundness assumption of the set membership proof in Construction \ref{alg:ZKSM}. This implies that $\tilde{x}_k=x_k$. 
 
-It has been proved that the aggregated set membership proof, presented in Construction \ref{alg:ZKSM-Agg}, fulfils the soundness in Definition \ref{def:ZKP_agg} under the assumptions that the aggregation is performed according to equation \eqref{eq:aggDn} by a trusted party, that provers cannot communicate and that the set membership proof in Construction \ref{alg:ZKSM} is sound. 
-\begin{comment}
-\begin{align*}
- \sum_{i\in T} \big( \prod_{\substack{j\in\mathcal{S} \\ j\neq i}} c_j \big) \tilde{m}_j =&  \prod_{j\in\mathcal{S}} c_j \big( \sum_{i\in T} \tilde{R}_i  \big)   + \sum_{i\in T} \big( \prod_{\substack{j\in\mathcal{S} \\ j\neq i}} c_j\big) z_{R_i}\\
-  \big( \prod_{\substack{j\in\mathcal{S} \\ j\neq i}} c_j \big) \tilde{m}_k =& \big( \prod_{\substack{j\in\mathcal{S}\\ j\neq k}} c_j\big) c_k \big( \tilde{R}_k  \big)  + \big( \prod_{\substack{j\in\mathcal{S}  \\ j\neq k}} c_j\big) z_{R_k} \implies   \tilde{m}_k = c_k\tilde{R}_k  +  z_{R_k} .
-  \\
-  \big( \prod_{\substack{j\in\mathcal{S} \\ j\neq i}} c_j \big) \tilde{m}_k + \sum_{i\in T \\ i\neq k}} \big( \prod_{\substack{j\in\mathcal{S} \\ j\neq i}} c_j \big) \tilde{m}_j =&  \prod_{j\in\mathcal{S}} c_j \big( \sum_{i\in T} \tilde{R}_i  \big)   + \sum_{i\in T} \big( \prod_{\substack{j\in\mathcal{S} \\ j\neq i}} c_j\big) z_{R_i}
-  \\
-  & \Big( g^{c \sum_{i\in T} \tilde{x}_i } \Big)    h^{ \sum_{i\in T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i} } 
- h^{\sum_{i\in\mathcal{S}\backslash T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i- \sum_{i\in\marhcal{S}\backslash T} \big( \sum_{i\in\mathcal{S}} c_j\big)R_i}
-   \\
-& g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i - c  \sum_{i\in T } x_i}
-\end{align*}
-\end{comment}
+Thereby, it is proved that if for any $i\in\mathcal{S}$ the secret  $x_i\notin \Phi$, it holds that Prob$[ $\textbf{Verify}$($\textbf{Aggrgeate}$(\{$\textbf{Prove}$(pp,i,C_i,x_i,\Phi)\}_{i\in\mathcal{S}}) ) = 1] < \varepsilon$, for a negligible $\varepsilon$.
+
+\vspace{10pt}
+\begin{thm}[\textbf{Completeness, Zero-Knowledge and Soundness}]
+Assume that the aggregated proof $\Sigma_a$ is computed according to algorithm \textbf{Aggregate} in Construction \ref{alg:ZKSM-Agg},  that the parties constructing the proofs, $\{\Sigma_i\}_{i\in\mathcal{S}}$, cannot communicate and that the set membership proof in Construction \ref{alg:ZKSM} satisfies the requirements stated  in Definition \ref{def:ZKP}.
+Then the  aggregated signature-based set membership proof in Construction \ref{alg:ZKSM-Agg} satisfies the completeness, zero-knowledge and soundness requirements for aggregated set membership proofs, stated in chapter \ref{ch:generalAgg}.
+\end{thm}
+\begin{proof}
+The proof follows from the arguments given above. 
 \end{proof}
+%It has been proved that the aggregated set membership proof, presented in Construction \ref{alg:ZKSM-Agg}, fulfils the soundness in Definition \ref{def:ZKP_agg} under the assumptions that the aggregation is performed according to equation \eqref{eq:aggDn} by a trusted party, that provers cannot communicate and that the set membership proof in Construction \ref{alg:ZKSM} is sound. 
+%\end{proof}
 % c be partially aggregated by servers, not compleatly by aggregator of RP -> alll c_i used most be correct?
 
 %More precisely it has to hold that a secret not in $\Phi$ satisfies the verification with a negligible property and additionally that the secret hidden in the commitments $C_i$ is the same as the secrets in $z_{x_i}$. 
@@ -337,109 +356,11 @@ It has been proved that the aggregated set membership proof, presented in Constr
 
 %Neither the  second equality test including  bilinear mapping holds after aggregation, this equality will not hold even if the challenges are equal, i.e $c_1=c_2$ unlike the first.  This concludes that the neither set membership nor signature based range proof can be straight forward aggregated without modifications.  Challange in included on both sides, is this an issue? But not yout own challange on LHS?
 
-\subsection*{Untrusted Aggregating party }
-In the previous section it was assumed that the algorithm \textbf{Aggregate} was performed correctly by a trusted party. Under the assumption that the proving parties cannot communicate is was argued that the aggregated set membership proof in Construction \ref{alg:ZKSM-Agg} satisfies the correctness, soundness and zero-knowledge property  in Definition \ref{def:ZKP_agg}.
-
-In this section it will be investigated if the trusted party assumption is necessary or if some weaker assumption is sufficient alternatively if the aggregation can be checked. It will be assumed that proving parties cannot communicate between themselves and that proving parties cannot communicate with the aggregating party. 
-
-Note that since all input to the algorithm \textbf{Aggregate} is public, the aggregation can be done by anybody. Therefore an aggregation performed can always be checked if it is correct by running the algorithm \textbf{Aggregate} on one's own and then examine if the results are the same. To aggregate the set membership proofs is an expensive operations and hence arguments on an aggregations correctness without having to redo the aggregation would be useful.
-
-%An important feature in the verification of the original set membership construction is that verifier can compute the challenge as the hash of parts of the proof and hence the prover cannot cheat and use some cleaver challenge that cancel terms or in some other way affects the proof. The proposed aggregation does not provide sufficient input to the verification algorithm for the verifier to compute the individual challenges and then their product used in the verification. Further the challenges are computed and used in the aggregation hence it is necessary to perform some assurance that it is the correct challenges used. 
-
-%TODO fix below
-Before looking into how the aggregation party might cheat and depart from the aggregation in equation \eqref{eq:aggDn}, it will be cleared out what values the aggregation party can affect and what requirements that has hold. The aggregation party need to provide values for the proof parameters $D,z_x,z_R$ such that $D=C^ch^{z_R}g^{z_x}$. The party performing the aggregation can not modify the values of the product of commitments, denoted $C$, nor the value of the product of the provers challenges, denoted $c$.  If the aggregation can be performed  such that the  values $D,z_x,z_R$ are not computed according to equation \eqref{eq:aggDn} and the verification verifies true, the aggregating party has deceived the verifier.
-
-An important distinction is that in the original set membership construction the value of the challenge, $c_i$, used is not know when constructing $C_i,V_i,D_i,a_i$ since it is a function of these values. In the aggregated set membership the challenges depends on the values publicly known for the aggregating party. This leads to that this knowledge can be taken advantage of to cheat. This results in that besides having a party independent of the aggregation, possibly the verifier, computing the product of the challenges, it must also be verified that $D\neq C^c$, where $C=\prod_{i\in\mathcal{S}}C_i$ and $c=\prod_{i\in\mathcal{S}}c_i$.
-
-If it is not checked that $D \neq C^c$ it would be possible to choose the values $D,z_x,z_R$ according to,
-\begin{align*}
-D =& \prod_{i\in\mathcal{S}} C_i ^{\prod_{i\in\mathcal{S}} c_i}	\\
-z_x =& \phi(p)	\\
-z_R =& \phi(p),	\\
-\end{align*}
-where $p$ is the prime underlying the field $\mathds{F}$. For the above choice of $D,z_x,z_R$ the equation, $D\overset{?}{=} \big(\prod_{i\in\mathcal{S}}^nC_i\big)^{\prod_{i\in\mathcal{S}}^n c_i} h^{z_R}g^{z_x}$ holds trivially true, independent of whether the commitment $C_i$ and the values $z_{x_i}$ hides the same secret for all $i\in\mathcal{S}$. Henceforth it will be assume that it is checked that $D \neq C^c$.
-
-
-This leads to that the aggregated values $D,z_R,z_x$  must be such that $D \neq C^c$ and that left hand side equals the right hand side in the below equation system:
-
-\begin{align*}
-LHS =& D\\
-RHS  =& \big(\prod_{i\in\mathcal{S}}C_i\big)^{\prod_{i\in\mathcal{S}} c_i} h^{z_R}g^{z_x} =
-\big( g^{\sum_{i\in\mathcal{S}} x_i } h^{\sum_{i\in\mathcal{S}} R_i} \big) ^{\prod_{i\in\mathcal{S}} c_i}h^{z_R} g^{z_x} \\
-=& \big( g^{ (  \prod_{i\in\mathcal{S}} c_i ) \sum_{i\in\mathcal{S}} x_i ) } h^{ ( \prod_{i\in\mathcal{S}}  c_i ) \sum_{i\in\mathcal{S}} R_i ) } \big)h^{z_R} g^{z_x}.
-\end{align*}
-
-%In the original set membership construction is that the verifier uses the same value $z_x$ is used for the entire verification. In the aggregated set membership, an aggregated value $z_x$ is used to test if $D\overset{?}{=}C^ch^{z_R}g^{z_x}$ while non-aggregated values $z_{x_i}$ are used to verify $a_i=e(V_i,y)^ce(V_i,g)^{-z_x}e(g,g)^{z_{\tau_i}}$ for $i\in\mathcal{S}$. Thereby the same value is not used in the entire verification. This means that in the aggregated set membership the aggregated value $z_x$ has less claims that needs to be fulfilled in order for the verification to succeed. 
-
-In order to have equality between the left hand side and the right hand side, the terms derived from the commitments must be cancelled. The aggregating party does not know the secrets $x_i$ or the random values $R_i$ for any $i\in\mathcal{S}$ nor the sums $\sum_{i\in\mathcal{S}} x_i$ and $\sum_{i\in\mathcal{S}} R_i$, this follows from the assumption that the provers cannot communicate with each-other or with the party performing the aggregation. 
-
-Under the assumption discussed above, Theorem \ref{thm:aggrgeation} states that aggregation must be performed according to the algorithm \textbf{Aggregate} for the algorithm \textbf{Verify} to verify true in Construction \ref{alg:ZKSM-Agg}. 
-
-
-% The argument is that in order to cancel the terms depending on the unknown sum of secrets, $x_i$, and random values, $R_i$, the values $z_{x_i}$ and $z_{R_i}$ must be used. These term can not be combined in a way that all cross terms are cancelled besides as in equation \ref{eq:aggDn}. Remark here that this is assumed and not proved, in other words the security of the aggregated set membership presented in Construction \ref{alg:ZKSM-Agg} is based on this assumption or alternatively as in the previous section the assumption that the aggregation is done by a trusted party.
-
-\hspace{10pt}
-\begin{thm}[\textbf{Security of aggregation without trusted third party assumption}]
-\label{thm:aggrgeation}
-
-Let $\mathcal{A}$ be a PPT adversary. Assume $\mathcal{A}$ knows 
-the set membership proofs $\Sigma_i$ for $i\in\mathcal{S}$, where $\Sigma_i=(V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i})$ calculated according to the algorithm \textbf{Prove} in Construction \ref{alg:ZKSM-Agg}. In addition the adversary has also knowledge of the Pedersen commitments $C_i$ and the challenges $c_i=Hash(D_i,a_i)$ for all $i\in\mathcal{S}$.\\
-\\
-Assume that the adversary  $\mathcal{A}$ cannot communicate with the provers and that the provers cannot communicate with each other,. This leads to that the  $\mathcal{A}$ has no knowledge of the secrets $x_i$ or the randomness $R_i$ in the Pedersen commitment, nor the sum of the secrets and random values. \\
-\\
-Under these assumptions the adversary $\mathcal{A}$ has a negligible probability of choosing $D,z_x,z_R$ such that: $D = C^cg^{z_x}h^{z_R}$, where $D\neq C^c$, $C=\prod_{i\in\mathcal{S}}C_i$ and $c=\prod_{i\in\mathcal{S}}c_i$ and  $z_x \neq \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i}$. 
-
-%The aggregated set membership proof, given in Construction \ref{alg:ZKSM-Agg}, fulfils the soundness in Definition \ref{def:ZKP} if the probability that the adversary $\mathcal{A}$ can cheat, according to the above definition, is negligible. 
-
-%The adversary has successfully cheated if the values $D,z_x,z_R$ can be chosen such that $z_{x} \neq \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i}$, or if they can be chosen in any other way then according to equation \eqref{eq:aggDn}. 
-
-%The following is the informal description of the security proof\\
-%\textbf{Known to the adversary:}\\
-%The adversary has knowledge of the set membership proofs $RP_i$ for $i\in\mathcal{S}$, where $RP_i=(V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i})$ calculated according to the algorithm \textbf{Prove} in Construction \ref{alg:ZKSM-Agg}. The adversary has also knowledge of the Pedersen commitments $C_i$ published by the provers and can calculate the challenges $c_i=Hash(D_i,a_i)$ for all $i\in\mathcal{S}$.\\
-%\textbf{Not known:}\\
-%The sums $\sum_{i\in\mathcal{S}} x_i$ and $\sum_{i\in\mathcal{S}}R_i$ are unknown just as the individual values $x_i$ and $R_i$ for all $i\in\mathcal{S}$, these are the values in the commitments $C_i=g^{x_i}h^{R_i}$.  The adversary cannot communicate with the provers. \\
-%\textbf{Goal:}\\
-%Given this information, the adversary wish to choose the values $D,z_x,z_R$ such that the equality $D = C^cg^{z_x}h^{z_R}$ holds and $D\neq C^c$, where $C=\prod_{i\in\mathcal{S}}C_i$ and $c=\prod_{i\in\mathcal{S}}c_i$.
-%The adversary has successfully cheated if the values $D,z_x,z_R$ can be chosen such that $z_{x} \neq \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i}$, or if they can be chosen in any other way then according to equation \eqref{eq:aggDn}. 
-\end{thm}
-\begin{proof}
-Assume that the values $D,z_x,z_R$ may be chosen by the adversary, such that $D\in\mathds{G}$, $z_x,z_R\in\mathds{F}$ and  $z_x \neq \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i}$. Assumes without loss of generality that  $D=g^ah^b$, where $a,b\in\mathds{F}$. Given this the adversary $\mathcal{A}$ needs to choose the values $a,b,z_x,z_R$ such that:
-\begin{align*}
-g^a h^b  = C^cg^{z_x}h^{z_R},
-\end{align*}
-% \Big(=  \big(g^{\sum_{i\in\marhcal{S}}x_i}h^{\sum_{i\in\mathcal{S}} R_i} \big)^c g^{z_x}h^{z_R} \Big) = 
-the values of $C^c= \big(g^{\sum_{i\in\marhcal{S}}x_i}h^{\sum_{i\in\mathcal{S}} R_i} \big)^{\prod_{j\in\mathcal{S}}c_j} $ can not be modified by the adversary since they are send directly from the provers to the verifier and used in the verification.
-
-Expanding the right hand side of the equality it follows that,
-\begin{align*}
-g^ah^b =  g^{c \sum_{i\in\mathcal{S}}x_i +z_x } h^{ c \sum_{i\in\mathcal{S}}R_i +z_R   }.
-\end{align*}
-
-If $a\neq c\sum_{i\in\mathcal{S}}x_i+z_x$ and $b\neq c\sum_{i\in\mathcal{S}}R_i +z_R$, the above is contradiction to the assumption that it is not possible to construct two equal Pedersen Commitments hiding different secrets. 
-
-Thus the adversary must choose $a,b,z_x,z_R$ such that $a =  c\sum_{i\in\mathcal{S}}x_i+z_x$ and $b =  c\sum_{i\in\mathcal{S}}R_i +z_R$.  Considering the first equation it can be rewritten $a-z_x =  c \sum_{i\in\mathcal{S}} x_i \:\text{mod}\:\Phi(p)$ and then the second equation $b-z_R =  c \sum_{i\in\mathcal{S}} R_i \:\text{mod}\:\Phi(p)$. The right hand side of these equations is assumed to unknown, thereby the adversary has a negligible probability of choosing $a,b,z_x,z_R$ such that the above is satisfied. Thereby it follows that  $z_x = \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i}$, which contradicts the assumption and proves the theorem. 
-
-
-%This leads to that they must be chosen in a way such that the terms provided by $C^c$ is cancelled such that the two sides are equal, since it is assumed that $D\neq C^c$. This leads to that $z_x,z_R\neq 0$.
-
-%Assumes w.l.o.g that $D=g^ah^b$, then if follows that $a,b,z_x,z_R$ must be chosen such that,
-%\begin{align*}
-%g^ah^b =  g^{c \sum_{i\in\mathcal{S}}x_i +z_x } h^{ c \sum_{i\in\mathcal{S}}R_i +z_R   }.
-%\end{align*}
-%If $a\neq c\sum_{i\in\mathcal{S}}x_i+z_x$ and $b\neq c\sum_{i\in\mathcal{S}}R_i +z_R$, the above is contradiction to the assumption that it is not possible to construct two equal Pedersen Commitments hiding different secrets. 
-
-%Instead assume $a =  c\sum_{i\in\mathcal{S}}x_i+z_x$ and $b =  c\sum_{i\in\mathcal{S}}R_i +z_R$.  For the first equality to hold has to choose $a,z_x$ such that $a-z_x =  c \sum_{i\in\mathcal{S}} x_i \:\text{mod}\:\Phi(p)$. However the right hand side of this equation is assumed to unknown to the adversary and thus to have equality the adversary has aggregate according to equation \eqref{eq:aggDn}
-
-%My idea is to argue that choosing the values in such a way would mean that the adversary has managed to construct two Pedersen commitments ($\mathds{E}(a,b)= g^ah^b$) such that $\mathds{E}(x,R)= \mathds{E}(x',R')$  but $x\neq x'$. 
-\end{proof}
-
-Note thate the Theorem would hold even if several untrusted parties would aggregate subsets if the proofs and then one verifier would verify all the aggregated proofs. 
-
 %TODO read above and includeref to contsuction 8. 
 
 
 
-%The arguments given for the assumptions of the aggregating party and arguments for the aggregated proof satisfying the completeness, soundness and zero knowledge  does not act as formal proofs, it should rather be seen an as motivations. therefore all potential attacks on aggregated set membership proof can not be deducted and before using it in practise further security checks need to be performed. 
+%The arguments given for the assumptions of the aggregating party and arguments for the aggregated proof satisfying the completeness, soundness and zero-knowledge  does not act as formal proofs, it should rather be seen an as motivations. therefore all potential attacks on aggregated set membership proof can not be deducted and before using it in practise further security checks need to be performed. 
 
 
 

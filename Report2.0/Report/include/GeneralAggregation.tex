@@ -1,71 +1,84 @@
 \chapter{Aggregated Set Membership Proofs}
 \label{ch:generalAgg}
+The computational complexity for verification of set membership proofs is important to keep small, specially in applications where one verifier validates multiple provers. If set membership proofs, which are proofs the statement:
+\begin{align*}
+    \{(g,h\in\mathds{G},C\in\mathds{G};x,R\in\mathds{F})\::\:C= g^x h^R \wedge x \in \Phi\},
+\end{align*}
+are used to verify multiple provers then the verifier would have to verify each prover individually. This leads to that the computational complexity for verification grows linearly in the number of provers. The linear dependence on the number on provers for the verification algorithm results in that this algorithm quickly becomes a bottleneck in application where many provers participates. 
 
-%TODO fix intro
-In applications where one verifier is responsible for verifying multiple provers set membership proofs the computational complexity of the verification is important to keep low. If the set membership proofs are proof of the statement in equation \eqref{eq:SM_statement} the verifier would have to verify each proof individually. This would then leads to that the runtime for the verification grows linearly in the number of provers. The linear dependence of the number of provers for the computational complexity of the verification algorithm results in that this algorithm quickly becomes a bottleneck for such an application. 
+This motivates the question if set membership proofs can be aggregated, to decrease the computations required to verify multiple provers simultaneously. 
 
-This motivates the question if an aggregation of set membership proofs can be provided to decrees the computations required to verify multiple provers simultaneously. 
+A definition of aggregated set membership proofs is presented  in Definition \ref{def:GeneralAggregation}. An aggregated set membership proof is defined to be a  $5$-tuple of PPT algorithms,  (\textbf{SetUp}, \textbf{Prove}, \textbf{Aggregate}, \textbf{CalculateChallanges}, \textbf{Verify} ).
 
-An aggregated set membership proof is a zero knowledge proof of the statement,
+
+\vspace{10pt}
+\begin{Mydef}[\textbf{Aggregated set membership proofs}]
+\label{def:GeneralAggregation}
+Aggregated set membership proofs are a zero-knowledge proof of the statement:
 \begin{equation}
 \begin{aligned} 
 \label{eq:SMagg_statement}
-    \big\{(g,h\in\mathds{G},\{C_i\}_{i\in\mathcal{S}};\{x_i\}_{i\in\mathcal{S}},\{R_i\}_{i\in\mathcal{S}}\in\mathds{F}^n)\:: 
+    \big\{(g,h\in\mathds{G},\{C_i\}_{i\in\mathcal{S}}\in\mathds{G}^n;\:\{x_i\}_{i\in\mathcal{S}},\{R_i\}_{i\in\mathcal{S}}\in\mathds{F}^n)\:: 
 \: &C=\prod_{i\in\mathcal{S}}C_i 
 \\
  &\wedge \prod_{i\in\mathcal{S}}C_i  =   g^{\sum_{i\in\mathcal{S}}x_i} h^{\sum_{i\in\mathcal{S}}R_i} 
  \\
- &\wedge x_i \in \Phi \forall i\in\mathcal{S} \big\}.
+ &\wedge x_i \in \Phi \: \forall i\in\mathcal{S} \big\}.
 \end{aligned}
 \end{equation}
-The statement implies that after successfully having performed an aggregated set membership proof the verifier is convinced that or all $i\in\mathcal{S}$  the  Pedersen commitment $C_i$ is a commitment to a secret belonging to the set $\Phi$ . 
+Where $C_i$ is a Pedersen commitment to the secret $x_i\in\mathds{F}$ and $R_i \in_R\mathds{F}$ are chosen at random, for all $i\in\mathcal{S}$.  
 
+The statement implies that after successfully having performed an aggregated set membership proof protocol, it is proved that the aggregated Pedersen commitment, $C$, is a product of the Pedersen commitment,$\{C_i\}_{i\in\mathcal{S}}$ and that for all $i\in\mathcal{S}$ $C_i$ is a Pedersen commitment to a secret $x_i$ belonging to the set $\Phi$.
 
-%TODO fix can this be here?  ONLY range proofs
-%A remark is that to aggregate the commitments $C_i, \: i\in\mathcal{S}$ into $C = \prod_{i\in\mathcal{S}} Ci_i$. Then constructing  a range proof that the aggregated commitment $C = g^{\sum_{i=1}^n x_i}$ belongs to the range  $[n\cdot a,n\cdot b]$, does not prove that $x_i \in [a,b]$ for all $i \in\mathcal{N}$. In other word is does not satisfy the verification property in Theorem \ref{thm:VAHSS_RP_CSV}. The value $y=\sum_{i=1}^n x_i$ is publicly known so to construct a zero knowledge range proof for $y $ provides no new information and given that $y\in [n\cdot a,n\cdot b]$ does not imply $x_i\in [a,b]$ for all $i\in\mathcal{N}$. 
-
-
-Further an construction of an aggregated set membership proof is a $5$-tuple of PPT algorithms as described in Definition \ref{def:GeneralAggregation}. 
-
-\vspace{10pt}
-\begin{Mydef}[\textbf{Aggregated non-interactive set membership proof}]
-\label{def:GeneralAggregation}
-An aggregated set membership proof proves a statement on the form \eqref{eq:SMagg_statement} and is a $5$-tuple of PPT-algorithms (\textbf{SetUp}, \textbf{Prove}, \textbf{Aggregate}, \textbf{CalculateChallanges}, \textbf{Verify}. )
+A construction of aggregated set membership proof  is a $5$-tuple of PPT-algorithms (\textbf{SetUp}, \textbf{Prove}, \textbf{Aggregate}, \textbf{CalculateChallanges}, \textbf{Verify}).
+\\
 \begin{itemize}
-
   \item\textbf{SetUp $(1^\lambda, \Phi)\xrightarrow[]{}(pp,sk)$}\\
-On the input $1^\lambda$, where $\lambda$ is the security parameter , and the set $\Phi$ the algorithm outputs a secret key $sk$ and public parameters $pp$. 
+On the input $1^\lambda$, where $\lambda$ is the security parameter and the set $\Phi$ the algorithm outputs a secret key, $sk$, and public parameters, $pp$. 
 
-\item\text{\textbf{Prove} $(pp,i,C_i,\Phi)\xrightarrow[]{}\Sigma_i}$}\\
-On input the public parameters $pp$, $i\in\mathcal{S}$ denoting the index of the prover $p_i$ and a Pedersen commitment of the $p_i$'s secret $x_i$.  The algorithm outputs a polynomial time verifiable zero knowledge proof, denoted $\Sigma_i$, that the secret $x_i$ is in the set $\Phi$. 
+\item\text{\textbf{Prove} $(pp,i,C_i,x_i,\Phi) \xrightarrow[]{} \Sigma_i$}\\
+On the input, the public parameters $pp$, $i\in\mathcal{S}$ denoting the index of the prover $p_i$, a secret $x_i$ and a Pedersen commitment $C_i$ of the secret.  The algorithm outputs a polynomial time verifiable zero-knowledge proof of the statement in equation \eqref{eq:SM_statement}, denoted $\Sigma_i$.
 
-\item \text{\textbf{Aggregate} $ (\{ pp,\Sigma_i\}_{i\in\mathcal{S}} \xrightarrow[]{} \Sigma_a}$} \\
-Given a set of set membership proofs  $\{ \Sigma_{i}\}_{i\in\mathcal{S}}$ the algorithm aggregates the proofs into one zero knowledge proof of the statement in equation \eqref{eq:SMagg_statement} denoted $\Sigma_a$. 
+\item \text{\textbf{Aggregate} $ (pp,\{\Sigma_i\}_{i\in\mathcal{S}} \xrightarrow[]{} \Sigma_a$} \\
+Given a set of set membership proofs  $\{ \Sigma_{i}\}_{i\in\mathcal{S}}$ the algorithm aggregates the proofs into one zero-knowledge proof of the statement in equation \eqref{eq:SMagg_statement} denoted $\Sigma_a$. 
 
 \item \text{ \textbf{CalculateChallenges} $(\{C_i\}_{\in\mathcal{S}},\{\sigma_i\}_{i\in\mathcal{S}} ) \xrightarrow[]{} \{c_i\}_{i\in\mathcal{S}}$ }\\\
 On the input $\{\Sigma_i\}_{i\in\mathcal{S}}$ the algorithm computes and outputs the challenges  $c_i = Hash(\Sigma_i)$ for all $i\in\mathcal{S}$.
 
 \item\text{\textbf{Verify} $(pp, \Sigma_a, \{C_i\}_{i\in\mathcal{S}},\{c_i\}_{i\in\mathcal{S}}) \xrightarrow[]{} \{0,1\}$} \\
-On input the aggregated set membership proof public parameters, $pp$, aggregates proof, $\Sigma_a$, and every provers Pedersen commitment, $\{C_i\}_{i\in\mathcal{S}}$, and challenge ,$\{c_i\}_{i\in\mathcal{S}}$, the algorithm outputs either $1$ or $0$. 
+On input the aggregated set membership proof public parameters, $pp$, aggregated proof, $\Sigma_a$, the Pedersen commitments, $\{C_i\}_{i\in\mathcal{S}}$, and challenges ,$\{c_i\}_{i\in\mathcal{S}}$, the algorithm outputs either $1$ or $0$. 
 \end{itemize}
+
 \end{Mydef}
 \vspace{10pt}
-The algorithms  (\textbf{SetUp}, \textbf{Prove}, \textbf{Aggregate}, \textbf{CalculateChallanges}, \textbf{Verify} ) should satisfy the correctness, soundness and zero knowledge requirements in Defintion \ref{def:ZKP_agg}. These requirements can be seen as a  modification of Defnition \ref{def:ZKP} to an aggregated ZKP of the statement in equation \eqref{eq:SMagg_statement}. 
 
-\vspace{10pt}
-\begin{Mydef}
-\label{def:ZKP_agg}
-The algorithms in Definition \ref{def:GeneralAggregation} should be such that they fulfil the completeness, soundness and zero-knowledge properties:
+Aggregated set membership proofs consist of the parties: provers, an aggregator and a verifier. A schematic figure of the interaction between the parties is seen in Figure \ref{fig:gen_workflow}. The provers, which is assumed to be a group of many individual provers, run the algorithm \textbf{Prove} individually. The aggregating party, who is assumed to be computationally powerful, runs the algorithm \textbf{Aggregate} and the verifier runs the algorithm \textbf{Verify}.  The aggregation can be split between multiple parties implying there are many aggregators, this is discussed more in the next chapter. The algorithms \textbf{SetUp} and \textbf{CalculateChallenges} is either performed by the verifier or by an independent trusted party.
+
+ \begin{figure}
+\includegraphics[width=\linewidth]{./figure/genflow.png}
+\caption{Schematic figure of the interaction between parties in aggregated set membership proofs. }
+\label{fig:gen_workflow}
+\end{figure} 
+
+
+%TODO fix can this be here?  ONLY range proofs
+%A remark is that to aggregate the commitments $C_i, \: i\in\mathcal{S}$ into $C = \prod_{i\in\mathcal{S}} Ci_i$. Then constructing  a range proof that the aggregated commitment $C = g^{\sum_{i=1}^n x_i}$ belongs to the range  $[n\cdot a,n\cdot b]$, does not prove that $x_i \in [a,b]$ for all $i \in\mathcal{N}$. In other word is does not satisfy the verification property in Theorem \ref{thm:VAHSS_RP_CSV}. The value $y=\sum_{i=1}^n x_i$ is publicly known so to construct a zero-knowledge range proof for $y $ provides no new information and given that $y\in [n\cdot a,n\cdot b]$ does not imply $x_i\in [a,b]$ for all $i\in\mathcal{N}$. 
+
+
+The algorithms of aggregated set membership proofs, presented in Definition \ref{def:GeneralAggregation}, should fulfil the below completeness, soundness and zero-knowledge requirements:
 \begin{itemize}
-\item \textbf{Completeness} Given a witness $\Sigma_i$ satisfying the instance $x_i\in\Phi$, where $C_i$ is a Pedersen commitment of$x_i$, for all $i\in\mathcal{S}$, it should hold that
+\item \textbf{Completeness} Given a witness $\Sigma_i$ satisfying the instance $x_i\in\Phi$, where $C_i$ is a Pedersen commitment of $x_i$, for all $i\in\mathcal{S}$, it should hold that
 \\
- \texttt{Verify}$($\texttt{Aggrgeate}$(\{$\texttt{Prove}$(pp,i,C_i,\Phi)\}_{i\in\mathcal{S}}) )= 1$. 
-\item \textbf{Soundness} If for any $i\in\mathcal{S}$ the  witness $\Sigma_i$ does not satisfy the  instance $x_i\notin\mathcal{L}$, then the probability  Prob$[ $\texttt{Verify}$($\texttt{Aggrgeate}$(\{$\texttt{Prove}$(pp,i,C_i,\Phi)\}_{i\in\mathcal{S}}) ) = 1] < \varepsilon$, for a sufficiently small $\varepsilon$. 
+ \texttt{Verify}$($\texttt{Aggregate}$(\{$\texttt{Prove}$(pp,i,C_i,\Phi)\}_{i\in\mathcal{S}}) )= 1$. 
+\item \textbf{Soundness} If for any $i\in\mathcal{S}$ the  witness $\Sigma_i$ does not satisfy the  instance $x_i\notin\Phi$, then the probability  Prob$[ $\texttt{Verify}$($\texttt{Aggregate}$(\{$\texttt{Prove}$(pp,i,C_i,\Phi)\}_{i\in\mathcal{S}}) ) = 1] < \varepsilon$, for a sufficiently small $\varepsilon$. 
 \item  \textbf{Zero-knowledge} 
 %TODO
-A proof system is \textit{honest verifier zero-knowledge} if there exist a PPT algorithm \texttt{Simulator} having access to the same input as the algorithms \texttt{Verify} and \texttt{Aggregate} but not the provers input, such that output from the \textt{Simulator} and \texttt{Prove} is indistinguishable, i.e have the same distribution given that $x\in\mathcal{L}$.  
+A proof system is \textit{honest verifier zero-knowledge} if there exist a PPT algorithm \texttt{Simulator} having access to the same input as the algorithms \texttt{Verify} and \texttt{Aggregate} but not the provers input, such that output from the \texttt{Simulator} and \texttt{Prove} is indistinguishable, i.e have the same distribution given that $x\in\Phi$.  
 \end{itemize}
-\end{Mydef}
+
+These requirements can be seen as a modification of the requirements given in Definition \ref{def:ZKP} to aggregated set membership proof. Note that the zero-knowledge property should hold for the provers, not the aggregation.
+
+
 
 %\subsection*{Many aggregation}
 %TODO Decise if use

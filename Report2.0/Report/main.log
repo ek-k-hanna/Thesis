@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  20 MAY 2021 15:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  31 MAY 2021 14:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -959,6 +959,7 @@ Package: amsthm 2017/10/31 v2.20.4
 \c@thm=\count360
 \c@Mydef=\count361
 \c@Ass=\count362
+\c@Remark=\count363
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/doublestroke/dsfont.sty
 Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
@@ -967,7 +968,7 @@ Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 \@float@every@algorithm=\toks53
-\c@algorithm=\count363
+\c@algorithm=\count364
 )
 (/usr/local/texlive/2020/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
@@ -981,12 +982,12 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen302
 \cmidrulekern=\dimen303
 \defaultaddspace=\dimen304
-\@cmidla=\count364
-\@cmidlb=\count365
+\@cmidla=\count365
+\@cmidlb=\count366
 \@aboverulesep=\dimen305
 \@belowrulesep=\dimen306
-\@thisruleclass=\count366
-\@lastruleclass=\count367
+\@thisruleclass=\count367
+\@lastruleclass=\count368
 \@thisrulewidth=\dimen307
 )
 (/usr/local/texlive/2020/texmf-dist/tex/latex/arydshln/arydshln.sty
@@ -999,16 +1000,16 @@ Package: arydshln 2019/02/21 v1.76
 \adl@depth=\dimen312
 \adl@depthsave=\dimen313
 \adl@finaldepth=\dimen314
-\adl@columns=\count368
-\adl@ncol=\count369
-\adl@currentcolumn=\count370
-\adl@currentcolumnsave=\count371
-\adl@totalheight=\count372
-\adl@totalheightsave=\count373
-\adl@dash=\count374
-\adl@gap=\count375
-\adl@cla=\count376
-\adl@clb=\count377
+\adl@columns=\count369
+\adl@ncol=\count370
+\adl@currentcolumn=\count371
+\adl@currentcolumnsave=\count372
+\adl@totalheight=\count373
+\adl@totalheightsave=\count374
+\adl@dash=\count375
+\adl@gap=\count376
+\adl@cla=\count377
+\adl@clb=\count378
 \adl@everyvbox=\toks54
 \adl@LTpagetotal=\dimen315
 ))
@@ -1038,7 +1039,7 @@ ormation.
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count378
+\l__kernel_color_stack_int=\count379
 \l__pdf_internal_box=\box69
 )
 (./main.aux)
@@ -1063,16 +1064,16 @@ LaTeX Font Info:    ... okay on input line 17.
 
 (/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count379
+\scratchcounter=\count380
 \scratchdimen=\dimen316
 \scratchbox=\box70
-\nofMPsegments=\count380
-\nofMParguments=\count381
+\nofMPsegments=\count381
+\nofMParguments=\count382
 \everyMPshowfont=\toks55
-\MPscratchCnt=\count382
+\MPscratchCnt=\count383
 \MPscratchDim=\dimen317
-\MPnumerator=\count383
-\makeMPintoPDFobject=\count384
+\MPnumerator=\count384
+\makeMPintoPDFobject=\count385
 \everyMPtoPDFconversion=\toks56
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1135,7 +1136,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count385
+\c@section@level=\count386
 )
 LaTeX Info: Redefining \ref on input line 17.
 LaTeX Info: Redefining \pageref on input line 17.
@@ -1248,97 +1249,56 @@ Package pdftex.def Info: figure/auxiliary/ChGULogoHog.pdf  used on input line 6
 8.
 (pdftex.def)             Requested size: 149.37697pt x 209.14586pt.
 [3 <./figure/auxiliary/ChGULogoHog.pdf>]
-! Undefined control sequence.
-l.84 \oneLineTitle
-                  \\
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-! LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.85 \oneLineSubtitle
-                     \\
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 8
 8.
+
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )) [4]
 (./include/frontmatter/Abstract.tex
-! Undefined control sequence.
-l.2 \oneLineTitle
-                 \\
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-! LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3 \oneLineSubtitle
-                    \\
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-[5]) [6] (./include/frontmatter/Acknowledgements.tex [7]) [8] (./main.toc
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 6
-.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 2
+0.
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 6
-.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 2
+0.
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-6.
+20.
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-6.
+20.
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 6.
+(Font)              <12> on input line 20.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 6.
+(Font)              <8> on input line 20.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 6.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 6.
+(Font)              <6> on input line 20.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 20.
+
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 6.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 20.
+
 
 (/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
+) [5]) [6]
+(./include/frontmatter/Acknowledgements.tex [7]) [8] (./main.toc)
 \tf@toc=\write7
 \openout7 = `main.toc'.
 
@@ -1371,34 +1331,35 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [1
 
 ]
-[2]) (./include/Theory.tex [3] [4
-
-]
-Chapter 2.
+[2]
 LaTeX Font Info:    Trying to load font information for U+dsrom on input line 1
-3.
-(/usr/local/texlive/2020/texmf-dist/tex/latex/doublestroke/Udsrom.fd
+40.
+ (/usr/local/texlive/2020/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
-) [5]
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 81--83
+))
+(./include/Theory.tex [3] [4]
+Chapter 2.
+[5
+
+] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 86--88
 
  []
 
 
-Overfull \hbox (6.42273pt too wide) in paragraph at lines 97--98
+Overfull \hbox (6.42273pt too wide) in paragraph at lines 102--103
 []\T1/lmr/m/n/12 The Ped-er-sen com-mit-ment is ho-mo-mor-phic. Hence for ar-bi
 -trary mes-sages $\OML/lmm/m/it/12 x[]; x[] \OMS/lmsy/m/n/12 2
  []
 
-[7] [8]
+[7]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-34.
+38.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
+) [8]
 ! Undefined control sequence.
-l.138 ...s input, such that output from the \textt
+l.142 ...s input, such that output from the \textt
                                                   {Simulator} and \texttt{Pr...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1409,14 +1370,14 @@ and I'll forget about whatever was undefined.
 [9]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 202.
+               Default added (so using `htbp') on input line 214.
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 203.
+put line 215.
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.205 \vspace{2pt} \hline
+l.217 \vspace{2pt} \hline
                           \vspace{2pt}
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1424,7 +1385,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 \adl@hline ...mpcnta \xdef \adl@rowsL {\adl@rowsL 
                                                   (#1/\number \@tempcnta );}...
-l.205 \vspace{2pt} \hline
+l.217 \vspace{2pt} \hline
                           \vspace{2pt}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1435,7 +1396,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.205 \vspace{2pt} \hline
+l.217 \vspace{2pt} \hline
                           \vspace{2pt}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1446,7 +1407,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 \adl@hline ...nta );}\xdef \adl@rowsR {\adl@rowsR 
                                                   (#1/\number \@tempcnta );}
-l.205 \vspace{2pt} \hline
+l.217 \vspace{2pt} \hline
                           \vspace{2pt}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1457,7 +1418,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.205 \vspace{2pt} \hline
+l.217 \vspace{2pt} \hline
                           \vspace{2pt}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1465,17 +1426,28 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[10]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [10]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 250.
+               Default added (so using `tbp') on input line 266.
 
 [11]) (./include/GeneralAggregation.tex [12]
 Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--35
+
+ []
+
+[13
+
+]
 ! Extra }, or forgotten $.
 \mbox  #1->\leavevmode \hbox {#1}
                                  
-l.39 ... $(pp,i,C_i,\Phi)\xrightarrow[]{}\Sigma_i}
+l.39 ...p,i,C_i,x_i,\Phi)\xrightarrow[]{}\Sigma_i}
                                                   $}\\
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1483,9 +1455,6 @@ you forgot something else, as in `\hbox{$x}'. In such cases
 the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
-[13
-
-]
 ! Extra }, or forgotten $.
 \mbox  #1->\leavevmode \hbox {#1}
                                  
@@ -1497,8 +1466,13 @@ you forgot something else, as in `\hbox{$x}'. In such cases
 the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
+<./figure/genflow.png, id=436, 745.78625pt x 566.115pt>
+File: ./figure/genflow.png Graphic file (type png)
+<use ./figure/genflow.png>
+Package pdftex.def Info: ./figure/genflow.png  used on input line 58.
+(pdftex.def)             Requested size: 426.79135pt x 323.96736pt.
 ! Undefined control sequence.
-l.66 ...rs input, such that output from the \textt
+l.76 ...rs input, such that output from the \textt
                                                   {Simulator} and \texttt{Pr...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1506,54 +1480,28 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-) (./include/Aggregation.tex [14]
+) (./include/Aggregation.tex [14] [15 <./figure/genflow.png>] [16
+
+]
 Chapter 4.
-[15
-
-] [16]
-Overfull \hbox (8.3469pt too wide) detected at line 73
-[][]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [17]
-Overfull \hbox (12.05669pt too wide) detected at line 117
-[]
- []
-
-
-Overfull \hbox (30.33333pt too wide) in paragraph at lines 129--130
-\T1/lmr/m/n/12 go-rithm \T1/lmr/bx/n/12 Prove \T1/lmr/m/n/12 in Con-struc-tion 
-[][]1[][]. Ex-am-ine if an ag-gre-gated proof $\OT1/lmr/m/n/12 ^^F[] = (\OML/lm
-m/m/it/12 a; V; D; z[]; z[]; z[]\OT1/lmr/m/n/12 )$
- []
-
-[18]
-Overfull \hbox (9.54857pt too wide) in paragraph at lines 146--147
-\T1/lmr/m/n/12 i-nal set mem-ber-ship proof where the ver-i-fier cal-cu-lates t
-he chal-lenge $\OML/lmm/m/it/12 c[] \OT1/lmr/m/n/12 = \OML/lmm/m/it/12 Hash\OT1
-/lmr/m/n/12 (\OML/lmm/m/it/12 a[]; D[]\OT1/lmr/m/n/12 )$\T1/lmr/m/n/12 .
- []
-
+[17]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 160.
+               Default added (so using `htbp') on input line 37.
 
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.164 \vspace{2pt} \hline
-                          \vspace{2pt}
+l.41 \vspace{2pt} \hline
+                         \vspace{2pt}
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.164 \vspace{2pt} \hline
-                          \vspace{2pt}
+l.41 \vspace{2pt} \hline
+                         \vspace{2pt}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1563,8 +1511,8 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.164 \vspace{2pt} \hline
-                          \vspace{2pt}
+l.41 \vspace{2pt} \hline
+                         \vspace{2pt}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1574,7 +1522,7 @@ and I'll forget about whatever was undefined.
 ! Extra }, or forgotten $.
 \mbox  #1->\leavevmode \hbox {#1}
                                  
-l.170 ...{Prove} $(pp,i,C_i,\Phi)\xrightarrow[]{}}
+l.47 ...ove} $(pp,i,C_i,x_i,\Phi)\xrightarrow[]{}}
                                                   \Sigma_i$}\\
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1583,99 +1531,100 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 
-Underfull \hbox (badness 1694) in paragraph at lines 173--175
-\T1/lmr/m/n/12 Given a set of set mem-ber-ship proofs $\OMS/lmsy/m/n/12 f\OT1/l
-mr/m/n/12 ^^F[]\OMS/lmsy/m/n/12 g[]$\T1/lmr/m/n/12 . Ag-gre-gate the val-
+Underfull \hbox (badness 10000) in paragraph at lines 50--52
+\T1/lmr/m/n/12 Given a set of proofs $\OMS/lmsy/m/n/12 f\OT1/lmr/m/n/12 ^^F[]\O
+MS/lmsy/m/n/12 g[]$\T1/lmr/m/n/12 . Ag-gre-gate the val-ues
  []
 
 
-Underfull \hbox (badness 5802) in paragraph at lines 173--175
-\T1/lmr/m/n/12 ues $\OT1/lmr/m/n/12 (\OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 D[]\OMS
-/lmsy/m/n/12 g[]f\OML/lmm/m/it/12 z[]\OMS/lmsy/m/n/12 g[]f\OML/lmm/m/it/12 z[]\
-OMS/lmsy/m/n/12 g[]\OT1/lmr/m/n/12 ) \OMS/lmsy/m/n/12 7! \OML/lmm/m/it/12 D[]; 
-z[]; z[]$ \T1/lmr/m/n/12 ac-cord-ing to equa-tion
+Underfull \hbox (badness 10000) in paragraph at lines 50--52
+\OT1/lmr/m/n/12 (\OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 D[]\OMS/lmsy/m/n/12 g[]\OML
+/lmm/m/it/12 ; \OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 z[]\OMS/lmsy/m/n/12 g[]\OML/l
+mm/m/it/12 ; \OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 z[]\OMS/lmsy/m/n/12 g[]\OT1/lmr
+/m/n/12 ) \OMS/lmsy/m/n/12 7!$ $\OML/lmm/m/it/12 D[]; z[]; z[]$ \T1/lmr/m/n/12 
+ac-cord-ing to equa-
  []
 
 
-Underfull \hbox (badness 4595) in paragraph at lines 173--175
-[]\T1/lmr/m/n/12 . Then con-struct and pub-lish the ag-gre-gated proof $\OT1/lm
+Underfull \hbox (badness 5161) in paragraph at lines 50--52
+\T1/lmr/m/n/12 tion []. Con-struct and pub-lish the ag-gre-gated proof $\OT1/lm
 r/m/n/12 ^^F[] =
  []
 
 ! Double subscript.
-l.180 ... \prod_{i\in\mathcal{S}}C_i\big)^ch^{z_R_
+l.57 ...( \prod_{i\in\mathcal{S}}C_i\big)^ch^{z_R_
                                                   a}g^{z_x_a}\wedge a_i \ove...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Double subscript.
-l.180 ...\in\mathcal{S}}C_i\big)^ch^{z_R_a}g^{z_x_
+l.57 ...i\in\mathcal{S}}C_i\big)^ch^{z_R_a}g^{z_x_
                                                   a}\wedge a_i \overset{?}{=...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-[19] [20]
+[18]
+<./figure/flowmultiple.png, id=490, 745.78625pt x 566.115pt>
+File: ./figure/flowmultiple.png Graphic file (type png)
+<use ./figure/flowmultiple.png>
+Package pdftex.def Info: ./figure/flowmultiple.png  used on input line 98.
+(pdftex.def)             Requested size: 426.79135pt x 323.96736pt.
+ [19] [20 <./figure/flowmultiple.png>]
+! Undefined control sequence.
+l.196 ...\alpha =  c\sum_{i\in\mathcal{S}}x_i+z_\x
+                                                  _a}$ and $\beta =  c\sum_{...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 198.
+! Missing { inserted.
+<to be read again> 
+                   _
+l.196 ...alpha =  c\sum_{i\in\mathcal{S}}x_i+z_\x_
+                                                  a}$ and $\beta =  c\sum_{i...
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
 
-<./figure/workflow_challanger.png, id=491, 1226.5825pt x 803.0pt>
-File: ./figure/workflow_challanger.png Graphic file (type png)
-<use ./figure/workflow_challanger.png>
-Package pdftex.def Info: ./figure/workflow_challanger.png  used on input line 2
-01.
-(pdftex.def)             Requested size: 426.79135pt x 279.40009pt.
-
-Overfull \hbox (9.51454pt too wide) in paragraph at lines 204--204
+[21]
+Overfull \hbox (9.51454pt too wide) in paragraph at lines 206--206
 |[]\T1/lmr/bx/n/17.28 Completeness, Sound-ness and Zero-Knowledge| 
  []
 
+! Double subscript.
+l.235 ...it has been shown that $D_a  = C^ch^{z_R_
+                                                  a}g^{z_x_a}\wedge a_i = e(...
+I treat `x_1_2' essentially like `x_1{}_2'.
 
-Overfull \hbox (42.48773pt too wide) in paragraph at lines 213--214
-\T1/lmr/m/n/12 proof el-e-ment $\OML/lmm/m/it/12 z[]$ \T1/lmr/m/n/12 hides the 
-same se-cret. The sec-ond equal-ity check $\OML/lmm/m/it/12 a [] e\OT1/lmr/m/n/
-12 (\OML/lmm/m/it/12 V; y\OT1/lmr/m/n/12 )[](\OML/lmm/m/it/12 V; g\OT1/lmr/m/n/
-12 )[]\OML/lmm/m/it/12 e\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 g; g\OT1/lmr/m/n/12 )
-[]$
+! Double subscript.
+l.235 ...en shown that $D_a  = C^ch^{z_R_a}g^{z_x_
+                                                  a}\wedge a_i = e(V_i,y)^c_...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+
+Overfull \hbox (3.51614pt too wide) in paragraph at lines 235--239
+\OML/lmm/m/it/12 e\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 V[]; y\OT1/lmr/m/n/12 )[]\O
+ML/lmm/m/it/12 e\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 V[]; g\OT1/lmr/m/n/12 )[]\OML
+/lmm/m/it/12 e\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 g; g\OT1/lmr/m/n/12 )[]$ \T1/lm
+r/m/n/12 for all $\OML/lmm/m/it/12 i \OMS/lmsy/m/n/12 2 S$\T1/lmr/m/n/12 . Im-p
+ly-ing that \T1/lmr/bx/n/12 Ver-ify$\OT1/lmr/m/n/12 ($\T1/lmr/bx/n/12 Aggrgeate
+$\OT1/lmr/m/n/12 (\OMS/lmsy/m/n/12 f$\T1/lmr/bx/n/12 Prove$\OT1/lmr/m/n/12 ($
  []
 
-[21]
-! Missing } inserted.
-<inserted text> 
-                }
-l.222 ...(V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i) $
-                                                   for $i=1,2$. Given these ...
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-! Extra }, or forgotten $.
-l.222 ...hold that: $D = (C_1C_2)^ch^{z_R}g^{z_x}}
-                                                  $, where $C_i = g^{\tilde{...
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-
-Overfull \hbox (3.66826pt too wide) in paragraph at lines 222--223
-\OT1/lmr/m/n/12 (\OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 V[]; V[]\OMS/lmsy/m/n/12 g\
-OML/lmm/m/it/12 ; \OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 a[]; a[]\OMS/lmsy/m/n/12 g
-\OML/lmm/m/it/12 ; D; z[]; \OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 z[]z[]\OMS/lmsy/m
-/n/12 g\OML/lmm/m/it/12 ; \OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 z[]; z[]\OMS/lmsy/
-m/n/12 g\OML/lmm/m/it/12 ; z[]\OT1/lmr/m/n/12 ))$\T1/lmr/m/n/12 , ac-cord-ing t
-o al-go-rithm \T1/lmr/bx/n/12 Ag-gre-gate
+[22]
+Overfull \hbox (41.609pt too wide) in paragraph at lines 284--285
+\T1/lmr/m/n/12 the se-cret $\OML/lmm/m/it/12 x[] [] \OT1/lmr/m/n/12 ^^H$ \T1/lm
+r/m/n/12 then it holds that Prob$\OT1/lmr/m/n/12 [$\T1/lmr/bx/n/12 Verify$\OT1/
+lmr/m/n/12 ($\T1/lmr/bx/n/12 Aggrgeate$\OT1/lmr/m/n/12 (\OMS/lmsy/m/n/12 f$\T1/
+lmr/bx/n/12 Prove$\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 pp; i; C[]; x[]; \OT1/lmr/m
+/n/12 ^^H)\OMS/lmsy/m/n/12 g[]\OT1/lmr/m/n/12 )) =
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [22 <./figure/workflow_challanger.png>]
 ! Undefined control sequence.
-<argument> ...^{ c_2(m_1-c_1R_1 ) + c_1(m_2-c_2\R 
-                                                  _2 ) }\\ =& g^{ s_1c_2+ s_...
-l.227 \end{align*}
+<argument> ...c_j \Big )m_i- \sum _{i\in \marhcal 
+                                                  {S}\backslash T} \big ( \s...
+l.314 \end{align*}
                   
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1683,17 +1632,10 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-! Double subscript.
-<argument> ...{ c_2(m_1-c_1R_1 ) + c_1(m_2-c_2\R _
-                                                  2 ) }\\ =& g^{ s_1c_2+ s_2...
-l.227 \end{align*}
-                  
-I treat `x_1_2' essentially like `x_1{}_2'.
-
 ! Undefined control sequence.
-<argument> ...^{ c_2(m_1-c_1R_1 ) + c_1(m_2-c_2\R 
-                                                  _2 ) }\\ =& g^{ s_1c_2+ s_...
-l.227 \end{align*}
+<argument> ...c_j \Big )m_i- \sum _{i\in \marhcal 
+                                                  {S}\backslash T} \big ( \s...
+l.314 \end{align*}
                   
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1701,98 +1643,51 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-! Double subscript.
-<argument> ...{ c_2(m_1-c_1R_1 ) + c_1(m_2-c_2\R _
-                                                  2 ) }\\ =& g^{ s_1c_2+ s_2...
-l.227 \end{align*}
-                  
-I treat `x_1_2' essentially like `x_1{}_2'.
 
-! Extra }, or forgotten $.
-l.250 ...e{R}_i}$ such that $\tilde{x}_i \neq x_i}
-                                                  $ and $z_{x_i}=s_i-c_ix_i$.
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
+Overfull \hbox (54.31909pt too wide) detected at line 314
+[]
+ []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [23]
-! Undefined control sequence.
-<argument> ...c_j \Big )m_i- \sum _{i\in \marhcal 
-                                                  {S}\backslash T} \big ( \s...
-l.292 \end{align*}
-                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-! Undefined control sequence.
-<argument> ...c_j \Big )m_i- \sum _{i\in \marhcal 
-                                                  {S}\backslash T} \big ( \s...
-l.292 \end{align*}
-                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-Overfull \hbox (23.10097pt too wide) detected at line 292
-[]
- []
-
-[24] [25] [26]
-Underfull \hbox (badness 10000) in paragraph at lines 385--391
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 385--391
-
- []
-
-! Undefined control sequence.
-l.411 ...alues of $C^c= \big(g^{\sum_{i\in\marhcal
-                                                  {S}}x_i}h^{\sum_{i\in\math...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-) (./include/Results.tex [27] [28
+ [24])
+(./include/Results.tex [25] [26
 
 ]
 Chapter 5.
 
-LaTeX Warning: Citation `Git:MyCode' on page 29 undefined on input line 7.
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [29]
-Underfull \vbox (badness 4995) has occurred while \output is active []
+ [27]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [30]
-[31]
+ [28]
+Overfull \hbox (12.62685pt too wide) in paragraph at lines 130--131
+\T1/lmr/m/n/12 proofs are con-sid-ered. The run-time has been mea-sured con-sid
+-er-ing $\OT1/lmr/m/n/12 1\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 25\OML/lmm/m/it/12
+ ; \OT1/lmr/m/n/12 50\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 75\OML/lmm/m/it/12 ; \O
+T1/lmr/m/n/12 100\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 125$
+ []
+
+[29]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 138.
+               Default added (so using `tbp') on input line 139.
 
-<./figure/newverification_nrClients.png, id=601, 1445.4pt x 852.18375pt>
-File: ./figure/newverification_nrClients.png Graphic file (type png)
-<use ./figure/newverification_nrClients.png>
-Package pdftex.def Info: ./figure/newverification_nrClients.png  used on input 
-line 141.
-(pdftex.def)             Requested size: 384.1096pt x 226.46477pt.
-) (./include/VAHSS.tex [32 <./figure/newverification_nrClients.png (PNG copy)>]
+<./figure/verificationNbrClients.png, id=601, 1445.4pt x 852.18375pt>
+File: ./figure/verificationNbrClients.png Graphic file (type png)
+<use ./figure/verificationNbrClients.png>
+Package pdftex.def Info: ./figure/verificationNbrClients.png  used on input lin
+e 140.
+(pdftex.def)             Requested size: 426.79135pt x 251.62608pt.
+) (./include/VAHSS.tex [30] [31 <./figure/verificationNbrClients.png (PNG copy)
+>] [32
+
+]
 Chapter 6.
 
 ! LaTeX Error: \begin{document} ended by \end{comment}.
@@ -1801,7 +1696,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.104 \end{comment}
+l.106 \end{comment}
                    
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1810,28 +1705,18 @@ or  <return>  to continue without it.
 ! Extra \endgroup.
 <recently read> \endgroup 
                           
-l.104 \end{comment}
+l.106 \end{comment}
                    
 Things are pretty mixed up, but I think the worst is over.
 
+[33]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Overfull \hbox (9.8559pt too wide) in paragraph at lines 106--106
-|[]\T1/lmr/bx/n/17.28 Additive ho-mo-mor-phic se-cret shar-ing with ver-
- []
-
-[33
-
-] [34]
-! Double subscript.
-l.138 ...ment $\pi_k$ and constructs shares, $x_k_
-                                                  j$ such that $x_k = \sum_{...
-I treat `x_1_2' essentially like `x_1{}_2'.
-
-[35]
+ [34]
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.176 \hline
+l.226 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1839,7 +1724,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.176 \hline
+l.226 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1850,7 +1735,7 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.176 \hline
+l.226 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1858,14 +1743,11 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-
-LaTeX Warning: Reference `eq:pi(0)' on page 36 undefined on input line 180.
-
-[36]
+[35] [36]
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.274 \hline
+l.283 \hline
             
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
@@ -1873,7 +1755,7 @@ an alignment. Proceed, and I'll ignore this case.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.274 \hline
+l.283 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1884,21 +1766,18 @@ and I'll forget about whatever was undefined.
 ! Undefined control sequence.
 <argument> \adl@connect 
                         
-l.274 \hline
+l.283 \hline
             
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
-
-
-LaTeX Warning: Reference `eq:pi(0)' on page 37 undefined on input line 278.
 
 ! Extra }, or forgotten $.
 \mbox  #1->\leavevmode \hbox {#1}
                                  
-l.293 ...hcal{S}} ) \xrightarrow[]{} \Sigma_{a_k}}
+l.301 ...al{S}_k} ) \xrightarrow[]{} \Sigma_{a_k}}
                                                   $} \\
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1907,8 +1786,8 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 ! Extra }, or forgotten $.
-l.294 Given a subset of proofs  $\{ \Sigma_i}
-                                             \}_{i\in\mathcal{S}_k}$ where $...
+l.302 On the input $\{ \Sigma_i}
+                                \}_{i\in\mathcal{S}_k}$ where $\mathcal{S}_k...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
 you forgot something else, as in `\hbox{$x}'. In such cases
@@ -1918,7 +1797,7 @@ deleted material, e.g., by typing `I$}'.
 ! Extra }, or forgotten $.
 <recently read> \egroup 
                         
-l.303 ...i\}_{i\in\mathcal{N}},x,y,\{\Sigma_{a_k}}
+l.310 ...i\}_{i\in\mathcal{N}},x,y,\{\Sigma_{a_k}}
                                                   \}_{j\in\mathcal{K}})\xrig...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -1927,39 +1806,29 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 [37] [38]
-
-LaTeX Warning: Citation `git:Mycode' on page 39 undefined on input line 341.
-
-
-LaTeX Warning: Citation `Git:MyCode' on page 39 undefined on input line 344.
-
-
-LaTeX Warning: Citation `Git:MyCode' on page 39 undefined on input line 348.
-
-[39]
-! Too many }'s.
-l.388 ...-HSS-RP} and \ref{alg:VAHSS-HSS-RP-Agg} }
-                                                   using Bulletproofs, signa...
-You've closed more groups than you opened.
-Such booboos are generally harmless, so keep going.
-
-[40]
-Overfull \hbox (43.74425pt too wide) in paragraph at lines 406--408
+Overfull \hbox (51.79521pt too wide) in paragraph at lines 407--409
 \T1/lmr/m/n/12 For each proof $\OT1/lmr/m/n/12 ^^F[]$\T1/lmr/m/n/12 , ver-ify t
-hat it is cor-rect.This im-ples run-ning $[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 ^
-^Y[]; \OT1/lmr/m/n/12 ^^F[])$
+hat it is cor-rect. This im-plies run-ning $[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12
+ ^^Y[]; \OT1/lmr/m/n/12 ^^F[])$
  []
 
 
-Overfull \hbox (31.00919pt too wide) in paragraph at lines 447--462
+Overfull \hbox (3.2213pt too wide) in paragraph at lines 415--430
  [][] 
  []
 
-) (./include/Conclusion.tex [41] [42]
-Chapter 7.
-) [43
 
-] [44
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[39]) (./include/Conclusion.tex [40]
+Chapter 7.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [41
+
+]
+[42]) [43] [44
 
 ] (./main.bbl
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1967,130 +1836,8 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [45
 
 ])
-[46] (./include/backmatter/Appendix_2.tex
+[46] (./include/backmatter/Appendix_1.tex
 Appendix A.
-
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 5.
-
-! Misplaced \noalign.
-\hline ->\noalign 
-                  {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.9 \hline
-          
-I expect to see \noalign only after the \cr of
-an alignment. Proceed, and I'll ignore this case.
-
-! Undefined control sequence.
-<argument> \adl@connect 
-                        
-l.9 \hline
-          
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-<argument> \adl@connect 
-                        
-l.9 \hline
-          
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Misplaced \noalign.
-\hline ->\noalign 
-                  {\ifnum 0=`}\fi \ifadl@zwhrule \vskip -\arrayrulewidth \el...
-l.26 \hline
-           
-I expect to see \noalign only after the \cr of
-an alignment. Proceed, and I'll ignore this case.
-
-! Undefined control sequence.
-<argument> \adl@connect 
-                        
-l.26 \hline
-           
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-<argument> \adl@connect 
-                        
-l.26 \hline
-           
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-Underfull \hbox (badness 1199) in paragraph at lines 29--31
-\T1/lmr/m/n/12 Let $\OML/lmm/m/it/12 y \OT1/lmr/m/n/12 = [][](\OT1/lmr/bx/n/12 
-g\OML/lmm/m/it/12 ; \OT1/lmr/bx/n/12 h\OML/lmm/m/it/12 ; P[]; c\OT1/lmr/m/n/12 
-) \OMS/lmsy/m/n/12 2 \U/dsrom/m/n/12 F[]$ \T1/lmr/m/n/12 and com-pute $\OML/lmm
-/m/it/12 P[] \OT1/lmr/m/n/12 = \OML/lmm/m/it/12 u[]P$\T1/lmr/m/n/12 . Let
- []
-
-
-Underfull \hbox (badness 3701) in paragraph at lines 29--31
-\OT1/lmr/bx/n/12 l\OML/lmm/m/it/12 ; \OT1/lmr/bx/n/12 r$ \T1/lmr/m/n/12 be two 
-empty vec-tors. Run the re-cur-sive al-go-rithm \T1/lmr/bx/n/12 Gen-er-
- []
-
-) (./include/backmatter/Appendix_3.tex [1
-
-
-] [2]
-Appendix B.
-! Double subscript.
-<argument> ...^{-z_{x_1}- z_{x_2}}e(g,g)^{z_\tau _
-                                                  1+z_\tau _2} \\ =& e(g,g)^...
-l.24 \end{align*}
-                 
-I treat `x_1_2' essentially like `x_1{}_2'.
-
-! Double subscript.
-<argument> ...- z_{x_2}}e(g,g)^{z_\tau _1+z_\tau _
-                                                  2} \\ =& e(g,g)^{cq \big (...
-l.24 \end{align*}
-                 
-I treat `x_1_2' essentially like `x_1{}_2'.
-
-! Double subscript.
-<argument> ...^{-z_{x_1}- z_{x_2}}e(g,g)^{z_\tau _
-                                                  1+z_\tau _2} \\ =& e(g,g)^...
-l.24 \end{align*}
-                 
-I treat `x_1_2' essentially like `x_1{}_2'.
-
-! Double subscript.
-<argument> ...- z_{x_2}}e(g,g)^{z_\tau _1+z_\tau _
-                                                  2} \\ =& e(g,g)^{cq \big (...
-l.24 \end{align*}
-                 
-I treat `x_1_2' essentially like `x_1{}_2'.
-
-
-Overfull \hbox (29.5683pt too wide) detected at line 24
-[]
- []
-
-) (./include/backmatter/Appendix_1.tex [3
-
-] [4
-
-]
-Appendix C.
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `htbp') on input line 56.
@@ -2128,7 +1875,7 @@ and I'll forget about whatever was undefined.
 ! Extra }, or forgotten $.
 \mbox  #1->\leavevmode \hbox {#1}
                                  
-l.66 ...f{Prove} $(pp,i,C_i,\Phi)\xrightarrow[]{}}
+l.66 ...ove} $(pp,i,C_i,x_i,\Phi)\xrightarrow[]{}}
                                                   \Sigma_i$}\\
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -2137,17 +1884,24 @@ the way to recover is to insert both the forgotten and the
 deleted material, e.g., by typing `I$}'.
 
 
-Underfull \hbox (badness 1377) in paragraph at lines 69--71
-\T1/lmr/m/n/12 Given a set of set mem-ber-ship proofs $\OMS/lmsy/m/n/12 f\OT1/l
-mr/m/n/12 ^^F[]\OMS/lmsy/m/n/12 g[]$\T1/lmr/m/n/12 . Ag-gre-gate the val-
+Underfull \hbox (badness 10000) in paragraph at lines 69--71
+\T1/lmr/m/n/12 Given a set of proofs $\OMS/lmsy/m/n/12 f\OT1/lmr/m/n/12 ^^F[]\O
+MS/lmsy/m/n/12 g[]$\T1/lmr/m/n/12 . Ag-gre-gate the val-ues
  []
 
 
-Underfull \hbox (badness 3333) in paragraph at lines 69--71
-\T1/lmr/m/n/12 ues $\OT1/lmr/m/n/12 (\OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 D[]\OMS
-/lmsy/m/n/12 g[]f\OML/lmm/m/it/12 z[]\OMS/lmsy/m/n/12 g[]f\OML/lmm/m/it/12 z[]\
-OMS/lmsy/m/n/12 g[]\OT1/lmr/m/n/12 ) \OMS/lmsy/m/n/12 7! \OML/lmm/m/it/12 D[]; 
-z[]; z[]$ \T1/lmr/m/n/12 ac-cord-ing to equa-
+Underfull \hbox (badness 10000) in paragraph at lines 69--71
+\OT1/lmr/m/n/12 (\OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 D[]\OMS/lmsy/m/n/12 g[]\OML
+/lmm/m/it/12 ; \OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 z[]\OMS/lmsy/m/n/12 g[]\OML/l
+mm/m/it/12 ; \OMS/lmsy/m/n/12 f\OML/lmm/m/it/12 z[]\OMS/lmsy/m/n/12 g[]\OT1/lmr
+/m/n/12 ) \OMS/lmsy/m/n/12 7! \OML/lmm/m/it/12 D[]; z[]; z[]$ \T1/lmr/m/n/12 ac
+-cord-ing to equa-
+ []
+
+
+Underfull \hbox (badness 4366) in paragraph at lines 69--71
+\T1/lmr/m/n/12 tion []. Con-struct and pub-lish the ag-gre-gated proof $\OT1/lm
+r/m/n/12 ^^F[] =
  []
 
 ! Double subscript.
@@ -2166,59 +1920,76 @@ Underfull \hbox (badness 4391) in paragraph at lines 75--78
 /m/n/12 Then for check if $\OML/lmm/m/it/12 a[] []
  []
 
+) (./include/backmatter/Appendix_4.tex [1
+
+
+] [2
+
+]
+Appendix B.
+
+Overfull \hbox (10.78983pt too wide) in paragraph at lines 3--4
+\T1/lmr/m/n/12 rithm \T1/lmr/bx/n/12 Prove \T1/lmr/m/n/12 in Con-struc-tion [][
+]2[][]. The proofs are on the form $\OT1/lmr/m/n/12 ^^F[] = (\OML/lmm/m/it/12 V
+[]; a[]; D[]; z[]; z[]; z[]\OT1/lmr/m/n/12 )$
+ []
+
+) (./include/backmatter/Appendix_3.tex [3] [4
+
+]
+Appendix C.
+
+Overfull \hbox (12.50418pt too wide) detected at line 25
+[]
+ []
+
 ) [5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 101.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 101.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 103.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 103.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 101.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 101.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 103.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 103.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D9C30CD0ED2EDAD453E008BDF4C57484;1720.
-
-
-LaTeX Warning: There were undefined references.
-
+(rerunfilecheck)             Checksum: 12629695C3CD6AE8B94E521104D959C8;1587.
  ) 
 Here is how much of TeX's memory you used:
- 24949 strings out of 480608
- 462153 string characters out of 5903631
- 794270 words of memory out of 5000000
- 40048 multiletter control sequences out of 15000+600000
+ 24961 strings out of 480608
+ 462282 string characters out of 5903631
+ 794593 words of memory out of 5000000
+ 40062 multiletter control sequences out of 15000+600000
  636963 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,21n,85p,1730b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/lo
-cal/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texliv
-e/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2020/texmf-d
+ 71i,21n,85p,1634b,668s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
+texlive/2020/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/20
+20/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2020/texmf-d
 ist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/
 dvips/lm/lm-mathex.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/lm/l
 m-ts1.enc}{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr
 /local/texlive/2020/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb></us
-r/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbsy10.pfb></usr/local/t
-exlive/2020/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/202
-0/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2020/texmf-dis
-t/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/t
-ype1/public/lm/lmcsc10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/publ
-ic/lm/lmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi
-12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></us
-r/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/tex
-live/2020/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></usr/local/texlive/2020
-/texmf-dist/fonts/type1/public/lm/lmmib7.pfb></usr/local/texlive/2020/texmf-dis
-t/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/typ
-e1/public/lm/lmr17.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/l
-m/lmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmr8.pfb><
-/usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local
-/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2
-020/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2020/texmf-d
-ist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/t
-ype1/public/lm/lmtt12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/publi
-c/lm/lmtti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic/u
-hvb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.p
-fb>
-Output written on main.pdf (65 pages, 1595406 bytes).
+r/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/te
+xlive/2020/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2020/
+texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></usr/local/texlive/2020/texmf-dis
+t/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2020/texmf-dist/fonts/t
+ype1/public/lm/lmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/publi
+c/lm/lmmi12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi6
+.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/
+local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></usr/local/tex
+live/2020/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2020/t
+exmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2020/texmf-dist/f
+onts/type1/public/lm/lmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/p
+ublic/lm/lmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmr
+i12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></
+usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/t
+exlive/2020/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2020
+/texmf-dist/fonts/type1/public/lm/lmtt12.pfb></usr/local/texlive/2020/texmf-dis
+t/fonts/type1/public/lm/lmtti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/t
+ype1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/ur
+w/helvetic/uhvr8a.pfb>
+Output written on main.pdf (65 pages, 1560588 bytes).
 PDF statistics:
- 885 PDF objects out of 1000 (max. 8388607)
- 750 compressed objects within 8 object streams
- 147 named destinations out of 1000 (max. 500000)
- 329 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 889 PDF objects out of 1000 (max. 8388607)
+ 754 compressed objects within 8 object streams
+ 144 named destinations out of 1000 (max. 500000)
+ 334 words of extra memory for PDF output out of 10000 (max. 10000000)
 

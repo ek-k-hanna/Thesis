@@ -4,10 +4,10 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Timing in seconds for algorithms \textbf {Aggregate} and \textbf {VerifyAggregated} in Construction \ref {alg:ZKSM-Agg}. $100$ provers are considered and one trusted party performing the aggregation of all set membership proofs. \relax }}{30}{table.caption.8}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces The table shows the runtime for verification of $100$ proofs, using four different constructions to provide the proofs and a verification algorithm compatible with the proof construction. \relax }}{32}{table.caption.9}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Timing in seconds for algorithms \textbf {Aggregate} and \textbf {Verify} in Construction \ref {alg:ZKSM-Agg-Many} considering different numbers of aggregating parties, $|\mathcal {K}|$. \relax }}{28}{table.caption.9}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Runtime for verification of $100$ proofs constructed using three different ZKP. The three considered proof constructions are: Bulletproofs, with a maximal upper bound equal to $2^8$ and $2^{32}$, and aggregated signature-based set membership proofs. \relax }}{30}{table.caption.10}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces Timing in seconds for server and client verifiable-AHSS. Verification of clients is done using three different constructions namely by implementing Bulletproofs, signature based range proofs and set membership proofs\relax }}{42}{table.caption.11}%
+\contentsline {table}{\numberline {6.1}{\ignorespaces Runtime for the algorithms in Construction \ref {alg:VAHSS-HSS-RP} and \ref {alg:VAHSS-HSS-RP-Agg}. The runtime of Construction \ref {alg:VAHSS-HSS-RP} is presented using Bulletproofs and signature-based set membership proofs to verify clients. Aggregated signature-based set membership proofs are used to verify clients in Construction \ref {alg:VAHSS-HSS-RP-Agg}\relax }}{40}{table.caption.12}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

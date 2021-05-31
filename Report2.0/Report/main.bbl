@@ -1,5 +1,11 @@
 \begin{thebibliography}{10}
 
+\bibitem{prioPlus}
+S.~Addanki, K.~Garbe, E.~Jaffe, R.~Ostrovsky, and A.~Polychroniadou.
+\newblock Prio+: Privacy preserving aggregate statistics via boolean shares.
+\newblock Cryptology ePrint Archive, Report 2021/576, 2021.
+\newblock \url{https://eprint.iacr.org/2021/576}.
+
 \bibitem{Fiat-Shamir}
 M.~Bellare and P.~Rogaway.
 \newblock Random oracles are practical: A paradigm for designing efficient
@@ -8,26 +14,12 @@ M.~Bellare and P.~Rogaway.
   Communications Security}, CCS '93, page 62–73, New York, NY, USA, 1993.
   Association for Computing Machinery.
 
-\bibitem{zkSnark}
-N.~Bitansky, R.~Canetti, A.~Chiesa, and E.~Tromer.
-\newblock From extractable collision resistance to succinct non-interactive
-  arguments of knowledge, and back again.
-\newblock In {\em Proceedings of the 3rd Innovations in Theoretical Computer
-  Science Conference}, ITCS '12, page 326–349, New York, NY, USA, 2012.
-  Association for Computing Machinery.
-
 \bibitem{Bohen-Boyen}
 D.~Boneh and X.~Boyen.
 \newblock Short signatures without random oracles.
 \newblock In C.~Cachin and J.~L. Camenisch, editors, {\em Advances in
   Cryptology - EUROCRYPT 2004}, pages 56--73, Berlin, Heidelberg, 2004.
   Springer Berlin Heidelberg.
-
-\bibitem{Efficient_proof_interval}
-F.~Boudot.
-\newblock Efficient proofs that a committed number lies in an interval.
-\newblock In B.~Preneel, editor, {\em Advances in Cryptology --- EUROCRYPT
-  2000}, pages 431--444, Berlin, Heidelberg, 2000. Springer Berlin Heidelberg.
 
 \bibitem{bulletProofs_theory}
 B.~{Bünz}, J.~{Bootle}, D.~{Boneh}, A.~{Poelstra}, P.~{Wuille}, and
@@ -48,6 +40,26 @@ R.~Chaabouni, H.~Lipmaa, and A.~Shelat.
 \newblock In R.~Steinfeld and P.~Hawkes, editors, {\em Information Security and
   Privacy}, pages 336--351, Berlin, Heidelberg, 2010. Springer Berlin
   Heidelberg.
+
+\bibitem{prio}
+H.~Corrigan-Gibbs and D.~Boneh.
+\newblock Prio: Private, robust, and scalable computation of aggregate
+  statistics.
+\newblock In {\em 14th {USENIX} Symposium on Networked Systems Design and
+  Implementation ({NSDI} 17)}, pages 259--282, Boston, MA, Mar. 2017. {USENIX}
+  Association.
+
+\bibitem{improveBulletproofs}
+G.~Couteau, M.~Klooß, H.~Lin, and M.~Reichle.
+\newblock Efficient range proofs with transparent setup from bounded integer
+  commitments.
+\newblock Cryptology ePrint Archive, Report 2021/540, 2021.
+\newblock \url{https://eprint.iacr.org/2021/540}.
+
+\bibitem{Git:mycode}
+H.~Ek.
+\newblock Aggrgated signature based set membership proofs.
+\newblock \url{https://github.com/ek-k-hanna/Aggregated-SMP}, 2021.
 
 \bibitem{OG_ZKP}
 S.~Goldwasser, S.~Micali, and C.~Rackoff.
