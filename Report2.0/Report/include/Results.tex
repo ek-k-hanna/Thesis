@@ -10,7 +10,7 @@ The purpose of the implementation is  to test the above-proposed constructions a
 \subsection*{Implementation parameters}
 The parameter settings used for the implementation are defined below. 
 
-The number of provers is fixed to $100$, unless otherwise stated, and the verifier is assumed to be a single party. The number of aggregating parties, $|\mathcal{K}|$, varies between $|\mathcal{K}| = 1,5,10$ or $20$. The set of proofs are split evenly between all aggregating parties, i.e $|\mathcal{S}_k|$ is equal for all $k\in\mathcal{K}$.
+The number of provers is fixed to $100$, unless otherwise stated, and the verifier is assumed to be a single party. The number of aggregating parties, $|\mathcal{K}|$, varies between $|\mathcal{K}| = 1,5,10$ or $20$. The set of proofs are split evenly between all aggregating parties implying that $|\mathcal{S}_k|$ is equal for all $k\in\mathcal{K}$.
 
 The set $\Phi$ consists of $182$ elements belonging to  the interval $[0,1000]$.  
 
@@ -47,11 +47,11 @@ The hardware used for benchmarking, throughout the entire paper, has $1.6$ GHz D
 
 \section{Trade-off between Aggregation and Verification}
 \label{sec:tradeoff}
-The aggregation of set membership proofs is computationally heavy. To reduce the computation required by a single aggregating party the aggregation can be split between several aggregating parties as in Construction \ref{alg:ZKSM-Agg-Many} in Appendix \ref{app:manyAggregatingParties}. If the set $\mathcal{K}$ in Construction \ref{alg:ZKSM-Agg-Many} consists of one single element and $\mathcal{S}_k=\mathcal{S}$, then Construction \ref{alg:ZKSM-Agg} and \ref{alg:ZKSM-Agg-Many} are equivalent. Hence this section will consider Construction \ref{alg:ZKSM-Agg-Many} any various number of aggregating parties.
+The aggregation of set membership proofs is computationally heavy. To reduce the computation required by a single aggregating party the aggregation can be split between several aggregating parties as in Construction \ref{alg:ZKSM-Agg-Many} in Appendix \ref{app:manyAggregatingParties}. If the set $\mathcal{K}$ in Construction \ref{alg:ZKSM-Agg-Many} consists of one single element and $\mathcal{S}_k=\mathcal{S}$, then constructions \ref{alg:ZKSM-Agg} and \ref{alg:ZKSM-Agg-Many} are equivalent. Hence this section will consider Construction \ref{alg:ZKSM-Agg-Many}for various number of aggregating parties.
 
 Table \ref{tab:tradeoff} presents the trade-off between increased verification time due to  validating multiple aggregated proofs and reduced runtime of  an individual aggregating party obtained by splitting the aggregation between  several parties. The number of aggregating parties varies between $1,2,5$ and $10$, while the number of proofs is fixed to $100$. An individual aggregating party thus has to aggregate $100,50,20$ or $10$  proofs respectively and the verifier has to verify $1,2,5$ or $10$ aggregated proofs respectively. In Table \ref{tab:tradeoff} the runtime for the algorithm \textbf{Aggregate} is given per aggregating party and the runtime for \textbf{Verify} is for verification of all aggregated proofs. 
 
-It is noted that the aggregation is a computationally demanding procedure. Considering one aggregating party, the runtime required to aggregate $100$ proofs is almost one minute. While the reduction in runtime for verifying the aggregated proof instead to verifying all $100$ proofs separately is just above one second. This illustrates that aggregation does not reduce the total runtime for the entire construction, but rather move computations from one party to another and thereby allows offloading computations from the verifier.
+It is noted that the aggregation is a computationally demanding procedure. Considering one aggregating party, the runtime required to aggregate $100$ proofs is almost one minute. While the reduction in runtime for verifying the aggregated proof instead of verifying all $100$ proofs separately is just above one second. This illustrates that aggregation does not reduce the total runtime for the entire construction, but rather move computations from one party to another and thereby allows offloading computations from the verifier.
 
 Table \ref{tab:tradeoff} shows that if the aggregation is shared between a set of aggregating parties the runtime per aggregating party is reduced almost exponentially. At the same time the increased runtime for verifying multiple aggregated proofs is linear. Resulting in that splitting the aggregation between a set of aggregating parties reduced the total runtime for the construction and per party.
 
@@ -86,7 +86,7 @@ $|\mathcal{K}|$ &  \textbf{Aggregate} [s] & \textbf{Verify} [s]\\	\midrule
 
 \section{Comparison to Bulletproofs}
 \label{sec:ComparetOBullet}
-In this section, the construction of aggregated signature-based set membership proofs are compared to the state-of-the-art Bulletproofs. The focus of comparison is the runtime of a party verifying of multiple proving parties. In this section the aggregation is considered to be performed by a single party, i.e $|\mathcal{K}|=1$. Before presenting the results, Bulletproofs are described in a bit more detail.
+In this section, the construction of aggregated signature-based set membership proofs are compared to the state-of-the-art Bulletproofs. The focus of comparison is the runtime of a party verifying of multiple proving parties. In this section the aggregation is considered to be performed by a single party, i.e $|\mathcal{K}|=1$. Before presenting the results, Bulletproofs are described in more detail.
 
 \subsection*{Bulleproofs settings}
 % Regarding aggregation of Bulletproos
@@ -116,9 +116,9 @@ Table \ref{tab:CompareToBulletproof} shows the runtime for the verification of $
 \begin{tabular}{l | r }
 \toprule
 	  											& \textbf{Verify} [s]\\	\midrule
-  Bulletproofs $n=8$					&   2.98 		\\ 
-  Bulletproofs $n=32$					&   10.22 		\\ 
-  Aggregated Set Membership	&   8.09 	 \\ 
+  Bulletproofs, $n=8$					&   2.98 		\\ 
+  Bulletproofs, $n=32$					&   10.22 		\\ 
+  Aggregated Set Membership Proofs 	&   8.09 	 \\ 
   \bottomrule 
 \end{tabular}
 \caption{Runtime for verification of $100$ proofs constructed using three different ZKP. The three considered proof constructions are: Bulletproofs, with a maximal upper bound equal to $2^8$ and $2^{32}$, and aggregated signature-based set membership proofs. }
@@ -138,6 +138,6 @@ In Figure \ref{fig:NrClients} it is noted that the difference between the runtim
 
  \begin{figure}[]
 \includegraphics[width=\linewidth]{./figure/verificationNbrClients.png}
-\caption{Runtime for verification of multiple provers as a function of the number of provers. Verification of four different constructions of proofs  are considered: aggregated signature-based set membership proofs, signature-based set membership proofs, Bulletproofs with a maximal upper bound equal to $2^8$ and Bulletproof with a maximal upper bound equal  to $2^{32}$.}
+\caption{Runtime for verification of multiple provers as a function of the number of provers. Verification of four different constructions of proofs  are considered: aggregated signature-based set membership proofs, signature-based set membership proofs, Bulletproofs with a maximal upper bound equal to $2^8$ and Bulletproofs with a maximal upper bound equal  to $2^{32}$.}
 \label{fig:NrClients}
 \end{figure}

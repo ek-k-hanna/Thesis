@@ -60,10 +60,10 @@ Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y
 \vspace{2pt} \hline \vspace{2pt}
 \begin{itemize}
  \item\textbf{SetUp $(1^\lambda,\Phi)\xrightarrow[]{}(sk,pp)$}\\
- Let g be a generator of the group $\mathds{G}$ and $h$ a element in the group such that $log_g(h)$ is unknown.  
+ Let g be a generator of the group $\mathds{G}$ and $h$ an element in the group such that $log_g(h)$ is unknown.  
 Pick uniformly at random $\chi\in_R\mathds{F}$ and put $sk=\chi$. Define $y=g^\chi$ and $A_i=g^{\frac{1}{\chi+i}} \:\forall i\in\Phi$, output $pp=(g,h,y,\{A_i\}_{i\in\Phi})$.
 
-\item\text{\textbf{Prove} $(pp,i,C_i,x_i,\Phi)\xrightarrow[]{}}\Sigma_i$}\\
+\item\text{\textbf{Prove} $(pp,i,C_i,x_i,\Phi)\xrightarrow[]{} \Sigma_i$}\\
 Pick uniformly at random $\tau_i\in_R\mathds{F}$, choose from the set $\{A_i\}$ the element $A_{x_i}$ and calculate $V_i=A_{x_i}^{\tau_i}$. Pick uniformly at random three values $s_i,t_i,m_i\in_R\mathds{F}$. Put $a_i=e(V_i,g)^{-s_i}e(g,g)^{t_i}$,  $D=g^{s_i}h^{m_i}$,$c=\text{Hash}(C_i,V_i,a_i,D_i)$ and compute $z_{x_i} = s_i-x_i c_i$, $z_{R_i} = m_i-R_ic_i$ and $z_{\tau_i}= t_i-\tau_i c_i$ . Finally construct and publish the proof $\Sigma_i = (V_i,a_i,D_i,z_{x_i},z_{\tau_i},z_{R_i})$.
 
 \item \text{\textbf{Aggregate} $( pp,k,\{ \Sigma_i\}_{i\in\mathcal{S}_k} ) \xrightarrow[]{} \Sigma_{a_k}$} \\

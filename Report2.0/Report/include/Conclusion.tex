@@ -15,22 +15,22 @@ The complexity of the presented aggregated signature-based set membership proof 
 The presented construction of aggregated signature-based set membership proof can be translated to a construction of aggregated signature-based range proofs. The signature-based range proofs are very similar in construction to the signature-based set membership proofs and thereby the aggregation can easily be adjusted to aggregate the range proofs. Details on how to generalise the aggregation are not given, but it follows directly from inspection.
  
  %VAHSS clients can lie but not cheat
-Using set membership proofs or range proofs to verify clients in a VAHSS construction prevents clients from cheating, but no requirement ensures that clients do not lie. Cheating means that a client shares a value not in the allowed set or range and lying means that the client shares a value in the allowed set or range, but not the truthful value
+Using set membership proofs or range proofs to verify clients in a VAHSS construction prevents clients from cheating, but no requirement ensures that clients do not lie. Cheating means that a client shares a value not in the allowed set or range and lying means that the client shares a value in the allowed set or range, but not the truthful value.
 
 %TODO Include : VAHSS not secure?
 \section*{Conclusion}
 
 % General def of agg and requirements
-This paper has presented a definition of aggregated set membership proofs, including the completeness, soundness, and zero-knowlegde requirements that it should fulfil.
+This paper has presented a definition of aggregated set membership proofs, including the completeness, soundness, and zero-knowledge requirements that it should fulfil.
 
 % Aggregated signature based, partly wanted compleat
-According to the definition of aggregated set membership proofs, signature-based set membership proofs has been partly aggregated. Since a part of the proofs is verified separately for each prover, the complexity for verification depends on the number of provers. However, the computational complexity required per prover is decreased, due to that, a part of the proofs is aggregated, such that it is checked once to validate all provers. 
+According to the definition of aggregated set membership proofs, signature-based set membership proofs have been partly aggregated. Since a part of the proofs is verified separately for each prover, the complexity for verification depends on the number of provers. However, the computational complexity required per prover is decreased, due to that, a part of the proofs is aggregated, such that it is checked once to validate all provers. 
 
 % not trusted aggregation
 It has been proved that an untrusted party must perform the aggregation according to the protocol, for the verification to validate true. The assumptions made to prove this are that: the provers do not collaborate  with each other or the aggregating party and that the aggregated proof $\Sigma_a$ is such that $D_a\neq C^c$. $C$ is the product of all provers Pedersen commitments and $c$ is the product of all challenges. 
 
 % Proved C S ZK
-The completeness, soundness and zero-knowlegde requirements for aggregated set membership proofs are proved to hold for the presented construction of aggregated signature-based set membership proofs. This was proved under the assumptions that the aggregation was performed according to the algorithm \textbf{Aggregate}, proves does not collaborate and that the signature-based set membership, \cite{RANGE-SET}, satisfies the requirements in Definition \ref{def:ZKP}. 
+The completeness, soundness and zero-knowledge requirements for aggregated set membership proofs are proved to hold for the presented construction of aggregated signature-based set membership proofs. This was proved under the assumptions that the aggregation was performed according to the algorithm \textbf{Aggregate}, proves does not collaborate and that the signature-based set membership, \cite{RANGE-SET}, satisfies the requirements in Definition \ref{def:ZKP}. 
 
 
 

@@ -8,17 +8,16 @@ Chalmers University of Technology and University of Gothenburg\setlength{\parski
 \thispagestyle{plain}			% Supress header 
 \setlength{\parskip}{0pt plus 1.0pt}
 \section*{Abstract}
-This paper addresses the issue of inflated computational complexity for the verification of multiple zero-knowledge proofs. More precisely, verification of numerous zero-knowledge set membership proofs performed by a single verifier is considered. To reduce the computations required by such a verifier \textit{Aggregated Set Membership Proofs} are introduced.
+This thesis addresses the issue of inflated computational complexity for the verification of multiple zero-knowledge proofs. More precisely, verification of numerous zero-knowledge set membership proofs performed by a single verifier is considered. To reduce the computations required by such a verifier \textit{Aggregated Set Membership Proofs} are introduced.
 
 Aggregated set membership proofs unifies multiple set membership proofs into one aggregated proof, such that the validity of the aggregated proof implies the validity of all individual proofs. Completeness, soundness and zero-knowledge requirements are established for zero-knowledge aggregated set membership proofs.
 
 A concrete construction of aggregated set membership proofs is presented and proved to satisfy the completeness, soundness and zero-knowledge requirements. The construction is a partial aggregation of signature-based set membership proofs, \cite{RANGE-SET}, and is referred to as \textit{aggregated signature-based set membership proofs}. % mention more party aggregated?
 
-A general technique to verify clients in verifiable additive homomorphic secret sharing is derived. The clients are verified by computing zero-knowledge proofs, derived from Pedersen commitments, of some given statement and then the proofs are validated by a verifier.  If the proved statement is that the shared secrets belong to a discrete set, clients construct set membership proofs. Usually several clients participate in verifiable additive homomorphic secret sharing  protocols resulting in that the verification of clients is computationally expensive.
+A general technique to verify clients in verifiable additive homomorphic secret sharing is derived. The clients are verified by computing zero-knowledge proofs, derived from Pedersen commitments, of some given statement and then the proofs are validated by a verifier.  If the proved statement is that the shared secrets belong to a discrete set, clients construct set membership proofs. Usually, several clients participate in verifiable additive homomorphic secret sharing protocols resulting in that the verification of clients is computationally expensive.
 % If the statement is that the secrets belong to a discrete set, clients can construct set membership proofs.
  
 A prototype implementation considering $100$ clients showed that the runtime for verification of clients was reduced by $13\%$ when verifying an aggregated signature-based set membership proof compared to verifying the same proofs without performing the aggregation. 
-
 
 %Implementation of all proposed constructions in Golang and runtime comparison of the constructions.
 

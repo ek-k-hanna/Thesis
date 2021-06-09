@@ -16,7 +16,7 @@
 \contentsline {section}{\numberline {5.3}Comparison to Bulletproofs}{29}{section.5.3}%
 \contentsline {chapter}{\numberline {6}Application in VAHSS}{33}{chapter.6}%
 \contentsline {section}{\numberline {6.1}VAHSS}{33}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Client and Server VAHSS}{33}{section.6.2}%
+\contentsline {section}{\numberline {6.2}Client and Server VAHSS}{34}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Implementation}{37}{section.6.3}%
 \contentsline {section}{\numberline {6.4}Prototype analysis}{39}{section.6.4}%
 \contentsline {chapter}{\numberline {7}Discussion and Conclusion}{41}{chapter.7}%

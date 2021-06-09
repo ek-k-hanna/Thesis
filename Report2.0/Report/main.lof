@@ -3,11 +3,11 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Extending range proofs to consider arbitrary ranges. It is illustrated that if $x\in [b-u^l,b)\wedge x\in [a,a+u^l)$ then $x\in [a,b]$\relax }}{11}{figure.caption.6}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Schematic figure of the interaction between parties in aggregated set membership proofs. \relax }}{15}{figure.caption.7}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Schematic figure of the interaction between Provers, Aggregator and Verifier in aggregated set membership proofs. \relax }}{15}{figure.caption.7}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Provers outsourcing their set membership proofs to their assigned servers that in turn publishes an aggregated set membership proof. \relax }}{20}{figure.caption.8}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Provers outsourcing their set membership proofs to their assigned aggregator that in turn publishes an aggregated set membership proof. \relax }}{20}{figure.caption.8}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Runtime for verification of multiple provers as a function of the number of provers. Verification of four different constructions of proofs are considered: aggregated signature-based set membership proofs, signature-based set membership proofs, Bulletproofs with a maximal upper bound equal to $2^8$ and Bulletproof with a maximal upper bound equal to $2^{32}$.\relax }}{31}{figure.caption.11}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Runtime for verification of multiple provers as a function of the number of provers. Verification of four different constructions of proofs are considered: aggregated signature-based set membership proofs, signature-based set membership proofs, Bulletproofs with a maximal upper bound equal to $2^8$ and Bulletproofs with a maximal upper bound equal to $2^{32}$.\relax }}{31}{figure.caption.11}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

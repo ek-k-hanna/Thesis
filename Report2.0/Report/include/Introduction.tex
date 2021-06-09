@@ -61,15 +61,15 @@ In many applications, however, it is sufficient to share more abstract informati
 %In many application it is sufficient to share more abstract information. Two illustrative examples are: When proving that you are a member of group instead of sharing your personal membership number, it would be sufficient to prove that you are one of a members. Another example is when performing a purchase or applying for a loan instead of revealing the precise amount of money you have on you account it would be sufficient to prove that is above a certain level or in a certain range.
 
 % Alice and Bob
-To illustrate the above idea, consider two parties Alice and Bob. Alice is a subscriber to Bob's paper and wishes to convince Bob of this, without revealing who she is. Bob has a list of all subscribers, but without knowing who Alice is, he does not feel certain that she is on the list. Therefore, Alice constructs a proof that her name is on the list. Bob receives this proof and checks its validity. Bob is now convinced that Alice's name is on the list, but not which of the names it is, and allows Alice to get access to the paper.  For the remaining, Alice will be denoted as the prover and Bob as the verifier.
+To illustrate the above idea, consider two parties Alice and Bob. Alice is a subscriber to Bob's paper and wishes to convince Bob of this, without revealing who she is. Bob has a list of all subscribers, but without knowing who Alice is, he does not feel certain that she is on the list. Therefore, Alice constructs a proof that her name is on the list. Bob receives this proof and checks its validity. Bob is now convinced that Alice's name is on the list, but not which of the names it is, and allows Alice to get access to the paper.  For the remainder of this thesis, Alice will be denoted as the prover and Bob as the verifier.
 
-A cryptographic construction that allows a prover to convince a verifier that a secret is in a set without revealing the secret is called \textit{set membership proofs}.  %Another construction that is very similar to set memberships are range proofs, that instead of proving that a secret belongs to a list proofs that the secret is in an allowed range. 
+A cryptographic construction that allows a prover to convince a verifier that a secret is in a set without revealing the secret is called a \textit{set membership proof}.  %Another construction that is very similar to set memberships are range proofs, that instead of proving that a secret belongs to a list proofs that the secret is in an allowed range. 
 %Kostsamt, speciellt för verifieraren
-Constructing set membership proofs are computationally expensive. Consequently, a lot of research has been done to reduce the computations required to construct and verify set membership proofs. Usually, the constructions are optimised considering one prover and one verifier, as in the example above with Alice and Bob. Considering instead the setting: multiple provers one verifier. An example of such a construction is verification of clients in a VAHSS protocol, \cite{SumItUp}. In such a construction, using set membership proofs, the computational complexity for the verifier grows linearly with the number of provers. This is due to that the verifier has to verify all received proofs individually.  
+Constructions of set membership proofs are computationally expensive. Consequently, a lot of research has been done to reduce the computations required to construct and verify set membership proofs. Usually, the constructions are optimised considering one prover and one verifier, as in the example above with Alice and Bob. We are considering constructions consisting of multiple provers and one verifier. An example of such a construction is the verification of clients in a VAHSS protocol, \cite{SumItUp}. In such a construction, using set membership proofs, the computational complexity for the verifier grows linearly with the number of provers. This since the verifier has to verify all received proofs individually.  
 
-A method for reducing the computations required by the verifier is to aggregate the proofs beforehand. Then the verifier only needs to verify one proof, the aggregated proof. The aggregated proof should be such that its validity implies the validity of all individual proofs.
+A method for reducing the computations required of the verifier is aggregating the proofs beforehand. Then the verifier only needs to verify one proof, the aggregated proof. The aggregated proof should be such that its validity implies the validity of all individual proofs.
 
-The aim of this paper is to investigate the possibilities to aggregate set membership proofs, in order to reduce the computational complexity for verification of multiple provers.
+The aim of this thesis is to investigate the possibilities to aggregate set membership proofs, in order to reduce the computational complexity for verification of multiple provers.
 
 
 %Many such work well when considering one prober one veifier %TODO bridge to next
@@ -100,9 +100,9 @@ The aim of this paper is to investigate the possibilities to aggregate set membe
 
 \section*{Purpose}
 %This paper will investigate the possibility to ensure honest clients in the VAHSS construction where the servers computations are verified using a homomorphic hash function. 
-This paper consists of two parts. The first is to explore the possibility to aggregate set membership proofs, in order to reduce the computational complexity for verification of multiple provers. Initially, a general description of aggregate set membership proofs is sought. Then, given such a description provide a concrete construction of an aggregated set membership proof and prove its security.
+This paper consists of two parts. The first is to explore the possibility to aggregate set membership proofs, in order to reduce the computational complexity for the verification of multiple provers. Initially, a general description of aggregate set membership proofs is sought. Then, given such a description we provide a concrete construction of an aggregated set membership proof and prove its security.
 
-The second purpose is to obtain a method for extending a VAHSS construction, \cite{SumItUp}, to verify clients. Then compare the runtime of using aggregated set membership proof contra Bulletproof for verification of clients.
+The second purpose is to obtain a method for extending a VAHSS construction, \cite{SumItUp}, to verify clients' inputs. Then we compare the runtime of using aggregated set membership proof contra Bulletproof for the verification of clients.
 
 \section*{Limitations}
 The exploration of obtaining a construction of an aggregated set membership proofs is limited to investigate if one specific set membership proof can be aggregated. 
@@ -120,7 +120,7 @@ The main results obtained in this paper are:
 
 \item A construction and implementation of an aggregated signature-based set membership proof. The presented construction is proved to satisfy the completeness soundness and zero-knowledge properties for aggregated set membership proofs.
 
-\item The VAHSS construction using homomorphic hash functions to verify servers, \cite{SumItUp}, is modified to additionally verifying clients. The clients are verified using either a range proof or a set membership proof. The construction is also modified to be compatible with aggregated set membership proofs for verification of clients.
+\item The VAHSS construction using homomorphic hash functions to verify servers  \cite{SumItUp} is modified to additionally verifying clients' inputs. The clients' inputs are verified using either range proofs or set membership proofs. The construction is also modified to be compatible with aggregated set membership proofs for the verification of clients.
 
 \item Implementation of all proposed constructions in Golang and runtime comparison of the constructions.
 \end{itemize}
@@ -130,14 +130,14 @@ The main results obtained in this paper are:
 \subsection*{Zero-Knowledge proofs}
 
 \subsubsection*{Set membership proofs}
-Set membership proofs are zero-knowledge proofs proving that a secret belongs to a discrete  set. A construction of set membership proofs based on bilinear groups and public signatures of elements in the set is presented in \cite{RANGE-SET}. Their construction has a computational complexity of $\mathcal{O}(1)$ for the construction and verification of the set membership proofs. However, when multiple proofs are verified at once the computational complexity grows linear in the number of proofs. 
+Set membership proofs are zero-knowledge proofs proving that a secret belongs to a discrete  set. A construction of set membership proofs based on bilinear groups and public signatures of elements in the set is presented in \cite{RANGE-SET}. Their construction has a computational complexity of $\mathcal{O}(1)$ for the construction and verification of the set membership proofs. However, when multiple proofs are verified at once the computational complexity grows linearly in the number of proofs. 
 
 \subsubsection*{Range Proofs}
 Range proofs are strongly connected to set membership proofs, but instead of proving that a secret belongs to a discrete set, they prove that a secret belongs to a numerical range.
 
-Bulletproofs are state-of-the-art range proofs used in many real-world applications. Bulletproofs proves  that a secret belongs to a given range, by making use of an inner-product argument, \cite{bulletProofs_theory}. Bulletproofs can be aggregated using a simple multi-party computation protocol. Consequently, aggregation of Bulletproofs requires interaction between the provers during the construction of the proof. Unlike the focus of this paper, where non-interactive aggregation of zero-knowledge proofs is considered.
+Bulletproofs are state-of-the-art range proofs used in many real-world applications. Bulletproofs states that a secret belongs to a given range, by making use of an inner-product argument \cite{bulletProofs_theory}. Bulletproofs can be aggregated using a simple multi-party computation protocol. Consequently, aggregation of Bulletproofs requires interaction between the provers during the construction of the proof. Unlike the focus of this paper, where non-interactive aggregation of zero-knowledge proofs is considered.
 
-A recently published paper presents range proofs that are faster than Bulletproofs for both the prover and the verifier, \cite{improveBulletproofs}. Their range proofs make use of square decomposition methods by converting commitment schemes over $\mathds{Z}_p$ into proves over $\mathds{Z}$ between bounded-range integers. In applications where multiple provers participate each proof is verified individually, leading to that the computational complexity of the verification grows linearly in the number of provers. 
+A recently published paper presents range proofs that are faster than Bulletproofs for both the prover and the verifier, \cite{improveBulletproofs}. Their range proofs make use of square decomposition methods by converting commitment schemes over $\mathds{Z}_p$ into proofs over $\mathds{Z}$ between bounded-range integers. In applications where multiple provers participate each proof is verified individually, leading to that the computational complexity of the verification grows linearly in the number of provers. 
 
 
 \subsection*{Prio+}

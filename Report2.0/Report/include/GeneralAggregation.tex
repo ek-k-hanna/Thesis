@@ -1,12 +1,14 @@
 \chapter{Aggregated Set Membership Proofs}
 \label{ch:generalAgg}
-The computational complexity for verification of set membership proofs is important to keep small, specially in applications where one verifier validates multiple provers. If set membership proofs, which are proofs the statement:
+It is of high importance to keep the computational complexity for the verification of set membership proofs small, 
+%The computational complexity for verification of set membership proofs is important to keep small,
+ specially in applications where one verifier validates multiple provers. If set membership proofs, which are proofs of the statement:
 \begin{align*}
     \{(g,h\in\mathds{G},C\in\mathds{G};x,R\in\mathds{F})\::\:C= g^x h^R \wedge x \in \Phi\},
 \end{align*}
-are used to verify multiple provers then the verifier would have to verify each prover individually. This leads to that the computational complexity for verification grows linearly in the number of provers. The linear dependence on the number on provers for the verification algorithm results in that this algorithm quickly becomes a bottleneck in application where many provers participates. 
+are used to verify multiple provers then the verifier would have to verify each prover individually. This leads to that the computational complexity for verification grows linearly in the number of provers and the verification algorithm quickly becomes a bottleneck in application where many provers participates. 
 
-This motivates the question if set membership proofs can be aggregated, to decrease the computations required to verify multiple provers simultaneously. 
+This motivates the question if set membership proofs can be aggregated, and thereby decreasing the computations required to verify multiple provers. 
 
 A definition of aggregated set membership proofs is presented  in Definition \ref{def:GeneralAggregation}. An aggregated set membership proof is defined to be a  $5$-tuple of PPT algorithms,  (\textbf{SetUp}, \textbf{Prove}, \textbf{Aggregate}, \textbf{CalculateChallanges}, \textbf{Verify} ).
 
@@ -30,7 +32,7 @@ Where $C_i$ is a Pedersen commitment to the secret $x_i\in\mathds{F}$ and $R_i \
 
 The statement implies that after successfully having performed an aggregated set membership proof protocol, it is proved that the aggregated Pedersen commitment, $C$, is a product of the Pedersen commitment,$\{C_i\}_{i\in\mathcal{S}}$ and that for all $i\in\mathcal{S}$ $C_i$ is a Pedersen commitment to a secret $x_i$ belonging to the set $\Phi$.
 
-A construction of aggregated set membership proof  is a $5$-tuple of PPT-algorithms (\textbf{SetUp}, \textbf{Prove}, \textbf{Aggregate}, \textbf{CalculateChallanges}, \textbf{Verify}).
+A construction of aggregated set membership proofs is a $5$-tuple of PPT-algorithms (\textbf{SetUp}, \textbf{Prove}, \textbf{Aggregate}, \textbf{CalculateChallanges}, \textbf{Verify}).
 \\
 \begin{itemize}
   \item\textbf{SetUp $(1^\lambda, \Phi)\xrightarrow[]{}(pp,sk)$}\\
@@ -52,11 +54,11 @@ On input the aggregated set membership proof public parameters, $pp$, aggregated
 \end{Mydef}
 \vspace{10pt}
 
-Aggregated set membership proofs consist of the parties: provers, an aggregator and a verifier. A schematic figure of the interaction between the parties is seen in Figure \ref{fig:gen_workflow}. The provers, which is assumed to be a group of many individual provers, run the algorithm \textbf{Prove} individually. The aggregating party, who is assumed to be computationally powerful, runs the algorithm \textbf{Aggregate} and the verifier runs the algorithm \textbf{Verify}.  The aggregation can be split between multiple parties implying there are many aggregators, this is discussed more in the next chapter. The algorithms \textbf{SetUp} and \textbf{CalculateChallenges} is either performed by the verifier or by an independent trusted party.
+Aggregated set membership proofs consist of the following parties: provers, an aggregator and a verifier. A schematic figure of the interaction between the parties is seen in Figure \ref{fig:gen_workflow}. The provers, a group of many individual provers, individually run the algorithm \textbf{Prove} and publishes the computed proof. The aggregating party retrieves all proofs, runs the algorithm \textbf{Aggregate} and publishes the aggregated proof. Finally, the verifier validates the aggregated proof by running the algorithm \textbf{Verify}.  The aggregation can be split between multiple parties implying there are many aggregators, this is discussed more in the next chapter. The algorithms \textbf{SetUp} and \textbf{CalculateChallenges} is either performed by the verifier or by an independent trusted party.
 
  \begin{figure}
-\includegraphics[width=\linewidth]{./figure/genflow.png}
-\caption{Schematic figure of the interaction between parties in aggregated set membership proofs. }
+\includegraphics[width=\linewidth]{./figure/oneagg.png}
+\caption{Schematic figure of the interaction between Provers, Aggregator and Verifier in aggregated set membership proofs. }
 \label{fig:gen_workflow}
 \end{figure} 
 
@@ -72,8 +74,7 @@ The algorithms of aggregated set membership proofs, presented in Definition \ref
  \texttt{Verify}$($\texttt{Aggregate}$(\{$\texttt{Prove}$(pp,i,C_i,\Phi)\}_{i\in\mathcal{S}}) )= 1$. 
 \item \textbf{Soundness} If for any $i\in\mathcal{S}$ the  witness $\Sigma_i$ does not satisfy the  instance $x_i\notin\Phi$, then the probability  Prob$[ $\texttt{Verify}$($\texttt{Aggregate}$(\{$\texttt{Prove}$(pp,i,C_i,\Phi)\}_{i\in\mathcal{S}}) ) = 1] < \varepsilon$, for a sufficiently small $\varepsilon$. 
 \item  \textbf{Zero-knowledge} 
-%TODO
-A proof system is \textit{honest verifier zero-knowledge} if there exist a PPT algorithm \texttt{Simulator} having access to the same input as the algorithms \texttt{Verify} and \texttt{Aggregate} but not the provers input, such that output from the \texttt{Simulator} and \texttt{Prove} is indistinguishable, i.e have the same distribution given that $x\in\Phi$.  
+A proof system is \textit{honest verifier zero-knowledge} if there exists a PPT algorithm \texttt{Simulator} having access to the same input as the algorithms \texttt{Verify} and \texttt{Aggregate} but not the provers input, such that output from the \texttt{Simulator} and \texttt{Prove} is indistinguishable, i.e have the same distribution given that $x\in\Phi$.  
 \end{itemize}
 
 These requirements can be seen as a modification of the requirements given in Definition \ref{def:ZKP} to aggregated set membership proof. Note that the zero-knowledge property should hold for the provers, not the aggregation.

@@ -1,6 +1,6 @@
 \chapter{Application in VAHSS}
 \label{ch:VAHSS}
-In this chapter, an application of the aggregated set membership proof is presented and evaluated. As discussed chapter \ref{ch:intro}, VAHSS is an example where multiple data providers, henceforth denoted clients, participate. In this chapter first a construction of VAHSS  that verifies the servers computation is presented, then it is derived how to extend the verification to also include the clients. 
+In this chapter, an application of the aggregated set membership proof is presented and evaluated. As discussed in chapter \ref{ch:intro}, VAHSS is an example where multiple data providers, henceforth denoted clients, participate. In this chapter first a construction of VAHSS  that verifies the servers computation is presented, then it is derived how to extend the verification to also include the clients. 
 %The verification of clients requires each client to prove that the shared secret is in a predetermined allowed set or range.
 Then different methods for verifying clients are compared. The comparison   mainly focuses on comparing aggregated signature-based set membership proof presented in Construction \ref{alg:ZKSM-Agg} with the state-of-the-art Bulletproofs for verification of clients to see how the runtime of the construction is affected.
 
@@ -8,105 +8,23 @@ Then different methods for verifying clients are compared. The comparison   main
 \section{VAHSS}
 \label{sec:VAHSS-HSS}
 %Consider $n$ clients and $m$ servers, to simplify notation define the two sets $\mathcal{N}=\{1,...,n\}$ and $\mathcal{M} = \{1,...,m\}$. Let $c_i$ and $x_i$ for $i\in\mathcal{N}$ denote the clients (data providers) and their respective data. Denote the servers by $s_j$, where $\:j\in\mathcal{M}$.
-The considered construction of VAHSS presented in \cite{SumItUp}, implemented and benchmarked in \cite{VAHSS}, makes use of homomorphic hash functions to verify servers.
+The considered construction of VAHSS presented in \cite{SumItUp}, implemented and benchmarked in \cite{VAHSS}, makes use of homomorphic hash functions to verify the computations performed by servers.
 
 %In this section the construction of the Verifiable Additive Homomorphic Secret Sharing (VAHSS), that this paper aim to extend is presented. The goal is to extend the VAHSS such that it in addition to  the verification of servers computations client are also verified to be honest. This will be done  by verifying that they do not provide false data. Different methods for verifying the data provided by the clients is explained in the next section.
 
 %Before extending the VAHSS construction to additionally verify clients and combining it with the aggregated set membership proof introduced in the previous chapters. The VAHSS construction considered will be explained briefly. 
 
-Assume that $n$ clients and $m$ servers participate in the VHASS construction. The sets $\mathcal{N}=\{1,...,n\}$ and $\mathcal{M} = \{1,...,m\}$ are introduced to simplify notation. The clients are denoted $c_i$ for $i\in\mathcal{N}$, and their respective data $x_i$.  The servers in the construction are refereed to $s_j$ for $\:j\in\mathcal{M}$. 
+Assume that $n$ clients and $m$ servers participate in the VAHSS construction. The sets $\mathcal{N}=\{1,...,n\}$ and $\mathcal{M} = \{1,...,m\}$ are introduced to simplify notation. The clients are denoted $c_i$ for $i\in\mathcal{N}$, and their respective data $x_i$.  The servers in the construction are refereed to $s_j$ for $\:j\in\mathcal{M}$. 
 
-Each client $c_i$ split their secret $x_i$ into $m$ shares, denoted $\{x_{ij}\}_{j\in\mathcal{M}}$, such that $x_i=\sum_{j\in\mathcal{M}}x_{ih}$ and sends one share to each server. The servers receives shares from all $n$ clients and computes and publishes the partial sum $y_j = \sum_{i\in\mathcal{N}} x_{ij} $. Then the final sum can be computed by any party by summing the public partial sums, which gives $y = \sum_{j\in\mathcal{M}} y_j = \sum_{j\in\mathcal{M}} \sum_{i\in\mathcal{N}} x_{ij} = \sum_{i\in\mathcal{N}} \sum_{j\in\mathcal{M}} x_{ij} =   \sum_{i\in\mathcal{N}}x_i$.
+Each client $c_i$ splits the secret $x_i$ into $m$ shares, denoted $\{x_{ij}\}_{j\in\mathcal{M}}$, such that $x_i=\sum_{j\in\mathcal{M}}x_{ij}$ and sends one share to each server. Each server $s_j$,  $j\in\mathcal{M}$, receives shares from all $n$ clients and computes and publishes the partial sum $y_j = \sum_{i\in\mathcal{N}} x_{ij} $. Then the final sum can be computed by any party by summing the public partial sums, which gives $y = \sum_{j\in\mathcal{M}} y_j = \sum_{j\in\mathcal{M}} \sum_{i\in\mathcal{N}} x_{ij} = \sum_{i\in\mathcal{N}} \sum_{j\in\mathcal{M}} x_{ij} =   \sum_{i\in\mathcal{N}}x_i$.
 
 %For AHSS constructions, the idea is that each client splits their secret, $x_i$, into $m$ shares, denoted $x_{ij}$. The clients then sends one share to each server. The servers receives shares from all $n$ clients and computes the partial sum $y_j = \sum_{i\in\mathcal{N}} x_{ij} $ and publishes the result. The final sum can then be computed by any party by summing the public partial sums, this gives $y = \sum_{j\in\mathcal{M}} y_j = \sum_{j\in\mathcal{M}} \sum_{i\in\mathcal{N}} x_{ij} =  \sum_{i\in\mathcal{N}}x_i$. For VHASS construction in addition to AHSS a proof $\sigma$ that verifies that the partial sums $y_j=  \sum_{i=1}^n  x_{ij} $,  for all $j\in\mathcal{M}$, is generated and published. This allows any party to verify the correctness of the servers computations.
 
 A proof $\sigma$ of the servers computations is obtained accordingly.  Each client $c_i$ publishes a checksum $\tau_i= g^{x_i+R_i}$, where $x_i$ is the secret hidden by the distributed shares and $R_i\in_R\mathds{F}$ is such that $R_n=\phi(p) \lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(p)}\rceil - \sum_{i=1}^{n-1}R_i $. Each server $s_j$ computes a partial proof $\sigma_j = g^{y_j}$.  Finally the verification is done by checking if $\prod_{j\in\mathcal{M}} \sigma_j = \prod_{i\in\mathcal{N}}\tau_i\wedge \prod_{i\in\mathcal{N}}\tau_i = g^y$.  If it holds the servers computations are proved to be correct. For a precise implementation and proof of correctness, security and verification the reader is refereed to the original paper about VAHSS \cite{SumItUp}.
-\begin{comment}
-%\subsection*{Construction}
-%The considered VAHSS, uses homomorphic hash functions to verify the servers computations, it was presented in \cite{SumItUp} and then implemented and evaluated in \cite{VAHSS}.
 
-%The shares that hides the secrets are constructed by making use of a certain polynomial, $p_i$. For each client, $c_i$, let $\theta_{i1},...,\theta_{im}\in\mathds{F}\backslash\{0\}$ and $\lambda_{i1},...,\lambda_{im}\in\mathds{F}$ be chosen such that the following property for polynomial $p_i$ holds,
-%\begin{align}
-%\label{eq:pi(0)}
-%p_i(0) = \sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij}).
-%\end{align}
-%Then if  $c_i$ puts the shares to  $x_{ij}= \lambda_{ij}p_i(\theta_{ij})$, where  the polynomial $p_i(X)$ is a $t$-degree polynomial defined as $p_i(X) = x_i + \sum_{k=1}^t a_kX^k$. The sum of all shares is , $\sum_{j=1}^m x_{ij} = \sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij})= p_i(0) = x_i$, thus the shares $x_{ij}$ adds up to the secret $x_i$  and the secret is perfectly hidden is not all shares used in the summation. 
-
-%This idea is used in the VAHSS Construction \ref{alg:VAHSS-HSS}. The construction consists of the six PPT algorithms: \textbf{ShareSecret}, \textbf{PartialEval}, \textbf{PartialProof}, \textbf{FinalEval}, \textbf{FinalProof} and \textbf{Verify}. 
-
-%The clients  executed the step \textbf{ShareSecret}, the servers \textbf{PartialEval} and \textbf{PartialProof} and the last three steps can be ran by anyone. A full description of the construction and all six algorithms is seen in Construction \ref{alg:VAHSS-HSS}.
-
-%To obtain a secret sharing protocol, where any true subset of shares reviles no information about the secret they are origination from, the construction makes use the following polynomial. 
-%For each client, $c_i$, let $\theta_{i1},...,\theta_{im}\in\mathds{F}\backslash\{0\}$ and $\lambda_{i1},...,\lambda_{im}\in\mathds{F}$ such that the following property for polynomial $p_i$ holds,
-%\begin{align}
-%\label{eq:pi(0)}
-%p_i(0) = \sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij}).
-%\end{align}
-%Note that is the step \textbf{ShareSecret} the shares are put to $x_{ij}= \lambda_{ij}p_i(\theta_{ij})$ and the polynomial $p_i(X)$ is a $t$-degree polynomial defined as $p_i(X) = x_i + \sum_{k=1}^t a_kX^k$, thus $\sum_{j=1}^m x_{ij} = \sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij})= p_i(0) = x_i$, thus the shares $x_{ij}$ adds up to the secret $x_i$ if all shares are in the sum and the secret is hidden else. 
-
-
-%To verify servers honesty a proof, denoted $\sigma$, relying on homomorphic secret sharing is constructed. Each server, $s_j$ publishes a partial proof $\sigma_j$, and it will then be possible for any party to verify the correctness of the aggregation. A detailed description is seen in Construction \ref{alg:VAHSS-HSS}.
-
-
-%\begin{algorithm}
-%\caption{\textbf{: Verifiable additive homomorphic secret sharing}}
-%\label{alg:VAHSS-HSS}
-%\textbf{Goal:} Construct and share the sum $\sum_{i=1}^n x_i$, where $x_i$ is a secret value known by client $c_i$, where $i\in\mathcal{N}$ without any client needing to revealing their individual secret. The servers, used to sharing the secrets, computations are verified so they must be honest. 
-%\vspace{2pt}
-%\hline 
-%\vspace{2pt}
-%\begin{itemize}
- % \item\textbf{ShareSecret $(1^\lambda,i,x_i)\xrightarrow[]{}(\tau_i,\{x_{ij}\}_{j\in\mathcal{M}})$}\\
-%Pick uniformly at random $\{a_i\}_{i\in\{1,..,t\}}\in\mathds{F}$ and a $t$-degree polynomial $p_i$ on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Let $\mathcal{H}:x\mapsto g^x$
-% (g generator the multiplicative group of $\mathds{F}$)
-%, be a collision-resistant homomorphic hash function. Let $R_i\in\mathds{F}$ be the output of a PRF. Where it is required that  $R_n\in \mathds{F}$  satisfies
-%$R_n = \phi(N)\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N)}\rceil- \sum_{i=1}^{n-1}R_i $. Compute $\tau_i = \mathcal{H}(x_i+R_i)$, and put $x_{ij}=\lambda_{i,j}p_i(\theta_{ij})$.  Output $\tau_i$ and $x_{i,j}$ for $j\in\mathcal{M}$. 
-
-%\item\textbf{PartialEval $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}y_j$}\\
-%Compute and output $y_j = \sum_{i=1}^n x_{ij}$.
-
-%\item\textbf{PartialProof $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}\sigma_j$}\\
-%Compute and output $\sigma_j = \prod_{i=1}^n g^{x_{ij}} =  g^{\sum_{i=1}^n x_{ij}}= g^{y_j}=\mathcal{H}(y_j)$.
-
-%\item\textbf{FinalEval $(\{y_j\}_{j\in\mathcal{M}})\xrightarrow[]{}y$}\\
-%Compute and output $y = \sum_{j=1}^m y_{j}$.
-
-%\item\textbf{FinalProof $(\{\sigma_j\}_{j\in\mathcal{M}})\xrightarrow[]{}\sigma$}\\
-%Compute and output $\sigma = \prod_{j=1}^m \sigma_j = \prod_{j=1}^m g^{y_{j}} =  g^{\sum_{j=1}^m y_{j}}= g^{y}=\mathcal{H}(y)$.
-
-%\item\textbf{Verify $(\{\tau_i\}_{i\in\mathcal{N}},\sigma,y)\xrightarrow[]{}\{0,1\}$}\\
-%Compute and output $\sigma= \prod_{i=1}^n \tau_i \wedge \prod_{i=1}^n \tau_i = \mathcal{H}(y)$.
-%\end{itemize}
-%\end{algorithm}
-
-%\subsection*{Correctness, Security and Verifiability}
-%A HSS and a AHSS construction should satisfy  two requirements: \textit{Correctness} and \textit{Security}. A VAHSS should also satisfy \textit{Verifiability}. The exact definition of the three requirements for Construction \ref{alg:VAHSS-HSS} is given in \cite{SumItUp} and Theorem \ref{thm:VAHSS_CSV} states that Construction \ref{alg:VAHSS-HSS} fulfils these requirements. 
-%\begin{comment}
-%\begin{itemize}
-  %  \item \textbf{Correctness} It must hold that Pr$\Big[\textbf{Verify}(\{\tau_i\}_{i\in\mathcal{N}},\sigma,y)=1\Big]=1$. This means that with probability $1$ the output $y$ from \textbf{FinalEval} is accepted given all parties where honest and the protocol were executed correctly.
-   % \item \textbf{Security} Let $T$ define the set of corrupted servers such that $|T|<m$, i.e at least one server is honest.  Denote a PPT adversary by $\mathcal{A}_1$ and let the Adv$(1^\lambda,\mathcal{A},T):= \text{Pr}[b' = b]-1/2$ be the advantage of $\mathcal{A}=\{\mathcal{A}_1,\mathcal{D}\}$ in guessing $b$ in the following experiment:
-    %\begin{enumerate}
-      %  \item The adversary $\mathcal{A}_1$ gives $(i,x_i,x_i')$ to the challenger, where $i\in[n], x_i\neq x_i'$ and $|x_i|=|x_i'|$.
-     %   \item The challenger picks a bit $b\in\{0,1\}$ uniformly at random chooses and computes $\textbf{ShareSecret}(1^\lambda,i,\hat{x}_i) = (\hat{\text{share}}_{i1},...,\hat{\text{share}}_{im},\tau_i)$, where $\hat{\textbf{x}}_i$ is  such that $\hat{x}_i = \begin{cases}x_i, \text{ if } b=0 \\ x_i' \text{ else} \end{cases}$. 
-       % \item Given the shares from the corrupted servers T and $\hat{\tau}_i$ the adversary distinguisger outputs a guess $b'\xleftarrow[]{}\mathcal{D}((\hat{\text{share}_{ij}})_{j|s_j\in T},\hat{\tau}_i)$.
-    %\end{enumerate}
-    %A VAHSS-construction is $t$-secure if for all $T\subset \{s_1,...,s_m\}$ with $|T|<t$ it holds that Adv$(1^\lambda,\mathcal{A},T)<\varepsilon(\lambda)$ for some negligible $\varepsilon(\lambda)$.
- %\item \textbf{Verifiability} Let $\mathcal{A}$ denote any PPT  adversary and $T$ denote the set of corrupted servers with $T\leq m$. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(x_1,...,x_n)$ with negligible probability.   
-%\end{itemize}
-%The VHASS in Construction \ref{alg:VAHSS-HSS} satisfies the correctness, security and verifiability requirements defined above, this is stated in Theorem \ref{thm:VAHSS_CSV} .
-%\end{comment}
-
-%\begin{thm}
-%\label{thm:VAHSS_CSV}
-%Construction \ref{alg:VAHSS-HSS} satisfies the correctness, security and verifiability requirements defined in \cite{SumItUp}.
-%\end{thm}
-%\begin{proof}
-%See section $4.1$ in \cite{SumItUp}.
-%\end{proof}
-\end{comment}
 
 \section{Client and Server VAHSS}
-The VAHSS construction discussed in section \ref{sec:VAHSS-HSS} assumes honest clients and verifies the servers. This section extends the VAHSS construction to verify both clients and servers. First it is stated how to extend the VAHSS construction to additionally verify clients. Then a construction, using range proofs or set membership proofs, to verify clients is derived. It is then discussed how such construction can be modified to use aggregated set membership proofs for verification of clients. 
+The VAHSS construction discussed in section \ref{sec:VAHSS-HSS} assumes honest clients and verifies the servers. This section extends the VAHSS construction to verify both the clients' input and the computations performed by the servers. First it is stated how to extend the VAHSS construction to additionally verify clients. Then a construction, using range proofs or set membership proofs, to verify clients is derived. It is then discussed how such a construction can be modified to use aggregated set membership proofs for verification of client' inputs. 
 
 %If a range proof or set membership proof is included in the VAHSS construction then a potentially malicious clients can have a limited influence on the computed sum. Range proofs and set membership proofs force malicious input to still be part of a certain range or set. This leads to that the impact on the sum that a malicious client can have is bounded by the size of the range or by the elements in the set. 
 
@@ -298,8 +216,8 @@ Compute and output $y_j = \sum_{i=1}^n x_{ij}$.
 \item\textbf{PartialProof $(j,\{x_{ij}\}_{i\in\mathcal{N}})\xrightarrow[]{}\sigma_j$}\\
 Compute and output $\sigma_j = \prod_{i=1}^n g^{x_{ij}} =  g^{\sum_{i=1}^n x_{ij}}= g^{y_j}=\mathcal{H}_1(y_j)$.
 
-\item \text{\textbf{PartialAggregate} $(pp,k,\mathcal{S}_k, \{\Sigma_i\}_{i\in\mathcal{S}_k} ) \xrightarrow[]{} \Sigma_{a_k}}$} \\
-On the input $\{ \Sigma_i}\}_{i\in\mathcal{S}_k}$ where $\mathcal{S}_k\subseteq\{1,...,n\}$, the set of proofs is aggregated according to the algorithm \textbf{Aggregate} in Construction \ref{alg:ZKSM-Agg} and  aggregated proof $\Sigma_{a_k}$ is published. 
+\item \text{\textbf{PartialAggregate} $(pp,k,\mathcal{S}_k, \{\Sigma_i\}_{i\in\mathcal{S}_k} ) \xrightarrow[]{} \Sigma_{a_k}$} \\
+On the input $\{ \Sigma_i \}_{i\in\mathcal{S}_k}$ where $\mathcal{S}_k\subseteq\{1,...,n\}$, the set of proofs is aggregated according to the algorithm \textbf{Aggregate} in Construction \ref{alg:ZKSM-Agg} and  aggregated proof $\Sigma_{a_k}$ is published. 
 
 \item\textbf{FinalEval $(\{y_j\}_{j\in\mathcal{M}})\xrightarrow[]{}y$}\\
 Compute and output $y = \sum_{j=1}^m y_{j}$.
@@ -307,7 +225,7 @@ Compute and output $y = \sum_{j=1}^m y_{j}$.
 \item\textbf{FinalProof $(\{\sigma_j\}_{j\in\mathcal{M}})\xrightarrow[]{}\sigma$}\\
 Compute and output $\sigma = \prod_{j=1}^m \sigma_j = \prod_{j=1}^m g^{y_{j}} =  g^{\sum_{j=1}^m y_{j}}= g^{y}=H(y)$.
 
-\item\textbf{Verify $(\{\pi_i\}_{i\in\mathcal{N}},x,y,\{\Sigma_{a_k}}\}_{j\in\mathcal{K}})\xrightarrow[]{}\{0,1\}$}\\
+\item\text{ \textbf{Verify} $(\{\pi_i\}_{i\in\mathcal{N}},x,y,\{\Sigma_{a_k} \}_{k\in\mathcal{K}})\xrightarrow[]{}\{0,1\}$}\\
 Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y)\wedge \{\textbf{VerifyProof}(\Sigma_{a_k})\}_{k\in\mathcal{K}}$. $\textbf{VerifyProof}$ is the verification algorithm in Construction \ref{alg:ZKSM-Agg}.
 \end{itemize}
 \label{alg:VAHSS-HSS-RP-Agg}
@@ -363,9 +281,9 @@ To provide an implementation of Construction \ref{alg:VAHSS-HSS-RP} and \ref{alg
 \subsection*{Implementation parameters}
 The finite field $\mathds{F}$ is generated by a prime of size $256$-bit.
 
-The number of servers is set to $5$, $|\mathcal{M}|=5$,  and the number of clients to $100$, $|\mathcal{N}|=100$.  The set of aggregation parties $\mathcal{K}$ is assumed to consist of a single party, $|\mathcal{K}|=1$.
+The number of servers is set to $5$, $|\mathcal{M}|=5$,  and the number of clients to $100$, $|\mathcal{N}|=100$.  The set of aggregation parties $\mathcal{K}$ is assumed to consist of a single party, meaning that $|\mathcal{K}|=1$.
 
-The range is set to $[18,200]$ for the implementation of Bulletproofs, and thus the upper bound of the Bulletproof is set to $2^n$, where $n=8$. The size of the set $\Phi$ set to the length of the range, i.e $|\Phi|=200-18 = 182$, for both the aggregated and not aggregated signature-based set membership proofs. 
+The range is set to $[18,200]$ for the implementation of Bulletproofs, and thus the upper bound of the Bulletproof is set to $2^n$, where $n=8$. The size of the set $\Phi$ is put to the length of the range, $|\Phi|=200-18 = 182$, for both the aggregated and not aggregated signature-based set membership proofs. 
 
 A final remark about the implementation is that its purpose is to test the above-proposed constructions and provide runtime evaluations, the code has not been tested enough to be considered as a secure implementation.
 
@@ -386,7 +304,7 @@ A final remark about the implementation is that its purpose is to test the above
 
 %Smaller adjustment has been made to the algorithms due to combining and hence the runtime for all algorithms in the  the client and server VAHSS in evaluated.  
 
-The runtime for the algorithms in Construction \ref{alg:VAHSS-HSS-RP} and \ref{alg:VAHSS-HSS-RP-Agg} is presented in Table \ref{tab:BenchBP}. Construction \ref{alg:VAHSS-HSS-RP} is benchmaked considering two different constructions for verifying clients:  Bulletproofs and signature-based set membership proofs. Construction \ref{alg:VAHSS-HSS-RP-Agg} is benchmarked considering aggregated signature-based set membership proofs, with a single trusted aggregating party.
+The runtime for the algorithms in Construction \ref{alg:VAHSS-HSS-RP} and \ref{alg:VAHSS-HSS-RP-Agg} is presented in Table \ref{tab:BenchBP}. Construction \ref{alg:VAHSS-HSS-RP} is benchmarked considering two different constructions for verifying clients:  Bulletproofs and signature-based set membership proofs. Construction \ref{alg:VAHSS-HSS-RP-Agg} is benchmarked considering aggregated signature-based set membership proofs, with a single trusted aggregating party.
  
 
 
@@ -405,9 +323,9 @@ To separately measure the runtime for verifying the servers and clients the  alg
  	\item \textbf{VerifyServers $(\{\pi_i\}_{i\in\mathcal{N}},y)\xrightarrow[]{}\{0,1\})$}\\
  Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y)$.
  \item \textbf{VerifyClients $(\{\pi_i\}_{i\in\mathcal{N}}\{\Sigma_i\}_{i\in\mathcal{N}})\xrightarrow[]{}\{0,1\}$ }\\
- For each proof $\Sigma_i$, verify that it is correct. This implies running  $\textbf{VerifyProof}(\pi_i, \Sigma_i)$ for all $i\in\mathcal{N}$. Where $\textbf{VerifyProof}$ is the verification algorithm associated with the algorithm used to construct the proof, $\Sigma_i$. If the proofs have been aggregated then the verification is performed for each aggregated proof instead of for each clients proofs. If all proofs are correct return $1$, else $0$.  
+ For each proof $\Sigma_i$, verify that it is correct. This implies running  $\textbf{VerifyProof}(\pi_i, \Sigma_i)$ for all $i\in\mathcal{N}$, where $\textbf{VerifyProof}$ is the verification algorithm associated with the algorithm used to construct the proof, $\Sigma_i$. If the proofs have been aggregated then the verification is performed for each aggregated proof instead of for each clients proofs. If all proofs are correct return $1$, else $0$.  
  \end{itemize}
-Return  $\textbf{VerifyServers}\wedge \textbf{VerifyCleints}$
+Return  $\textbf{VerifyServers}\wedge \textbf{VerifyClients}$
 \end{itemize}
 
  \begin{table}[h]
@@ -420,7 +338,7 @@ Return  $\textbf{VerifyServers}\wedge \textbf{VerifyCleints}$
   \textbf{ProveSecret} 						&53/x [ms]				& 	66 [ms]	&66 [ms]			\\ 
   \textbf{PartialEval}  										&   78/x	[$\mu$s]				&71[$\mu$s]	 		&	71	 [$\mu$s]							\\ 
   \textbf{PartialProof} 									&   273/x[$\mu$s]						& 5255 [$\mu$s]			& 5255 [$\mu$s]				\\ 
-   \textbf{Aggregate}										&   -				&		-	&		59 [s]					\\ 
+   \textbf{Aggregate}										&   				&			&		59 [s]					\\ 
   \textbf{FinalEval}  											&   689/x [ns]						&699  [ns]				&			699  [ns]												\\ 
   \textbf{FinalProof}  												&   50/x	[$\mu$s]			&  115 [$\mu$s]	&				115 [$\mu$s]									\\ 
   \textbf{VerifyClients}							  							&   2979/x[ms]					& 9288 [ms]&					8120 [ms]							\\ 
@@ -432,15 +350,15 @@ Return  $\textbf{VerifyServers}\wedge \textbf{VerifyCleints}$
 \end{table}
 %Considering this paraphrase, it is clear what the runtime \textbf{VerifyServers} and \textbf{VerifyClients} in Table \ref{tab:BenchBP} measures. Note that \textbf{VerifyServers} is the runtime to verify all servers and \textbf{VerifyClients} is the runtime for verifying all client.
 
-In Table \ref{tab:BenchBP} the runtime for all algorithms  is consistently fastest when using Bulletproofs to verify the clients. Note that the considered range is $[18,200]$, hence it is sufficient to use $n=8$ for the upper bound for the Bulletproofs. In section \ref{sec:ComparetOBullet} it is noted that the runtime for verification of multiple clients increased significantly if the upper bound of the range is increased. This implies that if a larger range is considered the aggregated signature-based set membership would be faster than Bulletproofs for verification of all clients. This is seen in Chapter \ref{ch:results} in Figure \ref{fig:NrClients}. 
+In Table \ref{tab:BenchBP} the runtime for all algorithms are  consistently faster when using Bulletproofs to verify the clients. Note that the considered range is $[18,200]$, hence it is sufficient to use $n=8$ for the upper bound for the Bulletproofs. In section \ref{sec:ComparetOBullet} it is noted that the runtime for verification of multiple clients increased significantly if the upper bound of the range is increased. This implies that if a larger range is considered the aggregated signature-based set membership would be faster than Bulletproofs for verification of all clients. This is seen in Chapter \ref{ch:results} in Figure \ref{fig:NrClients}. 
 
-Uniformly, independent of which construction used to verify clients, the runtime for \textbf{VerifyServers} is approximately $10^3$ times faster then for \textbf{VerifyClients}.  This highlights how expensive the verification of clients is which motivates the attempt to reduce the computations required to verify multiple clients by aggregating set membership proofs. 
+Uniformly, independent of which construction used to verify clients, the runtime for \textbf{VerifyServers} is approximately $10^3$ times faster than for \textbf{VerifyClients}.  This highlights how expensive the verification of clients is and motivates the attempt to reduce the computations required to verify multiple clients by aggregating set membership proofs. 
 
-Considering the runtime of \textbf{VerifyClients}, it is noted that aggregation of signature-based set membership proofs reduce the runtime with $13\%$. Since it is only partly aggregated the runtime still depends on the number of provers. Consequently, when a large number of clients participate the verification of clients still becomes a bottleneck of the construction. 
+Considering the runtime of \textbf{VerifyClients}, it is noted that aggregation of signature-based set membership proofs reduce the runtime by $13\%$. The set membership proofs are only partly aggregated and thereby the runtime depends on the number of provers. Consequently, when a large number of clients participate the verification of clients still becomes a bottleneck of the construction.
 
 
-It is noted that the algorithms \textbf{PartialProof}, \textbf{FinalProof} and \textbf{VerifyServers} differs noteworthy in runtime for different constructions for verifying clients. These algorithms, as described in Construction \ref{alg:VAHSS-HSS-RP} and \ref{alg:VAHSS-HSS-RP-Agg}, are seemingly independent of the construction used to verify clients. The  difference in runtime is comes from that different libraries for the elliptic curve groups are used for Bulletproofs and the signature-based set membership proofs. %Optimisation of the libraries has not been made and whether the difference can be reduced due to optimisations is not investigated.
-The libraries have note been benchmarked against each other, and whether the difference in runtime can be reduced via optimisations has not been investigated.
+It is noted that the algorithms \textbf{PartialProof}, \textbf{FinalProof} and \textbf{VerifyServers} differs noteworthy in runtime for different constructions for verifying clients. These algorithms, as described in Construction \ref{alg:VAHSS-HSS-RP} and \ref{alg:VAHSS-HSS-RP-Agg}, are seemingly independent of the construction used to verify clients. The  difference in runtime comes from that different libraries for the elliptic curve groups are used for Bulletproofs and the signature-based set membership proofs. %Optimisation of the libraries has not been made and whether the difference can be reduced due to optimisations is not investigated.
+The libraries have not been benchmarked against each other, and whether the difference in runtime can be reduced via optimisations has not been investigated.
 
 %The runtime  for the algorithms \textbf{PartialProof}, \textbf{FinalProof} and \textbf{VerifyServers} using Bulletproof for verification of client is not affected by increasing the maximum upper bound. I.e Bulletproofs are consequently, independent of implementation parameters, faster then aggregated signature-based set membership proofs, for these algorithms.
 
