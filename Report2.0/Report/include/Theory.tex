@@ -63,7 +63,9 @@ In this paper \textit{Verifiable Additive}  homomorphic secret sharing  (VAHSS) 
 
 The additivity property for a HSS means that the secret is reconstructed by computing the sum of at least $\tau$ shares, i.e $x = \sum_{i=1}^\tau x_i$. This is denoted Additive Homomorphic Secret Sharing (AHSS).
 
-VAHSS is a construction of AHSS where $m$ parties, referred to as servers, collaborates to compute the sum of multiple clients' secrets. Each client split their secret into $m$ shares and sends one share to each server. The servers compute and output a partial sum of all received shares. The final sum is computed by summing the servers outputs. For VAHSS constructions a proof $\sigma$ is constructed that verifies that the final sum is the correctly computed sum of the clients' secrets. In section \ref{sec:VAHSS-HSS} a specific construction of a VAHSS is presented.
+VAHSS is a construction of AHSS where $m$ parties, referred to as servers, collaborates to compute the sum of multiple clients' secrets. Each client split their secret into $m$ shares and sends one share to each server. The servers compute and output a partial sum of all received shares. The final sum is computed by summing the servers outputs. For VAHSS constructions a proof $\sigma$ is constructed that verifies that the final sum is the correctly computed sum of the clients' secrets. 
+
+In section \ref{sec:VAHSS-HSS} a specific construction of a VAHSS is presented and in Appendix \ref{Appendix:CSV-VAHSS} the correctness, security and verifiability requirement of a VAHSS construction is stated.
 
 
 \subsection*{Homomorphic hash functions}
@@ -159,13 +161,13 @@ The Fiat-Shamir heuristic \cite{Fiat-Shamir} can be used to convert an interacti
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Set Membership Proofs and Range Proofs}
 \label{sec:RF_theory}
-Zero-knowledge set memberships proofs allows a prover to convince a verifier that the value of a secret is in an allowed set, without revealing any other information about the secret. Formally they are proofs of the statement:
+Zero-knowledge set memberships proofs allow a prover to convince a verifier that the value of a secret is in an allowed set, without revealing any other information about the secret. Formally they are proofs of the statement:
 \begin{align} \label{eq:SM_statement}
     \{(g,h\in\mathds{G},C;x,R\in\mathds{F})\::\:C= g^x h^R \wedge x \in \Phi\},
 \end{align}
 where $\Phi$ is some known set. 
  
-Zero-knowledge range proofs states that a secret belongs to a range, instead of a set. Since ranges are continuous sets, zero-knowledge range proofs are less general than zero-knowledge set membership proofs.  Zero-knowledge range proofs do not reveal any information about the secret beyond the fact that the secret belongs to the range. Formally they are proofs of the following statement: 
+Zero-knowledge range proofs prove that a secret belongs to a range, instead of a set. Since ranges are continuous sets, zero-knowledge range proofs are less general than zero-knowledge set membership proofs.  Zero-knowledge range proofs do not reveal any information about the secret beyond the fact that the secret belongs to the range. Formally they are proofs of the following statement: 
 \begin{align} \label{eq:RP_statement}
     \{(g,h\in\mathds{G},C;x,R\in\mathds{F})\::\:C= g^x h^R \wedge x \in \{\textit{"predetermined allowed range"}\}.
 \end{align}

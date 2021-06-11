@@ -20,6 +20,7 @@
 \BOOKMARK [1][-]{section.6.4}{Prototype analysis}{chapter.6}% 20
 \BOOKMARK [0][-]{chapter.7}{Discussion and Conclusion}{}% 21
 \BOOKMARK [0][-]{chapter.7}{Bibliography}{}% 22
-\BOOKMARK [0][-]{appendix.A}{Multiple Aggregating Parties}{}% 23
-\BOOKMARK [0][-]{appendix.B}{Naive Aggregation }{}% 24
-\BOOKMARK [0][-]{appendix.C}{Complete Aggregation }{}% 25
+\BOOKMARK [0][-]{appendix.A}{Correctness, Security and Verifiability of VAHSS}{}% 23
+\BOOKMARK [0][-]{appendix.B}{Multiple Aggregating Parties}{}% 24
+\BOOKMARK [0][-]{appendix.C}{Naive Aggregation }{}% 25
+\BOOKMARK [0][-]{appendix.D}{Complete Aggregation }{}% 26

@@ -1,6 +1,39 @@
-\chapter{Non-interactive Bulletproofs}
+\chapter{Correctness, Security and Verifiability of VAHSS}
+\label{Appendix:CSV-VAHSS}
+
+Assume that a VAHSS construction consists of $n$ clients and $m$ servers, and that the index set of clients and servers are $\mathcal{N}$ and $\mathcal{M}$ respectively.   A construction of VAHSS is a $7$-tuple of PPT-algorithms (\textbf{Setup}, \textbf{ShareSecret}, \textbf{PartialEval}, \textbf{PartialProof}, \textbf{FinalEval}, \textbf{FinalProof}, \textbf{Verify}). Assuming that the algorithms are as defined in \cite{SumItUp} they should satisfy the following correctness, verifiability and security requirements \cite{SumItUp}:
+
+\begin{itemize}
+\item \textbf{Correctness} It should always hold that Pr$[$\textbf{Verify}$(pp,\sigma,y)=1]=1$. $pp$ are the public parameters constructed by the algorithm \textbf{Setup}, $\sigma$ is the output of the algorithm \textbf{FinalProof} computed by the partial proofs $\sigma_j$, which are outputs of the algorithm \textbf{PartialProof} for $\forall\:  j\in\mathcal{M} $. The value $y$ is the output of the algorithm \textbf{FinalEval}.
+
+\item \textbf{Verifiability}
+For any set $T$ of corrupted servers and any PPT adversary $\mathcal{A}$ it should hold that Pr$[$\textbf{Exp}$_{VHSS}^{Verify}(x_1,...,x_n,T,\mathcal{A})=1]\leq\varepsilon (\lambda)$ for some negligible $\varepsilon(\lambda)$. The values $x_1,...,x_n\in\mathds{F}$ are secret values and the experiment \textbf{Exp}$_{VHSS}^{Verify}(x_1,...,x_n,T,\mathcal{A})$ is defined as:
+\begin{enumerate}
+\item For all $i\in\mathcal{N}$ run the algorithm \textbf{ShareSecret} in the input $(1^\lambda,i,\mathbf{x}_i)$ and publish the output $\tau_i$.
+\item All servers $s_j\in T$ gives the shares $(\text{share}_{1j}, ..., \text{share}_{mj})$ to the adversary.   
+\item For all corrupted server $s_j\inT$ the adversary outputs the modified values $y_j'$ and $\sigma_j'$. While for all servers $s_j\notin T$ the values $y_j'$ and $\sigma_j'$ are computed according to the algorithms \textbf{PartialEval} and \textbf{PartialProof} respectively.
+\item The final value $y'$ is computed according to the algorithm \textbf{FinalEval} and the final proof $\sigma$ is computed according to the algorithm \textbf{FinalProof}. 
+\item If $y \neq f(x_1,...,x_n) $ and \textbf{Verify}$(pp,\sigma',y')=1$ output $1$ else $0$. In this thesis the function $f$ is assumed to be the sum of the arguments.
+\end{enumerate}
+
+The above can be interpreted as: any PPT adversary who controls the shares of the  secret inputs for the corrupted servers has a negligible probability of having a wrong value of $y$ being accepted.
+
+\item \textbf{Security} Denote the set of corrupted servers by $T$ and assume that at least one servers is honest, resulting in that $|T|<m$. A VAHSS scheme is $t$-secure if  Adv$(1^\lambda,\mathcal{A},T)\leq \varepsilon (\lambda)$, for a negligible $\varepsilon(\lambda)$  and all $T\subset \{s_i,...,s_m\}$ such that $|T|< t$. Adv$(1^\lambda,\mathcal{A},T):= \text{Pr}[b=b']-1/2$ is the advantage of the adversary $\mathcal{A} = \{\mathcal{A}_1,\mathcal{D}\}$ in guessing $b$ in the following experiment:
+\begin{enumerate}
+\item The adversary $\mathcal{A}_1$ gives $(i,x_i,x_i')$ to the challenger, where  $i\in\mathcal{N}$, $x_i\neq x_i'$ and $|x_i|=|x_i'|$.
+\item The challenger picks a bit $b\in_R\{0,1\}$, if $b=0$ then the challenger puts $\mathbf{\hat{x}}_i =x_i$ and if $b=1$ the challenger puts  $\mathbf{\hat{x}}_i =x_i'$. Then the challenger runs the algorithm \textbf{ShareSecret} on the input $(1^\lambda,i,\mathbf{\hat{x}}_i)$ and algorithm outputs $( \Hat {\text{share}}_{i1},...,\hat{\text{share}}_{im},\hat{\tau}_i) $.
+
+\item Given the shares sent to the corrupted servers $T$ and the hash $\hat{\tau}_i$ from the challenger.  The adversary distinguisher outputs a guess $b'= \mathcal{D}\big( ({\text{share}}_{ij})_{j| s_j\in T} , \hat{\tau}_i \big)$.
+\end{enumerate}
+
+\end{itemize}
+
+
+
+
+\begin{comment}
 %\label{appendix:VHASS-LSS}
-\label{Appendix:Bulletproof}
+
 
 \begin{algorithm}[]
 \caption{\textbf{: Non-Interactive Bulletproofs}}
@@ -122,4 +155,5 @@ Compute $e=H(fid)$. Check that $y,s\in\mathds{Z}_\hat{N}$ and $\tilde{x}^{eN} = 
         \end{align*}
     \end{itemize}
 \end{itemize}
+\end{comment}
 \end{comment}

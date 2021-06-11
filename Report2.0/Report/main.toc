@@ -19,8 +19,9 @@
 \contentsline {section}{\numberline {6.2}Client and Server VAHSS}{34}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Implementation}{37}{section.6.3}%
 \contentsline {section}{\numberline {6.4}Prototype analysis}{39}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Discussion and Conclusion}{41}{chapter.7}%
-\contentsline {chapter}{Bibliography}{45}{chapter.7}%
-\contentsline {chapter}{\numberline {A}Multiple Aggregating Parties}{I}{appendix.A}%
-\contentsline {chapter}{\numberline {B}Naive Aggregation }{III}{appendix.B}%
-\contentsline {chapter}{\numberline {C}Complete Aggregation }{V}{appendix.C}%
+\contentsline {chapter}{\numberline {7}Discussion and Conclusion}{43}{chapter.7}%
+\contentsline {chapter}{Bibliography}{47}{chapter.7}%
+\contentsline {chapter}{\numberline {A}Correctness, Security and Verifiability of VAHSS}{I}{appendix.A}%
+\contentsline {chapter}{\numberline {B}Multiple Aggregating Parties}{III}{appendix.B}%
+\contentsline {chapter}{\numberline {C}Naive Aggregation }{V}{appendix.C}%
+\contentsline {chapter}{\numberline {D}Complete Aggregation }{VII}{appendix.D}%

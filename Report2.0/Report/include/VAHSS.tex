@@ -60,13 +60,14 @@ Assume that client $c_k$ commits to the value $\hat{x}_k$ in the Pedersen commit
 \vspace{10pt}
 The correctness, security and verifiability requirements of a VAHSS construction holds after replacing the checksums $\tau_i= g^{x_i+R_i}$ with a Pedersen commitment $\pi_i= g^{x_i}h^{R_i}$ in the VAHSS construction, \cite{SumItUp}. 
 
-Additionally, if a range proof or set membership proof, denoted $\Sigma_i$, is constructed of the secret $x_i$ in the Pedersen commitment, for all clients in the VAHSS construction.  Then any PPT adversary $\mathcal{A}$ who can modify the Pedersen commitments $\pi_i$  to any $\pi_i^{'} \:\forall  i\in T$, where $T$ is the set of corrupted clients,  has a negligible probability of choosing a commitment $\pi_i^{'}$ such that verification of the proofs $\Sigma_i$ and the VAHSS verifies true.
+Additionally if a range proof or set membership proof, denoted $\Sigma_i$, that satisfies the soundness, completeness and zero-knowledge requirements of zero-knowledge proofs is constructed of the secret $x_i$ in the Pedersen commitment $\pi_i$, for all clients $c_i$ in the VAHSS construction. Then any PPT adversary $\mathcal{A}$ who can modify the Pedersen commitments $\pi_i$  to any $\pi_i^{'} \:\forall  i\in T$, where $T$ is the set of corrupted clients, has a negligible probability of choosing a commitment $\pi_i^{'}$ such that verification of all the proofs $\Sigma_i$ and the VAHSS validates true.
 %\begin{itemize}
  %\item \textbf{Verifiability Servers}  Let $\mathcal{A}$ denote any PPT  adversary and $T$ denote the set of corrupted servers with $T\leq m$. Note that if $|T|=m$, the verifiability property holds but not the security property. The verifiability property requires that any $\mathcal{A}$ who can modify the input shares to all servers $s_j\in T$ can cause a wrong value to be excepted as $y=f(x_1,...,x_n)$ with negligible probability.  
  %\item  \textbf{Verifiability Clients} 
 %\end{itemize} 
 \end{Remark}
 %TODO fix proof before hand in to Seminar 2
+\textbf{Proof of remark:}
 The remark follows from that  replacing  $\tau_i$ with $\pi_i$ for $i=1,...,n$, it still holds that:
 \begin{align*}
 &\prod_{i\in\mathcal{N}} \pi_i = \prod_{i\in\mathcal{N}} g^{x_i}h^{R_i} = g^{\sum_{i\in\mathcal{N}} x_i}h^{\sum_{i\in\mathcal{N}} R_i} = g^{y} h^{ \phi(N)\big\lceil \frac{\sum_{i=1}^{n-1}R_i}{\phi(N) }\big\rceil} = g^y \\
@@ -74,7 +75,7 @@ The remark follows from that  replacing  $\tau_i$ with $\pi_i$ for $i=1,...,n$, 
 \end{align*}
 Further the Pedersen commitment is perfectly hiding as well as computationally binding and thus it follows that the requirements are still fulfilled. 
 
-From the soundness of range proofs and set membership proofs, and the above argument that the secret hidden in the commitment $\pi_i$ must be the same as the secret obtained by combining the the shares $\{x_{ij}\}_{j\in\mathcal{M}}$ for all $i=\mathcal{N}$, it follows that any adversary who can modify the commitments $\pi_i$ has a negligible probability of doing so such that the proofs $\Sigma_i$ and the VAHSS construction validates true.
+From the soundness of range proofs and set membership proofs, and the above argument that the secret hidden in the commitment $\pi_i$ must be the same as the secret obtained by combining the the shares $\{x_{ij}\}_{j\in\mathcal{M}}$ for all $i=\mathcal{N}$, it follows that any adversary who can modify the commitments $\pi_i$ has a negligible probability of doing so such that the proofs $\Sigma_i$ and the VAHSS construction validates true. $\quad \square$
 
 \begin{comment}
 The correctness follows from the correctness of range proofs and by proving that $\sigma= \prod_{i=1}^n \pi_i \:\bigwedge\: \prod_{i=1}^n \pi_i = \mathcal{H}(y)$. Both $y$ and $\sigma$ are the same as in Construction \ref{alg:VAHSS-HSS}, hence by construction:
@@ -104,10 +105,12 @@ A VAHSS where clients are verified by publishing range proofs or set membership 
 The algorithms \textbf{ShareSecret} and \textbf{Verify} has been modified,  and the algorithms \textbf{ProveSecret} and \textbf{GenerateCommitment} have been added. More precisely, the algorithm \textbf{ShareSecret} does not output the checksum $\tau_i$, instead the Pedersen commitment $\pi_i$ is computed in the algorithm \textbf{GenerateCommitment}. The algorithm \textbf{ProveSecret} constructs a set membership proof or range proof denoted $\Sigma_i$ given the commitment $\pi_i$. 
 %The precise construction of the range proof or set membership proof that is used does not affect the rest of Construction \ref{alg:VAHSS-HSS-RP}, as long as it originates from a Pedersen commitment.
  In addition to the steps of the algorithm \textbf{Verify} in the VAHSS construction presented in \cite{SumItUp}, the algorithm \textbf{Verify} also validates the proofs $\Sigma_i$ for all $i\in\mathcal{N}$.
-
+ 
 %The algorithm  \textbf{GenerateCommitment} can be included in either \textbf{ShareSecret}  or \textbf{RangeProof} instead of being viewed as a separate algorithm. In the implementation discussed later the commitment is generated while constructing the range proof and not explicitly. 
 
 The algorithms \textbf{GenerateCommitment} and \textbf{ProveSecret} are executed by the clients and the other algorithms are executed by the same party as in the  VAHSS construction in \cite{SumItUp}. 
+
+Remark \ref{thm:VAHSS_RP_CSV}  implies that Construction \ref{alg:VAHSS-HSS-RP} satisfies the correctness, security and verification requirements for a VAHSS construction and that the verification of clients' input satisfies the completeness, soundness and zero-knowledge requirements of the considered range proofs or set membership proofs.
 
 %In the VAHSS Construction \ref{alg:VAHSS-HSS} the verifiability property includes verification of the servers. In this section this will be extended to also include the clients. The value $\pi_i$ published by the clients will be modified into a Pedersen commitment on the form $\pi_i = g^{x_i}h^{R_i}$, remember $\pi_i=g^{x_i+R_i}$ in the original construction presented in \cite{SumItUp}. The clients will apart from the previous commitments  also construct and publish a range proof for $\pi_i$. This allows any verifier to apart from verifying the servers also verify that the secret shared by the clients is in an certain range.  
 
@@ -172,14 +175,15 @@ Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = \ma
 \end{algorithm}
 
 \subsection*{Verifying clients using aggregated set membership proofs}
-Construction \ref{alg:VAHSS-HSS-RP-Agg} described a client and server VAHSS compatible with aggregated set membership proofs for verification of clients. The algorithms in Construction \ref{alg:VAHSS-HSS-RP-Agg} are the same as in Construction \ref{alg:VAHSS-HSS-RP} except that the algorithm \textbf{PartialAggregate} is introduced and the algorithm \textbf{Verify} is modified. 
+Construction \ref{alg:VAHSS-HSS-RP-Agg} describes a client and server VAHSS compatible with aggregated set membership proofs for verification of clients. The algorithms in Construction \ref{alg:VAHSS-HSS-RP-Agg} are the same as in Construction \ref{alg:VAHSS-HSS-RP} except that the algorithm \textbf{PartialAggregate} is introduced and the algorithm \textbf{Verify} is modified. 
 
-The algorithm \textbf{PartialAggregate} is run by the aggregating parties in the set $\mathcal{K}$ and the algorithm \textbf{Verify} is modified such that it verifies the aggregated proofs instead of the individual clients' proofs.
+The algorithm \textbf{PartialAggregate} is run by all aggregating parties in the set $\mathcal{K}$ and the algorithm \textbf{Verify} is modified such that it verifies the aggregated proofs instead of the individual clients' proofs.
 
 If the server computing the partial sums $y_j$ are responsible for aggregation of the clients set membership proofs, then no new parties are introduced to the VAHSS construction to aggregate the proofs.  Then the set $\mathcal{K}$ is equal to $\mathcal{M}$ in construction \ref{alg:VAHSS-HSS-RP-Agg}. 
  
-For aggregation in Construction \ref{alg:VAHSS-HSS-RP-Agg} to be sound, the aggregation must either be performed by a trusted party or split between at least two aggregating parties. If the aggregation is performed by an untrusted party, this party can cheat in the aggregation of the proofs, by exploiting that the sum $y$ can be computed by any party once the servers have performed the algorithm \textbf{partialEval} and that  $h^{\sum_{i\in\mathcal{N}} R_i } =1 \: \text{mod}\:  \phi(p)$. Note that this induces that  the assumptions of Theorem \ref{thm:aggrgeation} are not fulfilled, since the aggregation party has additional knowledge beyond the input to the algorithm \textbf{Aggregate} and the commitments $\{C_i\}_{i\in\mathcal{S}}$. %Although the individual secrets are unknown, it is possible to cheat when constructing the aggregated proof $\Sigma_a$, by using the fact that $y=\sum_{i\in\mathcal{N}}x_i, h^{\sum_{i\in\mathcal{N}}R_i}$ are known.
+For aggregation in Construction \ref{alg:VAHSS-HSS-RP-Agg} to be sound, the aggregation must either be performed by a trusted party or split between at least two aggregating parties. 
 
+If the aggregation is performed by an untrusted party, this party can cheat in the aggregation of the proofs, by exploiting that the sum $y$ can be computed once the servers have performed the algorithm \textbf{PartialEval} and that  $h^{\sum_{i\in\mathcal{N}} R_i } =1 \: \text{mod}\:  \phi(p)$. Note that this induces that  the assumptions of Theorem \ref{thm:aggrgeation} are not fulfilled, since the aggregation party has additional knowledge beyond the input to the algorithm \textbf{Aggregate} and the commitments $\{C_i\}_{i\in\mathcal{S}}$. %Although the individual secrets are unknown, it is possible to cheat when constructing the aggregated proof $\Sigma_a$, by using the fact that $y=\sum_{i\in\mathcal{N}}x_i, h^{\sum_{i\in\mathcal{N}}R_i}$ are known. 
 Since $y$ is known to the aggregating party, the aggregated proof $\Sigma_a$ can be constructed as, $D_a=C^{k+c}, z_{R_a} = k\phi (N)$ and $z_{x_a} = k y$, where $y= \sum_{i\in\mathcal{N}} x_i$ and $k\in_R \mathds{F}$. Then it follows that:
 \begin{align*}
 D_a &= C^{k+c}= \big( g^ { k \sum_{i=1}^n x_i } h^{ k  \sum_{i=1}^n R_i ) } \big)   \big( g^{ (  \prod_{i=1}^n c_i ) \sum_{i=1}^n x_i ) } h^{ ( \prod_{i=1}^n c_i ) \sum_{i=1}^n R_i ) } \big)   \\
@@ -192,6 +196,8 @@ It has been shown that if one party aggregating all clients' set membership proo
 %Further it is seen that  it is possible for such an aggregating party to  cheat and provide an aggregated proof that  verifies true without the statement in equation \eqref{eq:SM_statement} being true.
 
 If multiple parties aggregates subsets of the proofs, the assumptions in Theorem \ref{thm:aggrgeation} holds,  this follows from that the sum of the secrets and random values are unknown considering any true subset of the clients. 
+
+Under the assumption that the aggregation is sound, Remark \ref{thm:VAHSS_RP_CSV} applies to Construction \ref{alg:VAHSS-HSS-RP-Agg}. Thereby, if the aggregation is performed by a trusted party or is split between at least two independent aggregating parties, Construction \ref{alg:VAHSS-HSS-RP-Agg} satisfies the correctness, security and verification requirements for a VAHSS construction and the verification of clients' input satisfies the completeness, soundness and zero-knowledge requirements of the considered range proofs or set membership proofs. 
 
 \begin{algorithm}
 \caption{\textbf{: Client and Server Verifiable additive homomorphic secret sharing}}
@@ -283,12 +289,14 @@ The finite field $\mathds{F}$ is generated by a prime of size $256$-bit.
 
 The number of servers is set to $5$, $|\mathcal{M}|=5$,  and the number of clients to $100$, $|\mathcal{N}|=100$.  The set of aggregation parties $\mathcal{K}$ is assumed to consist of a single party, meaning that $|\mathcal{K}|=1$.
 
+Remark that the trade-off between runtime for aggregation and verification depending on the number of aggregation parties is presented in section \ref{sec:tradeoff}.  The result presented there translates directly to the runtime of the aggregation and the verification of clients in a server and client VAHSS.  Thereby, although $|\mathcal{K}|=1$ in this section the runtime considering multiple aggregating parties can be obtained by studying the results presented in chapter \ref{ch:results}.
+
 The range is set to $[18,200]$ for the implementation of Bulletproofs, and thus the upper bound of the Bulletproof is set to $2^n$, where $n=8$. The size of the set $\Phi$ is put to the length of the range, $|\Phi|=200-18 = 182$, for both the aggregated and not aggregated signature-based set membership proofs. 
 
 A final remark about the implementation is that its purpose is to test the above-proposed constructions and provide runtime evaluations, the code has not been tested enough to be considered as a secure implementation.
 
 
-%TODO write into here
+
 % runtime is important
 % not aggregation here 
 %This paper has studied three different constructions possible to combine with a VAHSS to verify clients. In the runtime comparison of these three constrictions, seen in Table \ref{tab:runtime}, it was noted that the set membership and Bulletproofs where notable faster than the signature-based range proof. Further it has been discussed that the set membership proof can be used a larger area of applications. This is due to that it proves membership of a sets which are more flexile than ranges. 
@@ -330,22 +338,22 @@ Return  $\textbf{VerifyServers}\wedge \textbf{VerifyClients}$
 
  \begin{table}[h]
 \centering
+\caption{Runtime for the algorithms in Construction \ref{alg:VAHSS-HSS-RP} and \ref{alg:VAHSS-HSS-RP-Agg}. The runtime of Construction \ref{alg:VAHSS-HSS-RP} is presented using Bulletproofs and signature-based set membership proofs to verify clients.  Aggregated signature-based set membership proofs are used to verify clients in Construction \ref{alg:VAHSS-HSS-RP-Agg}}
 \begin{tabular}{l  c c c}
-
+\toprule
 &   \multicolumn{2}{c}{\textbf{ Construction \ref{alg:VAHSS-HSS-RP}}}    &	\textbf{Construction \ref{alg:VAHSS-HSS-RP-Agg}}	\\ 
-    																	& Bulletproofs  & Set membership & Aggregated Set membership\\	\toprule
-  \textbf{GenerateShares}				  					&95/x [$\mu$s]			 &98[$\mu$s]  &98 [$\mu$s]												\\ 
-  \textbf{ProveSecret} 						&53/x [ms]				& 	66 [ms]	&66 [ms]			\\ 
-  \textbf{PartialEval}  										&   78/x	[$\mu$s]				&71[$\mu$s]	 		&	71	 [$\mu$s]							\\ 
-  \textbf{PartialProof} 									&   273/x[$\mu$s]						& 5255 [$\mu$s]			& 5255 [$\mu$s]				\\ 
+    																	& Bulletproofs  & Set membership & Aggregated Set membership\\	\midrule
+  \textbf{GenerateShares}				  					&95 [$\mu$s]			 &98 [$\mu$s]  &98 [$\mu$s]												\\ 
+  \textbf{ProveSecret} 						&53 [ms]				& 	66 [ms]	&66 [ms]			\\ 
+  \textbf{PartialEval}  										&   78 [$\mu$s]				&71 [$\mu$s]	 		&	71	 [$\mu$s]							\\ 
+  \textbf{PartialProof} 									&   273 [$\mu$s]						& 5255 [$\mu$s]			& 5255 [$\mu$s]				\\ 
    \textbf{Aggregate}										&   				&			&		59 [s]					\\ 
-  \textbf{FinalEval}  											&   689/x [ns]						&699  [ns]				&			699  [ns]												\\ 
-  \textbf{FinalProof}  												&   50/x	[$\mu$s]			&  115 [$\mu$s]	&				115 [$\mu$s]									\\ 
-  \textbf{VerifyClients}							  							&   2979/x[ms]					& 9288 [ms]&					8120 [ms]							\\ 
-  \textbf{VerifyServers}											&   1672/x [$\mu$s]					&		7947 [$\mu$s] 	&		7947 [$\mu$s]					\\ 
+  \textbf{FinalEval}  											&   689 [ns]						&699  [ns]				&			699  [ns]												\\ 
+  \textbf{FinalProof}  												&   50 [$\mu$s]			&  115 [$\mu$s]	&				115 [$\mu$s]									\\ 
+  \textbf{VerifyClients}							  							&   2979 [ms]					& 9288 [ms]&					8120 [ms]							\\ 
+  \textbf{VerifyServers}											&   1672 [$\mu$s]					&		7947 [$\mu$s] 	&		7947 [$\mu$s]					\\ 
   \bottomrule
 \end{tabular}
-\caption{Runtime for the algorithms in Construction \ref{alg:VAHSS-HSS-RP} and \ref{alg:VAHSS-HSS-RP-Agg}. The runtime of Construction \ref{alg:VAHSS-HSS-RP} is presented using Bulletproofs and signature-based set membership proofs to verify clients.  Aggregated signature-based set membership proofs are used to verify clients in Construction \ref{alg:VAHSS-HSS-RP-Agg}}
 \label{tab:BenchBP}
 \end{table}
 %Considering this paraphrase, it is clear what the runtime \textbf{VerifyServers} and \textbf{VerifyClients} in Table \ref{tab:BenchBP} measures. Note that \textbf{VerifyServers} is the runtime to verify all servers and \textbf{VerifyClients} is the runtime for verifying all client.
