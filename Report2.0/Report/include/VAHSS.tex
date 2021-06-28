@@ -143,9 +143,7 @@ Remark \ref{thm:VAHSS_RP_CSV}  implies that Construction \ref{alg:VAHSS-HSS-RP} 
 \caption{\textbf{: Client and Server Verifiable additive homomorphic secret sharing}}
 
 \textbf{Goal:} Compute the sum $y = \sum_{i=1}^n x_i$. The values $x_i$ are kept secret. The servers computations and the clients shared values are verified. 
-\vspace{2pt}
-\hline
-\vspace{2pt}
+\vspace{2pt}\hrule\vspace{2pt}
 \begin{itemize}
  \item\textbf{ShareSecret $(1^\lambda,i,x_i) \mapsto \{x_{ij}\}_{j\in\mathcal{M}}$} \\
 Pick uniformly at random the coefficients, $\{a_i\}_{i\in\{1,..,t\}}\in_R\mathds{F}$ and define a $t$-degree polynomial $p_i$ to be on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Put the shares $x_{ij}=\lambda_{ij}p_i(\theta_{ij})$ for $j\in\mathcal{M}$.  The parameters $\theta_{ij}$ and Lagrange coefficients $\lambda_{ij}$ are chosen such that $ p_i(0) = \sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij})$.
@@ -203,9 +201,7 @@ Under the assumption that the aggregation is sound, Remark \ref{thm:VAHSS_RP_CSV
 \caption{\textbf{: Client and Server Verifiable additive homomorphic secret sharing}}
 
 \textbf{Goal:} Compute the sum $y = \sum_{i=1}^n x_i$. The values $x_i$ are kept secret. Servers computations and clients shared values are verified. 
-\vspace{2pt}
-\hline
-\vspace{2pt}
+\vspace{2pt}\hrule\vspace{2pt}
 \begin{itemize}
  \item\textbf{ShareSecret $(1^\lambda,i,x_i) \mapsto \{x_{ij}\}_{j\in\mathcal{M}}$} \\
 Pick uniformly at random the coefficients, $\{a_i\}_{i\in\{1,..,t\}}\in_R\mathds{F}$ and define a $t$-degree polynomial $p_i$ to be on the form $p_i(X) = x_i + a_1X+...+a_tX^t$. Put the shares $x_{ij}=\lambda_{ij}p_i(\theta_{ij})$ for $j\in\mathcal{M}$.  The parameters $\theta_{ij}$ and Lagrange coefficients $\lambda_{ij}$ are chosen such that $ p_i(0) = \sum_{j=1}^m \lambda_{ij}p_i(\theta_{ij})$.

@@ -57,7 +57,7 @@ Compute and output $\sigma= \prod_{i=1}^n \pi_i \wedge \prod_{i=1}^n \pi_i = H(y
 \caption{\textbf{: Aggregation of non interactive set membership proof}}
 %This protocol is a modification of Construction \ref{alg:ZKSM}, such that when multiple parties wish to prove that their secret is in an allowed set, $\Phi$, to the same verifier, their proofs can be partly aggregated into one common proof to reduce the verification time. 
 \textbf{Goal:}  Given  the Pedersen commitments $C_i=g^{x_i} h^{R_i}$, for $i\in\mathcal{S}$. The construction  proves that all secrets $x_i$ belongs to the set $\Phi$, without revealing anything else about the secrets.
-\vspace{2pt} \hline \vspace{2pt}
+\vspace{2pt}\hrule\vspace{2pt}
 \begin{itemize}
  \item\textbf{SetUp $(1^\lambda,\Phi)\xrightarrow[]{}(sk,pp)$}\\
  Let g be a generator of the group $\mathds{G}$ and $h$ an element in the group such that $log_g(h)$ is unknown.  
@@ -73,7 +73,7 @@ Given a set of  proofs  $\{\Sigma_i\}_{i\in\mathcal{S}_k}$. Aggregate the values
 For all $i\in\mathcal{S}$ parse the proof $\Sigma_i$, then compute the challenge $c_i = Hash(C_i,V_i,a_i,D_i)$. Finally output the set of all challenges $\{c_i\}_{i\in\mathcal{S}}$. 
 
 \item\text{\textbf{Verify} $(pp,\{\Sigma_{a_k}\}_{k\in\mathcal{K}},\{C_i\}_{i\in\mathcal{S}},\{c_i\}_{i\in\mathcal{S}}) \xrightarrow[]{} \{0,1\}$} \\
-For all $k\in\mathcal{K}$ compute the product of the challenges $c_k=\prod_{i\in\mathcal{S}_k} c_i$. Check if $D_{a_k}\overset{?}{=} \big( \prod_{i\in\mathcal{S}_k}C_i\big)^{c_k}h^{z_R_{a_k}}g^{z_x_{a_k}}$ 
+For all $k\in\mathcal{K}$ compute the product of the challenges $c_k=\prod_{i\in\mathcal{S}_k} c_i$. Check if $D_{a_k}\overset{?}{=} \big( \prod_{i\in\mathcal{S}_k} C_i\big)^{c_k}h^{z_{R{a_k}}}g^{z_{x{a_k}}}$ 
 Then for check if $ a_i \overset{?}{=} e(V_i,y)^c_i e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$. If the equalities holds return $1$ otherwise return $0$.
 \end{itemize}
 \label{alg:ZKSM-Agg-Many}

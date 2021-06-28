@@ -11,7 +11,7 @@ For any set $T$ of corrupted servers and any PPT adversary $\mathcal{A}$ it shou
 \begin{enumerate}
 \item For all $i\in\mathcal{N}$ run the algorithm \textbf{ShareSecret} in the input $(1^\lambda,i,\mathbf{x}_i)$ and publish the output $\tau_i$.
 \item All servers $s_j\in T$ gives the shares $(\text{share}_{1j}, ..., \text{share}_{mj})$ to the adversary.   
-\item For all corrupted server $s_j\inT$ the adversary outputs the modified values $y_j'$ and $\sigma_j'$. While for all servers $s_j\notin T$ the values $y_j'$ and $\sigma_j'$ are computed according to the algorithms \textbf{PartialEval} and \textbf{PartialProof} respectively.
+\item For all corrupted server $s_j \in T$ the adversary outputs the modified values $y_j'$ and $\sigma_j'$. While for all servers $s_j\notin T$ the values $y_j'$ and $\sigma_j'$ are computed according to the algorithms \textbf{PartialEval} and \textbf{PartialProof} respectively.
 \item The final value $y'$ is computed according to the algorithm \textbf{FinalEval} and the final proof $\sigma$ is computed according to the algorithm \textbf{FinalProof}. 
 \item If $y \neq f(x_1,...,x_n) $ and \textbf{Verify}$(pp,\sigma',y')=1$ output $1$ else $0$. In this thesis the function $f$ is assumed to be the sum of the arguments.
 \end{enumerate}
@@ -80,7 +80,7 @@ For $i\in\{0,log(n)\}$ put $n=n/2$ and $y=\text{Hash}(\bm{l}[i],\bm{r}[i])$, the
 \end{itemize}
 \label{alg:inner_product}
 \end{algorithm}
-
+\end{comment}
 \begin{comment}
 \begin{algorithm}
 \caption{\textbf{: Verifiable additive homomorphic secret sharing}}
@@ -155,5 +155,4 @@ Compute $e=H(fid)$. Check that $y,s\in\mathds{Z}_\hat{N}$ and $\tilde{x}^{eN} = 
         \end{align*}
     \end{itemize}
 \end{itemize}
-\end{comment}
 \end{comment}

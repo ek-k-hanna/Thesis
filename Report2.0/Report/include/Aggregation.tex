@@ -19,8 +19,8 @@ $\Sigma_a $. The aggregated values $D_a,z_{x_a},z_{R_a}$ in $\Sigma_a$ are compu
 \begin{equation}
 \begin{aligned}
 \label{eq:aggDn}
-D_a &=\prod_{i\in\mathcal{S}}  D_i ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j }  =  g ^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i}
- \\
+D_a &=\prod_{i\in\mathcal{S}}  D_i ^{\prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j }  =  g ^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S} \\ j\neq i}}   c_j \Big) m_i}
+\\
 z_{x_a} &= \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{x_i} = \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i
 \\
 z_{R_a} &=  \sum_{i\in\mathcal{S}}  \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i} = \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big)m_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} R_i 
@@ -37,9 +37,7 @@ Due to the aggregation, the equality $D_a=C^ch^{z_{R_a}}g^{z_{x_a}}$ is checked 
 \begin{algorithm}[]
 \caption{\textbf{: Aggregation of non interactive set membership proof}}
 \textbf{Goal:}  Given the Pedersen commitments $C_i=g^{x_i} h^{R_i}$, for $i\in\mathcal{S}$. The construction  proves that all secrets $x_i$ belong to the set $\Phi$, without revealing anything else about the secrets.
-\vspace{2pt} 
-\hline 
-\vspace{2pt}
+\vspace{3pt}\hrule\vspace{2pt}
 \begin{itemize}
   \item\text{\textbf{SetUp} $(1^\lambda,\Phi)\xrightarrow[]{}(sk,pp)$}\\
  Let g be a generator of the group $\mathds{G}$ and $h$ an element in the group such that $log_g(h)$ is unknown.  
@@ -55,7 +53,7 @@ Given a set of proofs  $\{\Sigma_i\}_{i\in\mathcal{S}}$. Aggregate the values $(
 For all $i\in\mathcal{S}$ parse the proof $\Sigma_i$, then compute the challenge $c_i = Hash(C_i,V_i,a_i,D_i)$. Finally output the set of all challenges $\{c_i\}_{i\in\mathcal{S}}$. 
 
 \item\text{\textbf{Verify} $(pp,\Sigma_a,\{C_i\}_{i\in\mathcal{S}},\{c_i\}_{i\in\mathcal{S}}) \xrightarrow[]{} \{0,1\}$} \\
-Compute the product of the challenges $c=\prod_{i\in\mathcal{S}} c_i$. Check if $D_a\overset{?}{=} \big( \prod_{i\in\mathcal{S}}C_i\big)^ch^{z_R_a}g^{z_x_a}\wedge a_i \overset{?}{=} e(V_i,y)^c_i e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$. If the equalities hold return $1$ otherwise return $0$.
+Compute the product of the challenges $c=\prod_{i\in\mathcal{S}} c_i$. Check if $D_a\overset{?}{=} \big( \prod_{i\in\mathcal{S}}C_i\big)^ch^{z_{Ra}}g^{z_{xa}}\wedge a_i \overset{?}{=} e(V_i,y)^c_i e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$. If the equalities hold return $1$ otherwise return $0$.
 \end{itemize}
 \label{alg:ZKSM-Agg}
 \end{algorithm} 
@@ -193,7 +191,10 @@ g^\alpha h^\beta =  g^{c \sum_{i\in\mathcal{S}}x_i +z_{x_a} } h^{ c \sum_{i\in\m
 \end{align*}
 
 If $\alpha \neq c \sum_{i\in\mathcal{S}} x_i+z_{x_a}$ and $\beta\neq c\sum_{i\in\mathcal{S}}R_i +z_{R_a}$, the above equality contradicts to the binding property of the Pedersen commitments.  %assumption that it is not possible to construct two equal Pedersen Commitments hiding different secrets.
-Thereby, the values $\alpha,\beta,z_{x_a}$ and $z_{R_a}$ must satisfy: $\alpha =  c\sum_{i\in\mathcal{S}}x_i+z_\x_a}$ and $\beta =  c\sum_{i\in\mathcal{S}}R_i +z_{R_a}$.  
+Thereby, the values $\alpha, \beta , z_{x_a}$ and $z_{R_a}$ must satisfy: 
+$\alpha =  c \sum_{i\in\mathcal{S}} x_i+z_{x_a}$ 
+and 
+$\beta =  c \sum_{i\in\mathcal{S}} R_i +z_{R_a}$.  
 
 This can be rewritten as $\alpha-z_{x_a} =  c \sum_{i\in\mathcal{S}} x_i$ mod $\Phi(p)$ and  $\beta-z_{R_a} =  c \sum_{i\in\mathcal{S}} R_i$ mod $\Phi(p)$. The sums $ \sum_{i\in\mathcal{S}} x_i$ and $ \sum_{i\in\mathcal{S}} R_i$ are assumed to be unknown.  
 
@@ -219,7 +220,7 @@ a_i = e(V_i,y)^{c_i}e(V,g)^{z_{x_i}}e(g,g)^{z_{\tau_i}} \:\: \forall \: i\in\mat
 
 It remains to argue that $D_a =C^ch^{z_{R_a}}g^{z_{x_a}}$, where $C=\prod_{i\in\mathcal{S}}C_i$ and $c=\prod_{i\in\mathcal{S}}c_i$. By construction it holds that:
 \begin{align*}
-D_a = &g ^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i}  ,
+D_a = &g ^ {\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^{\sum_{i\in\mathcal{S}} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i}  ,
 \\
  C^ch^{z_{R_a}}g^{z_{x_a}} =&\:  \Big( \prod_{i\in\mathcal{S}} C_i \Big)^{\prod_{i\in\mathcal{S}} c_i}h^ {\sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i}
 g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \big) \sum_{i\in\mathcal{S}} x_i}
@@ -232,7 +233,7 @@ g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   
  \implies D_a \:=& \:C^ch^{z_{R_a}}g^{z_{x_a}}
 \end{align*}
 
-Combining the above results it has been shown that $D_a  = C^ch^{z_R_a}g^{z_x_a}\wedge a_i = e(V_i,y)^c_i e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$.
+Combining the above results it has been shown that $D_a  = C^ch^{z_{Ra}}g^{z_{xa}}\wedge a_i = e(V_i,y)^c_i e(V_i,g)^{-z_{x_i}}e(g,g)^{z_{\tau_i}}$ for all $i\in\mathcal{S}$.
 Implying that \textbf{Verify}$ ( $\textbf{Aggregate}$ (\{ $\textbf{Prove}$($
 $pp,i,C_i,x_i,\Phi)\}_{i\in\mathcal{S}}) )= 1$.
 %To aggregate the public signature based set membership proofs possible constructions for the algorithm \textbf{Aggregate} is evaluated. The starting point for designing such a construction is that the aggregation of public signature set membership proofs according to the algorithm \textbf{Aggregate} should result in construction that satisfies the completeness requirement in Definition \ref{def:ZKP_agg}. Remark that it is assumed that the verification of the aggregated proof should be designed in the same way as the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM}. Having found an implementation of the algorithm \textbf{Aggregate} that satisfies the completeness it will then be examined under what assumptions the soundness and zero-knowledge in Definition \ref{def:ZKP_agg} is satisfied. 
@@ -301,17 +302,19 @@ where $\tilde{x}_i\neq x_i$ and $x_i\in\Phi$. It is not required that $\tilde{s}
 
 For the algorithm \textbf{Verify} to validate true it has to hold that $D_a=C^ch^{z_{R_a}}g^{z_{x_a}}$, where $D_a,z_{R_a},z_{x_a}$ is the aggregation of $\Sigma_i$ for all $i\in\mathcal{S}$  according to equation \eqref{eq:aggDn}. By expanding the equality it follows that:
 \begin{align*}
-D_a =& g ^ {\sum_{i\in T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)\tilde{s}_i + \sum_{i\in\mathcal{S}\backslash T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)\tilde{m}_i+ \sum_{i\in\mathcal{S}\backslash T} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i} 
+D_a =& g ^ {\sum_{i\in T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)\tilde{s}_i + \sum_{i\in\mathcal{S}\backslash T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ {\sum_{i\in T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)\tilde{m}_i+ \sum_{i\in\mathcal{S}\backslash T} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i } 
  \\
  C^ch^{z_{R_a}}g^{z_{x_a}} =&   \Big( g^{\sum_{i\in T} \tilde{x}_i + \sum_{i\in \mathcal{S}\backslash T} x_i} h^{\sum_{i\in T} \tilde{R}_i + \sum_{i\in \mathcal{S}\backslash T} R_i}  \Big) ^{\prod_{j\in\mathcal{S}} c_j}  h^{ \sum_{i\in T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i}}
  \\
-& h^{\sum_{i\in\mathcal{S}\backslash T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)m_i- \sum_{i\in\marhcal{S}\backslash T} \big( \sum_{i\in\mathcal{S}} c_j\big)R_i}  
+& h^{\sum_{i\in\mathcal{S}\backslash T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big) m_i - \sum_{i\in\mathcal{S} \backslash T} \big( \sum_{i\in\mathcal{S}} c_j\big)R_i}  
 g^{ \sum_{i\in\mathcal{S}} \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i - \big( \prod_{j\in\mathcal{S}} c_j \Big) \sum_{i\in\mathcal{S}} x_i}
 \\ 
- &=  g ^{\prod_{j\in\mathcal{S}} c_j \big(\sum_{i\in T} \tilde{x}_i + \sum_{i\in T} x_i\big) +  \sum_{i\in T} \big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j\big) s_i     } h^{ \big( \prod_{j\in\mathcal{S}} c_j\big)\sum_{i\in T} \tilde{R}_i  + \sum_{i\in T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i}}
- \\
- & g ^ {\sum_{i\in\mathcal{S}\backslash T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ { \sum_{i\in\mathcal{S}\backslash T} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j \Big)m_i} .
+ &=  g ^{\prod_{j\in\mathcal{S}} c_j \big(\sum_{i\in T} \tilde{x}_i + \sum_{i\in T} x_i\big) +  \sum_{i\in T} \big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j\big) s_i     } h^{ \big(\prod_{j\in\mathcal{S}} c_j\big)\sum_{i\in T} \tilde{R}_i  + \sum_{i\in T } \Big( \prod_{\substack{j\in\mathcal{S}\\ j\neq i}} c_j \Big) z_{R_i} }
+\\
+& 
+g ^ {\sum_{i\in\mathcal{S}\backslash T } \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}   c_j \Big)s_i} h^ { \sum_{i\in\mathcal{S}\backslash T} \Big(\prod_{\substack{j\in\mathcal{S}\\ j\neq i}}    c_j  \Big) m_i} .
 \end{align*}
+
 Both above equations can be interpreted as Pedersen commitments.  It is assumed, under the discrete logarithm assumption, that two Pedersen commitments cannot be equal unless their arguments are equal. This implies that the exponents of $g$ and $h$ are equal for the two above equations. Consider the exponent of $g$ this leads to:
 \begin{align}
 \label{eq:cheatingCient}
