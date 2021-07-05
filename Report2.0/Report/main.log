@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  5 JUL 2021 15:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.8)  5 JUL 2021 16:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1284,7 +1284,10 @@ ly-ing that \T1/lmr/bx/n/12 Ver-ify$\OT1/lmr/m/n/12 ($\T1/lmr/bx/n/12 Aggregate
 $\OT1/lmr/m/n/12 (\OMS/lmsy/m/n/12 f$\T1/lmr/bx/n/12 Prove$\OT1/lmr/m/n/12 ($
  []
 
-[23]
+
+Underfull \vbox (badness 1292) has occurred while \output is active []
+
+ [23]
 Overfull \hbox (54.31909pt too wide) detected at line 316
 []
  []
@@ -1455,7 +1458,7 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  22351 strings out of 480608
  405173 string characters out of 5903631
- 693567 words of memory out of 5000000
+ 697567 words of memory out of 5000000
  37481 multiletter control sequences out of 15000+600000
  636963 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1487,7 +1490,7 @@ t/fonts/type1/public/lm/lmtti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/t
 ype1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2020/texmf-dist/fon
 ts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2020/texmf-dist/fonts/type
 1/urw/helvetic/uhvr8a.pfb>
-Output written on main.pdf (69 pages, 1631453 bytes).
+Output written on main.pdf (69 pages, 1630676 bytes).
 PDF statistics:
  952 PDF objects out of 1000 (max. 8388607)
  810 compressed objects within 9 object streams

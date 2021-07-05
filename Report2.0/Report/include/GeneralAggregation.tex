@@ -71,15 +71,13 @@ Aggregated set membership proofs consist of the following parties: provers, an a
 
 The algorithms of aggregated set membership proofs, presented in Definition \ref{def:GeneralAggregation}, should fulfil the below completeness, soundness and zero-knowledge requirements:
 \begin{itemize}
-\item \textbf{Completeness} Given a witness $\Sigma_i$ satisfying the instance $x_i\in\Phi$, where $C_i$ is a Pedersen commitment of $x_i$, for all $i\in\mathcal{S}$, it should hold that
-\\
+\item \textbf{Completeness} Given $x_i\in\Phi$, where $C_i$ is a Pedersen commitment of $x_i$, for all $i\in\mathcal{S}$, it should hold that
  \texttt{Verify}$($\texttt{Aggregate}$(\{$\texttt{Prove}$(pp,i,C_i,\Phi)\}_{i\in\mathcal{S}}) )= 1$. 
-\item \textbf{Soundness} If for any $i\in\mathcal{S}$ the  witness $\Sigma_i$ does not satisfy the  instance $x_i\notin\Phi$, then the probability  Prob$[ $\texttt{Verify}$($\texttt{Aggregate}$(\{$\texttt{Prove}$(pp,i,C_i,\Phi)\}_{i\in\mathcal{S}}) ) = 1] < \varepsilon$, for a sufficiently small $\varepsilon$. 
-\item  \textbf{Zero-knowledge} 
-A proof system is \textit{honest verifier zero-knowledge} if there exists a PPT algorithm \texttt{Simulator} having access to the same input as the algorithms \texttt{Verify} and \texttt{Aggregate} but not the provers input, such that output from the \texttt{Simulator} and \texttt{Prove} is indistinguishable, i.e have the same distribution given that $x\in\Phi$.  
+\item \textbf{Soundness} If for any $i\in\mathcal{S}$ $x_i\notin\Phi$, then the probability  \\ Prob$[ $\texttt{Verify}$($\texttt{Aggregate}$(\{$\texttt{Prove}$(pp,i,C_i,\Phi)\}_{i\in\mathcal{S}}) ) = 1] < \varepsilon$, for a sufficiently small $\varepsilon$. 
+\item  \textbf{Zero-knowledge} It should be possible to simulate the proof of a true statement without knowing the witness.
 \end{itemize}
 
-These requirements can be seen as a modification of the requirements given in Definition \ref{def:ZKP} to aggregated set membership proof. Note that the zero-knowledge property should hold for the provers, not the aggregation.
+These requirements can be seen as a modification of the requirements given in Definition \ref{def:ZKP} to aggregated set membership proof. 
 
 
 

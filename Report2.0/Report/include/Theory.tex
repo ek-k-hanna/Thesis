@@ -176,13 +176,13 @@ The Fiat-Shamir heuristic \cite{Fiat-Shamir} can be used to convert an interacti
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Set Membership Proofs and Range Proofs}
 \label{sec:RF_theory}
-Zero-knowledge set memberships proofs allow a prover to convince a verifier that the value of a secret is in an allowed set, without revealing any other information about the secret. Formally they are proofs of the statement:
+Zero-knowledge set memberships proofs allow a prover to convince a verifier that the value is in an allowed set, without revealing any other information about the value. Formally they are proofs of the statement:
 \begin{align} \label{eq:SM_statement}
     \{(g,h\in\mathds{G},C;x,R\in\mathds{F})\::\:C= g^x h^R \wedge x \in \Phi\},
 \end{align}
 where $\Phi$ is some known set. 
  
-Zero-knowledge range proofs prove that a secret belongs to a range, instead of a set. Since ranges are continuous sets, zero-knowledge range proofs are less general than zero-knowledge set membership proofs.  Zero-knowledge range proofs do not reveal any information about the secret beyond the fact that the secret belongs to the range. Formally they are proofs of the following statement: 
+Zero-knowledge range proofs prove that a value belongs to a range, instead of a set. Since ranges are continuous sets, zero-knowledge range proofs are less general than zero-knowledge set membership proofs.  Zero-knowledge range proofs do not reveal any information beyond the fact that the value belongs to the range. Formally they are proofs of the following statement: 
 \begin{align} \label{eq:RP_statement}
     \{(g,h\in\mathds{G},C;x,R\in\mathds{F})\::\:C= g^x h^R \wedge x \in \{\textit{"predetermined allowed range"}\}.
 \end{align}
