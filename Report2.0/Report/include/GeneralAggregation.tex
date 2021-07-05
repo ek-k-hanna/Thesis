@@ -17,20 +17,22 @@ A definition of aggregated set membership proofs is presented  in Definition \re
 \begin{Mydef}[\textbf{Aggregated set membership proofs}]
 \label{def:GeneralAggregation}
 Aggregated set membership proofs are a zero-knowledge proof of the statement:
+% &\wedge \prod_{i\in\mathcal{S}}C_i  =   g^{\sum_{i\in\mathcal{S}}x_i} h^{\sum_{i\in\mathcal{S}}R_i} 
+%&C=\prod_{i\in\mathcal{S}}C_i 
 \begin{equation}
 \begin{aligned} 
 \label{eq:SMagg_statement}
     \big\{(g,h\in\mathds{G},\{C_i\}_{i\in\mathcal{S}}\in\mathds{G}^n;\:\{x_i\}_{i\in\mathcal{S}},\{R_i\}_{i\in\mathcal{S}}\in\mathds{F}^n)\:: 
-\: &C=\prod_{i\in\mathcal{S}}C_i 
-\\
- &\wedge \prod_{i\in\mathcal{S}}C_i  =   g^{\sum_{i\in\mathcal{S}}x_i} h^{\sum_{i\in\mathcal{S}}R_i} 
+\:  &C_i  =   g^{x_i} h^{R_i} \:\forall i \in\mathcal{S}
  \\
  &\wedge x_i \in \Phi \: \forall i\in\mathcal{S} \big\}.
 \end{aligned}
 \end{equation}
 Where $C_i$ is a Pedersen commitment to the secret $x_i\in\mathds{F}$ and $R_i \in_R\mathds{F}$ are chosen at random, for all $i\in\mathcal{S}$.  
 
-The statement implies that after successfully having performed an aggregated set membership proof protocol, it is proved that the aggregated Pedersen commitment, $C$, is a product of the Pedersen commitment,$\{C_i\}_{i\in\mathcal{S}}$ and that for all $i\in\mathcal{S}$ $C_i$ is a Pedersen commitment to a secret $x_i$ belonging to the set $\Phi$.
+The statement implies that after successfully having performed an aggregated set membership proof protocol, it is proved that 
+%the aggregated Pedersen commitment, $C$, is a product of the Pedersen commitment,$\{C_i\}_{i\in\mathcal{S}}$ and that
+for all $i\in\mathcal{S}$: $C_i$ is a Pedersen commitment to a secret $x_i$ belonging to the set $\Phi$.
 
 A construction of aggregated set membership proofs is a $5$-tuple of PPT-algorithms (\textbf{SetUp}, \textbf{Prove}, \textbf{Aggregate}, \textbf{CalculateChallanges}, \textbf{Verify}).
 \\

@@ -58,13 +58,19 @@ G.~Couteau, M.~Klooß, H.~Lin, and M.~Reichle.
 
 \bibitem{Git:mycode}
 H.~Ek.
-\newblock Aggrgated signature based set membership proofs.
+\newblock Aggregated signature based set membership proofs.
 \newblock \url{https://github.com/ek-k-hanna/Aggregated-SMP}, 2021.
 
 \bibitem{OG_ZKP}
 S.~Goldwasser, S.~Micali, and C.~Rackoff.
 \newblock The knowledge complexity of interactive proof systems.
 \newblock {\em SIAM Journal on Computing}, 18(1):186--208, 1989.
+
+\bibitem{NIZKP}
+J.~Groth.
+\newblock Short non-interactive zero-knowledge proofs.
+\newblock In M.~Abe, editor, {\em Advances in Cryptology - ASIACRYPT 2010},
+  pages 341--358, Berlin, Heidelberg, 2010. Springer Berlin Heidelberg.
 
 \bibitem{ZKRP_Morais}
 E.~Morais, T.~Koens, C.~van Wijk, and A.~Koren.

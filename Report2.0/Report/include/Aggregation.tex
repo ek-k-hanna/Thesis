@@ -32,7 +32,7 @@ The challenges, denoted $c_i$ for $i\in\mathcal{S}$, are computed according to t
 
 The above aggregation has the computational complexity $\mathcal{O}(|\mathcal{S}|^2)$. This is reduced to be linear in $|S|$, by considering the following optimization. Instead of computing the product $\prod_{\substack{j\in\mathcal{S},\: j\neq i}} c_j $ for each $i$, it is sufficient to compute the product $c=\prod_{\substack{j\in\mathcal{S}}} c_j $  once and then the truncated product can be obtained by noting that $ \prod_{\substack{j\in\mathcal{S},j\neq i}} c_j = c/c_i $. Thereby, for each $i\in\mathcal{S}$, it is sufficient to perform one division instead of computing the product $\prod_{\substack{j\in\mathcal{S},\:j\neq i}} c_j $.
 
-Due to the aggregation, the equality $D_a=C^ch^{z_{R_a}}g^{z_{x_a}}$ is checked once instead of once for each proving party in the protocol. This can bee seen by comparing the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM-Agg} with running the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM} once for each prover. 
+Due to the aggregation, the equality $D_a=\prod_{i\in\mathcal{S}}C_i^{\prod_{i\in\mathcal{S}}c_i}h^{z_{R_a}}g^{z_{x_a}}$ is checked once instead of once for each proving party in the protocol. This can bee seen by comparing the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM-Agg} with running the algorithm \textbf{Verify} in Construction \ref{alg:ZKSM} once for each prover. 
 
 \begin{algorithm}[]
 \caption{\textbf{: Aggregation of non interactive set membership proof}}
@@ -179,7 +179,7 @@ Assume that the adversary $\mathcal{A}$, can construct a valid proof $\Sigma_a$,
 
 %The adversary $\mathcal{A}$ should construct a valid aggregated proof, $\Sigma_a$, i.e choosing the values $D,_az_{x_a},z_{R_a}$. These should be such that $D_a\in\mathds{G}$, $z_x,z_R\in\mathds{F}$ and  $z_{x_a} \neq \sum_{i\in\mathcal{S}} \Big( \prod_{j\in\mathcal{S}, j\neq i} c_j \big) z_{x_i}$. Assume, without loss of generality that  $D_a=g^\alpha h^\beta$, where $\alpha,\beta\in\mathds{F}$. 
 
-For the aggregated proof to be valid it must hold that $D_a= C^ch^{z_{R_a}}g^{z_{x_a}}$ which implies that the values $\alpha,\beta,z_x,z_R$ must satisfy:
+For the aggregated proof to be valid it must hold that $D_a= C^ch^{z_{R_a}}g^{z_{x_a}}$ which implies that the values $\alpha,\beta,z_{x_a},z_{R_a}$ must satisfy:
 \begin{align*}
 g^\alpha h^\beta  = C^cg^{z_{x_a}}h^{z_{R_a}}.
 \end{align*}

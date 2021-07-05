@@ -41,8 +41,7 @@ To ensure honest clients it is not sufficient to construct and perform a set mem
 
 %Thus some trick to connect the secret in the shares to the secret in the Pedersen commitment must be derived. Therefore  that the aggregation of the partial proofs used in the VAHSS construction to prove the honesty of the servers will be used to connect the range proofs to the VAHSS construction.
 
-In the VAHSS construction the clients publishes, in addition to the shares,  the checksums $\tau_i$ for the secrets $x_i$. Recall that the definition of the checksum is  $\tau_i=g^{x_i+R_i}$. The checksum $\tau_i$ can be interpreted as a Pedersen commitment, where $g=h$.
-
+In the VAHSS construction the clients publishes, in addition to the shares,  the checksums $\tau_i$ for the secrets $x_i$. Recall that the definition of the checksum is  $\tau_i=g^{x_i+R_i}$. %The checksum $\tau_i$ can be interpreted as a Pedersen commitment, where $g=h$.
 Hereafter, the clients compute and outputs the Pedersen commitments $\pi_i=g^{x_i}h^{R_i}$, instead of the previously computed checksums $\tau_i$.  Given a commitment $\pi_i$, the clients can construct a range proof or set membership proof of the committed secret. It remains to argue that this would ensure the verifier that the secret hidden by the shares is the same secret proved to be in the allowed range or set as for all $i\in\mathcal{N}$.
 
 
